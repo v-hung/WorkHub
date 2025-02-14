@@ -1,0 +1,29 @@
+.main-table {
+  height: 100%;
+}
+
+.main-table .ant-spin-nested-loading,
+.main-table .ant-spin-container,
+.main-table .ant-table-container {
+  height: 100%;
+}
+
+.main-table .ant-spin-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-table .ant-spin-container .ant-table {
+  /* flex-grow: 1;
+  min-height: 0; */
+  overflow-y: auto;
+}
+
+.main-table .ant-table-body {
+  max-height: calc(100% - 55px);
+}
+
+.main-table .ant-spin-container .ant-pagination {
+  flex: none;
+  margin-bottom: 0;
+}

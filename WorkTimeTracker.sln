@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeTracker.Server", "WorkTimeTracker.Server\WorkTimeTracker.Server.csproj", "{70306DE0-6A8B-419E-AD70-870F28C96C77}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "worktimetracker.client", "worktimetracker.client\worktimetracker.client.esproj", "{53F83C5A-4C2B-4D72-84B5-E7365185E874}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
