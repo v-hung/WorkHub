@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using WorkTimeTracker.Server.Dto.User;
 using WorkTimeTracker.Server.Dto.Work;
 

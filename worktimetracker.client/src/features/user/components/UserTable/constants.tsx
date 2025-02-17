@@ -4,17 +4,12 @@ export class DataUserTableType {
   "key": string;
   "id": string;
   "email": string;
-  "fullName": number;
-  "image"?: string;
+  "fullName": string;
+  "image"?: string | null;
   "createdAt": Date;
 }
 
 export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
-  {
-    title: "Id",
-    dataIndex: "id",
-    key: "id",
-  },
   {
     title: "Email",
     dataIndex: "email",

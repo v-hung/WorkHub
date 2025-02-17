@@ -5,7 +5,7 @@ import {
   UserPosition,
   UserStatus,
 } from "@/generate-api";
-import { accountApi } from "@/services/apiClient";
+import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -46,7 +46,8 @@ export const useAuthStore = create<AuthState>()(
         // });
 
         try {
-          const user = await accountApi.apiIdentityCurrentUserGet();
+          const user =
+            await accountApiWithRefreshToken.apiIdentityCurrentUserGet();
 
           set({ user });
         } catch (error) {

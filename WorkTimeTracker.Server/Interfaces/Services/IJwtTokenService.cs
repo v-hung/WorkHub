@@ -11,7 +11,8 @@ public interface IJwtTokenService
 
 	RefreshToken GenerateRefreshTokenModel(bool rememberMe);
 
-	CookieOptions GenerateTokenCookieOptions(bool refreshToken = false);
+	CookieOptions GenerateTokenCookieOptions();
+	CookieOptions GenerateRefreshTokenCookieOptions(bool rememberMe = false);
 
 	string GenerateJwtToken(User user);
 
@@ -19,5 +20,5 @@ public interface IJwtTokenService
 
 	void RevokeExpiredRefreshTokens(User user);
 
-	RefreshToken RefreshTokenAsync(User user, string oldRefreshToken);
+	Task<RefreshToken> RefreshTokenAsync(string? oldRefreshToken);
 }

@@ -27,6 +27,13 @@ public class UserController : BaseApiController<UserController>
 		return Ok(users);
 	}
 
+	[HttpGet("{id}")]
+	public async Task<ActionResult<Paginated<UserFullDto>>> GetById(Guid id)
+	{
+		var user = await _userService.GetAsync<UserFullDto>(id);
+		return Ok(user);
+	}
+
 	[HttpPost]
 	public async Task<ActionResult<UserDto>> Create(UserCreateUpdateRequest request)
 	{

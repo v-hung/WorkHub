@@ -5,6 +5,7 @@ using WorkTimeTracker.Server.Helpers;
 using WorkTimeTracker.Server.Interfaces.Data;
 using WorkTimeTracker.Server.Models.Enums;
 using WorkTimeTracker.Server.Models.Identity;
+using WorkTimeTracker.Server.Models.Organization;
 
 namespace WorkTimeTracker.Server.Data;
 
@@ -30,8 +31,24 @@ public class DatabaseSeeder : IDatabaseSeeder
 
 	public async Task Initialize()
 	{
+		var teams = await SeedTeams();
 		await SeedAdminUser();
-		await SeedBasicUsers();
+		await SeedBasicUsers(teams);
+	}
+
+	private async Task<List<Team>> SeedTeams()
+	{
+
+		var teams = new[]{
+			new Team() { Name = "STNet"},
+			new Team() { Name = "Msr"},
+		};
+
+		_context.Teams.AddRange(teams);
+
+		await _context.SaveChangesAsync();
+
+		return teams.ToList();
 	}
 
 	private async Task SeedAdminUser()
@@ -86,7 +103,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 		}
 	}
 
-	private async Task SeedBasicUsers()
+	private async Task SeedBasicUsers(List<Team> teams)
 	{
 		var basicRoleExits = await _roleManager.RoleExistsAsync(RoleConst.BasicRole);
 
@@ -114,7 +131,8 @@ public class DatabaseSeeder : IDatabaseSeeder
 				LockoutEnabled = true,
 				SecurityStamp = Guid.NewGuid().ToString(),
 				EmailConfirmed = true,
-				UserPosition = UserPosition.DEVELOPER
+				UserPosition = UserPosition.DEVELOPER,
+				TeamId = teams.Where(t => t.Name == "STNet").FirstOrDefault()?.Id ?? null
 			};
 
 			var result = await _userManager.CreateAsync(user, "Admin123!");

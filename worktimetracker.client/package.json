@@ -12,8 +12,6 @@
 	},
 	"dependencies": {
 		"@ant-design/colors": "^7.2.0",
-		"@automapper/classes": "^8.8.1",
-		"@automapper/core": "^8.8.1",
 		"@react-router/node": "^7.1.5",
 		"antd": "^5.23.3",
 		"i18next": "^24.2.2",
@@ -27,6 +25,7 @@
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-i18next": "^15.4.0",
+		"reflect-metadata": "^0.2.2",
 		"simplebar-react": "^3.3.0",
 		"unplugin-auto-import": "^19.0.0",
 		"whatwg-fetch": "^3.6.20",

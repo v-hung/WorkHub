@@ -61,6 +61,9 @@ namespace WorkTimeTracker.Server.Services
 				query.OrderBy(ordering); // require system.linq.dynamic.core
 			}
 
+			// Navigation
+			query = query.Include(u => u.WorkTime).Include(u => u.Supervisor).Include(u => u.Team);
+
 			// Pagination
 			query = query.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
 
@@ -72,9 +75,9 @@ namespace WorkTimeTracker.Server.Services
 
 		public async Task<D> GetAsync<D>(Guid userId) where D : class
 		{
-			var user = await _context.Users.Where(u => u.Id == userId).FirstAsync();
-
-			return _mapper.Map<D>(user);
+			return await _context.Users.AsNoTracking()
+				.ProjectTo<D>(_mapper.ConfigurationProvider)
+				.FirstAsync() ?? throw new BusinessException(HttpStatusCode.NoContent, "User is not found");
 		}
 
 		public async Task<int> GetCountAsync()

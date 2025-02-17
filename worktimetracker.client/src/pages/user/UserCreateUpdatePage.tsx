@@ -2,16 +2,15 @@ import { Button, Layout } from "antd";
 import MainContent from "@/layouts/main/components/MainContent";
 import MainHeader from "@/layouts/main/components/MainHeader";
 import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
-import { useNavigate, useParams } from "react-router";
-import UserTable from "@/features/user/components/UserTable/UserTable";
+import { useParams } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import UserFormCreate from "@/features/user/components/UserFormCreate/UserFormCreate";
 
 export const loader = wrapLoaderWithPermission(async ({ params }) => {
   console.log({ id: params.id });
 });
 
 export function Component() {
-  const navigate = useNavigate();
   const { id } = useParams();
 
   return (
@@ -33,7 +32,9 @@ export function Component() {
         ]}
       />
 
-      <MainContent>{/* <UserTable /> */}</MainContent>
+      <MainContent>
+        <UserFormCreate />
+      </MainContent>
     </Layout>
   );
 }

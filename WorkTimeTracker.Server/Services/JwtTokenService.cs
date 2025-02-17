@@ -1,12 +1,15 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WorkTimeTracker.Server.Configs;
 using WorkTimeTracker.Server.Data;
 using WorkTimeTracker.Server.Interfaces.Services;
+using WorkTimeTracker.Server.Middlewares.Exceptions;
 using WorkTimeTracker.Server.Models.Identity;
 
 namespace WorkTimeTracker.Server.Services;
@@ -64,7 +67,7 @@ public class JwtTokenService : IJwtTokenService
 		};
 	}
 
-	public CookieOptions GenerateTokenCookieOptions(bool refreshToken = false)
+	public CookieOptions GenerateTokenCookieOptions()
 	{
 
 		return new CookieOptions
@@ -72,7 +75,20 @@ public class JwtTokenService : IJwtTokenService
 			HttpOnly = true,
 			Secure = true,
 			SameSite = SameSiteMode.Strict,
-			Expires = refreshToken ? DateTime.UtcNow.AddHours(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays)) : DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtSettings.TokenExpiryMinutes))
+			Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtSettings.TokenExpiryMinutes))
+		};
+
+	}
+
+	public CookieOptions GenerateRefreshTokenCookieOptions(bool rememberMe = false)
+	{
+
+		return new CookieOptions
+		{
+			HttpOnly = true,
+			Secure = true,
+			SameSite = SameSiteMode.Strict,
+			Expires = rememberMe ? DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays)) : DateTime.UtcNow.AddDays(1)
 		};
 
 	}
@@ -134,13 +150,18 @@ public class JwtTokenService : IJwtTokenService
 		return false;
 	}
 
-	public RefreshToken RefreshTokenAsync(User user, string oldRefreshToken)
+	public async Task<RefreshToken> RefreshTokenAsync(string? oldRefreshToken)
 	{
-		var token = _context.RefreshTokens.FirstOrDefault(rt => rt.Token == oldRefreshToken && DateTime.Now <= rt.Expires && rt.UserId == user.Id && rt.RememberMe);
-
-		if (token == null)
+		if (string.IsNullOrEmpty(oldRefreshToken))
 		{
-			throw new SecurityTokenException("Invalid or expired refresh token.");
+			throw new BusinessException(HttpStatusCode.BadRequest, "Refresh token is invalid client request");
+		}
+
+		var token = await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken && DateTime.Now <= rt.Expires && rt.RememberMe);
+
+		if (token == null || token.User == null)
+		{
+			throw new BusinessException(HttpStatusCode.Unauthorized, "Refresh token is invalid or expired");
 		}
 
 		token.Expires = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays));

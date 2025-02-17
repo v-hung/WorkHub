@@ -38,8 +38,7 @@ export class FetchHttpLibrary implements HttpLibrary {
       binary: () => resp.blob(),
     });
 
-    // Nếu bật chế độ refreshToken và gặp lỗi 403, thử refresh
-    if (this.enableRefreshToken && resp.status === 403 && !isRetry) {
+    if (this.enableRefreshToken && resp.status === 401 && !isRetry) {
       try {
         await accountApi.apiIdentityRefreshTokenPost();
         return this.handleRequest(request, true);

@@ -21,7 +21,7 @@ export function Component() {
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 16 }}
       autoComplete="off"
-      initialValues={{ remember: true }}
+      initialValues={{ rememberMe: false }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
@@ -42,7 +42,7 @@ export function Component() {
       </Form.Item>
 
       <Form.Item
-        name="remember"
+        name="rememberMe"
         valuePropName="checked"
         wrapperCol={{ offset: 6, span: 16 }}
       >

@@ -22,6 +22,7 @@ export const configWithRefreshToken = createConfiguration({
 });
 
 const accountApi = new AccountApi(config);
+const accountApiWithRefreshToken = new AccountApi(configWithRefreshToken);
 const userApi = new UserApi(configWithRefreshToken);
 
-export { accountApi, userApi };
+export { accountApi, accountApiWithRefreshToken, userApi };

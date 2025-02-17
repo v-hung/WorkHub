@@ -10,14 +10,18 @@ using WorkTimeTracker.Server.Interfaces.Services;
 using WorkTimeTracker.Server.Models.Identity;
 using WorkTimeTracker.Server.Requests.Identity;
 using WorkTimeTracker.Server.Responses.Identity;
+using WorkTimeTracker.Server.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WorkTimeTracker.Server.Services;
 
-public class IdentityService(SignInManager<User> signInManager, UserManager<User> userManager, IJwtTokenService jwtTokenService, IMapper mapper, ILogger<IdentityService> logger, IHttpContextAccessor httpContextAccessor) : IIdentityService
+public class IdentityService(SignInManager<User> signInManager, UserManager<User> userManager, IJwtTokenService jwtTokenService, IMapper mapper, ILogger<IdentityService> logger, IHttpContextAccessor httpContextAccessor, ApplicationDbContext context) : IIdentityService
 {
 	private readonly UserManager<User> _userManager = userManager;
 
 	// private readonly RoleManager<Role> _roleManager;
+
+	private readonly ApplicationDbContext _context = context;
 
 	private readonly SignInManager<User> _signInManager = signInManager;
 
@@ -80,31 +84,13 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	public async Task<RefreshTokenResponse> RefreshTokenAsync(HttpRequest request)
 	{
-		var token = request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 		var refreshToken = request.Cookies["refreshToken"];
 
-		if (string.IsNullOrEmpty(token))
-		{
-			token = request.Cookies["token"];
-		}
+		var refreshTokenModel = await _jwtTokenService.RefreshTokenAsync(refreshToken);
+		var newToken = _jwtTokenService.GenerateJwtToken(refreshTokenModel.User!);
 
-		if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(refreshToken))
-		{
-			throw new BusinessException(HttpStatusCode.BadRequest, "Invalid client request");
-		}
-
-		var principal = _jwtTokenService.GetPrincipalFromExpiredToken(token);
-		var username = principal.Identity?.Name ?? "";
-
-		var user = await _userManager.FindByNameAsync(username);
-
-		if (user == null)
-		{
-			throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
-		}
-
-		var newToken = _jwtTokenService.GenerateJwtToken(user);
-		var refreshTokenModel = _jwtTokenService.RefreshTokenAsync(user, refreshToken);
+		// Set token cookie 
+		SetTokenCookie(newToken, refreshTokenModel.Token, refreshTokenModel.RememberMe);
 
 		return new RefreshTokenResponse
 		{
@@ -146,13 +132,10 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	private void SetTokenCookie(string token, string refreshToken, bool rememberMe)
 	{
-		var tokenCookieOptions = _jwtTokenService.GenerateTokenCookieOptions(true);
+		var tokenCookieOptions = _jwtTokenService.GenerateTokenCookieOptions();
 		_httpContextAccessor.HttpContext?.Response.Cookies.Append("token", token, tokenCookieOptions);
 
-		if (rememberMe)
-		{
-			var refreshCookieOptions = _jwtTokenService.GenerateTokenCookieOptions(true);
-			_httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", refreshToken, refreshCookieOptions);
-		}
+		var refreshCookieOptions = _jwtTokenService.GenerateRefreshTokenCookieOptions(rememberMe);
+		_httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", refreshToken, refreshCookieOptions);
 	}
 }

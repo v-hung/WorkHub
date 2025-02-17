@@ -10,6 +10,8 @@ namespace WorkTimeTracker.Server.Mappings
 		public UserProfile()
 		{
 			CreateMap<User, UserDto>().ReverseMap();
+			CreateMap<User, UserFullDto>().ReverseMap();
+			CreateMap<UserDetail, UserDetailDto>().ReverseMap();
 			CreateMap<UserCreateUpdateRequest, User>().ReverseMap();
 		}
 	}
