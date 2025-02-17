@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Timesheet.Server.Authorization;
+namespace WorkTimeTracker.Server.Authorization;
 
 public class PermissionRequirement : IAuthorizationRequirement
 {
-    public string Permission { get; private set; }
+	public string Permission { get; private set; }
 
-    public PermissionRequirement(string permission)
-    {
-        Permission = permission;
-    }
+	public PermissionRequirement(string permission)
+	{
+		Permission = permission;
+	}
 }

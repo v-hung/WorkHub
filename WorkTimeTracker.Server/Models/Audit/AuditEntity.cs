@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Timesheet.Server.Models.Audit;
+namespace WorkTimeTracker.Server.Models.Audit;
 
 public abstract class AuditEntity<TId> : Entity<TId>
 {

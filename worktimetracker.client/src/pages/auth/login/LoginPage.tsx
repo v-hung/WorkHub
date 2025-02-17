@@ -26,9 +26,9 @@ export function Component() {
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: "Please input your username!" }]}
+        label="email"
+        name="email"
+        rules={[{ required: true, message: "Please input your email!" }]}
       >
         <Input />
       </Form.Item>
@@ -38,7 +38,7 @@ export function Component() {
         name="password"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
-        <Input />
+        <Input.Password />
       </Form.Item>
 
       <Form.Item

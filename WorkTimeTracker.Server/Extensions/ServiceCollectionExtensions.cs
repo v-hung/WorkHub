@@ -3,147 +3,156 @@
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Timesheet.Server.Authorization;
-using Timesheet.Server.Configs;
-using Timesheet.Server.Constants.Permission;
-using Timesheet.Server.Data;
-using Timesheet.Server.Extensions.Utils;
-using Timesheet.Server.Interfaces.Data;
-using Timesheet.Server.Interfaces.Services;
-using Timesheet.Server.Models.Identity;
-using Timesheet.Server.Services;
+using WorkTimeTracker.Server.Authorization;
+using WorkTimeTracker.Server.Configs;
+using WorkTimeTracker.Server.Constants.Permission;
+using WorkTimeTracker.Server.Data;
+using WorkTimeTracker.Server.Extensions.Utils;
+using WorkTimeTracker.Server.Interfaces.Data;
+using WorkTimeTracker.Server.Interfaces.Services;
+using WorkTimeTracker.Server.Models.Identity;
+using WorkTimeTracker.Server.Services;
 
-namespace Timesheet.Server.Extensions;
+namespace WorkTimeTracker.Server.Extensions;
 
 static class ServiceCollectionExtensions
 {
-    public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
-    {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)))
-            .AddTransient<IDatabaseSeeder, DatabaseSeeder>();
-    }
+	public static void AddDatabase(this IServiceCollection services, IConfiguration configuration)
+	{
+		var connectionString = configuration.GetConnectionString("DefaultConnection");
+		services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)))
+				.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
+	}
 
-    public static void AddIdentityConfiguration(this IServiceCollection services)
-    {
-        services.AddIdentity<User, Role>(options =>
-        {
-            options.SignIn.RequireConfirmedAccount = false;
-            options.Password.RequireDigit = false;
-            options.Password.RequiredLength = 6;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequiredUniqueChars = 1;
-        })
-        .AddEntityFrameworkStores<ApplicationDbContext>();
-    }
+	public static void AddCustomControllers(this IServiceCollection services)
+	{
+		services.AddControllers().AddJsonOptions(options =>
+		{
+			options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+		});
+	}
 
-    public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
-    {
-        var jwtSettings = configuration.GetSection("Jwt");
+	public static void AddIdentityConfiguration(this IServiceCollection services)
+	{
+		services.AddIdentity<User, Role>(options =>
+		{
+			options.SignIn.RequireConfirmedAccount = false;
+			options.Password.RequireDigit = false;
+			options.Password.RequiredLength = 6;
+			options.Password.RequireNonAlphanumeric = false;
+			options.Password.RequireUppercase = false;
+			options.Password.RequireLowercase = false;
+			options.Password.RequiredUniqueChars = 1;
+		})
+		.AddEntityFrameworkStores<ApplicationDbContext>();
+	}
 
-        services.Configure<JwtSettings>(jwtSettings);
+	public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+	{
+		var jwtSettings = configuration.GetSection("Jwt");
 
-        var key = Encoding.ASCII.GetBytes(jwtSettings.Get<JwtSettings>()!.Secret);
+		services.Configure<JwtSettings>(jwtSettings);
 
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                RoleClaimType = ClaimTypes.Role,
-                ClockSkew = TimeSpan.Zero
-            };
+		var key = Encoding.ASCII.GetBytes(jwtSettings.Get<JwtSettings>()!.Secret);
 
-            options.Events = new JwtBearerEvents
-            {
-                OnMessageReceived = context =>
-                {
-                    var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+		services.AddAuthentication(options =>
+		{
+			options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+			options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+		})
+		.AddJwtBearer(options =>
+		{
+			options.TokenValidationParameters = new TokenValidationParameters
+			{
+				ValidateIssuerSigningKey = true,
+				IssuerSigningKey = new SymmetricSecurityKey(key),
+				ValidateIssuer = false,
+				ValidateAudience = false,
+				RoleClaimType = ClaimTypes.Role,
+				ClockSkew = TimeSpan.Zero
+			};
 
-                    if (string.IsNullOrEmpty(token))
-                    {
-                        token = context.Request.Cookies["token"];
-                    }
+			options.Events = new JwtBearerEvents
+			{
+				OnMessageReceived = context =>
+						{
+							var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
-                    context.Token = token;
-                    return Task.CompletedTask;
-                }
-            };
-        });
+							if (string.IsNullOrEmpty(token))
+							{
+								token = context.Request.Cookies["token"];
+							}
 
-        services.AddAuthorization(options =>
-        {
-            // Here I stored necessary permissions/roles in a constant
-            foreach (var permission in Permissions.GetRegisteredPermissions())
-            {
-                options.AddPolicy(permission, policy => policy.RequireClaim(ApplicationClaimTypes.Permission, permission));
-            }
-        });
-    }
+							context.Token = token;
+							return Task.CompletedTask;
+						}
+			};
+		});
 
-    public static void AddApplicationServices(this IServiceCollection services)
-    {
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IJwtTokenService, JwtTokenService>();
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
-        services.AddScoped<IIdentityService, IdentityService>();
-        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-        services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-    }
+		services.AddAuthorization(options =>
+		{
+			// Here I stored necessary permissions/roles in a constant
+			foreach (var permission in Permissions.GetRegisteredPermissions())
+			{
+				options.AddPolicy(permission, policy => policy.RequireClaim(ApplicationClaimTypes.Permission, permission));
+			}
+		});
+	}
 
-    public static void AddSwaggerDocumentation(this IServiceCollection services)
-    {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(c =>
-        {
-            // c.EnableAnnotations();
+	public static void AddApplicationServices(this IServiceCollection services)
+	{
+		services.AddScoped<IUserService, UserService>();
+		services.AddScoped<IJwtTokenService, JwtTokenService>();
+		services.AddScoped<ICurrentUserService, CurrentUserService>();
+		services.AddScoped<IIdentityService, IdentityService>();
+		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+		services.AddAutoMapper(Assembly.GetExecutingAssembly());
+	}
 
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
-            });
+	public static void AddSwaggerDocumentation(this IServiceCollection services)
+	{
+		services.AddEndpointsApiExplorer();
+		services.AddSwaggerGen(c =>
+		{
+			// c.EnableAnnotations();
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Name = "Bearer",
-                        In = ParameterLocation.Header,
-                        Reference = new OpenApiReference
-                        {
-                            Id = "Bearer",
-                            Type = ReferenceType.SecurityScheme,
-                        }
-                    },
-                    new List<string>()
-                }
-            });
+			c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+			{
+				Name = "Authorization",
+				Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+				In = ParameterLocation.Header,
+				Type = SecuritySchemeType.ApiKey,
+				Scheme = "Bearer"
+			});
 
-            c.OperationFilter<AddErrorResponse500>();
-            c.SchemaFilter<PermissionSchema>();
-            c.OperationFilter<AddPermissionSchemaOperationFilter>();
-        });
-    }
+			c.AddSecurityRequirement(new OpenApiSecurityRequirement
+			{
+				{
+					new OpenApiSecurityScheme
+					{
+						Name = "Bearer",
+						In = ParameterLocation.Header,
+						Reference = new OpenApiReference
+						{
+							Id = "Bearer",
+							Type = ReferenceType.SecurityScheme,
+						}
+					},
+					new List<string>()
+				}
+			});
+
+			c.OperationFilter<AddErrorResponse500>();
+			c.SchemaFilter<PermissionSchema>();
+			c.OperationFilter<AddPermissionSchemaOperationFilter>();
+		});
+	}
 }

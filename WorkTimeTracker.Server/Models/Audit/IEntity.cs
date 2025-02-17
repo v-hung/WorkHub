@@ -1,4 +1,4 @@
-namespace Timesheet.Server.Models.Audit;
+namespace WorkTimeTracker.Server.Models.Audit;
 
 public interface IEntity
 {

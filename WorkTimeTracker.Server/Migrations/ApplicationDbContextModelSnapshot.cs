@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Timesheet.Server.Data;
+using WorkTimeTracker.Server.Data;
 
 #nullable disable
 
-namespace Timesheet.Server.Migrations
+namespace WorkTimeTracker.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -125,7 +125,22 @@ namespace Timesheet.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Timesheet.Server.Models.Identity.RefreshToken", b =>
+            modelBuilder.Entity("ProjectUser", b =>
+                {
+                    b.Property<Guid>("MembersId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MembersId", "ProjectsId");
+
+                    b.HasIndex("ProjectsId");
+
+                    b.ToTable("ProjectUser");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.RefreshToken", b =>
                 {
                     b.Property<string>("Token")
                         .HasColumnType("varchar(255)");
@@ -135,6 +150,9 @@ namespace Timesheet.Server.Migrations
 
                     b.Property<DateTime>("Expires")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("RememberMe")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
@@ -146,7 +164,7 @@ namespace Timesheet.Server.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Timesheet.Server.Models.Identity.Role", b =>
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -180,7 +198,7 @@ namespace Timesheet.Server.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Timesheet.Server.Models.Identity.User", b =>
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,9 +206,6 @@ namespace Timesheet.Server.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -216,8 +231,14 @@ namespace Timesheet.Server.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsFirstLogin")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("LeaveHours")
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
@@ -245,6 +266,12 @@ namespace Timesheet.Server.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
+                    b.Property<Guid?>("SupervisorId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -255,6 +282,15 @@ namespace Timesheet.Server.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<int>("UserPosition")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WorkTimeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -264,12 +300,269 @@ namespace Timesheet.Server.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
+                    b.HasIndex("SupervisorId");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("WorkTimeId");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.UserDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ContactAddress")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Gender")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("PermanentAddress")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("YearsOfWork")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserDetails");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Organization.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActiveProjects")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CompletedProjects")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid?>("ManagerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TotalMembers")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Requests.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid?>("ApprovedById")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<int>("RequestType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApprovedById");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Requests");
+
+                    b.HasDiscriminator<int>("RequestType");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Time.Timesheet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("WorkMinutes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Timesheets");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Time.WorkTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AllowedLateMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("EndTimeAfternoon")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan>("EndTimeMorning")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan>("StartTimeAfternoon")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan>("StartTimeMorning")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkTimes");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Work.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("ManagerId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Requests.LeaveRequest", b =>
+                {
+                    b.HasBaseType("WorkTimeTracker.Server.Models.Requests.Request");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Requests.TimesheetRequest", b =>
+                {
+                    b.HasBaseType("WorkTimeTracker.Server.Models.Requests.Request");
+
+                    b.Property<TimeSpan?>("NewCheckIn")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan?>("NewCheckOut")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan?>("OldCheckIn")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan?>("OldCheckOut")
+                        .HasColumnType("time(6)");
+
+                    b.Property<DateTime>("WorkDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasDiscriminator().HasValue(0);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Timesheet.Server.Models.Identity.Role", null)
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -278,7 +571,7 @@ namespace Timesheet.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Timesheet.Server.Models.Identity.User", null)
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -287,7 +580,7 @@ namespace Timesheet.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Timesheet.Server.Models.Identity.User", null)
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -296,13 +589,13 @@ namespace Timesheet.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Timesheet.Server.Models.Identity.Role", null)
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Timesheet.Server.Models.Identity.User", null)
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -311,16 +604,31 @@ namespace Timesheet.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Timesheet.Server.Models.Identity.User", null)
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Timesheet.Server.Models.Identity.RefreshToken", b =>
+            modelBuilder.Entity("ProjectUser", b =>
                 {
-                    b.HasOne("Timesheet.Server.Models.Identity.User", "User")
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkTimeTracker.Server.Models.Work.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.RefreshToken", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,9 +637,122 @@ namespace Timesheet.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Timesheet.Server.Models.Identity.User", b =>
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.User", b =>
                 {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "Supervisor")
+                        .WithMany("Supervisors")
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WorkTimeTracker.Server.Models.Organization.Team", "Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId");
+
+                    b.HasOne("WorkTimeTracker.Server.Models.Time.WorkTime", "WorkTime")
+                        .WithMany("Users")
+                        .HasForeignKey("WorkTimeId");
+
+                    b.Navigation("Supervisor");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("WorkTime");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.UserDetail", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "User")
+                        .WithOne("UserDetail")
+                        .HasForeignKey("WorkTimeTracker.Server.Models.Identity.UserDetail", "UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Organization.Team", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "Manager")
+                        .WithMany("ManagerTeams")
+                        .HasForeignKey("ManagerId");
+
+                    b.Navigation("Manager");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Requests.Request", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "ApprovedBy")
+                        .WithMany("ApprovedRequests")
+                        .HasForeignKey("ApprovedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "User")
+                        .WithMany("Requests")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApprovedBy");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Time.Timesheet", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "User")
+                        .WithMany("Timesheets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Work.Project", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "Manager")
+                        .WithMany("ManagerProjects")
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkTimeTracker.Server.Models.Organization.Team", "Team")
+                        .WithMany("Projects")
+                        .HasForeignKey("TeamId");
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.User", b =>
+                {
+                    b.Navigation("ApprovedRequests");
+
+                    b.Navigation("ManagerProjects");
+
+                    b.Navigation("ManagerTeams");
+
                     b.Navigation("RefreshTokens");
+
+                    b.Navigation("Requests");
+
+                    b.Navigation("Supervisors");
+
+                    b.Navigation("Timesheets");
+
+                    b.Navigation("UserDetail");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Organization.Team", b =>
+                {
+                    b.Navigation("Members");
+
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Server.Models.Time.WorkTime", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

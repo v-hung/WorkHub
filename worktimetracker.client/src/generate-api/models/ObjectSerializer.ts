@@ -1,20 +1,32 @@
+export * from '../models/ChangePasswordRequest';
 export * from '../models/ErrorResponse';
 export * from '../models/LoginRequest';
 export * from '../models/LoginResponse';
-export * from '../models/PagedRequest';
 export * from '../models/Permission';
 export * from '../models/RefreshTokenResponse';
+export * from '../models/TeamDto';
+export * from '../models/UserCreateUpdateRequest';
+export * from '../models/UserDetailDto';
 export * from '../models/UserDto';
 export * from '../models/UserDtoPaginated';
+export * from '../models/UserPosition';
+export * from '../models/UserStatus';
+export * from '../models/WorkTimeDto';
 
+import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
-import { PagedRequest } from '../models/PagedRequest';
 import { Permission } from '../models/Permission';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { UserDto } from '../models/UserDto';
+import { TeamDto } from '../models/TeamDto';
+import { UserCreateUpdateRequest                  } from '../models/UserCreateUpdateRequest';
+import { UserDetailDto } from '../models/UserDetailDto';
+import { UserDto                 } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
+import { UserPosition } from '../models/UserPosition';
+import { UserStatus } from '../models/UserStatus';
+import { WorkTimeDto } from '../models/WorkTimeDto';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -30,16 +42,22 @@ let primitives = [
 
 let enumsMap: Set<string> = new Set<string>([
     "Permission",
+    "UserPosition",
+    "UserStatus",
 ]);
 
 let typeMap: {[index: string]: any} = {
+    "ChangePasswordRequest": ChangePasswordRequest,
     "ErrorResponse": ErrorResponse,
     "LoginRequest": LoginRequest,
     "LoginResponse": LoginResponse,
-    "PagedRequest": PagedRequest,
     "RefreshTokenResponse": RefreshTokenResponse,
+    "TeamDto": TeamDto,
+    "UserCreateUpdateRequest": UserCreateUpdateRequest,
+    "UserDetailDto": UserDetailDto,
     "UserDto": UserDto,
     "UserDtoPaginated": UserDtoPaginated,
+    "WorkTimeDto": WorkTimeDto,
 }
 
 type MimeTypeDescriptor = {

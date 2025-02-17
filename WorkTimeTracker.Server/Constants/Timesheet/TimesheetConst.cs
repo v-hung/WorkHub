@@ -1,4 +1,4 @@
-namespace Timesheet.Server.Constants.Timesheet
+namespace WorkTimeTracker.Server.Constants.Timesheet
 {
 	public static class TimesheetConst
 	{

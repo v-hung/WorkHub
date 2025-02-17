@@ -1,15 +1,16 @@
 using AutoMapper;
-using Timesheet.Server.Dto;
-using Timesheet.Server.Models.Identity;
+using WorkTimeTracker.Server.Dto.User;
+using WorkTimeTracker.Server.Models.Identity;
+using WorkTimeTracker.Server.Requests.Identity;
 
-namespace Timesheet.Server.Mappings
+namespace WorkTimeTracker.Server.Mappings
 {
-    public class UserProfile : Profile
-    {
-        public UserProfile()
-        {
-            CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<UserDto, User>().ReverseMap();
-        }
-    }
+	public class UserProfile : Profile
+	{
+		public UserProfile()
+		{
+			CreateMap<User, UserDto>().ReverseMap();
+			CreateMap<UserCreateUpdateRequest, User>().ReverseMap();
+		}
+	}
 }

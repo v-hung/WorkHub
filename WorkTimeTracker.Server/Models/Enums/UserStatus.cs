@@ -1,4 +1,4 @@
-namespace Timesheet.Server.Models.Enums
+namespace WorkTimeTracker.Server.Models.Enums
 {
 	public enum UserStatus
 	{

@@ -1,18 +1,19 @@
 using System.Security.Claims;
-using Timesheet.Server.Dto;
-using Timesheet.Server.Models.Identity;
-using Timesheet.Server.Requests.Identity;
-using Timesheet.Server.Responses.Identity;
+using WorkTimeTracker.Server.Dto.User;
+using WorkTimeTracker.Server.Requests.Identity;
+using WorkTimeTracker.Server.Responses.Identity;
 
-namespace Timesheet.Server.Interfaces.Services;
+namespace WorkTimeTracker.Server.Interfaces.Services;
 
 public interface IIdentityService
 {
-    Task<LoginResponse> LoginAsync(LoginRequest input);
+	Task<LoginResponse> LoginAsync(LoginRequest input);
 
-    Task<UserDto> GetCurrentUserAsync(ClaimsPrincipal claimsPrincipal);
+	Task<UserDto> GetCurrentUserAsync(ClaimsPrincipal claimsPrincipal);
 
-    Task<RefreshTokenResponse> RefreshTokenAsync(HttpRequest httpRequest);
+	Task<RefreshTokenResponse> RefreshTokenAsync(HttpRequest httpRequest);
 
-    Task<string> LogoutAsync(HttpRequest httpRequest, ClaimsPrincipal claimsPrincipal);
+	Task<string> LogoutAsync(HttpRequest httpRequest, ClaimsPrincipal claimsPrincipal);
+
+	Task ChangePasswordAsync(ChangePasswordRequest request, Guid userId);
 }

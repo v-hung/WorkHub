@@ -6,13 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    });
+	options.AddPolicy("AllowAll", builder =>
+	{
+		builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+	});
 });
 
-builder.Services.AddControllers();
+builder.Services.AddCustomControllers();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityConfiguration();
@@ -27,7 +27,7 @@ app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerDocumentation();
+	app.UseSwaggerDocumentation();
 }
 
 app.UseCors("AllowAll");

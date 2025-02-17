@@ -1,4 +1,10 @@
-import { LoginRequest, Permission, UserDto } from "@/generate-api";
+import {
+  LoginRequest,
+  Permission,
+  UserDto,
+  UserPosition,
+  UserStatus,
+} from "@/generate-api";
 import { accountApi } from "@/services/apiClient";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -22,41 +28,30 @@ export const useAuthStore = create<AuthState>()(
       permissions: [],
 
       login: async (credentials) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        set({
-          user: {
-            id: "1",
-            fullName: "Nguyễn Việt Hùng",
-            email: "hungnv@wbcvn.vn",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-        });
-        // const response = await accountApi.apiIdentityLoginPost(credentials);
-        // set({ user: response.user, token: response.token });
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        // set({
+        //   user: USER,
+        // });
+
+        const response = await accountApi.apiIdentityLoginPost(credentials);
+        set({ user: response.user, token: response.token });
       },
 
       logout: () => set({ user: null, token: null }),
 
       load: async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        set({
-          user: {
-            id: "1",
-            fullName: "Nguyễn Việt Hùng",
-            email: "hungnv@wbcvn.vn",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-        });
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        // set({
+        //   user: USER
+        // });
 
-        // try {
-        //   const user = await accountApi.apiIdentityCurrentUserGet();
+        try {
+          const user = await accountApi.apiIdentityCurrentUserGet();
 
-        //   set({ user });
-        // } catch (error) {
-        //   set({ user: null, token: null });
-        // }
+          set({ user });
+        } catch (error) {
+          set({ user: null, token: null });
+        }
       },
     })),
     {
@@ -66,3 +61,15 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 );
+
+const USER = {
+  id: "1",
+  fullName: "Nguyễn Việt Hùng",
+  email: "hungnv@wbcvn.vn",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  isFirstLogin: false,
+  leaveHours: 0,
+  userPosition: UserPosition.Developer,
+  userStatus: UserStatus.Active,
+};

@@ -1,8 +1,8 @@
-namespace Timesheet.Server.Interfaces.Services;
+namespace WorkTimeTracker.Server.Interfaces.Services;
 
 public interface ICurrentUserService
 {
-    string? UserId { get; }
+	string? UserId { get; }
 
-    string? UserName { get; }
+	string? UserName { get; }
 }

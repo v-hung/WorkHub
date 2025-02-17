@@ -1,6 +1,6 @@
-namespace Timesheet.Server.Interfaces.Data;
+namespace WorkTimeTracker.Server.Interfaces.Data;
 
 public interface IDatabaseSeeder
 {
-    Task Initialize();
+	Task Initialize();
 }

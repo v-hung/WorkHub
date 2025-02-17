@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Timesheet.Server.Requests
+namespace WorkTimeTracker.Server.Requests
 {
 	public class PagedRequest
 	{

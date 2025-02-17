@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Timesheet.Server.Wrapper
+namespace WorkTimeTracker.Server.Wrapper
 {
 	public class Paginated<T>
 	{

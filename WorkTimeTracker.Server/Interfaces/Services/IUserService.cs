@@ -1,25 +1,26 @@
-using Timesheet.Server.Dto;
-using Timesheet.Server.Requests;
-using Timesheet.Server.Wrapper;
+using WorkTimeTracker.Server.Dto.User;
+using WorkTimeTracker.Server.Requests;
+using WorkTimeTracker.Server.Requests.Identity;
+using WorkTimeTracker.Server.Wrapper;
 
-namespace Timesheet.Server.Interfaces.Services
+namespace WorkTimeTracker.Server.Interfaces.Services
 {
-    public interface IUserService
-    {
-        Task<List<UserDto>> GetAllAsync();
+	public interface IUserService
+	{
+		Task<List<UserDto>> GetAllAsync();
 
-        Task<Paginated<UserDto>> SearchAsync(PagedRequest request);
+		Task<Paginated<UserDto>> SearchAsync(PagedRequest request);
 
-        Task<int> GetCountAsync();
+		Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class;
 
-        Task<UserDto> GetAsync(string userId);
+		Task<int> GetCountAsync();
 
-        Task<UserDto> CreateAsync();
+		Task<D> GetAsync<D>(Guid userId) where D : class;
 
-        Task<UserDto> UpdateAsync(string userId);
+		Task<D> CreateAsync<D>(UserCreateUpdateRequest request) where D : class;
 
-        Task<bool> DeleteAsync(string userId);
+		Task<D?> UpdateAsync<D>(Guid userId, UserCreateUpdateRequest request) where D : class;
 
-        Task<bool> ResetPasswordAsync(string userId);
-    }
+		Task DeleteAsync(Guid userId);
+	}
 }

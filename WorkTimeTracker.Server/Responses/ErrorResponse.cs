@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-namespace Timesheet.Server.Responses;
+namespace WorkTimeTracker.Server.Responses;
 
 public class ErrorResponse
 {
@@ -11,7 +11,7 @@ public class ErrorResponse
 	[Required]
 	public required string Message { get; set; }
 
-	public string? Details { get; set; }
+	public Dictionary<string, string>? Details { get; set; }
 
 	public override string ToString() =>
 			JsonSerializer.Serialize(this);

@@ -2,14 +2,20 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
+import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
-import { PagedRequest } from '../models/PagedRequest';
 import { Permission } from '../models/Permission';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { TeamDto } from '../models/TeamDto';
+import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
+import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
+import { UserPosition } from '../models/UserPosition';
+import { UserStatus } from '../models/UserStatus';
+import { WorkTimeDto } from '../models/WorkTimeDto';
 
 import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
 export class ObservableAccountApi {
@@ -25,6 +31,35 @@ export class ObservableAccountApi {
         this.configuration = configuration;
         this.requestFactory = requestFactory || new AccountApiRequestFactory(configuration);
         this.responseProcessor = responseProcessor || new AccountApiResponseProcessor();
+    }
+
+    /**
+     * @param [changePasswordRequest]
+     */
+    public apiIdentityChangePasswordPostWithHttpInfo(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.apiIdentityChangePasswordPost(changePasswordRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.apiIdentityChangePasswordPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [changePasswordRequest]
+     */
+    public apiIdentityChangePasswordPost(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Observable<void> {
+        return this.apiIdentityChangePasswordPostWithHttpInfo(changePasswordRequest, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
     }
 
     /**
@@ -156,10 +191,14 @@ export class ObservableUserApi {
     }
 
     /**
-     * @param [pagedRequest]
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy]
+     * @param [orderByString]
      */
-    public apiUsersGetWithHttpInfo(pagedRequest?: PagedRequest, _options?: Configuration): Observable<HttpInfo<UserDtoPaginated>> {
-        const requestContextPromise = this.requestFactory.apiUsersGet(pagedRequest, _options);
+    public apiUsersGetWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Observable<HttpInfo<UserDtoPaginated>> {
+        const requestContextPromise = this.requestFactory.apiUsersGet(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -178,10 +217,103 @@ export class ObservableUserApi {
     }
 
     /**
-     * @param [pagedRequest]
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy]
+     * @param [orderByString]
      */
-    public apiUsersGet(pagedRequest?: PagedRequest, _options?: Configuration): Observable<UserDtoPaginated> {
-        return this.apiUsersGetWithHttpInfo(pagedRequest, _options).pipe(map((apiResponse: HttpInfo<UserDtoPaginated>) => apiResponse.data));
+    public apiUsersGet(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Observable<UserDtoPaginated> {
+        return this.apiUsersGetWithHttpInfo(pageNumber, pageSize, searchString, orderBy, orderByString, _options).pipe(map((apiResponse: HttpInfo<UserDtoPaginated>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public apiUsersIdDeleteWithHttpInfo(id: string, _options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.apiUsersIdDelete(id, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.apiUsersIdDeleteWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public apiUsersIdDelete(id: string, _options?: Configuration): Observable<void> {
+        return this.apiUsersIdDeleteWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     * @param [userCreateUpdateRequest]
+     */
+    public apiUsersIdPostWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Observable<HttpInfo<UserDto>> {
+        const requestContextPromise = this.requestFactory.apiUsersIdPost(id, userCreateUpdateRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.apiUsersIdPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     * @param [userCreateUpdateRequest]
+     */
+    public apiUsersIdPost(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Observable<UserDto> {
+        return this.apiUsersIdPostWithHttpInfo(id, userCreateUpdateRequest, _options).pipe(map((apiResponse: HttpInfo<UserDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param [userCreateUpdateRequest]
+     */
+    public apiUsersPostWithHttpInfo(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Observable<HttpInfo<UserDto>> {
+        const requestContextPromise = this.requestFactory.apiUsersPost(userCreateUpdateRequest, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.apiUsersPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [userCreateUpdateRequest]
+     */
+    public apiUsersPost(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Observable<UserDto> {
+        return this.apiUsersPostWithHttpInfo(userCreateUpdateRequest, _options).pipe(map((apiResponse: HttpInfo<UserDto>) => apiResponse.data));
     }
 
 }

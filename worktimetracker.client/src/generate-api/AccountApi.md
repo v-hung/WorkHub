@@ -4,11 +4,68 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**apiIdentityChangePasswordPost**](AccountApi.md#apiIdentityChangePasswordPost) | **POST** /api/identity/change-password | 
 [**apiIdentityCurrentUserGet**](AccountApi.md#apiIdentityCurrentUserGet) | **GET** /api/identity/current-user | 
 [**apiIdentityLoginPost**](AccountApi.md#apiIdentityLoginPost) | **POST** /api/identity/login | 
 [**apiIdentityLogoutPost**](AccountApi.md#apiIdentityLogoutPost) | **POST** /api/identity/logout | 
 [**apiIdentityRefreshTokenPost**](AccountApi.md#apiIdentityRefreshTokenPost) | **POST** /api/identity/refresh-token | 
 
+
+# **apiIdentityChangePasswordPost**
+> void apiIdentityChangePasswordPost()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, AccountApi } from '';
+import type { AccountApiApiIdentityChangePasswordPostRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new AccountApi(configuration);
+
+const request: AccountApiApiIdentityChangePasswordPostRequest = {
+  
+  changePasswordRequest: {
+    password: "password_example",
+    newPassword: "newPassword_example",
+  },
+};
+
+const data = await apiInstance.apiIdentityChangePasswordPost(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **changePasswordRequest** | **ChangePasswordRequest**|  |
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **apiIdentityCurrentUserGet**
 > UserDto apiIdentityCurrentUserGet()

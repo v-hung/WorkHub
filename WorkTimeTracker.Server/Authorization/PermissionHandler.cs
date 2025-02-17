@@ -1,32 +1,32 @@
 using Microsoft.AspNetCore.Authorization;
-using Timesheet.Server.Constants.Permission;
+using WorkTimeTracker.Server.Constants.Permission;
 
-namespace Timesheet.Server.Authorization;
+namespace WorkTimeTracker.Server.Authorization;
 
 public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
 {
 
-    public PermissionHandler()
-    {
-    }
+	public PermissionHandler()
+	{
+	}
 
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext authContext, PermissionRequirement requirement)
-    {
-        if (authContext.User == null)
-        {
-            await Task.CompletedTask;
-            return;
-        }
+	protected override async Task HandleRequirementAsync(AuthorizationHandlerContext authContext, PermissionRequirement requirement)
+	{
+		if (authContext.User == null)
+		{
+			await Task.CompletedTask;
+			return;
+		}
 
-        var permissions = authContext.User.Claims.Where(x => x.Type == ApplicationClaimTypes.Permission &&
-            x.Value == requirement.Permission &&
-            x.Issuer == "LOCAL AUTHORITY");
+		var permissions = authContext.User.Claims.Where(x => x.Type == ApplicationClaimTypes.Permission &&
+				x.Value == requirement.Permission &&
+				x.Issuer == "LOCAL AUTHORITY");
 
-        if (permissions.Any())
-        {
-            authContext.Succeed(requirement);
-            await Task.CompletedTask;
-        }
-    }
+		if (permissions.Any())
+		{
+			authContext.Succeed(requirement);
+			await Task.CompletedTask;
+		}
+	}
 
 }

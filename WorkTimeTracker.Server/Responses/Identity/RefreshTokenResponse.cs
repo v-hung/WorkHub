@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Timesheet.Server.Responses.Identity
+namespace WorkTimeTracker.Server.Responses.Identity
 {
-    public class RefreshTokenResponse
-    {
-        [Required]
-        public required string Token { get; set; }
+	public class RefreshTokenResponse
+	{
+		[Required]
+		public required string Token { get; set; }
 
-        [Required]
-        public required string RefreshToken { get; set; }
-    }
+		[Required]
+		public required string RefreshToken { get; set; }
+	}
 }

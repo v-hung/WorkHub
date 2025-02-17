@@ -1,32 +1,31 @@
 using System.ComponentModel.DataAnnotations;
-using Timesheet.Server.Constants.Timesheet;
-using Timesheet.Server.Models.Identity;
+using WorkTimeTracker.Server.Constants.Timesheet;
+using WorkTimeTracker.Server.Models.Identity;
 
-namespace Timesheet.Server.Models.Time
+namespace WorkTimeTracker.Server.Models.Time
 {
 	public class WorkTime
 	{
 
-		[Required]
-		public long Id { get; set; }
+		public int Id { get; set; }
 
 		[Required]
-		public required string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
 		[Required]
-		public required TimeSpan startTimeMorning { get; set; } = TimesheetConst.START_TIME_MORNING;
+		public TimeSpan StartTimeMorning { get; set; } = TimesheetConst.START_TIME_MORNING;
 
 		[Required]
-		public required TimeSpan endTimeMorning { get; set; } = TimesheetConst.END_TIME_MORNING;
+		public TimeSpan EndTimeMorning { get; set; } = TimesheetConst.END_TIME_MORNING;
 
 		[Required]
-		public required TimeSpan startTimeAfternoon { get; set; } = TimesheetConst.START_TIME_AFTERNOON;
+		public TimeSpan StartTimeAfternoon { get; set; } = TimesheetConst.START_TIME_AFTERNOON;
 
 		[Required]
-		public required TimeSpan endTimeAfternoon { get; set; } = TimesheetConst.END_TIME_AFTERNOON;
+		public TimeSpan EndTimeAfternoon { get; set; } = TimesheetConst.END_TIME_AFTERNOON;
 
 		[Required]
-		public required int allowedLateMinutes { get; set; } = TimesheetConst.ALLOWED_LATE_MINUTES;
+		public int AllowedLateMinutes { get; set; } = TimesheetConst.ALLOWED_LATE_MINUTES;
 
 		public IList<User> Users { get; set; } = [];
 	}

@@ -1,6 +1,6 @@
-﻿namespace Timesheet.Server.Constants.Permission;
+﻿namespace WorkTimeTracker.Server.Constants.Permission;
 
 public static class ApplicationClaimTypes
 {
-    public const string Permission = "Permission";
+	public const string Permission = "Permission";
 }
