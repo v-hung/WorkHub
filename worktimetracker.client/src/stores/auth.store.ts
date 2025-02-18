@@ -7,60 +7,56 @@ import {
 } from "@/generate-api";
 import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
 
 type AuthState = {
   user: UserDto | null;
   permissions: Permission[];
-  token: string | null;
   login: (credentials: LoginRequest) => Promise<void>;
   logout: () => void;
   load: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthState>()(
-  persist(
-    immer((set) => ({
-      user: null,
-      token: null,
-      permissions: [],
+  immer((set) => ({
+    user: null,
+    permissions: [],
 
-      login: async (credentials) => {
-        // await new Promise((resolve) => setTimeout(resolve, 1000));
-        // set({
-        //   user: USER,
-        // });
+    login: async (credentials) => {
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      // set({
+      //   user: USER,
+      // });
 
-        const response = await accountApi.apiIdentityLoginPost(credentials);
-        set({ user: response.user, token: response.token });
-      },
+      const response = await accountApi.apiIdentityLoginPost(credentials);
+      set({ user: response.user });
+    },
 
-      logout: () => set({ user: null, token: null }),
+    logout: () => set({ user: null }),
 
-      load: async () => {
-        // await new Promise((resolve) => setTimeout(resolve, 1000));
-        // set({
-        //   user: USER
-        // });
+    load: async () => {
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      // set({
+      //   user: USER
+      // });
 
-        try {
-          const user =
-            await accountApiWithRefreshToken.apiIdentityCurrentUserGet();
+      try {
+        const user =
+          await accountApiWithRefreshToken.apiIdentityCurrentUserGet();
 
-          set({ user });
-        } catch (error) {
-          set({ user: null, token: null });
-        }
-      },
-    })),
-    {
-      name: "auth-storage",
-      storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ token: state.token }),
-    }
-  )
+        set({ user });
+      } catch (error) {
+        set({ user: null });
+      }
+    },
+  }))
+  //   {
+  //     name: "auth-storage",
+  //     storage: createJSONStorage(() => localStorage),
+  //     partialize: (state) => ({ token: state.token }),
+  //   }
+  // )
 );
 
 const USER = {

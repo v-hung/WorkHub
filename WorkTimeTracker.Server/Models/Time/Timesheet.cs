@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Models.Identity;
 
 namespace WorkTimeTracker.Server.Models.Time
 {
-	public class Timesheet
+	public class Timesheet : Entity<Guid>
 	{
-		public Guid Id { get; set; } = Guid.NewGuid();
 
 		public DateTime Date { get; set; }
 

@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using WorkTimeTracker.Server.Models.Audit;
 
 namespace WorkTimeTracker.Server.Models.Identity;
-public class Role : IdentityRole<Guid>
+public class Role : IdentityRole<Guid>, IEntity<Guid>
 {
 	[Required]
 	public string Description { get; set; } = "";

@@ -6,9 +6,9 @@ namespace WorkTimeTracker.Server.Dto.Organization
 	public class TeamFullDto : TeamDto
 	{
 
-		public IList<UserDto> Members { get; set; } = [];
+		public IList<UserMinimalDto> Members { get; set; } = [];
 
-		public List<ProjectDto> Projects { get; set; } = [];
+		public List<ProjectMinimalDto> Projects { get; set; } = [];
 
 	}
 }

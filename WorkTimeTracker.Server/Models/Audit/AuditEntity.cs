@@ -5,7 +5,7 @@ namespace WorkTimeTracker.Server.Models.Audit;
 public abstract class AuditEntity<TId> : Entity<TId>
 {
 	[Required]
-	public DateTime CreatedAt { get; set; }
+	public required DateTime CreatedAt { get; set; } = new DateTime();
 
 	public DateTime? UpdateAt { get; set; }
 

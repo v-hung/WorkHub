@@ -1,30 +1,14 @@
-using System.ComponentModel.DataAnnotations;
 using WorkTimeTracker.Server.Dto.Organization;
 using WorkTimeTracker.Server.Dto.User;
-using WorkTimeTracker.Server.Models.Enums;
 namespace WorkTimeTracker.Server.Dto.Work
 {
-	public class ProjectDto
+	public class ProjectDto : ProjectMinimalDto
 	{
-		[Required]
-		public int Id { get; set; }
 
-		[Required]
-		public required string Name { get; set; }
+		public TeamMinimalDto? Team { get; set; }
 
-		public string? Description { get; set; }
+		public UserMinimalDto? Manager { get; set; }
 
-		public DateTime StartDate { get; set; }
-
-		public DateTime EndDate { get; set; }
-
-		public ProjectStatus Status { get; set; }
-
-		// Navigation
-
-		public TeamDto? Team { get; set; }
-		public UserDto? Manager { get; set; }
-
-		public IList<UserDto> Members { get; set; } = [];
+		public IList<UserMinimalDto> Members { get; set; } = [];
 	}
 }

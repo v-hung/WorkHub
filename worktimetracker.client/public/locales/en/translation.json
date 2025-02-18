@@ -23,5 +23,8 @@
 	"locale": {
 		"vi": "Vietnamese",
 		"en": "English"
+	},
+	"auth": {
+		"sessionExpired": "Your session has expired. Please log in again."
 	}
 }

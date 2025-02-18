@@ -18,6 +18,8 @@ public class RefreshToken
 	[Required]
 	public DateTime Created { get; set; }
 
+	// Navigation properties
+
 	[Required]
 	[ForeignKey("User")]
 	public Guid UserId { get; set; }

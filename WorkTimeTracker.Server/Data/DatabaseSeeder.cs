@@ -44,9 +44,13 @@ public class DatabaseSeeder : IDatabaseSeeder
 			new Team() { Name = "Msr"},
 		};
 
-		_context.Teams.AddRange(teams);
+		var newTeams = teams.Where(item => !_context.Teams.Any(t => t.Name == item.Name)).ToList();
 
-		await _context.SaveChangesAsync();
+		if (newTeams.Any())
+		{
+			await _context.Teams.AddRangeAsync(newTeams);
+			await _context.SaveChangesAsync();
+		}
 
 		return teams.ToList();
 	}

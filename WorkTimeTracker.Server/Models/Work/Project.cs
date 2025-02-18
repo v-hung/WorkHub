@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Models.Enums;
 using WorkTimeTracker.Server.Models.Identity;
 using WorkTimeTracker.Server.Models.Organization;
 
 namespace WorkTimeTracker.Server.Models.Work
 {
-	public class Project
+	public class Project : Entity<int>
 	{
-		public int Id { get; set; }
 
 		[Required]
 		public required string Name { get; set; }
@@ -21,7 +21,8 @@ namespace WorkTimeTracker.Server.Models.Work
 
 		public ProjectStatus Status { get; set; }
 
-		// Navigation
+		// Navigation properties
+
 		public Team? Team { get; set; }
 
 		[ForeignKey("Manager")]

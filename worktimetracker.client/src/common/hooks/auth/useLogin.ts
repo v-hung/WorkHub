@@ -1,11 +1,12 @@
 import { LoginRequest } from "@/generate-api";
 import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export const useLogin = () => {
   const accountLogin = useAuthStore((state) => state.login);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +16,10 @@ export const useLogin = () => {
       setLoading(true);
       await accountLogin(credentials);
 
-      navigate("/");
+      const params = new URLSearchParams(location.search);
+      const redirectUrl = params.get("redirectUrl") || "/";
+
+      navigate(redirectUrl);
     } catch (error) {
       console.log({ error });
     } finally {

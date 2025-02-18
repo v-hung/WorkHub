@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using WorkTimeTracker.Server.Constants.Timesheet;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Models.Identity;
 
 namespace WorkTimeTracker.Server.Models.Time
 {
-	public class WorkTime
+	public class WorkTime : Entity<int>
 	{
-
-		public int Id { get; set; }
 
 		[Required]
 		public string Title { get; set; } = string.Empty;

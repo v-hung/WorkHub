@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using WorkTimeTracker.Server.Models.Organization;
 using WorkTimeTracker.Server.Models.Work;
 using Microsoft.AspNetCore.Identity;
+using WorkTimeTracker.Server.Models.Audit;
 
 namespace WorkTimeTracker.Server.Services
 {
@@ -73,11 +74,11 @@ namespace WorkTimeTracker.Server.Services
 			return new Paginated<D>(users, request.PageNumber, request.PageSize, await query.CountAsync());
 		}
 
-		public async Task<D> GetAsync<D>(Guid userId) where D : class
+		public async Task<D> GetAsync<D, TId>(TId userId) where D : IEntity<TId> where TId : notnull
 		{
 			return await _context.Users.AsNoTracking()
 				.ProjectTo<D>(_mapper.ConfigurationProvider)
-				.FirstAsync() ?? throw new BusinessException(HttpStatusCode.NoContent, "User is not found");
+				.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NoContent, "User is not found");
 		}
 
 		public async Task<int> GetCountAsync()

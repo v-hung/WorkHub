@@ -2,8 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WorkTimeTracker.Server.Models.Audit;
 
-public abstract class Entity<TId>
+public abstract class Entity<TId> : IEntity<TId>
 {
 	[Required]
-	public required TId Id { get; set; }
+	public TId Id { get; set; }
 }

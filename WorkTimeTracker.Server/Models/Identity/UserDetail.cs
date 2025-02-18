@@ -1,11 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WorkTimeTracker.Server.Models.Audit;
 
 namespace WorkTimeTracker.Server.Models.Identity
 {
-	public class UserDetail
+	public class UserDetail : Entity<int>
 	{
-		public int Id { get; set; }
 
 		public DateTime BirthDate { get; set; }
 

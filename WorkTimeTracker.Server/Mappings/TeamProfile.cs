@@ -8,7 +8,9 @@ namespace WorkTimeTracker.Server.Mappings
 	{
 		public TeamProfile()
 		{
+			CreateMap<Team, TeamMinimalDto>().ReverseMap();
 			CreateMap<Team, TeamDto>().ReverseMap();
+			CreateMap<Team, TeamFullDto>().ReverseMap();
 		}
 	}
 }

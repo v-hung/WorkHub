@@ -8,6 +8,7 @@ namespace WorkTimeTracker.Server.Mappings
 	{
 		public ProjectProfile()
 		{
+			CreateMap<Project, ProjectMinimalDto>().ReverseMap();
 			CreateMap<Project, ProjectDto>().ReverseMap();
 		}
 	}

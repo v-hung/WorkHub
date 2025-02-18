@@ -1,14 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Models.Enums;
 using WorkTimeTracker.Server.Models.Identity;
 
 namespace WorkTimeTracker.Server.Models.Requests
 {
-	public abstract class Request
+	public abstract class Request : Entity<int>
 	{
-
-		public int Id { get; set; }
 
 		[Required]
 		public RequestType RequestType { get; set; }
@@ -21,7 +20,7 @@ namespace WorkTimeTracker.Server.Models.Requests
 
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-		// Navigation
+		// Navigation properties
 
 		[ForeignKey("User")]
 		public Guid? UserId { get; set; }

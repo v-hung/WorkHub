@@ -1,4 +1,5 @@
 using WorkTimeTracker.Server.Dto.User;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Requests;
 using WorkTimeTracker.Server.Requests.Identity;
 using WorkTimeTracker.Server.Wrapper;
@@ -15,7 +16,7 @@ namespace WorkTimeTracker.Server.Interfaces.Services
 
 		Task<int> GetCountAsync();
 
-		Task<D> GetAsync<D>(Guid userId) where D : class;
+		Task<D> GetAsync<D, TId>(TId userId) where D : IEntity<TId> where TId : notnull;
 
 		Task<D> CreateAsync<D>(UserCreateUpdateRequest request) where D : class;
 

@@ -7,8 +7,6 @@ namespace WorkTimeTracker.Server.Dto.User
 	{
 		public UserDetailDto? UserDetail { get; set; }
 
-		public IList<TeamDto> ManagerTeams { get; set; } = [];
-
-		public IList<ProjectDto> ManagerProjects { get; set; } = [];
+		public IList<TeamMinimalDto> ManagerTeams { get; set; } = [];
 	}
 }

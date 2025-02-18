@@ -6,6 +6,7 @@ export const useUsers = () => {
   const [loading, setLoading] = useState(false);
 
   // GET LIST USER
+  // =============
 
   const [users, setUsers] = useState<UserDtoPaginated>({
     data: [],
@@ -36,6 +37,7 @@ export const useUsers = () => {
   }, [request]);
 
   // GET USER BY ID
+  // ==============
 
   const [user, setUser] = useState<UserDto | null>();
 

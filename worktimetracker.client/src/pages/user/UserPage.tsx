@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import UserTable from "@/features/user/components/UserTable/UserTable";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 
-export const loader = wrapLoaderWithPermission(async () => {});
+export const loader = wrapLoaderWithPermission();
 
 export function Component() {
   const navigate = useNavigate();
