@@ -10,14 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { TeamMinimalDto } from '../models/TeamMinimalDto';
-import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
-import { WorkTimeDto } from '../models/WorkTimeDto';
 import { HttpFile } from '../http/http';
 
-export class UserDto {
+export class UserMinimalDto {
     'id': string;
     'email': string;
     'fullName': string;
@@ -25,15 +22,6 @@ export class UserDto {
     'image'?: string | null;
     'userPosition': UserPosition;
     'userStatus': UserStatus;
-    'isFirstLogin': boolean;
-    'leaveHours': number;
-    'createdAt': Date;
-    'updatedAt'?: Date | null;
-    'createdBy'?: string | null;
-    'lastModifiedBy'?: string | null;
-    'workTime'?: WorkTimeDto;
-    'supervisor'?: UserMinimalDto;
-    'team'?: TeamMinimalDto;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -81,64 +69,10 @@ export class UserDto {
             "baseName": "userStatus",
             "type": "UserStatus",
             "format": ""
-        },
-        {
-            "name": "isFirstLogin",
-            "baseName": "isFirstLogin",
-            "type": "boolean",
-            "format": ""
-        },
-        {
-            "name": "leaveHours",
-            "baseName": "leaveHours",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "createdAt",
-            "baseName": "createdAt",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "updatedAt",
-            "baseName": "updatedAt",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "createdBy",
-            "baseName": "createdBy",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "lastModifiedBy",
-            "baseName": "lastModifiedBy",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "workTime",
-            "baseName": "workTime",
-            "type": "WorkTimeDto",
-            "format": ""
-        },
-        {
-            "name": "supervisor",
-            "baseName": "supervisor",
-            "type": "UserMinimalDto",
-            "format": ""
-        },
-        {
-            "name": "team",
-            "baseName": "team",
-            "type": "TeamMinimalDto",
-            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return UserDto.attributeTypeMap;
+        return UserMinimalDto.attributeTypeMap;
     }
 
     public constructor() {

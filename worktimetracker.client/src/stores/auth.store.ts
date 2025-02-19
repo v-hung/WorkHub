@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthState>()(
       //   user: USER,
       // });
 
-      const response = await accountApi.apiIdentityLoginPost(credentials);
+      const response = await accountApi.accountLogin(credentials);
       set({ user: response.user });
     },
 
@@ -42,8 +42,7 @@ export const useAuthStore = create<AuthState>()(
       // });
 
       try {
-        const user =
-          await accountApiWithRefreshToken.apiIdentityCurrentUserGet();
+        const user = await accountApiWithRefreshToken.accountGetCurrentUser();
 
         set({ user });
       } catch (error) {
@@ -51,12 +50,6 @@ export const useAuthStore = create<AuthState>()(
       }
     },
   }))
-  //   {
-  //     name: "auth-storage",
-  //     storage: createJSONStorage(() => localStorage),
-  //     partialize: (state) => ({ token: state.token }),
-  //   }
-  // )
 );
 
 const USER = {

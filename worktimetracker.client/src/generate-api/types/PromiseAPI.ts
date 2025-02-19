@@ -7,11 +7,13 @@ import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Permission } from '../models/Permission';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { TeamDto } from '../models/TeamDto';
+import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
+import { UserFullDto } from '../models/UserFullDto';
+import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
 import { WorkTimeDto } from '../models/WorkTimeDto';
@@ -32,74 +34,74 @@ export class PromiseAccountApi {
     /**
      * @param [changePasswordRequest]
      */
-    public apiIdentityChangePasswordPostWithHttpInfo(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.apiIdentityChangePasswordPostWithHttpInfo(changePasswordRequest, _options);
+    public accountChangePasswordWithHttpInfo(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.accountChangePasswordWithHttpInfo(changePasswordRequest, _options);
         return result.toPromise();
     }
 
     /**
      * @param [changePasswordRequest]
      */
-    public apiIdentityChangePasswordPost(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<void> {
-        const result = this.api.apiIdentityChangePasswordPost(changePasswordRequest, _options);
+    public accountChangePassword(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<void> {
+        const result = this.api.accountChangePassword(changePasswordRequest, _options);
         return result.toPromise();
     }
 
     /**
      */
-    public apiIdentityCurrentUserGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<UserDto>> {
-        const result = this.api.apiIdentityCurrentUserGetWithHttpInfo(_options);
+    public accountGetCurrentUserWithHttpInfo(_options?: Configuration): Promise<HttpInfo<UserDto>> {
+        const result = this.api.accountGetCurrentUserWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
      */
-    public apiIdentityCurrentUserGet(_options?: Configuration): Promise<UserDto> {
-        const result = this.api.apiIdentityCurrentUserGet(_options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param [loginRequest]
-     */
-    public apiIdentityLoginPostWithHttpInfo(loginRequest?: LoginRequest, _options?: Configuration): Promise<HttpInfo<LoginResponse>> {
-        const result = this.api.apiIdentityLoginPostWithHttpInfo(loginRequest, _options);
+    public accountGetCurrentUser(_options?: Configuration): Promise<UserDto> {
+        const result = this.api.accountGetCurrentUser(_options);
         return result.toPromise();
     }
 
     /**
      * @param [loginRequest]
      */
-    public apiIdentityLoginPost(loginRequest?: LoginRequest, _options?: Configuration): Promise<LoginResponse> {
-        const result = this.api.apiIdentityLoginPost(loginRequest, _options);
+    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: Configuration): Promise<HttpInfo<LoginResponse>> {
+        const result = this.api.accountLoginWithHttpInfo(loginRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [loginRequest]
+     */
+    public accountLogin(loginRequest?: LoginRequest, _options?: Configuration): Promise<LoginResponse> {
+        const result = this.api.accountLogin(loginRequest, _options);
         return result.toPromise();
     }
 
     /**
      */
-    public apiIdentityLogoutPostWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.apiIdentityLogoutPostWithHttpInfo(_options);
+    public accountLogoutWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.accountLogoutWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
      */
-    public apiIdentityLogoutPost(_options?: Configuration): Promise<void> {
-        const result = this.api.apiIdentityLogoutPost(_options);
+    public accountLogout(_options?: Configuration): Promise<void> {
+        const result = this.api.accountLogout(_options);
         return result.toPromise();
     }
 
     /**
      */
-    public apiIdentityRefreshTokenPostWithHttpInfo(_options?: Configuration): Promise<HttpInfo<RefreshTokenResponse>> {
-        const result = this.api.apiIdentityRefreshTokenPostWithHttpInfo(_options);
+    public accountRefreshTokenWithHttpInfo(_options?: Configuration): Promise<HttpInfo<RefreshTokenResponse>> {
+        const result = this.api.accountRefreshTokenWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
      */
-    public apiIdentityRefreshTokenPost(_options?: Configuration): Promise<RefreshTokenResponse> {
-        const result = this.api.apiIdentityRefreshTokenPost(_options);
+    public accountRefreshToken(_options?: Configuration): Promise<RefreshTokenResponse> {
+        const result = this.api.accountRefreshToken(_options);
         return result.toPromise();
     }
 
@@ -123,14 +125,46 @@ export class PromiseUserApi {
     }
 
     /**
+     * @param [userCreateUpdateRequest]
+     */
+    public userCreateWithHttpInfo(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<HttpInfo<UserDto>> {
+        const result = this.api.userCreateWithHttpInfo(userCreateUpdateRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [userCreateUpdateRequest]
+     */
+    public userCreate(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<UserDto> {
+        const result = this.api.userCreate(userCreateUpdateRequest, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public userDeleteWithHttpInfo(id: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.userDeleteWithHttpInfo(id, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public userDelete(id: string, _options?: Configuration): Promise<void> {
+        const result = this.api.userDelete(id, _options);
+        return result.toPromise();
+    }
+
+    /**
      * @param pageNumber
      * @param pageSize
      * @param [searchString]
      * @param [orderBy]
      * @param [orderByString]
      */
-    public apiUsersGetWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Promise<HttpInfo<UserDtoPaginated>> {
-        const result = this.api.apiUsersGetWithHttpInfo(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
+    public userGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Promise<HttpInfo<UserDtoPaginated>> {
+        const result = this.api.userGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
         return result.toPromise();
     }
 
@@ -141,33 +175,24 @@ export class PromiseUserApi {
      * @param [orderBy]
      * @param [orderByString]
      */
-    public apiUsersGet(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Promise<UserDtoPaginated> {
-        const result = this.api.apiUsersGet(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
+    public userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Promise<UserDtoPaginated> {
+        const result = this.api.userGetAll(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public apiUsersIdDeleteWithHttpInfo(id: string, _options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.apiUsersIdDeleteWithHttpInfo(id, _options);
+    public userGetByIdWithHttpInfo(id: string, _options?: Configuration): Promise<HttpInfo<UserFullDto>> {
+        const result = this.api.userGetByIdWithHttpInfo(id, _options);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public apiUsersIdDelete(id: string, _options?: Configuration): Promise<void> {
-        const result = this.api.apiUsersIdDelete(id, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param id
-     * @param [userCreateUpdateRequest]
-     */
-    public apiUsersIdPostWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<HttpInfo<UserDto>> {
-        const result = this.api.apiUsersIdPostWithHttpInfo(id, userCreateUpdateRequest, _options);
+    public userGetById(id: string, _options?: Configuration): Promise<UserFullDto> {
+        const result = this.api.userGetById(id, _options);
         return result.toPromise();
     }
 
@@ -175,24 +200,17 @@ export class PromiseUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public apiUsersIdPost(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<UserDto> {
-        const result = this.api.apiUsersIdPost(id, userCreateUpdateRequest, _options);
+    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<HttpInfo<UserDto>> {
+        const result = this.api.userUpdateWithHttpInfo(id, userCreateUpdateRequest, _options);
         return result.toPromise();
     }
 
     /**
+     * @param id
      * @param [userCreateUpdateRequest]
      */
-    public apiUsersPostWithHttpInfo(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<HttpInfo<UserDto>> {
-        const result = this.api.apiUsersPostWithHttpInfo(userCreateUpdateRequest, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param [userCreateUpdateRequest]
-     */
-    public apiUsersPost(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<UserDto> {
-        const result = this.api.apiUsersPost(userCreateUpdateRequest, _options);
+    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<UserDto> {
+        const result = this.api.userUpdate(id, userCreateUpdateRequest, _options);
         return result.toPromise();
     }
 

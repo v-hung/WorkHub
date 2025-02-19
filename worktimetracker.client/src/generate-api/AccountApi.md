@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiIdentityChangePasswordPost**](AccountApi.md#apiIdentityChangePasswordPost) | **POST** /api/identity/change-password | 
-[**apiIdentityCurrentUserGet**](AccountApi.md#apiIdentityCurrentUserGet) | **GET** /api/identity/current-user | 
-[**apiIdentityLoginPost**](AccountApi.md#apiIdentityLoginPost) | **POST** /api/identity/login | 
-[**apiIdentityLogoutPost**](AccountApi.md#apiIdentityLogoutPost) | **POST** /api/identity/logout | 
-[**apiIdentityRefreshTokenPost**](AccountApi.md#apiIdentityRefreshTokenPost) | **POST** /api/identity/refresh-token | 
+[**accountChangePassword**](AccountApi.md#accountChangePassword) | **POST** /api/identity/change-password | 
+[**accountGetCurrentUser**](AccountApi.md#accountGetCurrentUser) | **GET** /api/identity/current-user | 
+[**accountLogin**](AccountApi.md#accountLogin) | **POST** /api/identity/login | 
+[**accountLogout**](AccountApi.md#accountLogout) | **POST** /api/identity/logout | 
+[**accountRefreshToken**](AccountApi.md#accountRefreshToken) | **POST** /api/identity/refresh-token | 
 
 
-# **apiIdentityChangePasswordPost**
-> void apiIdentityChangePasswordPost()
+# **accountChangePassword**
+> void accountChangePassword()
 
 
 ### Example
@@ -20,12 +20,12 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, AccountApi } from '';
-import type { AccountApiApiIdentityChangePasswordPostRequest } from '';
+import type { AccountApiAccountChangePasswordRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new AccountApi(configuration);
 
-const request: AccountApiApiIdentityChangePasswordPostRequest = {
+const request: AccountApiAccountChangePasswordRequest = {
   
   changePasswordRequest: {
     password: "password_example",
@@ -33,7 +33,7 @@ const request: AccountApiApiIdentityChangePasswordPostRequest = {
   },
 };
 
-const data = await apiInstance.apiIdentityChangePasswordPost(request);
+const data = await apiInstance.accountChangePassword(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -67,8 +67,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityCurrentUserGet**
-> UserDto apiIdentityCurrentUserGet()
+# **accountGetCurrentUser**
+> UserDto accountGetCurrentUser()
 
 
 ### Example
@@ -82,7 +82,7 @@ const apiInstance = new AccountApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.apiIdentityCurrentUserGet(request);
+const data = await apiInstance.accountGetCurrentUser(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -113,8 +113,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityLoginPost**
-> LoginResponse apiIdentityLoginPost()
+# **accountLogin**
+> LoginResponse accountLogin()
 
 
 ### Example
@@ -122,12 +122,12 @@ This endpoint does not need any parameter.
 
 ```typescript
 import { createConfiguration, AccountApi } from '';
-import type { AccountApiApiIdentityLoginPostRequest } from '';
+import type { AccountApiAccountLoginRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new AccountApi(configuration);
 
-const request: AccountApiApiIdentityLoginPostRequest = {
+const request: AccountApiAccountLoginRequest = {
   
   loginRequest: {
     email: "email_example",
@@ -138,7 +138,7 @@ const request: AccountApiApiIdentityLoginPostRequest = {
   },
 };
 
-const data = await apiInstance.apiIdentityLoginPost(request);
+const data = await apiInstance.accountLogin(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -172,8 +172,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityLogoutPost**
-> void apiIdentityLogoutPost()
+# **accountLogout**
+> void accountLogout()
 
 
 ### Example
@@ -187,7 +187,7 @@ const apiInstance = new AccountApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.apiIdentityLogoutPost(request);
+const data = await apiInstance.accountLogout(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -218,8 +218,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityRefreshTokenPost**
-> RefreshTokenResponse apiIdentityRefreshTokenPost()
+# **accountRefreshToken**
+> RefreshTokenResponse accountRefreshToken()
 
 
 ### Example
@@ -233,7 +233,7 @@ const apiInstance = new AccountApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.apiIdentityRefreshTokenPost(request);
+const data = await apiInstance.accountRefreshToken(request);
 console.log('API called successfully. Returned data:', data);
 ```
 

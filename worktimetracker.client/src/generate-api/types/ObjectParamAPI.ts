@@ -7,11 +7,13 @@ import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Permission } from '../models/Permission';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { TeamDto } from '../models/TeamDto';
+import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
+import { UserFullDto } from '../models/UserFullDto';
+import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
 import { WorkTimeDto } from '../models/WorkTimeDto';
@@ -19,31 +21,31 @@ import { WorkTimeDto } from '../models/WorkTimeDto';
 import { ObservableAccountApi } from "./ObservableAPI";
 import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
 
-export interface AccountApiApiIdentityChangePasswordPostRequest {
+export interface AccountApiAccountChangePasswordRequest {
     /**
      * 
      * @type ChangePasswordRequest
-     * @memberof AccountApiapiIdentityChangePasswordPost
+     * @memberof AccountApiaccountChangePassword
      */
     changePasswordRequest?: ChangePasswordRequest
 }
 
-export interface AccountApiApiIdentityCurrentUserGetRequest {
+export interface AccountApiAccountGetCurrentUserRequest {
 }
 
-export interface AccountApiApiIdentityLoginPostRequest {
+export interface AccountApiAccountLoginRequest {
     /**
      * 
      * @type LoginRequest
-     * @memberof AccountApiapiIdentityLoginPost
+     * @memberof AccountApiaccountLogin
      */
     loginRequest?: LoginRequest
 }
 
-export interface AccountApiApiIdentityLogoutPostRequest {
+export interface AccountApiAccountLogoutRequest {
 }
 
-export interface AccountApiApiIdentityRefreshTokenPostRequest {
+export interface AccountApiAccountRefreshTokenRequest {
 }
 
 export class ObjectAccountApi {
@@ -56,71 +58,71 @@ export class ObjectAccountApi {
     /**
      * @param param the request object
      */
-    public apiIdentityChangePasswordPostWithHttpInfo(param: AccountApiApiIdentityChangePasswordPostRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
-        return this.api.apiIdentityChangePasswordPostWithHttpInfo(param.changePasswordRequest,  options).toPromise();
+    public accountChangePasswordWithHttpInfo(param: AccountApiAccountChangePasswordRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.accountChangePasswordWithHttpInfo(param.changePasswordRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityChangePasswordPost(param: AccountApiApiIdentityChangePasswordPostRequest = {}, options?: Configuration): Promise<void> {
-        return this.api.apiIdentityChangePasswordPost(param.changePasswordRequest,  options).toPromise();
+    public accountChangePassword(param: AccountApiAccountChangePasswordRequest = {}, options?: Configuration): Promise<void> {
+        return this.api.accountChangePassword(param.changePasswordRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityCurrentUserGetWithHttpInfo(param: AccountApiApiIdentityCurrentUserGetRequest = {}, options?: Configuration): Promise<HttpInfo<UserDto>> {
-        return this.api.apiIdentityCurrentUserGetWithHttpInfo( options).toPromise();
+    public accountGetCurrentUserWithHttpInfo(param: AccountApiAccountGetCurrentUserRequest = {}, options?: Configuration): Promise<HttpInfo<UserDto>> {
+        return this.api.accountGetCurrentUserWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityCurrentUserGet(param: AccountApiApiIdentityCurrentUserGetRequest = {}, options?: Configuration): Promise<UserDto> {
-        return this.api.apiIdentityCurrentUserGet( options).toPromise();
+    public accountGetCurrentUser(param: AccountApiAccountGetCurrentUserRequest = {}, options?: Configuration): Promise<UserDto> {
+        return this.api.accountGetCurrentUser( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLoginPostWithHttpInfo(param: AccountApiApiIdentityLoginPostRequest = {}, options?: Configuration): Promise<HttpInfo<LoginResponse>> {
-        return this.api.apiIdentityLoginPostWithHttpInfo(param.loginRequest,  options).toPromise();
+    public accountLoginWithHttpInfo(param: AccountApiAccountLoginRequest = {}, options?: Configuration): Promise<HttpInfo<LoginResponse>> {
+        return this.api.accountLoginWithHttpInfo(param.loginRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLoginPost(param: AccountApiApiIdentityLoginPostRequest = {}, options?: Configuration): Promise<LoginResponse> {
-        return this.api.apiIdentityLoginPost(param.loginRequest,  options).toPromise();
+    public accountLogin(param: AccountApiAccountLoginRequest = {}, options?: Configuration): Promise<LoginResponse> {
+        return this.api.accountLogin(param.loginRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLogoutPostWithHttpInfo(param: AccountApiApiIdentityLogoutPostRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
-        return this.api.apiIdentityLogoutPostWithHttpInfo( options).toPromise();
+    public accountLogoutWithHttpInfo(param: AccountApiAccountLogoutRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.accountLogoutWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLogoutPost(param: AccountApiApiIdentityLogoutPostRequest = {}, options?: Configuration): Promise<void> {
-        return this.api.apiIdentityLogoutPost( options).toPromise();
+    public accountLogout(param: AccountApiAccountLogoutRequest = {}, options?: Configuration): Promise<void> {
+        return this.api.accountLogout( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityRefreshTokenPostWithHttpInfo(param: AccountApiApiIdentityRefreshTokenPostRequest = {}, options?: Configuration): Promise<HttpInfo<RefreshTokenResponse>> {
-        return this.api.apiIdentityRefreshTokenPostWithHttpInfo( options).toPromise();
+    public accountRefreshTokenWithHttpInfo(param: AccountApiAccountRefreshTokenRequest = {}, options?: Configuration): Promise<HttpInfo<RefreshTokenResponse>> {
+        return this.api.accountRefreshTokenWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityRefreshTokenPost(param: AccountApiApiIdentityRefreshTokenPostRequest = {}, options?: Configuration): Promise<RefreshTokenResponse> {
-        return this.api.apiIdentityRefreshTokenPost( options).toPromise();
+    public accountRefreshToken(param: AccountApiAccountRefreshTokenRequest = {}, options?: Configuration): Promise<RefreshTokenResponse> {
+        return this.api.accountRefreshToken( options).toPromise();
     }
 
 }
@@ -128,14 +130,33 @@ export class ObjectAccountApi {
 import { ObservableUserApi } from "./ObservableAPI";
 import { UserApiRequestFactory, UserApiResponseProcessor} from "../apis/UserApi";
 
-export interface UserApiApiUsersGetRequest {
+export interface UserApiUserCreateRequest {
+    /**
+     * 
+     * @type UserCreateUpdateRequest
+     * @memberof UserApiuserCreate
+     */
+    userCreateUpdateRequest?: UserCreateUpdateRequest
+}
+
+export interface UserApiUserDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof UserApiuserDelete
+     */
+    id: string
+}
+
+export interface UserApiUserGetAllRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserGetAll
      */
     pageNumber: number
     /**
@@ -144,63 +165,54 @@ export interface UserApiApiUsersGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserGetAll
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserGetAll
      */
     searchString?: string
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserGetAll
      */
     orderBy?: Array<string>
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserGetAll
      */
     orderByString?: string
 }
 
-export interface UserApiApiUsersIdDeleteRequest {
+export interface UserApiUserGetByIdRequest {
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof UserApiapiUsersIdDelete
+     * @memberof UserApiuserGetById
      */
     id: string
 }
 
-export interface UserApiApiUsersIdPostRequest {
+export interface UserApiUserUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof UserApiapiUsersIdPost
+     * @memberof UserApiuserUpdate
      */
     id: string
     /**
      * 
      * @type UserCreateUpdateRequest
-     * @memberof UserApiapiUsersIdPost
-     */
-    userCreateUpdateRequest?: UserCreateUpdateRequest
-}
-
-export interface UserApiApiUsersPostRequest {
-    /**
-     * 
-     * @type UserCreateUpdateRequest
-     * @memberof UserApiapiUsersPost
+     * @memberof UserApiuserUpdate
      */
     userCreateUpdateRequest?: UserCreateUpdateRequest
 }
@@ -215,57 +227,71 @@ export class ObjectUserApi {
     /**
      * @param param the request object
      */
-    public apiUsersGetWithHttpInfo(param: UserApiApiUsersGetRequest, options?: Configuration): Promise<HttpInfo<UserDtoPaginated>> {
-        return this.api.apiUsersGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy, param.orderByString,  options).toPromise();
+    public userCreateWithHttpInfo(param: UserApiUserCreateRequest = {}, options?: Configuration): Promise<HttpInfo<UserDto>> {
+        return this.api.userCreateWithHttpInfo(param.userCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersGet(param: UserApiApiUsersGetRequest, options?: Configuration): Promise<UserDtoPaginated> {
-        return this.api.apiUsersGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy, param.orderByString,  options).toPromise();
+    public userCreate(param: UserApiUserCreateRequest = {}, options?: Configuration): Promise<UserDto> {
+        return this.api.userCreate(param.userCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdDeleteWithHttpInfo(param: UserApiApiUsersIdDeleteRequest, options?: Configuration): Promise<HttpInfo<void>> {
-        return this.api.apiUsersIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public userDeleteWithHttpInfo(param: UserApiUserDeleteRequest, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.userDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdDelete(param: UserApiApiUsersIdDeleteRequest, options?: Configuration): Promise<void> {
-        return this.api.apiUsersIdDelete(param.id,  options).toPromise();
+    public userDelete(param: UserApiUserDeleteRequest, options?: Configuration): Promise<void> {
+        return this.api.userDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdPostWithHttpInfo(param: UserApiApiUsersIdPostRequest, options?: Configuration): Promise<HttpInfo<UserDto>> {
-        return this.api.apiUsersIdPostWithHttpInfo(param.id, param.userCreateUpdateRequest,  options).toPromise();
+    public userGetAllWithHttpInfo(param: UserApiUserGetAllRequest, options?: Configuration): Promise<HttpInfo<UserDtoPaginated>> {
+        return this.api.userGetAllWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy, param.orderByString,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdPost(param: UserApiApiUsersIdPostRequest, options?: Configuration): Promise<UserDto> {
-        return this.api.apiUsersIdPost(param.id, param.userCreateUpdateRequest,  options).toPromise();
+    public userGetAll(param: UserApiUserGetAllRequest, options?: Configuration): Promise<UserDtoPaginated> {
+        return this.api.userGetAll(param.pageNumber, param.pageSize, param.searchString, param.orderBy, param.orderByString,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersPostWithHttpInfo(param: UserApiApiUsersPostRequest = {}, options?: Configuration): Promise<HttpInfo<UserDto>> {
-        return this.api.apiUsersPostWithHttpInfo(param.userCreateUpdateRequest,  options).toPromise();
+    public userGetByIdWithHttpInfo(param: UserApiUserGetByIdRequest, options?: Configuration): Promise<HttpInfo<UserFullDto>> {
+        return this.api.userGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersPost(param: UserApiApiUsersPostRequest = {}, options?: Configuration): Promise<UserDto> {
-        return this.api.apiUsersPost(param.userCreateUpdateRequest,  options).toPromise();
+    public userGetById(param: UserApiUserGetByIdRequest, options?: Configuration): Promise<UserFullDto> {
+        return this.api.userGetById(param.id,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public userUpdateWithHttpInfo(param: UserApiUserUpdateRequest, options?: Configuration): Promise<HttpInfo<UserDto>> {
+        return this.api.userUpdateWithHttpInfo(param.id, param.userCreateUpdateRequest,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public userUpdate(param: UserApiUserUpdateRequest, options?: Configuration): Promise<UserDto> {
+        return this.api.userUpdate(param.id, param.userCreateUpdateRequest,  options).toPromise();
     }
 
 }

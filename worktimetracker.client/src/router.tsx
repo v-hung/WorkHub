@@ -27,6 +27,10 @@ const router = createBrowserRouter([
             path: ":id/edit",
             lazy: () => import("./pages/user/UserCreateUpdatePage"),
           },
+          {
+            path: ":id",
+            lazy: () => import("./pages/user/UserDetailPage"),
+          },
         ],
       },
     ],

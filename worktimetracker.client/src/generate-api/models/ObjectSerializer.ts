@@ -4,11 +4,13 @@ export * from '../models/LoginRequest';
 export * from '../models/LoginResponse';
 export * from '../models/Permission';
 export * from '../models/RefreshTokenResponse';
-export * from '../models/TeamDto';
+export * from '../models/TeamMinimalDto';
 export * from '../models/UserCreateUpdateRequest';
 export * from '../models/UserDetailDto';
 export * from '../models/UserDto';
 export * from '../models/UserDtoPaginated';
+export * from '../models/UserFullDto';
+export * from '../models/UserMinimalDto';
 export * from '../models/UserPosition';
 export * from '../models/UserStatus';
 export * from '../models/WorkTimeDto';
@@ -19,11 +21,13 @@ import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Permission } from '../models/Permission';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { TeamDto } from '../models/TeamDto';
+import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest                  } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto                 } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
+import { UserFullDto                   } from '../models/UserFullDto';
+import { UserMinimalDto        } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
 import { WorkTimeDto } from '../models/WorkTimeDto';
@@ -52,11 +56,13 @@ let typeMap: {[index: string]: any} = {
     "LoginRequest": LoginRequest,
     "LoginResponse": LoginResponse,
     "RefreshTokenResponse": RefreshTokenResponse,
-    "TeamDto": TeamDto,
+    "TeamMinimalDto": TeamMinimalDto,
     "UserCreateUpdateRequest": UserCreateUpdateRequest,
     "UserDetailDto": UserDetailDto,
     "UserDto": UserDto,
     "UserDtoPaginated": UserDtoPaginated,
+    "UserFullDto": UserFullDto,
+    "UserMinimalDto": UserMinimalDto,
     "WorkTimeDto": WorkTimeDto,
 }
 

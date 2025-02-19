@@ -6,7 +6,6 @@ import {
 import { from, Observable } from "@/generate-api/rxjsStub";
 import "whatwg-fetch";
 import { accountApi } from "./apiClient";
-import router from "@/router";
 import { notification } from "antd";
 import { useAuthStore } from "@/stores/auth.store";
 import i18n from "@/common/utils/i18n";
@@ -44,7 +43,7 @@ export class FetchHttpLibrary implements HttpLibrary {
 
     if (this.enableRefreshToken && resp.status === 401 && !isRetry) {
       try {
-        await accountApi.apiIdentityRefreshTokenPost();
+        await accountApi.accountRefreshToken();
         return this.handleRequest(request, true);
       } catch (e) {
         useAuthStore.getState().logout();
@@ -61,9 +60,3 @@ export class FetchHttpLibrary implements HttpLibrary {
     return from(this.handleRequest(request));
   }
 }
-
-const getRedirectUrl = () => {
-  const currentUrl = new URL(window.location.href);
-  const redirectUrl = currentUrl.searchParams.get("redirectUrl") || "/";
-  return redirectUrl;
-};

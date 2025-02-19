@@ -28,7 +28,7 @@ public class UserController : BaseApiController<UserController>
 	}
 
 	[HttpGet("{id}")]
-	public async Task<ActionResult<Paginated<UserFullDto>>> GetById(Guid id)
+	public async Task<ActionResult<UserFullDto>> GetById(Guid id)
 	{
 		var user = await _userService.GetAsync<UserFullDto, Guid>(id);
 		return Ok(user);

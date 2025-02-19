@@ -4,14 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiUsersGet**](UserApi.md#apiUsersGet) | **GET** /api/users | 
-[**apiUsersIdDelete**](UserApi.md#apiUsersIdDelete) | **DELETE** /api/users/{id} | 
-[**apiUsersIdPost**](UserApi.md#apiUsersIdPost) | **POST** /api/users/{id} | 
-[**apiUsersPost**](UserApi.md#apiUsersPost) | **POST** /api/users | 
+[**userCreate**](UserApi.md#userCreate) | **POST** /api/users | 
+[**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
+[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users | 
+[**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
+[**userUpdate**](UserApi.md#userUpdate) | **POST** /api/users/{id} | 
 
 
-# **apiUsersGet**
-> UserDtoPaginated apiUsersGet()
+# **userCreate**
+> UserDto userCreate()
 
 
 ### Example
@@ -19,12 +20,150 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersGetRequest } from '';
+import type { UserApiUserCreateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new UserApi(configuration);
 
-const request: UserApiApiUsersGetRequest = {
+const request: UserApiUserCreateRequest = {
+  
+  userCreateUpdateRequest: {
+    fullName: "fullName_example",
+    image: "image_example",
+    userPosition: "Administrator",
+    isFirstLogin: true,
+    leaveHours: 1,
+    userStatus: "ACTIVE",
+    createdAt: new Date('1970-01-01T00:00:00.00Z'),
+    updatedAt: new Date('1970-01-01T00:00:00.00Z'),
+    createdBy: "createdBy_example",
+    lastModifiedBy: "lastModifiedBy_example",
+    workTimeId: 1,
+    userDetail: {
+      id: 1,
+      birthDate: new Date('1970-01-01T00:00:00.00Z'),
+      phone: "phone_example",
+      gender: true,
+      permanentAddress: "permanentAddress_example",
+      contactAddress: "contactAddress_example",
+      yearsOfWork: 1,
+    },
+    supervisorId: "supervisorId_example",
+    teamId: 1,
+    managerTeamIds: [
+      1,
+    ],
+    managerProjectIds: [
+      1,
+    ],
+    roleNames: [
+      "roleNames_example",
+    ],
+  },
+};
+
+const data = await apiInstance.userCreate(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+
+
+### Return type
+
+**UserDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **userDelete**
+> void userDelete()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+import type { UserApiUserDeleteRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request: UserApiUserDeleteRequest = {
+  
+  id: "id_example",
+};
+
+const data = await apiInstance.userDelete(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **userGetAll**
+> UserDtoPaginated userGetAll()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+import type { UserApiUserGetAllRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request: UserApiUserGetAllRequest = {
   
   pageNumber: 1,
   
@@ -39,7 +178,7 @@ const request: UserApiApiUsersGetRequest = {
   orderByString: "OrderByString_example",
 };
 
-const data = await apiInstance.apiUsersGet(request);
+const data = await apiInstance.userGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -77,8 +216,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiUsersIdDelete**
-> void apiUsersIdDelete()
+# **userGetById**
+> UserFullDto userGetById()
 
 
 ### Example
@@ -86,17 +225,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersIdDeleteRequest } from '';
+import type { UserApiUserGetByIdRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new UserApi(configuration);
 
-const request: UserApiApiUsersIdDeleteRequest = {
+const request: UserApiUserGetByIdRequest = {
   
   id: "id_example",
 };
 
-const data = await apiInstance.apiUsersIdDelete(request);
+const data = await apiInstance.userGetById(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -110,7 +249,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**void**
+**UserFullDto**
 
 ### Authorization
 
@@ -119,94 +258,6 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiUsersIdPost**
-> UserDto apiUsersIdPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersIdPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
-
-const request: UserApiApiUsersIdPostRequest = {
-  
-  id: "id_example",
-  
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    isFirstLogin: true,
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    createdAt: new Date('1970-01-01T00:00:00.00Z'),
-    updatedAt: new Date('1970-01-01T00:00:00.00Z'),
-    createdBy: "createdBy_example",
-    lastModifiedBy: "lastModifiedBy_example",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      phone: "phone_example",
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
-    teamId: 1,
-    managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
-      1,
-    ],
-    roleNames: [
-      "roleNames_example",
-    ],
-  },
-};
-
-const data = await apiInstance.apiUsersIdPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
- **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**UserDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
  - **Accept**: text/plain, application/json, text/json
 
 
@@ -218,8 +269,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiUsersPost**
-> UserDto apiUsersPost()
+# **userUpdate**
+> UserDto userUpdate()
 
 
 ### Example
@@ -227,12 +278,14 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersPostRequest } from '';
+import type { UserApiUserUpdateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new UserApi(configuration);
 
-const request: UserApiApiUsersPostRequest = {
+const request: UserApiUserUpdateRequest = {
+  
+  id: "id_example",
   
   userCreateUpdateRequest: {
     fullName: "fullName_example",
@@ -269,7 +322,7 @@ const request: UserApiApiUsersPostRequest = {
   },
 };
 
-const data = await apiInstance.apiUsersPost(request);
+const data = await apiInstance.userUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -279,6 +332,7 @@ console.log('API called successfully. Returned data:', data);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **id** | [**string**] |  | defaults to undefined
 
 
 ### Return type

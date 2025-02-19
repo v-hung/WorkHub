@@ -82,17 +82,17 @@ static class ServiceCollectionExtensions
 			options.Events = new JwtBearerEvents
 			{
 				OnMessageReceived = context =>
+					{
+						var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+						if (string.IsNullOrEmpty(token))
 						{
-							var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
-							if (string.IsNullOrEmpty(token))
-							{
-								token = context.Request.Cookies["token"];
-							}
-
-							context.Token = token;
-							return Task.CompletedTask;
+							token = context.Request.Cookies["token"];
 						}
+
+						context.Token = token;
+						return Task.CompletedTask;
+					}
 			};
 		});
 
@@ -149,6 +149,8 @@ static class ServiceCollectionExtensions
 					new List<string>()
 				}
 			});
+
+			c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.ActionDescriptor.RouteValues["action"]}");
 
 			c.OperationFilter<AddErrorResponse500>();
 			c.SchemaFilter<PermissionSchema>();

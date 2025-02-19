@@ -1,5 +1,7 @@
+import { getMessageError } from "@/common/utils/error";
 import { UserDto, UserDtoPaginated } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
+import { notification } from "antd";
 import { useCallback, useState } from "react";
 
 export const useUsers = () => {
@@ -26,11 +28,15 @@ export const useUsers = () => {
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await userApi.apiUsersGet(
+      const data = await userApi.userGetAll(
         request.pageNumber,
         request.pageSize
       );
       setUsers(data);
+    } catch (e) {
+      notification.error({
+        message: getMessageError(e),
+      });
     } finally {
       setLoading(false);
     }
@@ -41,18 +47,19 @@ export const useUsers = () => {
 
   const [user, setUser] = useState<UserDto | null>();
 
-  // const fetchUser = useCallback(async () => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await userApi.apiUsersGet(
-  //       request.pageNumber,
-  //       request.pageSize
-  //     );
-  //     setUser(data);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [request]);
+  const fetchUser = async (id: string) => {
+    setLoading(true);
+    try {
+      const data = await userApi.userGetById(id);
+      setUser(data);
+    } catch (e) {
+      notification.error({
+        message: getMessageError(e),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return { users, loading, fetchUsers, setRequest };
+  return { users, loading, fetchUsers, setRequest, user, fetchUser };
 };

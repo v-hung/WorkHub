@@ -23,7 +23,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param changePasswordRequest 
      */
-    public async apiIdentityChangePasswordPost(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<RequestContext> {
+    public async accountChangePassword(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -67,7 +67,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      */
-    public async apiIdentityCurrentUserGet(_options?: Configuration): Promise<RequestContext> {
+    public async accountGetCurrentUser(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
@@ -96,7 +96,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param loginRequest 
      */
-    public async apiIdentityLoginPost(loginRequest?: LoginRequest, _options?: Configuration): Promise<RequestContext> {
+    public async accountLogin(loginRequest?: LoginRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -140,7 +140,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      */
-    public async apiIdentityLogoutPost(_options?: Configuration): Promise<RequestContext> {
+    public async accountLogout(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
@@ -168,7 +168,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      */
-    public async apiIdentityRefreshTokenPost(_options?: Configuration): Promise<RequestContext> {
+    public async accountRefreshToken(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
@@ -202,10 +202,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiIdentityChangePasswordPost
+     * @params response Response returned by the server for a request to accountChangePassword
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiIdentityChangePasswordPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async accountChangePasswordWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -234,10 +234,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiIdentityCurrentUserGet
+     * @params response Response returned by the server for a request to accountGetCurrentUser
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiIdentityCurrentUserGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async accountGetCurrentUserWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: UserDto = ObjectSerializer.deserialize(
@@ -270,10 +270,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiIdentityLoginPost
+     * @params response Response returned by the server for a request to accountLogin
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiIdentityLoginPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<LoginResponse >> {
+     public async accountLoginWithHttpInfo(response: ResponseContext): Promise<HttpInfo<LoginResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: LoginResponse = ObjectSerializer.deserialize(
@@ -306,10 +306,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiIdentityLogoutPost
+     * @params response Response returned by the server for a request to accountLogout
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiIdentityLogoutPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async accountLogoutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -338,10 +338,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiIdentityRefreshTokenPost
+     * @params response Response returned by the server for a request to accountRefreshToken
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiIdentityRefreshTokenPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RefreshTokenResponse >> {
+     public async accountRefreshTokenWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RefreshTokenResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: RefreshTokenResponse = ObjectSerializer.deserialize(

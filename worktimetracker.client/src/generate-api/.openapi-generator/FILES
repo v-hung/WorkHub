@@ -21,11 +21,13 @@ models/LoginResponse.ts
 models/ObjectSerializer.ts
 models/Permission.ts
 models/RefreshTokenResponse.ts
-models/TeamDto.ts
+models/TeamMinimalDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts
 models/UserDto.ts
 models/UserDtoPaginated.ts
+models/UserFullDto.ts
+models/UserMinimalDto.ts
 models/UserPosition.ts
 models/UserStatus.ts
 models/WorkTimeDto.ts

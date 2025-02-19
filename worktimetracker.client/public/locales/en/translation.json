@@ -26,5 +26,8 @@
 	},
 	"auth": {
 		"sessionExpired": "Your session has expired. Please log in again."
+	},
+	"message": {
+		"error": "Oups! Something went wrong!"
 	}
 }

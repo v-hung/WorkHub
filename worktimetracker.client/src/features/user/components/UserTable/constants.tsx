@@ -1,6 +1,5 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
-import { Button, Popconfirm, Space, TableProps } from "antd";
-import { FC } from "react";
+import { Space, TableProps } from "antd";
 
 export class DataUserTableType {
   "key": string;
@@ -36,7 +35,7 @@ export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
   {
     title: "Action",
     key: "action",
-    width: "12rem",
+    width: "10rem",
     render: (_, record) => (
       <Space size="small">
         <ButtonLink
@@ -55,28 +54,29 @@ export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
         >
           Edit
         </ButtonLink>
-        <ActionDeleteRender id={record.id} />
+        {/* <ActionDeleteRender id={record.id} /> */}
       </Space>
     ),
   },
 ];
 
-const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
-  const confirm = () =>
-    new Promise((resolve) => {
-      setTimeout(() => resolve(null), 3000);
-    });
+// const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
 
-  return (
-    <Popconfirm
-      title="Delete the user"
-      description="Are you sure to delete this user?"
-      onConfirm={confirm}
-      placement="bottomRight"
-    >
-      <Button size="small" danger>
-        Delete
-      </Button>
-    </Popconfirm>
-  );
-};
+//   const confirm = () =>
+//     new Promise((resolve) => {
+//       setTimeout(() => resolve(null), 3000);
+//     });
+
+//   return (
+//     <Popconfirm
+//       title="Delete the user"
+//       description="Are you sure to delete this user?"
+//       onConfirm={confirm}
+//       placement="bottomRight"
+//     >
+//       <Button size="small" danger>
+//         Delete
+//       </Button>
+//     </Popconfirm>
+//   );
+// };

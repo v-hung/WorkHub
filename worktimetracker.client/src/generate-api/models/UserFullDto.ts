@@ -11,13 +11,14 @@
  */
 
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
+import { UserDetailDto } from '../models/UserDetailDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
 import { WorkTimeDto } from '../models/WorkTimeDto';
 import { HttpFile } from '../http/http';
 
-export class UserDto {
+export class UserFullDto {
     'id': string;
     'email': string;
     'fullName': string;
@@ -34,6 +35,8 @@ export class UserDto {
     'workTime'?: WorkTimeDto;
     'supervisor'?: UserMinimalDto;
     'team'?: TeamMinimalDto;
+    'userDetail'?: UserDetailDto;
+    'managerTeams'?: Array<TeamMinimalDto> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -135,10 +138,22 @@ export class UserDto {
             "baseName": "team",
             "type": "TeamMinimalDto",
             "format": ""
+        },
+        {
+            "name": "userDetail",
+            "baseName": "userDetail",
+            "type": "UserDetailDto",
+            "format": ""
+        },
+        {
+            "name": "managerTeams",
+            "baseName": "managerTeams",
+            "type": "Array<TeamMinimalDto>",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return UserDto.attributeTypeMap;
+        return UserFullDto.attributeTypeMap;
     }
 
     public constructor() {
