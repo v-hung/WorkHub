@@ -5,6 +5,7 @@ import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import { useParams } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import UserFormCreate from "@/features/user/components/UserFormCreate/UserFormCreate";
+import { useRef } from "react";
 
 export const loader = wrapLoaderWithPermission(async ({ params }) => {
   console.log({ id: params.id });
@@ -12,6 +13,8 @@ export const loader = wrapLoaderWithPermission(async ({ params }) => {
 
 export function Component() {
   const { id } = useParams();
+
+  const formRef = useRef();
 
   return (
     <Layout className="main-layout">
@@ -33,7 +36,7 @@ export function Component() {
       />
 
       <MainContent>
-        <UserFormCreate />
+        <UserFormCreate ref={formRef} />
       </MainContent>
     </Layout>
   );
