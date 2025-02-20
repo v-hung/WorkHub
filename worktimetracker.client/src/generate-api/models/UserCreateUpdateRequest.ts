@@ -22,10 +22,6 @@ export class UserCreateUpdateRequest {
     'isFirstLogin': boolean;
     'leaveHours': number;
     'userStatus': UserStatus;
-    'createdAt': Date;
-    'updatedAt'?: Date | null;
-    'createdBy'?: string | null;
-    'lastModifiedBy'?: string | null;
     'workTimeId'?: number | null;
     'userDetail'?: UserDetailDto;
     'supervisorId'?: string | null;
@@ -33,6 +29,9 @@ export class UserCreateUpdateRequest {
     'managerTeamIds': Array<number>;
     'managerProjectIds': Array<number>;
     'roleNames': Array<string>;
+    'userName': string;
+    'email': string;
+    'phoneNumber'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -76,30 +75,6 @@ export class UserCreateUpdateRequest {
             "format": ""
         },
         {
-            "name": "createdAt",
-            "baseName": "createdAt",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "updatedAt",
-            "baseName": "updatedAt",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "createdBy",
-            "baseName": "createdBy",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "lastModifiedBy",
-            "baseName": "lastModifiedBy",
-            "type": "string",
-            "format": ""
-        },
-        {
             "name": "workTimeId",
             "baseName": "workTimeId",
             "type": "number",
@@ -139,6 +114,24 @@ export class UserCreateUpdateRequest {
             "name": "roleNames",
             "baseName": "roleNames",
             "type": "Array<string>",
+            "format": ""
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "phoneNumber",
+            "baseName": "phoneNumber",
+            "type": "string",
             "format": ""
         }    ];
 

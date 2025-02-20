@@ -34,10 +34,6 @@ const request: UserApiUserCreateRequest = {
     isFirstLogin: true,
     leaveHours: 1,
     userStatus: "ACTIVE",
-    createdAt: new Date('1970-01-01T00:00:00.00Z'),
-    updatedAt: new Date('1970-01-01T00:00:00.00Z'),
-    createdBy: "createdBy_example",
-    lastModifiedBy: "lastModifiedBy_example",
     workTimeId: 1,
     userDetail: {
       id: 1,
@@ -59,6 +55,9 @@ const request: UserApiUserCreateRequest = {
     roleNames: [
       "roleNames_example",
     ],
+    userName: "userName_example",
+    email: "email_example",
+    phoneNumber: "phoneNumber_example",
   },
 };
 
@@ -294,10 +293,6 @@ const request: UserApiUserUpdateRequest = {
     isFirstLogin: true,
     leaveHours: 1,
     userStatus: "ACTIVE",
-    createdAt: new Date('1970-01-01T00:00:00.00Z'),
-    updatedAt: new Date('1970-01-01T00:00:00.00Z'),
-    createdBy: "createdBy_example",
-    lastModifiedBy: "lastModifiedBy_example",
     workTimeId: 1,
     userDetail: {
       id: 1,
@@ -319,6 +314,9 @@ const request: UserApiUserUpdateRequest = {
     roleNames: [
       "roleNames_example",
     ],
+    userName: "userName_example",
+    email: "email_example",
+    phoneNumber: "phoneNumber_example",
   },
 };
 

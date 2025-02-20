@@ -12,6 +12,10 @@ body {
   height: 100%;
 }
 
+body {
+  overflow: hidden scroll;
+}
+
 #root {
   width: 100%;
   min-height: 100%;

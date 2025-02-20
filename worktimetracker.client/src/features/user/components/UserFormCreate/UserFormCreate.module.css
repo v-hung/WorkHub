@@ -1,0 +1,10 @@
+@media (min-width: 992px) {
+}
+@media (min-width: 1200px) {
+}
+@media (min-width: 1600px) {
+  .colCustomResponsive :global(.ant-form-item-label) {
+    flex: 0 0 13.333333333333333%;
+    max-width: 13.333333333333333%;
+  }
+}

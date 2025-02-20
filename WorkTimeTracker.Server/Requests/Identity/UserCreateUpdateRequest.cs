@@ -9,13 +9,19 @@ namespace WorkTimeTracker.Server.Requests.Identity
 		[Required]
 		public required string FullName { get; set; }
 
+		[Required]
+		public required string UserName { get; set; }
+
+		[Required]
+		public required string Email { get; set; }
+
+
+		public string? PhoneNumber { get; set; }
+
 		public string? Image { get; set; }
 
 		[Required]
 		public required UserPosition UserPosition { get; set; }
-
-		[Required]
-		public bool IsFirstLogin { get; set; } = true;
 
 		[Required]
 		public int LeaveHours { get; set; } = 0;
