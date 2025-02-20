@@ -8,8 +8,6 @@ namespace WorkTimeTracker.Server.Models.Identity
 
 		public DateTime BirthDate { get; set; }
 
-		public string? Phone { get; set; }
-
 		public bool Gender { get; set; }
 
 		public string? PermanentAddress { get; set; }

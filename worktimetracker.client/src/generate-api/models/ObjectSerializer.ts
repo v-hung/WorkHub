@@ -22,7 +22,7 @@ import { LoginResponse } from '../models/LoginResponse';
 import { Permission } from '../models/Permission';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
-import { UserCreateUpdateRequest                  } from '../models/UserCreateUpdateRequest';
+import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto                 } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
