@@ -23,17 +23,6 @@ namespace WorkTimeTracker.Server.Requests.Identity
 		[Required]
 		public UserStatus UserStatus { get; set; } = UserStatus.ACTIVE;
 
-		// AuditEntity
-
-		[Required]
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-		public DateTime? UpdatedAt { get; set; }
-
-		public string? CreatedBy { get; set; }
-
-		public string? LastModifiedBy { get; set; }
-
 		// Navigation properties
 
 		public int? WorkTimeId { get; set; }

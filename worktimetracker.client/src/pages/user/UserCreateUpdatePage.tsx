@@ -4,7 +4,9 @@ import MainHeader from "@/layouts/main/components/MainHeader";
 import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import { useParams } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
-import UserFormCreate from "@/features/user/components/UserFormCreate/UserFormCreate";
+import UserFormCreate, {
+  UserFormCreateRefState,
+} from "@/features/user/components/UserFormCreate/UserFormCreate";
 import { useRef } from "react";
 
 export const loader = wrapLoaderWithPermission(async ({ params }) => {
@@ -14,7 +16,13 @@ export const loader = wrapLoaderWithPermission(async ({ params }) => {
 export function Component() {
   const { id } = useParams();
 
-  const formRef = useRef();
+  const formRef = useRef<UserFormCreateRefState | null>(null);
+
+  const handleSave = () => {
+    if (formRef.current) {
+      formRef.current.handelUpsert();
+    }
+  };
 
   return (
     <Layout className="main-layout">
@@ -22,6 +30,7 @@ export function Component() {
         <Button
           type="primary"
           icon={<IIonSaveOutline width={16} height={16} />}
+          onClick={handleSave}
         >
           Save
         </Button>
