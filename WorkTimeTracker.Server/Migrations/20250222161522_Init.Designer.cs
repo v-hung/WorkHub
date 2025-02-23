@@ -12,7 +12,7 @@ using WorkTimeTracker.Server.Data;
 namespace WorkTimeTracker.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250215160350_Init")]
+    [Migration("20250222161522_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -145,8 +145,11 @@ namespace WorkTimeTracker.Server.Migrations
 
             modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.RefreshToken", b =>
                 {
-                    b.Property<string>("Token")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
@@ -157,10 +160,14 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<bool>("RememberMe")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Token");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -272,7 +279,7 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<Guid?>("SupervisorId")
                         .HasColumnType("char(36)");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -332,10 +339,7 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<string>("PermanentAddress")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("char(36)");
 
                     b.Property<int>("YearsOfWork")
@@ -364,7 +368,6 @@ namespace WorkTimeTracker.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("ManagerId")
@@ -392,7 +395,8 @@ namespace WorkTimeTracker.Server.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("ApprovedById")
+                    b.Property<Guid?>("ApprovedById")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -409,7 +413,8 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -440,7 +445,8 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<int>("WorkMinutes")
@@ -499,7 +505,8 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("ManagerId")
+                    b.Property<Guid?>("ManagerId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Name")
@@ -639,14 +646,13 @@ namespace WorkTimeTracker.Server.Migrations
             modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.User", b =>
                 {
                     b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "Supervisor")
-                        .WithMany()
-                        .HasForeignKey("SupervisorId");
+                        .WithMany("Supervisors")
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WorkTimeTracker.Server.Models.Organization.Team", "Team")
                         .WithMany("Members")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamId");
 
                     b.HasOne("WorkTimeTracker.Server.Models.Time.WorkTime", "WorkTime")
                         .WithMany("Users")
@@ -663,9 +669,7 @@ namespace WorkTimeTracker.Server.Migrations
                 {
                     b.HasOne("WorkTimeTracker.Server.Models.Identity.User", "User")
                         .WithOne("UserDetail")
-                        .HasForeignKey("WorkTimeTracker.Server.Models.Identity.UserDetail", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkTimeTracker.Server.Models.Identity.UserDetail", "UserId");
 
                     b.Navigation("User");
                 });
@@ -737,6 +741,8 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Navigation("RefreshTokens");
 
                     b.Navigation("Requests");
+
+                    b.Navigation("Supervisors");
 
                     b.Navigation("Timesheets");
 

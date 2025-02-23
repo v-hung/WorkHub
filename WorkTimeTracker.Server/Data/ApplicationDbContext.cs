@@ -1,7 +1,9 @@
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WorkTimeTracker.Server.Interfaces.Services;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Models.Enums;
 using WorkTimeTracker.Server.Models.Identity;
 using WorkTimeTracker.Server.Models.Organization;
@@ -32,27 +34,28 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 
 	public override int SaveChanges()
 	{
-		var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+		var entries = ChangeTracker.Entries();
 
 		foreach (var entry in entries)
 		{
-			List<string> properties = entry.Metadata.GetProperties().Select(v => v.Name).ToList();
+			if (entry.Entity is IAuditEntity auditEntity)
+			{
+				if (entry.State == EntityState.Added)
+				{
+					auditEntity.CreatedAt = DateTime.UtcNow;
+					auditEntity.CreatedBy = _currentUserService.UserName;
+				}
+				else if (entry.State == EntityState.Modified)
+				{
+					auditEntity.UpdatedAt = DateTime.UtcNow;
+					auditEntity.LastModifiedBy = _currentUserService.UserName;
+				}
+			}
 
-			if (entry.State == EntityState.Added && properties.Contains("CreatedAt"))
+			if (entry.Entity is SoftDeleteEntity softDeleteEntity && entry.State == EntityState.Deleted)
 			{
-				entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
-			}
-			else if (entry.State == EntityState.Modified && properties.Contains("UpdatedAt"))
-			{
-				entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
-			}
-			else if (entry.State == EntityState.Added && properties.Contains("CreatedBy"))
-			{
-				entry.Property("CreatedBy").CurrentValue = _currentUserService.UserName;
-			}
-			else if (entry.State == EntityState.Modified && properties.Contains("LastModifiedBy"))
-			{
-				entry.Property("LastModifiedBy").CurrentValue = _currentUserService.UserName;
+				entry.State = EntityState.Modified;
+				softDeleteEntity.IsDeleted = true;
 			}
 
 		}
@@ -68,7 +71,24 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 			.HasValue<LeaveRequest>(RequestType.LEAVE_REQUEST)
 			.HasValue<TimesheetRequest>(RequestType.TIMESHEET_ADJUSTMENT);
 
+		foreach (var entityType in builder.Model.GetEntityTypes())
+		{
+			if (typeof(SoftDeleteEntity).IsAssignableFrom(entityType.ClrType))
+			{
+				builder.Entity(entityType.ClrType)
+					.HasQueryFilter(ConvertFilterExpression(entityType.ClrType));
+			}
+		}
+
 		base.OnModelCreating(builder);
+	}
+
+	private static LambdaExpression ConvertFilterExpression(Type entityType)
+	{
+		var parameter = Expression.Parameter(entityType, "e");
+		var property = Expression.Property(parameter, "IsDeleted");
+		var condition = Expression.Equal(property, Expression.Constant(false));
+		return Expression.Lambda(condition, parameter);
 	}
 
 }

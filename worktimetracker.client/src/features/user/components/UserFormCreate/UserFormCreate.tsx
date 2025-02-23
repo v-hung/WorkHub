@@ -1,4 +1,4 @@
-import { Col, Form, Grid, Input, Radio, Row, Select } from "antd";
+import { Checkbox, Col, Form, Grid, Input, Radio, Row, Select } from "antd";
 import {
   forwardRef,
   HTMLAttributes,
@@ -6,7 +6,11 @@ import {
   useState,
 } from "react";
 import { useUserAction } from "../../hooks/useUserAction";
-import { UserCreateUpdateRequest, UserPosition } from "@/generate-api";
+import {
+  UserCreateUpdateRequest,
+  UserPosition,
+  UserStatus,
+} from "@/generate-api";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import styles from "./UserFormCreate.module.css";
 
@@ -52,7 +56,8 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
           form={form}
           initialValues={formState}
           validateTrigger="onBlur"
-          labelCol={{ lg: { span: 7 }, xl: { span: 9 }, xxl: { span: 8 } }}
+          labelCol={{ lg: { span: 9 }, xl: { span: 10 }, xxl: { span: 8 } }}
+          style={{ paddingTop: "1.5rem" }}
         >
           <Row wrap gutter={{ sm: 8, md: 16 }}>
             <Col xs={24} lg={12} xl={8}>
@@ -112,8 +117,8 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 rules={[{ required: true }]}
               >
                 <Select>
-                  <Select.Option>Vietnamese</Select.Option>
-                  <Select.Option>Japanese</Select.Option>
+                  <Select.Option key={"vi"}>Vietnamese</Select.Option>
+                  <Select.Option key={"jp"}>Japanese</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -133,17 +138,16 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
-                label="User Position"
-                name="userPosition"
+                label="User Status"
+                name="userStatus"
                 rules={[{ required: true }]}
               >
-                <Select>
-                  {Object.entries(UserPosition).map(([key, value]) => (
-                    <Select.Option value={value} key={key}>
-                      {key}
-                    </Select.Option>
-                  ))}
-                </Select>
+                <Select
+                  options={Object.entries(UserStatus).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
               </Form.Item>
             </Col>
 
@@ -155,6 +159,141 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 className={styles.colCustomResponsive}
               >
                 <Input placeholder="Permanent Address" />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Contact Address"
+                name="userDetail.contactAddress"
+                rules={[{ required: true }]}
+                className={styles.colCustomResponsive}
+              >
+                <Input placeholder="Contact Address" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="User Position"
+                name="userPosition"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  options={Object.entries(UserPosition).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Team"
+                name="teamID"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  options={Object.entries(UserPosition).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Supervisor"
+                name="supervisorId"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  options={Object.entries(UserPosition).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label="Roles"
+                name="roleNames"
+                rules={[{ required: true }]}
+                className={styles.colCustomResponsive}
+              >
+                <Select
+                  options={Object.entries(UserPosition).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="WorkTime"
+                name="workTimeId"
+                rules={[{ required: true }]}
+              >
+                <Select
+                  options={Object.entries(UserPosition).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Leave Hours"
+                name="leaveHours"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Years Of Work"
+                name="userDetail.yearsOfWork"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item label="Change password" layout="horizontal">
+                <Checkbox />
+              </Form.Item>
+            </Col>
+            <Col span={24} />
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={24} />
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Re Password"
+                name="rePassword"
+                rules={[{ required: true }]}
+              >
+                <Input />
               </Form.Item>
             </Col>
           </Row>

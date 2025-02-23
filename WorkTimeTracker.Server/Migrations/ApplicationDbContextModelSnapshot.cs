@@ -142,8 +142,11 @@ namespace WorkTimeTracker.Server.Migrations
 
             modelBuilder.Entity("WorkTimeTracker.Server.Models.Identity.RefreshToken", b =>
                 {
-                    b.Property<string>("Token")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime(6)");
@@ -154,10 +157,14 @@ namespace WorkTimeTracker.Server.Migrations
                     b.Property<bool>("RememberMe")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Token");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -230,6 +237,9 @@ namespace WorkTimeTracker.Server.Migrations
 
                     b.Property<string>("Image")
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsFirstLogin")
                         .HasColumnType("tinyint(1)");
@@ -327,9 +337,6 @@ namespace WorkTimeTracker.Server.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("PermanentAddress")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Phone")
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("UserId")

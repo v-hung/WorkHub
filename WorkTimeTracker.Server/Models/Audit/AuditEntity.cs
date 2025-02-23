@@ -2,12 +2,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WorkTimeTracker.Server.Models.Audit;
 
-public abstract class AuditEntity<TId> : Entity<TId>
+public abstract class AuditEntity<TId> : IAuditEntity<TId>
 {
+	[Required]
+	public TId Id { get; set; } = default!;
+
 	[Required]
 	public required DateTime CreatedAt { get; set; } = new DateTime();
 
-	public DateTime? UpdateAt { get; set; }
+	public DateTime? UpdatedAt { get; set; }
 
 	public string? CreatedBy { get; set; }
 

@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using WorkTimeTracker.Server.Constants.Timesheet;
+using WorkTimeTracker.Server.Models.Audit;
 
 namespace WorkTimeTracker.Server.Dto.Time
 {
-	public class WorkTimeDto
+	public class WorkTimeDto : IEntity<int>
 	{
 		[Required]
 		public int Id { get; set; }

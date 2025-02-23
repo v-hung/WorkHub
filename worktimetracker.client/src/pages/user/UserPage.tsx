@@ -12,7 +12,7 @@ export function Component() {
   const navigate = useNavigate();
 
   return (
-    <Layout className="main-layout">
+    <Layout className="main-layout h-screen">
       <MainHeader title="User Manager">
         <Button
           type="primary"

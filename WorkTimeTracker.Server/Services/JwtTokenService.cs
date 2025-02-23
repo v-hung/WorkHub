@@ -157,18 +157,19 @@ public class JwtTokenService : IJwtTokenService
 			throw new BusinessException(HttpStatusCode.BadRequest, "Refresh token is invalid client request");
 		}
 
-		var token = await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken && DateTime.Now <= rt.Expires && rt.RememberMe);
+		var refreshToken = await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken && DateTime.Now <= rt.Expires && rt.RememberMe);
 
-		if (token == null || token.User == null)
+		if (refreshToken == null || refreshToken.User == null)
 		{
 			throw new BusinessException(HttpStatusCode.Unauthorized, "Refresh token is invalid or expired");
 		}
 
-		token.Expires = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays));
-		_context.RefreshTokens.Update(token);
+		refreshToken.Token = GenerateRefreshToken();
+		refreshToken.Expires = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays));
+		_context.RefreshTokens.Update(refreshToken);
 
 		_context.SaveChanges();
 
-		return token;
+		return refreshToken;
 	}
 }

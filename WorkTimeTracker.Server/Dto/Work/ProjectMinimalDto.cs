@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Models.Enums;
 
 namespace WorkTimeTracker.Server.Dto.Work
 {
-	public class ProjectMinimalDto
+	public class ProjectMinimalDto : IEntity<int>
 	{
 
 		[Required]

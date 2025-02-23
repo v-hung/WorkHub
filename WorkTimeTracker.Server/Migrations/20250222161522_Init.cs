@@ -156,7 +156,7 @@ namespace WorkTimeTracker.Server.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     WorkTimeId = table.Column<int>(type: "int", nullable: true),
                     SupervisorId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -187,7 +187,8 @@ namespace WorkTimeTracker.Server.Migrations
                         name: "FK_AspNetUsers_AspNetUsers_SupervisorId",
                         column: x => x.SupervisorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_WorkTimes_WorkTimeId",
                         column: x => x.WorkTimeId,
@@ -224,7 +225,9 @@ namespace WorkTimeTracker.Server.Migrations
                 name: "RefreshTokens",
                 columns: table => new
                 {
-                    Token = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Token = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Expires = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     RememberMe = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -233,7 +236,7 @@ namespace WorkTimeTracker.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RefreshTokens", x => x.Token);
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RefreshTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -290,7 +293,7 @@ namespace WorkTimeTracker.Server.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "longtext", nullable: false)
+                    Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TotalMembers = table.Column<int>(type: "int", nullable: false),
                     CompletedProjects = table.Column<int>(type: "int", nullable: false),
@@ -338,15 +341,13 @@ namespace WorkTimeTracker.Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     BirthDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Phone = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Gender = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PermanentAddress = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ContactAddress = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     YearsOfWork = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -355,8 +356,7 @@ namespace WorkTimeTracker.Server.Migrations
                         name: "FK_UserDetails_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -545,8 +545,7 @@ namespace WorkTimeTracker.Server.Migrations
                 table: "AspNetUsers",
                 column: "TeamId",
                 principalTable: "Teams",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />

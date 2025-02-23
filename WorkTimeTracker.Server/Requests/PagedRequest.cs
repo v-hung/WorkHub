@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace WorkTimeTracker.Server.Requests
 {
@@ -27,7 +28,8 @@ namespace WorkTimeTracker.Server.Requests
 		}
 		public string? SearchString { get; set; }
 
-		public string[]? OrderBy { get; set; } // of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+		[SwaggerSchema("of the form fieldname [ascending|descending],fieldname [ascending|descending]...")]
+		public string[]? OrderBy { get; set; }
 
 		public PagedRequest()
 		{
@@ -54,6 +56,7 @@ namespace WorkTimeTracker.Server.Requests
 			}
 		}
 
+		[SwaggerIgnore]
 		public string OrderByString => OrderBy != null && OrderBy.Any()
 				? string.Join(",", OrderBy)
 				: string.Empty;

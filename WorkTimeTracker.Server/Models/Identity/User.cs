@@ -10,7 +10,7 @@ using WorkTimeTracker.Server.Models.Time;
 using WorkTimeTracker.Server.Models.Work;
 
 namespace WorkTimeTracker.Server.Models.Identity;
-public class User : IdentityUser<Guid>, IAuditEntity
+public class User : IdentityUser<Guid>, IAuditEntity, ISoftDeleteEntity
 {
 
 	[Required]
@@ -40,6 +40,8 @@ public class User : IdentityUser<Guid>, IAuditEntity
 	public string? CreatedBy { get; set; }
 
 	public string? LastModifiedBy { get; set; }
+
+	public bool IsDeleted { get; set; } = false;
 
 	// Navigation properties
 

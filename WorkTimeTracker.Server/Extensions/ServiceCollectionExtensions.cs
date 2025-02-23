@@ -27,8 +27,8 @@ static class ServiceCollectionExtensions
 	{
 		var connectionString = configuration.GetConnectionString("DefaultConnection");
 		services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)))
-				.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
+			options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)))
+			.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 	}
 
 	public static void AddCustomControllers(this IServiceCollection services)
@@ -108,13 +108,18 @@ static class ServiceCollectionExtensions
 
 	public static void AddApplicationServices(this IServiceCollection services)
 	{
+		services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
 		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<IJwtTokenService, JwtTokenService>();
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();
-		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-		services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		services.AddScoped(typeof(IRepositoryService<>), typeof(RepositoryService<>));
+
 	}
 
 	public static void AddSwaggerDocumentation(this IServiceCollection services)
@@ -122,7 +127,7 @@ static class ServiceCollectionExtensions
 		services.AddEndpointsApiExplorer();
 		services.AddSwaggerGen(c =>
 		{
-			// c.EnableAnnotations();
+			c.EnableAnnotations();
 
 			c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 			{
