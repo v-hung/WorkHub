@@ -42,7 +42,7 @@ public class UserController : BaseApiController<UserController>
 		return Ok(users);
 	}
 
-	[HttpPost("{id}")]
+	[HttpPut("{id}")]
 	public async Task<ActionResult<UserDto>> Update(Guid id, UserCreateUpdateRequest request)
 	{
 		var users = await _userService.UpdateAsync<UserDto>(id, request);

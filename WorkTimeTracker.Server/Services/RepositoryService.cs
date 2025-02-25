@@ -13,7 +13,7 @@ using System.Net;
 
 namespace WorkTimeTracker.Server.Services
 {
-	public class RepositoryService<T> : IRepositoryService<T> where T : class
+	public class RepositoryService<T, TId> : IRepositoryService<T, TId> where T : class, IEntity<TId> where TId : notnull
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
@@ -81,11 +81,46 @@ namespace WorkTimeTracker.Server.Services
 			return new Paginated<D>(pagedData, request.PageNumber, request.PageSize, totalRecords);
 		}
 
-		public async Task<D> GetAsync<D, TId>(TId id) where D : IEntity<TId> where TId : notnull
+		public async Task<D> GetAsync<D, DId>(TId id) where D : IEntity<DId> where DId : notnull
 		{
 			return await _context.Set<T>().AsNoTracking()
 				.ProjectTo<D>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync(p => p.Id.Equals(id)) ?? throw new BusinessException(HttpStatusCode.NoContent, typeof(T).Name + " is not found");
+		}
+
+		public async Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, List<DId>? relatedEntityIds, TId? id) where D : class, IEntity<DId> where DId : notnull
+		{
+			if (relatedEntityIds != null && relatedEntityIds.Any())
+			{
+				var collection = navigationProperty.Compile()(entity);
+
+				if (id != null)
+				{
+					await _context.Entry(entity).Collection(GetPropertyName(navigationProperty)).LoadAsync();
+
+					collection.Clear();
+				}
+
+				foreach (var relatedId in relatedEntityIds)
+				{
+					var relatedEntity = Activator.CreateInstance<D>();
+					typeof(T).GetProperty("Id")?.SetValue(relatedEntity, relatedId);
+
+					_context.Set<D>().Attach(relatedEntity);
+
+					collection.Add(relatedEntity);
+				}
+			}
+		}
+
+		private string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)
+		{
+			if (propertyLambda.Body is MemberExpression memberExpression)
+			{
+				return memberExpression.Member.Name;
+			}
+
+			throw new ArgumentException("The expression does not point to a member attribute.", nameof(propertyLambda));
 		}
 	}
 }
