@@ -10,18 +10,22 @@ using WorkTimeTracker.Server.Interfaces.Services;
 using WorkTimeTracker.Server.Models.Audit;
 using WorkTimeTracker.Server.Middlewares.Exceptions;
 using System.Net;
+using Microsoft.Extensions.Localization;
 
 namespace WorkTimeTracker.Server.Services
 {
-	public class RepositoryService<T, TId> : IRepositoryService<T, TId> where T : class, IEntity<TId> where TId : notnull
+	public class RepositoryService<T, TId> : IRepositoryService<T, TId> where T : class, IEntity<TId>
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
 
-		public RepositoryService(ApplicationDbContext context, IMapper mapper)
+		private readonly IStringLocalizer<RepositoryService<T, TId>> _localizer;
+
+		public RepositoryService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RepositoryService<T, TId>> localizer)
 		{
 			_context = context;
 			_mapper = mapper;
+			_localizer = localizer;
 		}
 
 		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request, Expression<Func<T, bool>>? filter = null)
@@ -85,10 +89,10 @@ namespace WorkTimeTracker.Server.Services
 		{
 			return await _context.Set<T>().AsNoTracking()
 				.ProjectTo<D>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(p => p.Id.Equals(id)) ?? throw new BusinessException(HttpStatusCode.NoContent, typeof(T).Name + " is not found");
+				.FirstOrDefaultAsync(p => p.Id.Equals(id)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
 		}
 
-		public async Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, List<DId>? relatedEntityIds, TId? id) where D : class, IEntity<DId> where DId : notnull
+		public async Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId>? relatedEntityIds, TId id) where D : class, IEntity<DId>
 		{
 			if (relatedEntityIds != null && relatedEntityIds.Any())
 			{
@@ -111,6 +115,15 @@ namespace WorkTimeTracker.Server.Services
 					collection.Add(relatedEntity);
 				}
 			}
+		}
+
+		public async Task DeleteAsync(TId id)
+		{
+			var entity = await _context.Set<T>().FindAsync(id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
+
+			_context.Set<T>().Remove(entity);
+
+			await _context.SaveChangesAsync();
 		}
 
 		private string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)

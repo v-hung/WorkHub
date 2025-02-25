@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MediatR;
 using WorkTimeTracker.Server.Authorization;
 using WorkTimeTracker.Server.Configs;
 using WorkTimeTracker.Server.Constants.Permission;
@@ -18,6 +19,7 @@ using WorkTimeTracker.Server.Interfaces.Data;
 using WorkTimeTracker.Server.Interfaces.Services;
 using WorkTimeTracker.Server.Models.Identity;
 using WorkTimeTracker.Server.Services;
+using Microsoft.Extensions.Localization;
 
 namespace WorkTimeTracker.Server.Extensions;
 
@@ -109,7 +111,10 @@ static class ServiceCollectionExtensions
 	public static void AddApplicationServices(this IServiceCollection services)
 	{
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+
+		services.AddLocalization(options => options.ResourcesPath = "Resources");
+		services.AddScoped(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
 
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
@@ -118,7 +123,7 @@ static class ServiceCollectionExtensions
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-		services.AddScoped(typeof(IRepositoryService<>), typeof(RepositoryService<>));
+		services.AddScoped(typeof(IRepositoryService<,>), typeof(RepositoryService<,>));
 
 	}
 

@@ -1,3 +1,6 @@
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using WorkTimeTracker.Server.Constants.Localization;
 using WorkTimeTracker.Server.Interfaces.Data;
 using WorkTimeTracker.Server.Middlewares;
 
@@ -27,6 +30,22 @@ static class ApplicationBuilderExtensions
 		{
 			Task.Run(initializer.Initialize).GetAwaiter().GetResult();
 		}
+
+		return app;
+	}
+
+	public static IApplicationBuilder UseRequestLocalizationByCulture(this IApplicationBuilder app)
+	{
+		var supportedCultures = LocalizationConstants.SupportedLanguages.Select(l => new CultureInfo(l.Code)).ToArray();
+		app.UseRequestLocalization(options =>
+		{
+			options.SupportedUICultures = supportedCultures;
+			options.SupportedCultures = supportedCultures;
+			options.DefaultRequestCulture = new RequestCulture(supportedCultures.First());
+			options.ApplyCurrentCultureToResponseHeaders = true;
+		});
+
+		app.UseMiddleware<RequestCultureMiddleware>();
 
 		return app;
 	}

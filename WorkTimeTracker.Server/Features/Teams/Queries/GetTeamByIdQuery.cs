@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using WorkTimeTracker.Server.Dto.Organization;
 using WorkTimeTracker.Server.Interfaces.Services;
@@ -21,9 +17,9 @@ namespace WorkTimeTracker.Server.Features.Teams.Queries
 
 	public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamDto>
 	{
-		private readonly IRepositoryService<Team> _repositoryService;
+		private readonly IRepositoryService<Team, int> _repositoryService;
 
-		public GetTeamByIdQueryHandler(IRepositoryService<Team> repositoryService)
+		public GetTeamByIdQueryHandler(IRepositoryService<Team, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

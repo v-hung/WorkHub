@@ -1,18 +1,18 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using AutoMapper;
 using MediatR;
 using WorkTimeTracker.Server.Data;
 using WorkTimeTracker.Server.Dto.Organization;
 using WorkTimeTracker.Server.Interfaces.Services;
-using WorkTimeTracker.Server.Models.Audit;
-using WorkTimeTracker.Server.Models.Identity;
+using WorkTimeTracker.Server.Middlewares.Exceptions;
 using WorkTimeTracker.Server.Models.Organization;
 
 namespace WorkTimeTracker.Server.Features.Teams.Commands
 {
 	public class CreateEditTeamCommand : IRequest<TeamDto>
 	{
-		public int Id { get; set; }
+		public int Id { get; set; } = default;
 
 		[Required]
 		public required string Name { get; set; }
@@ -41,11 +41,11 @@ namespace WorkTimeTracker.Server.Features.Teams.Commands
 	{
 		private readonly ApplicationDbContext _context;
 
-		private readonly IRepositoryService<Team> _repositoryService;
+		private readonly IRepositoryService<Team, int> _repositoryService;
 
 		private readonly IMapper _mapper;
 
-		public CreateEditTeamCommandHandler(ApplicationDbContext context, IMapper mapper, IRepositoryService<Team> repositoryService)
+		public CreateEditTeamCommandHandler(ApplicationDbContext context, IMapper mapper, IRepositoryService<Team, int> repositoryService)
 		{
 			_context = context;
 			_mapper = mapper;
@@ -54,9 +54,16 @@ namespace WorkTimeTracker.Server.Features.Teams.Commands
 
 		public async Task<TeamDto> Handle(CreateEditTeamCommand request, CancellationToken cancellationToken)
 		{
-			var team = _mapper.Map<Team>(request);
+			var team = request.Id != 0
+				? await _context.Teams.FindAsync(request.Id) ?? throw new BusinessException(HttpStatusCode.NotFound, "Team id not found")
+				: _mapper.Map<Team>(request);
 
-			_repositoryService.UpdateRelatedEntitiesAsync<User, IEntity<Guid>>(team, t => t.Members, request.MemberIds, request.Id);
+			await _repositoryService.UpdateRelatedEntitiesAsync(team, t => t.Members, request.MemberIds, request.Id);
+			await _repositoryService.UpdateRelatedEntitiesAsync(team, t => t.Projects, request.ProjectIds, request.Id);
+
+			await _context.SaveChangesAsync();
+
+			return _mapper.Map<TeamDto>(team);
 		}
 	}
 }

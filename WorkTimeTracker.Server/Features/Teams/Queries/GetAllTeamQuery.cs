@@ -19,9 +19,9 @@ namespace WorkTimeTracker.Server.Features.Teams.Queries
 
 	public class GetAllTeamQueryHandler : IRequestHandler<GetAllTeamQuery, Paginated<TeamDto>>
 	{
-		private readonly IRepositoryService<Team> _repositoryService;
+		private readonly IRepositoryService<Team, int> _repositoryService;
 
-		public GetAllTeamQueryHandler(IRepositoryService<Team> repositoryService)
+		public GetAllTeamQueryHandler(IRepositoryService<Team, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

@@ -1,13 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net;
 using MediatR;
-using Microsoft.Extensions.Localization;
-using WorkTimeTracker.Server.Data;
-using WorkTimeTracker.Server.Middlewares.Exceptions;
+using WorkTimeTracker.Server.Interfaces.Services;
+using WorkTimeTracker.Server.Models.Organization;
 
 namespace WorkTimeTracker.Server.Features.Teams.Commands
 {
-	public class DeleteTeamCommand : IRequest
+	public class DeleteTeamCommand : IRequest<int>
 	{
 
 		[Required]
@@ -15,26 +13,20 @@ namespace WorkTimeTracker.Server.Features.Teams.Commands
 
 	}
 
-	public class DeleteTeamCommandHandler : IRequestHandler<DeleteTeamCommand>
+	public class DeleteTeamCommandHandler : IRequestHandler<DeleteTeamCommand, int>
 	{
-		private readonly ApplicationDbContext _context;
-		private readonly IStringLocalizer<DeleteTeamCommandHandler> _localizer;
+		private readonly IRepositoryService<Team, int> _repositoryService;
 
-		public DeleteTeamCommandHandler(ApplicationDbContext context, IStringLocalizer<DeleteTeamCommandHandler> localizer)
+		public DeleteTeamCommandHandler(IRepositoryService<Team, int> repositoryService)
 		{
-			_context = context;
-			_localizer = localizer;
+			_repositoryService = repositoryService;
 		}
 
-		public async Task<Unit> Handle(DeleteTeamCommand request, CancellationToken cancellationToken)
+		public async Task<int> Handle(DeleteTeamCommand request, CancellationToken cancellationToken)
 		{
-			var team = await _context.Teams.FindAsync(request.Id) ?? throw new BusinessException(HttpStatusCode.NotFound, "");
+			await _repositoryService.DeleteAsync(request.Id);
 
-			_context.Teams.Remove(team);
-
-			await _context.SaveChangesAsync();
-
-			return Unit.Value;
+			return request.Id;
 		}
 	}
 }

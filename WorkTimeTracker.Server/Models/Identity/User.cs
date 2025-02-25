@@ -10,7 +10,7 @@ using WorkTimeTracker.Server.Models.Time;
 using WorkTimeTracker.Server.Models.Work;
 
 namespace WorkTimeTracker.Server.Models.Identity;
-public class User : IdentityUser<Guid>, IAuditEntity, ISoftDeleteEntity
+public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 {
 
 	[Required]

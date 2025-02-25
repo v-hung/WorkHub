@@ -78,7 +78,7 @@ namespace WorkTimeTracker.Server.Services
 		{
 			return await _context.Users.AsNoTracking()
 				.ProjectTo<D>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NoContent, "User is not found");
+				.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NotFound, "User is not found");
 		}
 
 		public async Task<int> GetCountAsync()
@@ -100,8 +100,7 @@ namespace WorkTimeTracker.Server.Services
 
 		public async Task<D?> UpdateAsync<D>(Guid userId, UserCreateUpdateRequest request) where D : class
 		{
-			var user = await _context.Users.FindAsync(userId);
-			if (user == null) return null;
+			var user = await _context.Users.FindAsync(userId) ?? throw new BusinessException(HttpStatusCode.NotFound, "User id not found");
 
 			_mapper.Map(request, user);
 
