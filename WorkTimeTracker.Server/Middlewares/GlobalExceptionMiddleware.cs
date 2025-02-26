@@ -9,8 +9,8 @@ public class GlobalExceptionMiddleware
 	private readonly ILogger<GlobalExceptionMiddleware> _logger;
 
 	public GlobalExceptionMiddleware(
-			RequestDelegate next,
-			ILogger<GlobalExceptionMiddleware> logger)
+		RequestDelegate next,
+		ILogger<GlobalExceptionMiddleware> logger)
 	{
 		_next = next;
 		_logger = logger;

@@ -12,6 +12,7 @@ static class ApplicationBuilderExtensions
 	public static void UseCustomMiddlewares(this IApplicationBuilder app)
 	{
 		app.UseMiddleware<GlobalExceptionMiddleware>();
+		app.UseMiddleware<RequestCultureMiddleware>();
 	}
 
 	public static void UseSwaggerDocumentation(this IApplicationBuilder app)
@@ -44,8 +45,6 @@ static class ApplicationBuilderExtensions
 			options.DefaultRequestCulture = new RequestCulture(supportedCultures.First());
 			options.ApplyCurrentCultureToResponseHeaders = true;
 		});
-
-		app.UseMiddleware<RequestCultureMiddleware>();
 
 		return app;
 	}

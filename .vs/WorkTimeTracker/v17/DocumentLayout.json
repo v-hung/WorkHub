@@ -1,12 +1,36 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\memo\\.net\\WorkTimeTracker\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\vieth\\OneDrive\\Desktop\\New folder\\.net\\WorkTimeTracker\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{70306DE0-6A8B-419E-AD70-870F28C96C77}|WorkTimeTracker.Server\\WorkTimeTracker.Server.csproj|c:\\users\\vieth\\onedrive\\desktop\\new folder\\.net\\worktimetracker\\worktimetracker.server\\resources\\repositoryservice.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
+      "RelativeMoniker": "D:0:0:{70306DE0-6A8B-419E-AD70-870F28C96C77}|WorkTimeTracker.Server\\WorkTimeTracker.Server.csproj|solutionrelative:worktimetracker.server\\resources\\repositoryservice.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RepositoryService.resx",
+              "DocumentMoniker": "C:\\Users\\vieth\\OneDrive\\Desktop\\New folder\\.net\\WorkTimeTracker\\WorkTimeTracker.Server\\Resources\\RepositoryService.resx",
+              "RelativeDocumentMoniker": "WorkTimeTracker.Server\\Resources\\RepositoryService.resx",
+              "ToolTip": "C:\\Users\\vieth\\OneDrive\\Desktop\\New folder\\.net\\WorkTimeTracker\\WorkTimeTracker.Server\\Resources\\RepositoryService.resx",
+              "RelativeToolTip": "WorkTimeTracker.Server\\Resources\\RepositoryService.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-02-26T15:53:37.079Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -16,6 +16,7 @@ using WorkTimeTracker.Server.Models.Organization;
 using WorkTimeTracker.Server.Models.Work;
 using Microsoft.AspNetCore.Identity;
 using WorkTimeTracker.Server.Models.Audit;
+using Microsoft.Extensions.Localization;
 
 namespace WorkTimeTracker.Server.Services
 {
@@ -25,11 +26,14 @@ namespace WorkTimeTracker.Server.Services
 		private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 
-		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager)
+		private readonly IStringLocalizer<UserService> _localizer;
+
+		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer)
 		{
 			_context = context;
 			_mapper = mapper;
 			_userManager = userManager;
+			_localizer = localizer;
 		}
 
 		public async Task<List<UserDto>> GetAllAsync()
@@ -78,7 +82,7 @@ namespace WorkTimeTracker.Server.Services
 		{
 			return await _context.Users.AsNoTracking()
 				.ProjectTo<D>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NotFound, "User is not found");
+				.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["User is not found"]);
 		}
 
 		public async Task<int> GetCountAsync()
