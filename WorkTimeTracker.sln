@@ -1,11 +1,14 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.13.35818.85 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeTracker.Server", "WorkTimeTracker.Server\WorkTimeTracker.Server.csproj", "{70306DE0-6A8B-419E-AD70-870F28C96C77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeTracker.AppHost", "WorkTimeTracker.AppHost\WorkTimeTracker.AppHost.csproj", "{9D2446A2-6B2E-4E63-B704-481125E15AE7}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "worktimetracker.client", "worktimetracker.client\worktimetracker.client.esproj", "{53F83C5A-4C2B-4D72-84B5-E7365185E874}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeTracker.ServiceDefaults", "WorkTimeTracker.ServiceDefaults\WorkTimeTracker.ServiceDefaults.csproj", "{5F300F13-3AC0-7552-472B-D1BA65BD80F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeTracker.Client", "WorkTimeTracker.Client\WorkTimeTracker.Client.csproj", "{877A5AD0-BA20-418E-96A3-8BEC1FC98638}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTimeTracker.WebAPI", "WorkTimeTracker.WebAPI\WorkTimeTracker.WebAPI.csproj", "{9E7F322B-06CB-B4FC-1002-1A28201F4BC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,18 +16,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70306DE0-6A8B-419E-AD70-870F28C96C77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53F83C5A-4C2B-4D72-84B5-E7365185E874}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9D2446A2-6B2E-4E63-B704-481125E15AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D2446A2-6B2E-4E63-B704-481125E15AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D2446A2-6B2E-4E63-B704-481125E15AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D2446A2-6B2E-4E63-B704-481125E15AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F300F13-3AC0-7552-472B-D1BA65BD80F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F300F13-3AC0-7552-472B-D1BA65BD80F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F300F13-3AC0-7552-472B-D1BA65BD80F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F300F13-3AC0-7552-472B-D1BA65BD80F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877A5AD0-BA20-418E-96A3-8BEC1FC98638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877A5AD0-BA20-418E-96A3-8BEC1FC98638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877A5AD0-BA20-418E-96A3-8BEC1FC98638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877A5AD0-BA20-418E-96A3-8BEC1FC98638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E7F322B-06CB-B4FC-1002-1A28201F4BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E7F322B-06CB-B4FC-1002-1A28201F4BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E7F322B-06CB-B4FC-1002-1A28201F4BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E7F322B-06CB-B4FC-1002-1A28201F4BC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {772D208C-5CF4-4655-9593-F6F497989D4C}
 	EndGlobalSection
 EndGlobal
