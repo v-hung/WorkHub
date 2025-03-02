@@ -1,11 +1,12 @@
 import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import plugin from "@vitejs/plugin-react";
 import fs from "fs";
 import path from "path";
 import child_process from "child_process";
 import { env } from "process";
+
 import Icons from "unplugin-icons/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import IconsResolver from "unplugin-icons/resolver";
@@ -48,12 +49,12 @@ const target = env.ASPNETCORE_HTTPS_PORT
   ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}`
   : env.ASPNETCORE_URLS
   ? env.ASPNETCORE_URLS.split(";")[0]
-  : "http://localhost:5173";
+  : "http://localhost:5240";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(),
+    plugin(),
     AutoImport({
       dts: "src/types/components.d.ts",
       resolvers: [
@@ -85,7 +86,7 @@ export default defineConfig({
         secure: false,
       },
     },
-    port: 56156,
+    port: parseInt(env.DEV_SERVER_PORT || "52045"),
     https: {
       key: fs.readFileSync(keyFilePath),
       cert: fs.readFileSync(certFilePath),

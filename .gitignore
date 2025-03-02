@@ -1,7 +1,7 @@
 
 *.suo
-# *.user
-# *.csproj.user
+*.user
+*.csproj.user
 *.sln.docstates
 **/bin/
 **/obj/

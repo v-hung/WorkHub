@@ -1,6 +1,14 @@
-export function createSuspender<T>(promise: Promise<T>) {
+type CreateSuspenderSettings = {
+  ignoreErrors?: boolean;
+};
+
+export function createSuspender<T>(
+  promise: Promise<T>,
+  settings?: CreateSuspenderSettings
+) {
   let status: "pending" | "success" | "error" = "pending";
   let result: T;
+  let { ignoreErrors = false } = settings || {};
 
   let resolvePromise: () => void;
   const wrapperPromise = new Promise<void>((resolve) => {
@@ -14,8 +22,8 @@ export function createSuspender<T>(promise: Promise<T>) {
       resolvePromise();
     })
     .catch((error) => {
-      status = "error";
-      result = error;
+      status = ignoreErrors ? "success" : "error";
+      result = ignoreErrors ? null : error;
       resolvePromise();
     });
 

@@ -1,5 +1,7 @@
 
 using WorkTimeTracker.Server.Extensions;
+using WorkTimeTracker.Application.Extensions;
+using WorkTimeTracker.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddCustomControllers();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityConfiguration();
+builder.Services.AddApplicationLayer();
+builder.Services.AddInfrastructureLayer();
 builder.Services.AddApplicationServices();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 

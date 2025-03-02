@@ -9,17 +9,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MediatR;
-using WorkTimeTracker.Server.Authorization;
-using WorkTimeTracker.Server.Configs;
-using WorkTimeTracker.Server.Constants.Permission;
-using WorkTimeTracker.Server.Data;
-using WorkTimeTracker.Server.Extensions.Utils;
-using WorkTimeTracker.Server.Interfaces.Data;
-using WorkTimeTracker.Server.Interfaces.Services;
-using WorkTimeTracker.Server.Models.Identity;
-using WorkTimeTracker.Server.Services;
-using Microsoft.Extensions.Localization;
+using WorkTimeTracker.Application.Configs;
+using WorkTimeTracker.Application.Interfaces.Data;
+using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Domain.Constants.Permission;
+using WorkTimeTracker.Domain.Entities.Identity;
+using WorkTimeTracker.Infrastructure.Authorization;
+using WorkTimeTracker.Infrastructure.Data;
+using WorkTimeTracker.Infrastructure.Services;
+using WorkTimeTracker.Server.Swagger;
 
 namespace WorkTimeTracker.Server.Extensions;
 
@@ -29,8 +27,9 @@ static class ServiceCollectionExtensions
 	{
 		var connectionString = configuration.GetConnectionString("DefaultConnection");
 		services.AddDbContext<ApplicationDbContext>(options =>
-			options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)))
-			.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
+				options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+						b => b.MigrationsAssembly("WorkTimeTracker.Infrastructure")))
+				.AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 	}
 
 	public static void AddCustomControllers(this IServiceCollection services)
@@ -84,17 +83,17 @@ static class ServiceCollectionExtensions
 			options.Events = new JwtBearerEvents
 			{
 				OnMessageReceived = context =>
+				{
+					var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+					if (string.IsNullOrEmpty(token))
 					{
-						var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
-						if (string.IsNullOrEmpty(token))
-						{
-							token = context.Request.Cookies["token"];
-						}
-
-						context.Token = token;
-						return Task.CompletedTask;
+						token = context.Request.Cookies["token"];
 					}
+
+					context.Token = token;
+					return Task.CompletedTask;
+				}
 			};
 		});
 
@@ -110,10 +109,10 @@ static class ServiceCollectionExtensions
 
 	public static void AddApplicationServices(this IServiceCollection services)
 	{
-		services.AddLocalization(options => options.ResourcesPath = "Server.Resources");
+		services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-		services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
@@ -151,8 +150,8 @@ static class ServiceCollectionExtensions
 						In = ParameterLocation.Header,
 						Reference = new OpenApiReference
 						{
-							Id = "Bearer",
-							Type = ReferenceType.SecurityScheme,
+								Id = "Bearer",
+								Type = ReferenceType.SecurityScheme,
 						}
 					},
 					new List<string>()
@@ -161,8 +160,8 @@ static class ServiceCollectionExtensions
 
 			c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.ActionDescriptor.RouteValues["action"]}");
 
-			c.OperationFilter<AddErrorResponse500>();
-			c.SchemaFilter<PermissionSchema>();
+			c.OperationFilter<SwaggerErrorResponseFilter>();
+			c.SchemaFilter<SwaggerPermissionSchema>();
 			c.OperationFilter<AddPermissionSchemaOperationFilter>();
 		});
 	}

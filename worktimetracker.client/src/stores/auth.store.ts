@@ -36,9 +36,9 @@ export const useAuthStore = create<AuthState>()(
     logout: () => set({ user: null }),
 
     load: async () => {
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve, reject) => setTimeout(resolve, 1000));
       // set({
-      //   user: USER
+      //   user: USER,
       // });
 
       try {
@@ -46,6 +46,7 @@ export const useAuthStore = create<AuthState>()(
 
         set({ user });
       } catch (error) {
+        console.log({ error });
         set({ user: null });
       }
     },
