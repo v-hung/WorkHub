@@ -189,17 +189,13 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Team"
-                name="teamID"
-                rules={[{ required: true }]}
-              >
-                <Select
+              <Form.Item label="Team" name="teamID">
+                {/* <Select
                   options={Object.entries(UserPosition).map(([key, value]) => ({
                     value,
                     label: key,
                   }))}
-                />
+                /> */}
               </Form.Item>
             </Col>
 

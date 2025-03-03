@@ -73,7 +73,7 @@ namespace WorkTimeTracker.Infrastructure.Services
 			// Mapping to DTO & Return
 			List<D> users = await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 
-			return new Paginated<D>(users, request.PageNumber, request.PageSize, await query.CountAsync());
+			return new Paginated<D>(users, await query.CountAsync(), request.PageNumber, request.PageSize);
 		}
 
 		public async Task<D> GetAsync<D, TId>(TId userId) where D : IEntity<TId> where TId : notnull

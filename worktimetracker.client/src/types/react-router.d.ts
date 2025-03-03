@@ -1,2 +1,2 @@
-import "react-router";
-declare module "react-router" {}
+// import "react-router";
+// declare module "react-router" {}

@@ -16,7 +16,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		[HttpGet]
 		public String test()
 		{
-			return _localizer["EntityNotFound", "Team"];
+			return _localizer["EntityNotFound", "Team 123"];
 		}
 	}
 }

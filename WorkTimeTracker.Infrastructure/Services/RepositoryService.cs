@@ -81,7 +81,7 @@ namespace WorkTimeTracker.Infrastructure.Services
 					.Take(request.PageSize)
 					.ToListAsync();
 
-			return new Paginated<D>(pagedData, request.PageNumber, request.PageSize, totalRecords);
+			return new Paginated<D>(pagedData, totalRecords, request.PageNumber, request.PageSize);
 		}
 
 		public async Task<D> GetAsync<D, DId>(TId id) where D : IEntity<DId> where DId : notnull
