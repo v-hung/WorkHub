@@ -10,17 +10,17 @@
  * Do not edit the class manually.
  */
 
-import { UserMinimalDto } from '../models/UserMinimalDto';
+import { WorkTimeDto } from '../models/WorkTimeDto';
 import { HttpFile } from '../http/http';
 
-export class TeamDto {
-    'id': number;
-    'name': string;
-    'description'?: string | null;
-    'totalMembers': number;
-    'completedProjects': number;
-    'activeProjects': number;
-    'manager'?: UserMinimalDto;
+export class WorkTimeDtoPaginated {
+    'data': Array<WorkTimeDto>;
+    'currentPage': number;
+    'totalPages': number;
+    'totalCount': number;
+    'pageSize': number;
+    'hasPreviousPage': boolean;
+    'hasNextPage': boolean;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -28,50 +28,50 @@ export class TeamDto {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "id",
-            "baseName": "id",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "name",
-            "baseName": "name",
-            "type": "string",
+            "name": "data",
+            "baseName": "data",
+            "type": "Array<WorkTimeDto>",
             "format": ""
         },
         {
-            "name": "description",
-            "baseName": "description",
-            "type": "string",
+            "name": "currentPage",
+            "baseName": "currentPage",
+            "type": "number",
+            "format": "int32"
+        },
+        {
+            "name": "totalPages",
+            "baseName": "totalPages",
+            "type": "number",
+            "format": "int32"
+        },
+        {
+            "name": "totalCount",
+            "baseName": "totalCount",
+            "type": "number",
+            "format": "int32"
+        },
+        {
+            "name": "pageSize",
+            "baseName": "pageSize",
+            "type": "number",
+            "format": "int32"
+        },
+        {
+            "name": "hasPreviousPage",
+            "baseName": "hasPreviousPage",
+            "type": "boolean",
             "format": ""
         },
         {
-            "name": "totalMembers",
-            "baseName": "totalMembers",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "completedProjects",
-            "baseName": "completedProjects",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "activeProjects",
-            "baseName": "activeProjects",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "manager",
-            "baseName": "manager",
-            "type": "UserMinimalDto",
+            "name": "hasNextPage",
+            "baseName": "hasNextPage",
+            "type": "boolean",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return TeamDto.attributeTypeMap;
+        return WorkTimeDtoPaginated.attributeTypeMap;
     }
 
     public constructor() {

@@ -1,12 +1,21 @@
 import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/http';
-import { Configuration} from '../configuration'
+import { Configuration, ConfigurationOptions, PromiseConfigurationOptions } from '../configuration'
+import { PromiseMiddleware, Middleware, PromiseMiddlewareWrapper } from '../middleware';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { CreateEditProjectCommand } from '../models/CreateEditProjectCommand';
+import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
+import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
 import { Permission } from '../models/Permission';
+import { ProjectDto } from '../models/ProjectDto';
+import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
+import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { TeamDto } from '../models/TeamDto';
+import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
@@ -17,6 +26,7 @@ import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
 import { WorkTimeDto } from '../models/WorkTimeDto';
+import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 import { ObservableAccountApi } from './ObservableAPI';
 
 import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
@@ -34,74 +44,705 @@ export class PromiseAccountApi {
     /**
      * @param [changePasswordRequest]
      */
-    public accountChangePasswordWithHttpInfo(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.accountChangePasswordWithHttpInfo(changePasswordRequest, _options);
+    public accountChangePasswordWithHttpInfo(changePasswordRequest?: ChangePasswordRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountChangePasswordWithHttpInfo(changePasswordRequest, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param [changePasswordRequest]
      */
-    public accountChangePassword(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<void> {
-        const result = this.api.accountChangePassword(changePasswordRequest, _options);
+    public accountChangePassword(changePasswordRequest?: ChangePasswordRequest, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountChangePassword(changePasswordRequest, observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public accountGetCurrentUserWithHttpInfo(_options?: Configuration): Promise<HttpInfo<UserDto>> {
-        const result = this.api.accountGetCurrentUserWithHttpInfo(_options);
+    public accountGetCurrentUserWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountGetCurrentUserWithHttpInfo(observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public accountGetCurrentUser(_options?: Configuration): Promise<UserDto> {
-        const result = this.api.accountGetCurrentUser(_options);
+    public accountGetCurrentUser(_options?: PromiseConfigurationOptions): Promise<UserDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountGetCurrentUser(observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param [loginRequest]
      */
-    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: Configuration): Promise<HttpInfo<LoginResponse>> {
-        const result = this.api.accountLoginWithHttpInfo(loginRequest, _options);
+    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<LoginResponse>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountLoginWithHttpInfo(loginRequest, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param [loginRequest]
      */
-    public accountLogin(loginRequest?: LoginRequest, _options?: Configuration): Promise<LoginResponse> {
-        const result = this.api.accountLogin(loginRequest, _options);
+    public accountLogin(loginRequest?: LoginRequest, _options?: PromiseConfigurationOptions): Promise<LoginResponse> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountLogin(loginRequest, observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public accountLogoutWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.accountLogoutWithHttpInfo(_options);
+    public accountLogoutWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountLogoutWithHttpInfo(observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public accountLogout(_options?: Configuration): Promise<void> {
-        const result = this.api.accountLogout(_options);
+    public accountLogout(_options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountLogout(observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public accountRefreshTokenWithHttpInfo(_options?: Configuration): Promise<HttpInfo<RefreshTokenResponse>> {
-        const result = this.api.accountRefreshTokenWithHttpInfo(_options);
+    public accountRefreshTokenWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<RefreshTokenResponse>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountRefreshTokenWithHttpInfo(observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public accountRefreshToken(_options?: Configuration): Promise<RefreshTokenResponse> {
-        const result = this.api.accountRefreshToken(_options);
+    public accountRefreshToken(_options?: PromiseConfigurationOptions): Promise<RefreshTokenResponse> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountRefreshToken(observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableProjectApi } from './ObservableAPI';
+
+import { ProjectApiRequestFactory, ProjectApiResponseProcessor} from "../apis/ProjectApi";
+export class PromiseProjectApi {
+    private api: ObservableProjectApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: ProjectApiRequestFactory,
+        responseProcessor?: ProjectApiResponseProcessor
+    ) {
+        this.api = new ObservableProjectApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [createEditProjectCommand]
+     */
+    public projectCreateWithHttpInfo(createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectCreateWithHttpInfo(createEditProjectCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [createEditProjectCommand]
+     */
+    public projectCreate(createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectCreate(createEditProjectCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public projectDeleteWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectDeleteWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public projectDelete(id: number, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectDelete(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public projectGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public projectGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<ProjectDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public projectGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectGetByIdWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public projectGetById(id: number, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createEditProjectCommand]
+     */
+    public projectUpdateWithHttpInfo(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectUpdateWithHttpInfo(id, createEditProjectCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createEditProjectCommand]
+     */
+    public projectUpdate(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectUpdate(id, createEditProjectCommand, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableTeamApi } from './ObservableAPI';
+
+import { TeamApiRequestFactory, TeamApiResponseProcessor} from "../apis/TeamApi";
+export class PromiseTeamApi {
+    private api: ObservableTeamApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: TeamApiRequestFactory,
+        responseProcessor?: TeamApiResponseProcessor
+    ) {
+        this.api = new ObservableTeamApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [createEditTeamCommand]
+     */
+    public teamCreateWithHttpInfo(createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamCreateWithHttpInfo(createEditTeamCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [createEditTeamCommand]
+     */
+    public teamCreate(createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamCreate(createEditTeamCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public teamDeleteWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamDeleteWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public teamDelete(id: number, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamDelete(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public teamGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public teamGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<TeamDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public teamGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamGetByIdWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public teamGetById(id: number, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createEditTeamCommand]
+     */
+    public teamUpdateWithHttpInfo(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamUpdateWithHttpInfo(id, createEditTeamCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createEditTeamCommand]
+     */
+    public teamUpdate(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamUpdate(id, createEditTeamCommand, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableTimesheetApi } from './ObservableAPI';
+
+import { TimesheetApiRequestFactory, TimesheetApiResponseProcessor} from "../apis/TimesheetApi";
+export class PromiseTimesheetApi {
+    private api: ObservableTimesheetApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: TimesheetApiRequestFactory,
+        responseProcessor?: TimesheetApiResponseProcessor
+    ) {
+        this.api = new ObservableTimesheetApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     */
+    public timesheetTestWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<string>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetTestWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public timesheetTest(_options?: PromiseConfigurationOptions): Promise<string> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetTest(observableOptions);
         return result.toPromise();
     }
 
@@ -127,32 +768,80 @@ export class PromiseUserApi {
     /**
      * @param [userCreateUpdateRequest]
      */
-    public userCreateWithHttpInfo(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<HttpInfo<UserDto>> {
-        const result = this.api.userCreateWithHttpInfo(userCreateUpdateRequest, _options);
+    public userCreateWithHttpInfo(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userCreateWithHttpInfo(userCreateUpdateRequest, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param [userCreateUpdateRequest]
      */
-    public userCreate(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<UserDto> {
-        const result = this.api.userCreate(userCreateUpdateRequest, _options);
+    public userCreate(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<UserDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userCreate(userCreateUpdateRequest, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public userDeleteWithHttpInfo(id: string, _options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.userDeleteWithHttpInfo(id, _options);
+    public userDeleteWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userDeleteWithHttpInfo(id, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public userDelete(id: string, _options?: Configuration): Promise<void> {
-        const result = this.api.userDelete(id, _options);
+    public userDelete(id: string, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userDelete(id, observableOptions);
         return result.toPromise();
     }
 
@@ -160,11 +849,22 @@ export class PromiseUserApi {
      * @param pageNumber
      * @param pageSize
      * @param [searchString]
-     * @param [orderBy]
-     * @param [orderByString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public userGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Promise<HttpInfo<UserDtoPaginated>> {
-        const result = this.api.userGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
+    public userGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 
@@ -172,27 +872,62 @@ export class PromiseUserApi {
      * @param pageNumber
      * @param pageSize
      * @param [searchString]
-     * @param [orderBy]
-     * @param [orderByString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, orderByString?: string, _options?: Configuration): Promise<UserDtoPaginated> {
-        const result = this.api.userGetAll(pageNumber, pageSize, searchString, orderBy, orderByString, _options);
+    public userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<UserDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public userGetByIdWithHttpInfo(id: string, _options?: Configuration): Promise<HttpInfo<UserFullDto>> {
-        const result = this.api.userGetByIdWithHttpInfo(id, _options);
+    public userGetByIdWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserFullDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userGetByIdWithHttpInfo(id, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public userGetById(id: string, _options?: Configuration): Promise<UserFullDto> {
-        const result = this.api.userGetById(id, _options);
+    public userGetById(id: string, _options?: PromiseConfigurationOptions): Promise<UserFullDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userGetById(id, observableOptions);
         return result.toPromise();
     }
 
@@ -200,8 +935,20 @@ export class PromiseUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<HttpInfo<UserDto>> {
-        const result = this.api.userUpdateWithHttpInfo(id, userCreateUpdateRequest, _options);
+    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userUpdateWithHttpInfo(id, userCreateUpdateRequest, observableOptions);
         return result.toPromise();
     }
 
@@ -209,8 +956,247 @@ export class PromiseUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<UserDto> {
-        const result = this.api.userUpdate(id, userCreateUpdateRequest, _options);
+    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<UserDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userUpdate(id, userCreateUpdateRequest, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableWorkTimeApi } from './ObservableAPI';
+
+import { WorkTimeApiRequestFactory, WorkTimeApiResponseProcessor} from "../apis/WorkTimeApi";
+export class PromiseWorkTimeApi {
+    private api: ObservableWorkTimeApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: WorkTimeApiRequestFactory,
+        responseProcessor?: WorkTimeApiResponseProcessor
+    ) {
+        this.api = new ObservableWorkTimeApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [createEditWorkTimeCommand]
+     */
+    public workTimeCreateWithHttpInfo(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeCreateWithHttpInfo(createEditWorkTimeCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [createEditWorkTimeCommand]
+     */
+    public workTimeCreate(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeCreate(createEditWorkTimeCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public workTimeDeleteWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeDeleteWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public workTimeDelete(id: number, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeDelete(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public workTimeGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public workTimeGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<WorkTimeDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public workTimeGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeGetByIdWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public workTimeGetById(id: number, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createEditWorkTimeCommand]
+     */
+    public workTimeUpdateWithHttpInfo(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeUpdateWithHttpInfo(id, createEditWorkTimeCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createEditWorkTimeCommand]
+     */
+    public workTimeUpdate(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeUpdate(id, createEditWorkTimeCommand, observableOptions);
         return result.toPromise();
     }
 

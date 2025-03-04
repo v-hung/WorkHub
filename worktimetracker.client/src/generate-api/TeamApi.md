@@ -1,65 +1,50 @@
-# .UserApi
+# .TeamApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**userCreate**](UserApi.md#userCreate) | **POST** /api/users | 
-[**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
-[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users | 
-[**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
-[**userUpdate**](UserApi.md#userUpdate) | **PUT** /api/users/{id} | 
+[**teamCreate**](TeamApi.md#teamCreate) | **POST** /api/teams | 
+[**teamDelete**](TeamApi.md#teamDelete) | **DELETE** /api/teams/{id} | 
+[**teamGetAll**](TeamApi.md#teamGetAll) | **GET** /api/teams | 
+[**teamGetById**](TeamApi.md#teamGetById) | **GET** /api/teams/{id} | 
+[**teamUpdate**](TeamApi.md#teamUpdate) | **PUT** /api/teams/{id} | 
 
 
-# **userCreate**
-> UserDto userCreate()
+# **teamCreate**
+> TeamDto teamCreate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserCreateRequest } from '';
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamCreateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new TeamApi(configuration);
 
-const request: UserApiUserCreateRequest = {
+const request: TeamApiTeamCreateRequest = {
   
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    userName: "userName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
-    teamId: 1,
-    managerTeamIds: [
-      1,
+  createEditTeamCommand: {
+    id: 1,
+    name: "name_example",
+    description: "description_example",
+    totalMembers: 1,
+    completedProjects: 1,
+    activeProjects: 1,
+    managerId: "managerId_example",
+    memberIds: [
+      "memberIds_example",
     ],
-    managerProjectIds: [
+    projectIds: [
       1,
-    ],
-    roleNames: [
-      "roleNames_example",
     ],
   },
 };
 
-const data = await apiInstance.userCreate(request);
+const data = await apiInstance.teamCreate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,12 +53,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **createEditTeamCommand** | **CreateEditTeamCommand**|  |
 
 
 ### Return type
 
-**UserDto**
+**TeamDto**
 
 ### Authorization
 
@@ -93,26 +78,26 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userDelete**
-> void userDelete()
+# **teamDelete**
+> void teamDelete()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserDeleteRequest } from '';
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamDeleteRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new TeamApi(configuration);
 
-const request: UserApiUserDeleteRequest = {
+const request: TeamApiTeamDeleteRequest = {
   
-  id: "id_example",
+  id: 1,
 };
 
-const data = await apiInstance.userDelete(request);
+const data = await apiInstance.teamDelete(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -121,7 +106,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type
@@ -146,21 +131,21 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userGetAll**
-> UserDtoPaginated userGetAll()
+# **teamGetAll**
+> TeamDtoPaginated teamGetAll()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserGetAllRequest } from '';
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamGetAllRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new TeamApi(configuration);
 
-const request: UserApiUserGetAllRequest = {
+const request: TeamApiTeamGetAllRequest = {
   
   pageNumber: 1,
   
@@ -173,7 +158,7 @@ const request: UserApiUserGetAllRequest = {
   ],
 };
 
-const data = await apiInstance.userGetAll(request);
+const data = await apiInstance.teamGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -190,7 +175,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**UserDtoPaginated**
+**TeamDtoPaginated**
 
 ### Authorization
 
@@ -210,26 +195,26 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userGetById**
-> UserFullDto userGetById()
+# **teamGetById**
+> TeamDto teamGetById()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserGetByIdRequest } from '';
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamGetByIdRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new TeamApi(configuration);
 
-const request: UserApiUserGetByIdRequest = {
+const request: TeamApiTeamGetByIdRequest = {
   
-  id: "id_example",
+  id: 1,
 };
 
-const data = await apiInstance.userGetById(request);
+const data = await apiInstance.teamGetById(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -238,12 +223,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type
 
-**UserFullDto**
+**TeamDto**
 
 ### Authorization
 
@@ -263,57 +248,42 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userUpdate**
-> UserDto userUpdate()
+# **teamUpdate**
+> TeamDto teamUpdate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserUpdateRequest } from '';
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamUpdateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new TeamApi(configuration);
 
-const request: UserApiUserUpdateRequest = {
+const request: TeamApiTeamUpdateRequest = {
   
   id: "id_example",
   
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    userName: "userName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
-    teamId: 1,
-    managerTeamIds: [
-      1,
+  createEditTeamCommand: {
+    id: 1,
+    name: "name_example",
+    description: "description_example",
+    totalMembers: 1,
+    completedProjects: 1,
+    activeProjects: 1,
+    managerId: "managerId_example",
+    memberIds: [
+      "memberIds_example",
     ],
-    managerProjectIds: [
+    projectIds: [
       1,
-    ],
-    roleNames: [
-      "roleNames_example",
     ],
   },
 };
 
-const data = await apiInstance.userUpdate(request);
+const data = await apiInstance.teamUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -322,13 +292,13 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **createEditTeamCommand** | **CreateEditTeamCommand**|  |
  **id** | [**string**] |  | defaults to undefined
 
 
 ### Return type
 
-**UserDto**
+**TeamDto**
 
 ### Authorization
 

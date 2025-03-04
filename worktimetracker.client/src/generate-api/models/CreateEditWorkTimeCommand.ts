@@ -12,13 +12,14 @@
 
 import { HttpFile } from '../http/http';
 
-export class UserDetailDto {
-    'id': number;
-    'birthDate'?: Date;
-    'gender'?: boolean;
-    'permanentAddress'?: string | null;
-    'contactAddress'?: string | null;
-    'yearsOfWork': number;
+export class CreateEditWorkTimeCommand {
+    'id'?: number;
+    'title': string;
+    'startTimeMorning': string;
+    'endTimeMorning': string;
+    'startTimeAfternoon': string;
+    'endTimeAfternoon': string;
+    'allowedLateMinutes': number;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -32,38 +33,44 @@ export class UserDetailDto {
             "format": "int32"
         },
         {
-            "name": "birthDate",
-            "baseName": "birthDate",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "gender",
-            "baseName": "gender",
-            "type": "boolean",
-            "format": ""
-        },
-        {
-            "name": "permanentAddress",
-            "baseName": "permanentAddress",
+            "name": "title",
+            "baseName": "title",
             "type": "string",
             "format": ""
         },
         {
-            "name": "contactAddress",
-            "baseName": "contactAddress",
+            "name": "startTimeMorning",
+            "baseName": "startTimeMorning",
             "type": "string",
-            "format": ""
+            "format": "date-span"
         },
         {
-            "name": "yearsOfWork",
-            "baseName": "yearsOfWork",
+            "name": "endTimeMorning",
+            "baseName": "endTimeMorning",
+            "type": "string",
+            "format": "date-span"
+        },
+        {
+            "name": "startTimeAfternoon",
+            "baseName": "startTimeAfternoon",
+            "type": "string",
+            "format": "date-span"
+        },
+        {
+            "name": "endTimeAfternoon",
+            "baseName": "endTimeAfternoon",
+            "type": "string",
+            "format": "date-span"
+        },
+        {
+            "name": "allowedLateMinutes",
+            "baseName": "allowedLateMinutes",
             "type": "number",
             "format": "int32"
         }    ];
 
     static getAttributeTypeMap() {
-        return UserDetailDto.attributeTypeMap;
+        return CreateEditWorkTimeCommand.attributeTypeMap;
     }
 
     public constructor() {

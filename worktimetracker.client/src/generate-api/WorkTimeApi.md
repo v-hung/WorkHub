@@ -1,65 +1,44 @@
-# .UserApi
+# .WorkTimeApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**userCreate**](UserApi.md#userCreate) | **POST** /api/users | 
-[**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
-[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users | 
-[**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
-[**userUpdate**](UserApi.md#userUpdate) | **PUT** /api/users/{id} | 
+[**workTimeCreate**](WorkTimeApi.md#workTimeCreate) | **POST** /api/work-times | 
+[**workTimeDelete**](WorkTimeApi.md#workTimeDelete) | **DELETE** /api/work-times/{id} | 
+[**workTimeGetAll**](WorkTimeApi.md#workTimeGetAll) | **GET** /api/work-times | 
+[**workTimeGetById**](WorkTimeApi.md#workTimeGetById) | **GET** /api/work-times/{id} | 
+[**workTimeUpdate**](WorkTimeApi.md#workTimeUpdate) | **PUT** /api/work-times/{id} | 
 
 
-# **userCreate**
-> UserDto userCreate()
+# **workTimeCreate**
+> WorkTimeDto workTimeCreate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserCreateRequest } from '';
+import { createConfiguration, WorkTimeApi } from '';
+import type { WorkTimeApiWorkTimeCreateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new WorkTimeApi(configuration);
 
-const request: UserApiUserCreateRequest = {
+const request: WorkTimeApiWorkTimeCreateRequest = {
   
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    userName: "userName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
-    teamId: 1,
-    managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
-      1,
-    ],
-    roleNames: [
-      "roleNames_example",
-    ],
+  createEditWorkTimeCommand: {
+    id: 1,
+    title: "title_example",
+    startTimeMorning: "startTimeMorning_example",
+    endTimeMorning: "endTimeMorning_example",
+    startTimeAfternoon: "startTimeAfternoon_example",
+    endTimeAfternoon: "endTimeAfternoon_example",
+    allowedLateMinutes: 1,
   },
 };
 
-const data = await apiInstance.userCreate(request);
+const data = await apiInstance.workTimeCreate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,12 +47,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **createEditWorkTimeCommand** | **CreateEditWorkTimeCommand**|  |
 
 
 ### Return type
 
-**UserDto**
+**WorkTimeDto**
 
 ### Authorization
 
@@ -93,26 +72,26 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userDelete**
-> void userDelete()
+# **workTimeDelete**
+> void workTimeDelete()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserDeleteRequest } from '';
+import { createConfiguration, WorkTimeApi } from '';
+import type { WorkTimeApiWorkTimeDeleteRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new WorkTimeApi(configuration);
 
-const request: UserApiUserDeleteRequest = {
+const request: WorkTimeApiWorkTimeDeleteRequest = {
   
-  id: "id_example",
+  id: 1,
 };
 
-const data = await apiInstance.userDelete(request);
+const data = await apiInstance.workTimeDelete(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -121,7 +100,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type
@@ -146,21 +125,21 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userGetAll**
-> UserDtoPaginated userGetAll()
+# **workTimeGetAll**
+> WorkTimeDtoPaginated workTimeGetAll()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserGetAllRequest } from '';
+import { createConfiguration, WorkTimeApi } from '';
+import type { WorkTimeApiWorkTimeGetAllRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new WorkTimeApi(configuration);
 
-const request: UserApiUserGetAllRequest = {
+const request: WorkTimeApiWorkTimeGetAllRequest = {
   
   pageNumber: 1,
   
@@ -173,7 +152,7 @@ const request: UserApiUserGetAllRequest = {
   ],
 };
 
-const data = await apiInstance.userGetAll(request);
+const data = await apiInstance.workTimeGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -190,7 +169,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**UserDtoPaginated**
+**WorkTimeDtoPaginated**
 
 ### Authorization
 
@@ -210,26 +189,26 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userGetById**
-> UserFullDto userGetById()
+# **workTimeGetById**
+> WorkTimeDto workTimeGetById()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserGetByIdRequest } from '';
+import { createConfiguration, WorkTimeApi } from '';
+import type { WorkTimeApiWorkTimeGetByIdRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new WorkTimeApi(configuration);
 
-const request: UserApiUserGetByIdRequest = {
+const request: WorkTimeApiWorkTimeGetByIdRequest = {
   
-  id: "id_example",
+  id: 1,
 };
 
-const data = await apiInstance.userGetById(request);
+const data = await apiInstance.workTimeGetById(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -238,12 +217,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type
 
-**UserFullDto**
+**WorkTimeDto**
 
 ### Authorization
 
@@ -263,57 +242,36 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userUpdate**
-> UserDto userUpdate()
+# **workTimeUpdate**
+> WorkTimeDto workTimeUpdate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserUpdateRequest } from '';
+import { createConfiguration, WorkTimeApi } from '';
+import type { WorkTimeApiWorkTimeUpdateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new WorkTimeApi(configuration);
 
-const request: UserApiUserUpdateRequest = {
+const request: WorkTimeApiWorkTimeUpdateRequest = {
   
   id: "id_example",
   
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    userName: "userName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
-    teamId: 1,
-    managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
-      1,
-    ],
-    roleNames: [
-      "roleNames_example",
-    ],
+  createEditWorkTimeCommand: {
+    id: 1,
+    title: "title_example",
+    startTimeMorning: "startTimeMorning_example",
+    endTimeMorning: "endTimeMorning_example",
+    startTimeAfternoon: "startTimeAfternoon_example",
+    endTimeAfternoon: "endTimeAfternoon_example",
+    allowedLateMinutes: 1,
   },
 };
 
-const data = await apiInstance.userUpdate(request);
+const data = await apiInstance.workTimeUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -322,13 +280,13 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **createEditWorkTimeCommand** | **CreateEditWorkTimeCommand**|  |
  **id** | [**string**] |  | defaults to undefined
 
 
 ### Return type
 
-**UserDto**
+**WorkTimeDto**
 
 ### Authorization
 

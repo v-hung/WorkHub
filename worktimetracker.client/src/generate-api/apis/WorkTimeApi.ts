@@ -8,26 +8,25 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
+import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
-import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
-import { UserDto } from '../models/UserDto';
-import { UserDtoPaginated } from '../models/UserDtoPaginated';
-import { UserFullDto } from '../models/UserFullDto';
+import { WorkTimeDto } from '../models/WorkTimeDto';
+import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 
 /**
  * no description
  */
-export class UserApiRequestFactory extends BaseAPIRequestFactory {
+export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param userCreateUpdateRequest 
+     * @param createEditWorkTimeCommand 
      */
-    public async userCreate(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeCreate(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
         // Path Params
-        const localVarPath = '/api/users';
+        const localVarPath = '/api/work-times';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -44,7 +43,7 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(userCreateUpdateRequest, "UserCreateUpdateRequest", ""),
+            ObjectSerializer.serialize(createEditWorkTimeCommand, "CreateEditWorkTimeCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -67,17 +66,17 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async userDelete(id: string, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeDelete(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("UserApi", "userDelete", "id");
+            throw new RequiredError("WorkTimeApi", "workTimeDelete", "id");
         }
 
 
         // Path Params
-        const localVarPath = '/api/users/{id}'
+        const localVarPath = '/api/work-times/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -106,25 +105,25 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
      * @param searchString 
      * @param orderBy of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public async userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'pageNumber' is not null or undefined
         if (pageNumber === null || pageNumber === undefined) {
-            throw new RequiredError("UserApi", "userGetAll", "pageNumber");
+            throw new RequiredError("WorkTimeApi", "workTimeGetAll", "pageNumber");
         }
 
 
         // verify required parameter 'pageSize' is not null or undefined
         if (pageSize === null || pageSize === undefined) {
-            throw new RequiredError("UserApi", "userGetAll", "pageSize");
+            throw new RequiredError("WorkTimeApi", "workTimeGetAll", "pageSize");
         }
 
 
 
 
         // Path Params
-        const localVarPath = '/api/users';
+        const localVarPath = '/api/work-times';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
@@ -172,17 +171,17 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async userGetById(id: string, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeGetById(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("UserApi", "userGetById", "id");
+            throw new RequiredError("WorkTimeApi", "workTimeGetById", "id");
         }
 
 
         // Path Params
-        const localVarPath = '/api/users/{id}'
+        const localVarPath = '/api/work-times/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -207,20 +206,20 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      * @param id 
-     * @param userCreateUpdateRequest 
+     * @param createEditWorkTimeCommand 
      */
-    public async userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeUpdate(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("UserApi", "userUpdate", "id");
+            throw new RequiredError("WorkTimeApi", "workTimeUpdate", "id");
         }
 
 
 
         // Path Params
-        const localVarPath = '/api/users/{id}'
+        const localVarPath = '/api/work-times/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -238,7 +237,7 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(userCreateUpdateRequest, "UserCreateUpdateRequest", ""),
+            ObjectSerializer.serialize(createEditWorkTimeCommand, "CreateEditWorkTimeCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -260,22 +259,22 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
 
 }
 
-export class UserApiResponseProcessor {
+export class WorkTimeApiResponseProcessor {
 
     /**
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userCreate
+     * @params response Response returned by the server for a request to workTimeCreate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userCreateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async workTimeCreateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<WorkTimeDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: WorkTimeDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "WorkTimeDto", ""
+            ) as WorkTimeDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -288,10 +287,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: WorkTimeDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "WorkTimeDto", ""
+            ) as WorkTimeDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -302,10 +301,10 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userDelete
+     * @params response Response returned by the server for a request to workTimeDelete
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async workTimeDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -334,16 +333,16 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userGetAll
+     * @params response Response returned by the server for a request to workTimeGetAll
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDtoPaginated >> {
+     public async workTimeGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<WorkTimeDtoPaginated >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDtoPaginated = ObjectSerializer.deserialize(
+            const body: WorkTimeDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDtoPaginated", ""
-            ) as UserDtoPaginated;
+                "WorkTimeDtoPaginated", ""
+            ) as WorkTimeDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -356,10 +355,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDtoPaginated = ObjectSerializer.deserialize(
+            const body: WorkTimeDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDtoPaginated", ""
-            ) as UserDtoPaginated;
+                "WorkTimeDtoPaginated", ""
+            ) as WorkTimeDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -370,16 +369,16 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userGetById
+     * @params response Response returned by the server for a request to workTimeGetById
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserFullDto >> {
+     public async workTimeGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<WorkTimeDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserFullDto = ObjectSerializer.deserialize(
+            const body: WorkTimeDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserFullDto", ""
-            ) as UserFullDto;
+                "WorkTimeDto", ""
+            ) as WorkTimeDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -392,10 +391,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserFullDto = ObjectSerializer.deserialize(
+            const body: WorkTimeDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserFullDto", ""
-            ) as UserFullDto;
+                "WorkTimeDto", ""
+            ) as WorkTimeDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -406,16 +405,16 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userUpdate
+     * @params response Response returned by the server for a request to workTimeUpdate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userUpdateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async workTimeUpdateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<WorkTimeDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: WorkTimeDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "WorkTimeDto", ""
+            ) as WorkTimeDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -428,10 +427,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: WorkTimeDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "WorkTimeDto", ""
+            ) as WorkTimeDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

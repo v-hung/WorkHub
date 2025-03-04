@@ -11,7 +11,7 @@ namespace WorkTimeTracker.Server.Controllers.Organization
 	public class TeamController : BaseApiController<TeamController>
 	{
 		[HttpGet]
-		public async Task<ActionResult<Paginated<TeamDto>>> GetAll([FromQuery(Name = "request")] PagedRequest request)
+		public async Task<ActionResult<Paginated<TeamDto>>> GetAll([FromQuery] PagedRequest request)
 		{
 			var teams = await _mediator.Send(new GetAllTeamQuery(request));
 

@@ -13,6 +13,7 @@ import {
 } from "@/generate-api";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import styles from "./UserFormCreate.module.css";
+import TeamSelect from "@/features/team/components/TeamSelect/TeamSelect";
 
 const { useBreakpoint } = Grid;
 
@@ -190,12 +191,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="Team" name="teamID">
-                {/* <Select
-                  options={Object.entries(UserPosition).map(([key, value]) => ({
-                    value,
-                    label: key,
-                  }))}
-                /> */}
+                <TeamSelect />
               </Form.Item>
             </Col>
 

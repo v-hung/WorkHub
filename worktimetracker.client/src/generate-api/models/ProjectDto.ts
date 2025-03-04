@@ -10,17 +10,21 @@
  * Do not edit the class manually.
  */
 
+import { ProjectStatus } from '../models/ProjectStatus';
+import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
-export class TeamDto {
+export class ProjectDto {
     'id': number;
     'name': string;
     'description'?: string | null;
-    'totalMembers': number;
-    'completedProjects': number;
-    'activeProjects': number;
+    'startDate'?: Date;
+    'endDate'?: Date;
+    'status'?: ProjectStatus;
+    'team'?: TeamMinimalDto;
     'manager'?: UserMinimalDto;
+    'members'?: Array<UserMinimalDto> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -46,34 +50,48 @@ export class TeamDto {
             "format": ""
         },
         {
-            "name": "totalMembers",
-            "baseName": "totalMembers",
-            "type": "number",
-            "format": "int32"
+            "name": "startDate",
+            "baseName": "startDate",
+            "type": "Date",
+            "format": "date-time"
         },
         {
-            "name": "completedProjects",
-            "baseName": "completedProjects",
-            "type": "number",
-            "format": "int32"
+            "name": "endDate",
+            "baseName": "endDate",
+            "type": "Date",
+            "format": "date-time"
         },
         {
-            "name": "activeProjects",
-            "baseName": "activeProjects",
-            "type": "number",
-            "format": "int32"
+            "name": "status",
+            "baseName": "status",
+            "type": "ProjectStatus",
+            "format": ""
+        },
+        {
+            "name": "team",
+            "baseName": "team",
+            "type": "TeamMinimalDto",
+            "format": ""
         },
         {
             "name": "manager",
             "baseName": "manager",
             "type": "UserMinimalDto",
             "format": ""
+        },
+        {
+            "name": "members",
+            "baseName": "members",
+            "type": "Array<UserMinimalDto>",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return TeamDto.attributeTypeMap;
+        return ProjectDto.attributeTypeMap;
     }
 
     public constructor() {
     }
 }
+
+

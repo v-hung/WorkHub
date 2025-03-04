@@ -9,7 +9,7 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 {
 	public class GetAllTeamQuery : IRequest<Paginated<TeamDto>>
 	{
-		public PagedRequest _request { get; }
+		public PagedRequest _request { get; set; }
 
 		public GetAllTeamQuery(PagedRequest request)
 		{

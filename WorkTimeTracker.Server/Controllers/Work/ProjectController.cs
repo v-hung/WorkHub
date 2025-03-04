@@ -11,7 +11,7 @@ namespace WorkTimeTracker.Server.Controllers.Work
 	public class ProjectController : BaseApiController<ProjectController>
 	{
 		[HttpGet]
-		public async Task<ActionResult<Paginated<ProjectDto>>> GetAll([FromQuery(Name = "request")] PagedRequest request)
+		public async Task<ActionResult<Paginated<ProjectDto>>> GetAll([FromQuery] PagedRequest request)
 		{
 			var data = await _mediator.Send(new GetAllProjectQuery(request));
 

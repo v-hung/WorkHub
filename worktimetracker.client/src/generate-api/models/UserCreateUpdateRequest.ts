@@ -17,9 +17,11 @@ import { HttpFile } from '../http/http';
 
 export class UserCreateUpdateRequest {
     'fullName': string;
+    'userName': string;
+    'email': string;
+    'phoneNumber'?: string | null;
     'image'?: string | null;
     'userPosition': UserPosition;
-    'isFirstLogin': boolean;
     'leaveHours': number;
     'userStatus': UserStatus;
     'workTimeId'?: number | null;
@@ -29,9 +31,6 @@ export class UserCreateUpdateRequest {
     'managerTeamIds': Array<number>;
     'managerProjectIds': Array<number>;
     'roleNames': Array<string>;
-    'userName': string;
-    'email': string;
-    'phoneNumber'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -45,6 +44,24 @@ export class UserCreateUpdateRequest {
             "format": ""
         },
         {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "email",
+            "baseName": "email",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "phoneNumber",
+            "baseName": "phoneNumber",
+            "type": "string",
+            "format": ""
+        },
+        {
             "name": "image",
             "baseName": "image",
             "type": "string",
@@ -54,12 +71,6 @@ export class UserCreateUpdateRequest {
             "name": "userPosition",
             "baseName": "userPosition",
             "type": "UserPosition",
-            "format": ""
-        },
-        {
-            "name": "isFirstLogin",
-            "baseName": "isFirstLogin",
-            "type": "boolean",
             "format": ""
         },
         {
@@ -114,24 +125,6 @@ export class UserCreateUpdateRequest {
             "name": "roleNames",
             "baseName": "roleNames",
             "type": "Array<string>",
-            "format": ""
-        },
-        {
-            "name": "userName",
-            "baseName": "userName",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "email",
-            "baseName": "email",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "phoneNumber",
-            "baseName": "phoneNumber",
-            "type": "string",
             "format": ""
         }    ];
 

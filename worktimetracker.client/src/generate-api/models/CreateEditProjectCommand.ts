@@ -10,17 +10,19 @@
  * Do not edit the class manually.
  */
 
-import { UserMinimalDto } from '../models/UserMinimalDto';
+import { ProjectStatus } from '../models/ProjectStatus';
 import { HttpFile } from '../http/http';
 
-export class TeamDto {
-    'id': number;
+export class CreateEditProjectCommand {
+    'id'?: number;
     'name': string;
     'description'?: string | null;
-    'totalMembers': number;
-    'completedProjects': number;
-    'activeProjects': number;
-    'manager'?: UserMinimalDto;
+    'startDate'?: Date;
+    'endDate'?: Date;
+    'status'?: ProjectStatus;
+    'teamId'?: number | null;
+    'managerId'?: string | null;
+    'memberIds'?: Array<string> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -46,34 +48,48 @@ export class TeamDto {
             "format": ""
         },
         {
-            "name": "totalMembers",
-            "baseName": "totalMembers",
-            "type": "number",
-            "format": "int32"
+            "name": "startDate",
+            "baseName": "startDate",
+            "type": "Date",
+            "format": "date-time"
         },
         {
-            "name": "completedProjects",
-            "baseName": "completedProjects",
-            "type": "number",
-            "format": "int32"
+            "name": "endDate",
+            "baseName": "endDate",
+            "type": "Date",
+            "format": "date-time"
         },
         {
-            "name": "activeProjects",
-            "baseName": "activeProjects",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "manager",
-            "baseName": "manager",
-            "type": "UserMinimalDto",
+            "name": "status",
+            "baseName": "status",
+            "type": "ProjectStatus",
             "format": ""
+        },
+        {
+            "name": "teamId",
+            "baseName": "teamId",
+            "type": "number",
+            "format": "int32"
+        },
+        {
+            "name": "managerId",
+            "baseName": "managerId",
+            "type": "string",
+            "format": "uuid"
+        },
+        {
+            "name": "memberIds",
+            "baseName": "memberIds",
+            "type": "Array<string>",
+            "format": "uuid"
         }    ];
 
     static getAttributeTypeMap() {
-        return TeamDto.attributeTypeMap;
+        return CreateEditProjectCommand.attributeTypeMap;
     }
 
     public constructor() {
     }
 }
+
+

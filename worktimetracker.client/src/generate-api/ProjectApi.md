@@ -1,65 +1,48 @@
-# .UserApi
+# .ProjectApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**userCreate**](UserApi.md#userCreate) | **POST** /api/users | 
-[**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
-[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users | 
-[**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
-[**userUpdate**](UserApi.md#userUpdate) | **PUT** /api/users/{id} | 
+[**projectCreate**](ProjectApi.md#projectCreate) | **POST** /api/projects | 
+[**projectDelete**](ProjectApi.md#projectDelete) | **DELETE** /api/projects/{id} | 
+[**projectGetAll**](ProjectApi.md#projectGetAll) | **GET** /api/projects | 
+[**projectGetById**](ProjectApi.md#projectGetById) | **GET** /api/projects/{id} | 
+[**projectUpdate**](ProjectApi.md#projectUpdate) | **PUT** /api/projects/{id} | 
 
 
-# **userCreate**
-> UserDto userCreate()
+# **projectCreate**
+> ProjectDto projectCreate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserCreateRequest } from '';
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiProjectCreateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new ProjectApi(configuration);
 
-const request: UserApiUserCreateRequest = {
+const request: ProjectApiProjectCreateRequest = {
   
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    userName: "userName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
+  createEditProjectCommand: {
+    id: 1,
+    name: "name_example",
+    description: "description_example",
+    startDate: new Date('1970-01-01T00:00:00.00Z'),
+    endDate: new Date('1970-01-01T00:00:00.00Z'),
+    status: "ACTIVE",
     teamId: 1,
-    managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
-      1,
-    ],
-    roleNames: [
-      "roleNames_example",
+    managerId: "managerId_example",
+    memberIds: [
+      "memberIds_example",
     ],
   },
 };
 
-const data = await apiInstance.userCreate(request);
+const data = await apiInstance.projectCreate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,12 +51,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **createEditProjectCommand** | **CreateEditProjectCommand**|  |
 
 
 ### Return type
 
-**UserDto**
+**ProjectDto**
 
 ### Authorization
 
@@ -93,26 +76,26 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userDelete**
-> void userDelete()
+# **projectDelete**
+> void projectDelete()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserDeleteRequest } from '';
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiProjectDeleteRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new ProjectApi(configuration);
 
-const request: UserApiUserDeleteRequest = {
+const request: ProjectApiProjectDeleteRequest = {
   
-  id: "id_example",
+  id: 1,
 };
 
-const data = await apiInstance.userDelete(request);
+const data = await apiInstance.projectDelete(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -121,7 +104,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type
@@ -146,21 +129,21 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userGetAll**
-> UserDtoPaginated userGetAll()
+# **projectGetAll**
+> ProjectDtoPaginated projectGetAll()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserGetAllRequest } from '';
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiProjectGetAllRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new ProjectApi(configuration);
 
-const request: UserApiUserGetAllRequest = {
+const request: ProjectApiProjectGetAllRequest = {
   
   pageNumber: 1,
   
@@ -173,7 +156,7 @@ const request: UserApiUserGetAllRequest = {
   ],
 };
 
-const data = await apiInstance.userGetAll(request);
+const data = await apiInstance.projectGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -190,7 +173,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**UserDtoPaginated**
+**ProjectDtoPaginated**
 
 ### Authorization
 
@@ -210,26 +193,26 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userGetById**
-> UserFullDto userGetById()
+# **projectGetById**
+> ProjectDto projectGetById()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserGetByIdRequest } from '';
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiProjectGetByIdRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new ProjectApi(configuration);
 
-const request: UserApiUserGetByIdRequest = {
+const request: ProjectApiProjectGetByIdRequest = {
   
-  id: "id_example",
+  id: 1,
 };
 
-const data = await apiInstance.userGetById(request);
+const data = await apiInstance.projectGetById(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -238,12 +221,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type
 
-**UserFullDto**
+**ProjectDto**
 
 ### Authorization
 
@@ -263,57 +246,40 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **userUpdate**
-> UserDto userUpdate()
+# **projectUpdate**
+> ProjectDto projectUpdate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiUserUpdateRequest } from '';
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiProjectUpdateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
+const apiInstance = new ProjectApi(configuration);
 
-const request: UserApiUserUpdateRequest = {
+const request: ProjectApiProjectUpdateRequest = {
   
   id: "id_example",
   
-  userCreateUpdateRequest: {
-    fullName: "fullName_example",
-    userName: "userName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      id: 1,
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-    },
-    supervisorId: "supervisorId_example",
+  createEditProjectCommand: {
+    id: 1,
+    name: "name_example",
+    description: "description_example",
+    startDate: new Date('1970-01-01T00:00:00.00Z'),
+    endDate: new Date('1970-01-01T00:00:00.00Z'),
+    status: "ACTIVE",
     teamId: 1,
-    managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
-      1,
-    ],
-    roleNames: [
-      "roleNames_example",
+    managerId: "managerId_example",
+    memberIds: [
+      "memberIds_example",
     ],
   },
 };
 
-const data = await apiInstance.userUpdate(request);
+const data = await apiInstance.projectUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -322,13 +288,13 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+ **createEditProjectCommand** | **CreateEditProjectCommand**|  |
  **id** | [**string**] |  | defaults to undefined
 
 
 ### Return type
 
-**UserDto**
+**ProjectDto**
 
 ### Authorization
 

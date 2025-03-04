@@ -1,6 +1,9 @@
 import {
   AccountApi,
+  ProjectApi,
+  TeamApi,
   UserApi,
+  WorkTimeApi,
   createConfiguration,
   server1,
 } from "@/generate-api";
@@ -24,5 +27,15 @@ export const configWithRefreshToken = createConfiguration({
 const accountApi = new AccountApi(config);
 const accountApiWithRefreshToken = new AccountApi(configWithRefreshToken);
 const userApi = new UserApi(configWithRefreshToken);
+const teamApi = new TeamApi(configWithRefreshToken);
+const projectApi = new ProjectApi(configWithRefreshToken);
+const workTimeApi = new WorkTimeApi(configWithRefreshToken);
 
-export { accountApi, accountApiWithRefreshToken, userApi };
+export {
+  accountApi,
+  accountApiWithRefreshToken,
+  userApi,
+  teamApi,
+  projectApi,
+  workTimeApi,
+};

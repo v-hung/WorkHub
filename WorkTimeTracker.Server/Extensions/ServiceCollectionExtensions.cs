@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WorkTimeTracker.Application.Configs;
@@ -114,6 +115,8 @@ static class ServiceCollectionExtensions
 		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
+		services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
+		services.AddSingleton(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
 		services.AddScoped<IUserService, UserService>();

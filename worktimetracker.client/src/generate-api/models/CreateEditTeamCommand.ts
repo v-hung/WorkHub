@@ -10,17 +10,18 @@
  * Do not edit the class manually.
  */
 
-import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
-export class TeamDto {
-    'id': number;
+export class CreateEditTeamCommand {
+    'id'?: number;
     'name': string;
     'description'?: string | null;
     'totalMembers': number;
     'completedProjects': number;
     'activeProjects': number;
-    'manager'?: UserMinimalDto;
+    'managerId'?: string | null;
+    'memberIds'?: Array<string> | null;
+    'projectIds'?: Array<number> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -64,14 +65,26 @@ export class TeamDto {
             "format": "int32"
         },
         {
-            "name": "manager",
-            "baseName": "manager",
-            "type": "UserMinimalDto",
-            "format": ""
+            "name": "managerId",
+            "baseName": "managerId",
+            "type": "string",
+            "format": "uuid"
+        },
+        {
+            "name": "memberIds",
+            "baseName": "memberIds",
+            "type": "Array<string>",
+            "format": "uuid"
+        },
+        {
+            "name": "projectIds",
+            "baseName": "projectIds",
+            "type": "Array<number>",
+            "format": "int32"
         }    ];
 
     static getAttributeTypeMap() {
-        return TeamDto.attributeTypeMap;
+        return CreateEditTeamCommand.attributeTypeMap;
     }
 
     public constructor() {

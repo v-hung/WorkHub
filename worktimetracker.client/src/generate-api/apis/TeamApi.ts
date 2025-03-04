@@ -8,26 +8,25 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
+import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
-import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
-import { UserDto } from '../models/UserDto';
-import { UserDtoPaginated } from '../models/UserDtoPaginated';
-import { UserFullDto } from '../models/UserFullDto';
+import { TeamDto } from '../models/TeamDto';
+import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 
 /**
  * no description
  */
-export class UserApiRequestFactory extends BaseAPIRequestFactory {
+export class TeamApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param userCreateUpdateRequest 
+     * @param createEditTeamCommand 
      */
-    public async userCreate(userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+    public async teamCreate(createEditTeamCommand?: CreateEditTeamCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
         // Path Params
-        const localVarPath = '/api/users';
+        const localVarPath = '/api/teams';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -44,7 +43,7 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(userCreateUpdateRequest, "UserCreateUpdateRequest", ""),
+            ObjectSerializer.serialize(createEditTeamCommand, "CreateEditTeamCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -67,17 +66,17 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async userDelete(id: string, _options?: Configuration): Promise<RequestContext> {
+    public async teamDelete(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("UserApi", "userDelete", "id");
+            throw new RequiredError("TeamApi", "teamDelete", "id");
         }
 
 
         // Path Params
-        const localVarPath = '/api/users/{id}'
+        const localVarPath = '/api/teams/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -106,25 +105,25 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
      * @param searchString 
      * @param orderBy of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public async userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
+    public async teamGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'pageNumber' is not null or undefined
         if (pageNumber === null || pageNumber === undefined) {
-            throw new RequiredError("UserApi", "userGetAll", "pageNumber");
+            throw new RequiredError("TeamApi", "teamGetAll", "pageNumber");
         }
 
 
         // verify required parameter 'pageSize' is not null or undefined
         if (pageSize === null || pageSize === undefined) {
-            throw new RequiredError("UserApi", "userGetAll", "pageSize");
+            throw new RequiredError("TeamApi", "teamGetAll", "pageSize");
         }
 
 
 
 
         // Path Params
-        const localVarPath = '/api/users';
+        const localVarPath = '/api/teams';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
@@ -172,17 +171,17 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async userGetById(id: string, _options?: Configuration): Promise<RequestContext> {
+    public async teamGetById(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("UserApi", "userGetById", "id");
+            throw new RequiredError("TeamApi", "teamGetById", "id");
         }
 
 
         // Path Params
-        const localVarPath = '/api/users/{id}'
+        const localVarPath = '/api/teams/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -207,20 +206,20 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      * @param id 
-     * @param userCreateUpdateRequest 
+     * @param createEditTeamCommand 
      */
-    public async userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+    public async teamUpdate(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("UserApi", "userUpdate", "id");
+            throw new RequiredError("TeamApi", "teamUpdate", "id");
         }
 
 
 
         // Path Params
-        const localVarPath = '/api/users/{id}'
+        const localVarPath = '/api/teams/{id}'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -238,7 +237,7 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(userCreateUpdateRequest, "UserCreateUpdateRequest", ""),
+            ObjectSerializer.serialize(createEditTeamCommand, "CreateEditTeamCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -260,22 +259,22 @@ export class UserApiRequestFactory extends BaseAPIRequestFactory {
 
 }
 
-export class UserApiResponseProcessor {
+export class TeamApiResponseProcessor {
 
     /**
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userCreate
+     * @params response Response returned by the server for a request to teamCreate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userCreateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async teamCreateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TeamDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: TeamDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "TeamDto", ""
+            ) as TeamDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -288,10 +287,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: TeamDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "TeamDto", ""
+            ) as TeamDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -302,10 +301,10 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userDelete
+     * @params response Response returned by the server for a request to teamDelete
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async teamDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -334,16 +333,16 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userGetAll
+     * @params response Response returned by the server for a request to teamGetAll
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDtoPaginated >> {
+     public async teamGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TeamDtoPaginated >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDtoPaginated = ObjectSerializer.deserialize(
+            const body: TeamDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDtoPaginated", ""
-            ) as UserDtoPaginated;
+                "TeamDtoPaginated", ""
+            ) as TeamDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -356,10 +355,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDtoPaginated = ObjectSerializer.deserialize(
+            const body: TeamDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDtoPaginated", ""
-            ) as UserDtoPaginated;
+                "TeamDtoPaginated", ""
+            ) as TeamDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -370,16 +369,16 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userGetById
+     * @params response Response returned by the server for a request to teamGetById
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserFullDto >> {
+     public async teamGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TeamDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserFullDto = ObjectSerializer.deserialize(
+            const body: TeamDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserFullDto", ""
-            ) as UserFullDto;
+                "TeamDto", ""
+            ) as TeamDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -392,10 +391,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserFullDto = ObjectSerializer.deserialize(
+            const body: TeamDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserFullDto", ""
-            ) as UserFullDto;
+                "TeamDto", ""
+            ) as TeamDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -406,16 +405,16 @@ export class UserApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to userUpdate
+     * @params response Response returned by the server for a request to teamUpdate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async userUpdateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async teamUpdateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TeamDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: TeamDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "TeamDto", ""
+            ) as TeamDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -428,10 +427,10 @@ export class UserApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: TeamDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "TeamDto", ""
+            ) as TeamDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

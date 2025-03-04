@@ -1,16 +1,16 @@
 import { getMessageError } from "@/common/utils/error";
-import { TeamDto, TeamDtoPaginated } from "@/generate-api";
-import { teamApi } from "@/services/apiClient";
+import { WorkTimeDto, WorkTimeDtoPaginated } from "@/generate-api";
+import { workTimeApi } from "@/services/apiClient";
 import { notification } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
-export const useTeams = () => {
+export const useWorkTimes = () => {
   const [loading, setLoading] = useState(false);
 
-  // GET LIST team
+  // GET LIST workTime
   // =============
 
-  const [teams, setTeams] = useState<TeamDtoPaginated>({
+  const [workTimes, setWorkTimes] = useState<WorkTimeDtoPaginated>({
     data: [],
     currentPage: 1,
     pageSize: 10,
@@ -23,18 +23,16 @@ export const useTeams = () => {
   const [request, setRequest] = useState({
     pageNumber: 1,
     pageSize: 10,
-    searchString: "",
   });
 
-  const fetchTeams = useCallback(async () => {
+  const fetchWorkTimes = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await teamApi.teamGetAll(
+      const data = await workTimeApi.workTimeGetAll(
         request.pageNumber,
-        request.pageSize,
-        request.searchString
+        request.pageSize
       );
-      setTeams(data);
+      setWorkTimes(data);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
@@ -44,20 +42,16 @@ export const useTeams = () => {
     }
   }, [request]);
 
-  useEffect(() => {
-    fetchTeams();
-  }, [request]);
-
-  // GET team BY ID
+  // GET workTime BY ID
   // ==============
 
-  const [team, setTeam] = useState<TeamDto | null>();
+  const [workTime, setWorkTime] = useState<WorkTimeDto | null>();
 
-  const fetchTeam = async (id: number) => {
+  const fetchWorkTime = async (id: number) => {
     setLoading(true);
     try {
-      const data = await teamApi.teamGetById(id);
-      setTeam(data);
+      const data = await workTimeApi.workTimeGetById(id);
+      setWorkTime(data);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
@@ -67,5 +61,12 @@ export const useTeams = () => {
     }
   };
 
-  return { teams, loading, fetchTeams, request, setRequest, team, fetchTeam };
+  return {
+    workTimes,
+    loading,
+    fetchWorkTimes,
+    setRequest,
+    workTime,
+    fetchWorkTime,
+  };
 };

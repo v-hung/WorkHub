@@ -95,7 +95,9 @@ namespace WorkTimeTracker.Infrastructure.Services
 		{
 			T entity = (id != null && !id.Equals(default(TId)))
 					? await _context.Set<T>().FindAsync(id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name])
-					: _mapper.Map<T>(request);
+					: Activator.CreateInstance<T>() ?? throw new BusinessException(HttpStatusCode.BadRequest, $"Cannot create an instance of {typeof(T).Name}");
+
+			_mapper.Map(request, entity);
 
 			if (updateRelations != null)
 			{
@@ -103,6 +105,11 @@ namespace WorkTimeTracker.Infrastructure.Services
 				{
 					await updateRelation(entity);
 				}
+			}
+
+			if (id == null || id.Equals(default(TId)))
+			{
+				await _context.Set<T>().AddAsync(entity);
 			}
 
 			await _context.SaveChangesAsync();
