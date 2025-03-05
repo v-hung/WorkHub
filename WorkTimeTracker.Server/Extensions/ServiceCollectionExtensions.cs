@@ -110,13 +110,11 @@ static class ServiceCollectionExtensions
 
 	public static void AddApplicationServices(this IServiceCollection services)
 	{
-		services.AddLocalization(options => options.ResourcesPath = "Resources");
-
 		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-		services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
-		services.AddSingleton(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
+		// services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
+		// services.AddSingleton(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
 		services.AddScoped<IUserService, UserService>();
@@ -125,6 +123,8 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IIdentityService, IdentityService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 		services.AddScoped(typeof(IRepositoryService<,>), typeof(RepositoryService<,>));
+
+		services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 	}
 

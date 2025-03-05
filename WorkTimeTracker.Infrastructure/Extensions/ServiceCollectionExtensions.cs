@@ -13,5 +13,5 @@ public static class ServiceCollectionExtensions
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
-    }
+	}
 }
