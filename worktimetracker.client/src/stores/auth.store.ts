@@ -36,19 +36,19 @@ export const useAuthStore = create<AuthState>()(
     logout: () => set({ user: null }),
 
     load: async () => {
-      await new Promise((resolve, reject) => setTimeout(resolve, 1000));
-      set({
-        user: USER,
-      });
+      // await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+      // set({
+      //   user: USER,
+      // });
 
-      // try {
-      //   const user = await accountApiWithRefreshToken.accountGetCurrentUser();
+      try {
+        const user = await accountApiWithRefreshToken.accountGetCurrentUser();
 
-      //   set({ user });
-      // } catch (error) {
-      //   console.log({ error });
-      //   set({ user: null });
-      // }
+        set({ user });
+      } catch (error) {
+        console.log({ error });
+        set({ user: null });
+      }
     },
   }))
 );

@@ -2,27 +2,28 @@ import { getMessageError } from "@/common/utils/error";
 import { TeamDto, TeamDtoPaginated } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { notification } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useTeams = () => {
+  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
 
   // GET LIST team
   // =============
 
-  const [teams, setTeams] = useState<TeamDtoPaginated>({
+  const [teamPaginated, setTeamPaginated] = useState<TeamDtoPaginated>({
     data: [],
     currentPage: 1,
-    pageSize: 10,
-    totalCount: 100,
-    totalPages: 10,
-    hasNextPage: true,
+    pageSize: 25,
+    totalCount: 0,
+    totalPages: 0,
+    hasNextPage: false,
     hasPreviousPage: false,
   });
 
   const [request, setRequest] = useState({
-    pageNumber: 1,
-    pageSize: 10,
+    pageNumber: teamPaginated.currentPage,
+    pageSize: teamPaginated.pageSize,
     searchString: "",
   });
 
@@ -34,7 +35,7 @@ export const useTeams = () => {
         request.pageSize,
         request.searchString
       );
-      setTeams(data);
+      setTeamPaginated(data);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
@@ -45,6 +46,11 @@ export const useTeams = () => {
   }, [request]);
 
   useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+
     fetchTeams();
   }, [request]);
 
@@ -67,5 +73,13 @@ export const useTeams = () => {
     }
   };
 
-  return { teams, loading, fetchTeams, request, setRequest, team, fetchTeam };
+  return {
+    teamPaginated,
+    loading,
+    fetchTeams,
+    request,
+    setRequest,
+    team,
+    fetchTeam,
+  };
 };

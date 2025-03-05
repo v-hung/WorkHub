@@ -1,76 +1,69 @@
-import { Select, SelectProps, Spin } from "antd";
+import { Select, SelectProps } from "antd";
 import { ComponentProps, FC, useCallback, useEffect, useState } from "react";
-import { useTeams } from "../../hooks/useTeams";
-import { debounce } from "@/common/utils/common.utils";
 import SelectApi from "@/ui/form/SelectApi";
+import { debounce } from "@/common/utils/common.utils";
+import { useTeams } from "../../hooks/useTeams";
 
 type State = ComponentProps<typeof Select>;
 
 const TeamSelect: FC<State> = (props) => {
   const { className, ...rest } = props;
 
-  const { fetchTeams, loading, setRequest } = useTeams();
+  const { teamPaginated, loading, request, setRequest } = useTeams();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
-  // const [requestType, setRequestType] = useState<"search" | "scroll">("search");
 
   useEffect(() => {
-    fetchTeams().then(v => setOptions(
-			v?.data.map((item) => ({
-				label: item.name,
-				value: item.id,
-			}))
-		))
+    setRequest((request) => ({
+      ...request,
+      pageNumber: 1,
+    }));
   }, []);
 
-	const fetchTeams = useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await teamApi.teamGetAll(
-        request.pageNumber,
-        request.pageSize,
-        request.searchString
-      );
-      return data;
-    } catch (e) {
-      notification.error({
-        message: getMessageError(e),
-      });
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    setOptions((prev) => {
+      const newOptions = teamPaginated.data.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+
+      return teamPaginated.currentPage === 1
+        ? newOptions
+        : Array.from(
+            new Map(
+              [...(prev ?? []), ...newOptions].map((item) => [item.value, item])
+            ).values()
+          );
+    });
+  }, [teamPaginated.data]);
+
+  const handleSearch = useCallback(
+    debounce((value: string) => {
+      setRequest((request) => ({
+        ...request,
+        pageNumber: 1,
+        searchString: value,
+      }));
+    }, 300),
+    [request]
+  );
+
+  const handlePopupScroll = useCallback(() => {
+    if (teamPaginated.hasNextPage) {
+      setRequest((request) => ({
+        ...request,
+        pageNumber: request.pageNumber + 1,
+      }));
     }
-  }, [request]);
-
-  const handleSearch = () => {
-		setRequest((r) => ({ ...r, searchString: value }));
-		fetchTeams().then(v => setOptions(
-			v?.data.map((item) => ({
-				label: item.name,
-				value: item.id,
-			}))
-	}
-
-  const handlePopupScroll = async (e: React.UIEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
-
-    if (
-      target.scrollTop + target.offsetHeight === target.scrollHeight &&
-      !loading &&
-      teams.hasNextPage
-    ) {
-      setRequestType("scroll");
-      setRequest((r) => ({ ...r, pageNumber: r.pageNumber + 1 }));
-    }
-  };
+  }, [request, teamPaginated.hasNextPage]);
 
   return (
     <SelectApi
       {...rest}
-      className={`${className}`}
+      className={className}
       options={options}
       loading={loading}
-      initCb
-			searchCb
-			scrollInfiniteCb
+      onSearch={handleSearch}
+      scrollInfiniteCb={handlePopupScroll}
     />
   );
 };
