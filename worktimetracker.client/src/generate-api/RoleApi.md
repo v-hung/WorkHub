@@ -1,39 +1,40 @@
-# .AccountApi
+# .RoleApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**accountChangePassword**](AccountApi.md#accountChangePassword) | **POST** /api/identity/change-password | 
-[**accountGetCurrentUser**](AccountApi.md#accountGetCurrentUser) | **GET** /api/identity/current-user | 
-[**accountLogin**](AccountApi.md#accountLogin) | **POST** /api/identity/login | 
-[**accountLogout**](AccountApi.md#accountLogout) | **POST** /api/identity/logout | 
-[**accountRefreshToken**](AccountApi.md#accountRefreshToken) | **POST** /api/identity/refresh-token | 
+[**roleCreate**](RoleApi.md#roleCreate) | **POST** /api/roles | 
+[**roleDelete**](RoleApi.md#roleDelete) | **DELETE** /api/roles/{id} | 
+[**roleGetAll**](RoleApi.md#roleGetAll) | **GET** /api/roles | 
+[**roleGetById**](RoleApi.md#roleGetById) | **GET** /api/roles/{id} | 
+[**roleUpdate**](RoleApi.md#roleUpdate) | **PUT** /api/roles/{id} | 
 
 
-# **accountChangePassword**
-> void accountChangePassword()
+# **roleCreate**
+> RoleDto roleCreate()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, AccountApi } from '';
-import type { AccountApiAccountChangePasswordRequest } from '';
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleCreateRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new AccountApi(configuration);
+const apiInstance = new RoleApi(configuration);
 
-const request: AccountApiAccountChangePasswordRequest = {
+const request: RoleApiRoleCreateRequest = {
   
-  changePasswordRequest: {
-    password: "password_example",
-    newPassword: "newPassword_example",
+  roleCreateUpdateRequest: {
+    name: "name_example",
+    description: "description_example",
+    isAdmin: true,
   },
 };
 
-const data = await apiInstance.accountChangePassword(request);
+const data = await apiInstance.roleCreate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -42,117 +43,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **changePasswordRequest** | **ChangePasswordRequest**|  |
+ **roleCreateUpdateRequest** | **RoleCreateUpdateRequest**|  |
 
 
 ### Return type
 
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **accountGetCurrentUser**
-> UserDto accountGetCurrentUser()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, AccountApi } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new AccountApi(configuration);
-
-const request = {};
-
-const data = await apiInstance.accountGetCurrentUser(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-This endpoint does not need any parameter.
-
-
-### Return type
-
-**UserDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **accountLogin**
-> UserDtoLoginResponse accountLogin()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, AccountApi } from '';
-import type { AccountApiAccountLoginRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new AccountApi(configuration);
-
-const request: AccountApiAccountLoginRequest = {
-  
-  loginRequest: {
-    email: "email_example",
-    password: "password_example",
-    twoFactorCode: "twoFactorCode_example",
-    twoFactorRecoveryCode: "twoFactorRecoveryCode_example",
-    rememberMe: true,
-  },
-};
-
-const data = await apiInstance.accountLogin(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **loginRequest** | **LoginRequest**|  |
-
-
-### Return type
-
-**UserDtoLoginResponse**
+**RoleDto**
 
 ### Authorization
 
@@ -172,28 +68,35 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **accountLogout**
-> void accountLogout()
+# **roleDelete**
+> void roleDelete()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, AccountApi } from '';
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleDeleteRequest } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new AccountApi(configuration);
+const apiInstance = new RoleApi(configuration);
 
-const request = {};
+const request: RoleApiRoleDeleteRequest = {
+  
+  id: "id_example",
+};
 
-const data = await apiInstance.accountLogout(request);
+const data = await apiInstance.roleDelete(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
 
 
 ### Return type
@@ -218,22 +121,22 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **accountRefreshToken**
-> RefreshTokenResponse accountRefreshToken()
+# **roleGetAll**
+> Array<RoleDto> roleGetAll()
 
 
 ### Example
 
 
 ```typescript
-import { createConfiguration, AccountApi } from '';
+import { createConfiguration, RoleApi } from '';
 
 const configuration = createConfiguration();
-const apiInstance = new AccountApi(configuration);
+const apiInstance = new RoleApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.accountRefreshToken(request);
+const data = await apiInstance.roleGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -244,7 +147,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**RefreshTokenResponse**
+**Array<RoleDto>**
 
 ### Authorization
 
@@ -253,6 +156,119 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **roleGetById**
+> RoleDto roleGetById()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleGetByIdRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RoleApi(configuration);
+
+const request: RoleApiRoleGetByIdRequest = {
+  
+  id: "id_example",
+};
+
+const data = await apiInstance.roleGetById(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**RoleDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **roleUpdate**
+> RoleDto roleUpdate()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleUpdateRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RoleApi(configuration);
+
+const request: RoleApiRoleUpdateRequest = {
+  
+  id: "id_example",
+  
+  roleCreateUpdateRequest: {
+    name: "name_example",
+    description: "description_example",
+    isAdmin: true,
+  },
+};
+
+const data = await apiInstance.roleUpdate(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **roleCreateUpdateRequest** | **RoleCreateUpdateRequest**|  |
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**RoleDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
  - **Accept**: text/plain, application/json, text/json
 
 

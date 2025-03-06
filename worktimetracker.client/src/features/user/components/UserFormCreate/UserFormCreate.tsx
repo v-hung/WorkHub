@@ -7,6 +7,7 @@ import {
 } from "react";
 import { useUserAction } from "../../hooks/useUserAction";
 import {
+  Nationality,
   UserCreateUpdateRequest,
   UserPosition,
   UserStatus,
@@ -16,6 +17,8 @@ import styles from "./UserFormCreate.module.css";
 import TeamSelect from "@/features/team/components/TeamSelect/TeamSelect";
 import UserSelect from "../UserSelect/UserSelect";
 import { useAuthStore } from "@/stores/auth.store";
+import RoleSelect from "@/features/role/components/RoleSelect/RoleSelect";
+import WorkTimeSelect from "@/features/workTime/components/WorkTimeSelect/WorkTimeSelect";
 
 const { useBreakpoint } = Grid;
 
@@ -71,7 +74,14 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 name="code"
                 rules={[{ max: 36, required: true }]}
               >
-                <Input placeholder="Employee code" />
+                <Input
+                  placeholder="E.g. WBC10 "
+                  onInput={(e) =>
+                    ((e.target as HTMLInputElement).value = (
+                      e.target as HTMLInputElement
+                    ).value.toUpperCase())
+                  }
+                />
               </Form.Item>
             </Col>
 
@@ -113,10 +123,12 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 name="userDetail.nationality"
                 rules={[{ required: true }]}
               >
-                <Select>
-                  <Select.Option key={"vi"}>Vietnamese</Select.Option>
-                  <Select.Option key={"jp"}>Japanese</Select.Option>
-                </Select>
+                <Select
+                  options={Object.entries(Nationality).map(([key, value]) => ({
+                    value,
+                    label: key,
+                  }))}
+                />
               </Form.Item>
             </Col>
 
@@ -182,11 +194,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Supervisor"
-                name="supervisorId"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="Supervisor" name="supervisorId">
                 <UserSelect withoutIds={[currentUser!.id]} />
               </Form.Item>
             </Col>
@@ -198,27 +206,13 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 rules={[{ required: true }]}
                 className={styles.colCustomResponsive}
               >
-                <Select
-                  options={Object.entries(UserPosition).map(([key, value]) => ({
-                    value,
-                    label: key,
-                  }))}
-                />
+                <RoleSelect />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="WorkTime"
-                name="workTimeId"
-                rules={[{ required: true }]}
-              >
-                <Select
-                  options={Object.entries(UserPosition).map(([key, value]) => ({
-                    value,
-                    label: key,
-                  }))}
-                />
+              <Form.Item label="WorkTime" name="workTimeId">
+                <WorkTimeSelect />
               </Form.Item>
             </Col>
 

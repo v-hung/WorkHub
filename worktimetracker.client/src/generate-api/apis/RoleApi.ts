@@ -8,27 +8,24 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
-import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { ErrorResponse } from '../models/ErrorResponse';
-import { LoginRequest } from '../models/LoginRequest';
-import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { UserDto } from '../models/UserDto';
-import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
+import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
+import { RoleDto } from '../models/RoleDto';
 
 /**
  * no description
  */
-export class AccountApiRequestFactory extends BaseAPIRequestFactory {
+export class RoleApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param changePasswordRequest 
+     * @param roleCreateUpdateRequest 
      */
-    public async accountChangePassword(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<RequestContext> {
+    public async roleCreate(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
         // Path Params
-        const localVarPath = '/api/identity/change-password';
+        const localVarPath = '/api/roles';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -45,7 +42,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(changePasswordRequest, "ChangePasswordRequest", ""),
+            ObjectSerializer.serialize(roleCreateUpdateRequest, "RoleCreateUpdateRequest", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -66,12 +63,48 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * @param id 
      */
-    public async accountGetCurrentUser(_options?: Configuration): Promise<RequestContext> {
+    public async roleDelete(id: string, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new RequiredError("RoleApi", "roleDelete", "id");
+        }
+
+
+        // Path Params
+        const localVarPath = '/api/roles/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.DELETE);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     */
+    public async roleGetAll(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
-        const localVarPath = '/api/identity/current-user';
+        const localVarPath = '/api/roles';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
@@ -94,17 +127,61 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
-     * @param loginRequest 
+     * @param id 
      */
-    public async accountLogin(loginRequest?: LoginRequest, _options?: Configuration): Promise<RequestContext> {
+    public async roleGetById(id: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new RequiredError("RoleApi", "roleGetById", "id");
+        }
 
 
         // Path Params
-        const localVarPath = '/api/identity/login';
+        const localVarPath = '/api/roles/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * @param id 
+     * @param roleCreateUpdateRequest 
+     */
+    public async roleUpdate(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new RequiredError("RoleApi", "roleUpdate", "id");
+        }
+
+
+
+        // Path Params
+        const localVarPath = '/api/roles/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.PUT);
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
 
 
@@ -118,7 +195,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(loginRequest, "LoginRequest", ""),
+            ObjectSerializer.serialize(roleCreateUpdateRequest, "RoleCreateUpdateRequest", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -138,74 +215,54 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
         return requestContext;
     }
 
-    /**
-     */
-    public async accountLogout(_options?: Configuration): Promise<RequestContext> {
-        let _config = _options || this.configuration;
-
-        // Path Params
-        const localVarPath = '/api/identity/logout';
-
-        // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
-        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
-
-
-        let authMethod: SecurityAuthentication | undefined;
-        // Apply auth methods
-        authMethod = _config.authMethods["Bearer"]
-        if (authMethod?.applySecurityAuthentication) {
-            await authMethod?.applySecurityAuthentication(requestContext);
-        }
-        
-        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
-        if (defaultAuth?.applySecurityAuthentication) {
-            await defaultAuth?.applySecurityAuthentication(requestContext);
-        }
-
-        return requestContext;
-    }
-
-    /**
-     */
-    public async accountRefreshToken(_options?: Configuration): Promise<RequestContext> {
-        let _config = _options || this.configuration;
-
-        // Path Params
-        const localVarPath = '/api/identity/refresh-token';
-
-        // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
-        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
-
-
-        let authMethod: SecurityAuthentication | undefined;
-        // Apply auth methods
-        authMethod = _config.authMethods["Bearer"]
-        if (authMethod?.applySecurityAuthentication) {
-            await authMethod?.applySecurityAuthentication(requestContext);
-        }
-        
-        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
-        if (defaultAuth?.applySecurityAuthentication) {
-            await defaultAuth?.applySecurityAuthentication(requestContext);
-        }
-
-        return requestContext;
-    }
-
 }
 
-export class AccountApiResponseProcessor {
+export class RoleApiResponseProcessor {
 
     /**
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountChangePassword
+     * @params response Response returned by the server for a request to roleCreate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountChangePasswordWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async roleCreateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: RoleDto = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RoleDto", ""
+            ) as RoleDto;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            const body: ErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorResponse", ""
+            ) as ErrorResponse;
+            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: RoleDto = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "RoleDto", ""
+            ) as RoleDto;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to roleDelete
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async roleDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -234,16 +291,16 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountGetCurrentUser
+     * @params response Response returned by the server for a request to roleGetAll
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountGetCurrentUserWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async roleGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<RoleDto> >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: Array<RoleDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "Array<RoleDto>", ""
+            ) as Array<RoleDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -256,10 +313,10 @@ export class AccountApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDto = ObjectSerializer.deserialize(
+            const body: Array<RoleDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDto", ""
-            ) as UserDto;
+                "Array<RoleDto>", ""
+            ) as Array<RoleDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -270,16 +327,16 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountLogin
+     * @params response Response returned by the server for a request to roleGetById
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountLoginWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDtoLoginResponse >> {
+     public async roleGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: UserDtoLoginResponse = ObjectSerializer.deserialize(
+            const body: RoleDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDtoLoginResponse", ""
-            ) as UserDtoLoginResponse;
+                "RoleDto", ""
+            ) as RoleDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -292,10 +349,10 @@ export class AccountApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: UserDtoLoginResponse = ObjectSerializer.deserialize(
+            const body: RoleDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "UserDtoLoginResponse", ""
-            ) as UserDtoLoginResponse;
+                "RoleDto", ""
+            ) as RoleDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -306,48 +363,16 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountLogout
+     * @params response Response returned by the server for a request to roleUpdate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountLogoutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async roleUpdateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
-        }
-        if (isCodeInRange("500", response.httpStatusCode)) {
-            const body: ErrorResponse = ObjectSerializer.deserialize(
+            const body: RoleDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "ErrorResponse", ""
-            ) as ErrorResponse;
-            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
-        }
-
-        // Work around for missing responses in specification, e.g. for petstore.yaml
-        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: void = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "void", ""
-            ) as void;
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
-        }
-
-        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
-    }
-
-    /**
-     * Unwraps the actual response sent by the server from the response context and deserializes the response content
-     * to the expected objects
-     *
-     * @params response Response returned by the server for a request to accountRefreshToken
-     * @throws ApiException if the response code was not in [200, 299]
-     */
-     public async accountRefreshTokenWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RefreshTokenResponse >> {
-        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
-        if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: RefreshTokenResponse = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "RefreshTokenResponse", ""
-            ) as RefreshTokenResponse;
+                "RoleDto", ""
+            ) as RoleDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -360,10 +385,10 @@ export class AccountApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: RefreshTokenResponse = ObjectSerializer.deserialize(
+            const body: RoleDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "RefreshTokenResponse", ""
-            ) as RefreshTokenResponse;
+                "RoleDto", ""
+            ) as RoleDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

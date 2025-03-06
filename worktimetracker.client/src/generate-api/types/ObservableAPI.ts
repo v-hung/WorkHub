@@ -9,19 +9,21 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
-import { LoginResponse } from '../models/LoginResponse';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
+import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
+import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
 import { UserFullDto } from '../models/UserFullDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
@@ -163,7 +165,7 @@ export class ObservableAccountApi {
     /**
      * @param [loginRequest]
      */
-    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: ConfigurationOptions): Observable<HttpInfo<LoginResponse>> {
+    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: ConfigurationOptions): Observable<HttpInfo<UserDtoLoginResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -214,8 +216,8 @@ export class ObservableAccountApi {
     /**
      * @param [loginRequest]
      */
-    public accountLogin(loginRequest?: LoginRequest, _options?: ConfigurationOptions): Observable<LoginResponse> {
-        return this.accountLoginWithHttpInfo(loginRequest, _options).pipe(map((apiResponse: HttpInfo<LoginResponse>) => apiResponse.data));
+    public accountLogin(loginRequest?: LoginRequest, _options?: ConfigurationOptions): Observable<UserDtoLoginResponse> {
+        return this.accountLoginWithHttpInfo(loginRequest, _options).pipe(map((apiResponse: HttpInfo<UserDtoLoginResponse>) => apiResponse.data));
     }
 
     /**
@@ -644,6 +646,314 @@ export class ObservableProjectApi {
      */
     public projectUpdate(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: ConfigurationOptions): Observable<ProjectDto> {
         return this.projectUpdateWithHttpInfo(id, createEditProjectCommand, _options).pipe(map((apiResponse: HttpInfo<ProjectDto>) => apiResponse.data));
+    }
+
+}
+
+import { RoleApiRequestFactory, RoleApiResponseProcessor} from "../apis/RoleApi";
+export class ObservableRoleApi {
+    private requestFactory: RoleApiRequestFactory;
+    private responseProcessor: RoleApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: RoleApiRequestFactory,
+        responseProcessor?: RoleApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new RoleApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new RoleApiResponseProcessor();
+    }
+
+    /**
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleCreateWithHttpInfo(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: ConfigurationOptions): Observable<HttpInfo<RoleDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.roleCreate(roleCreateUpdateRequest, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.roleCreateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleCreate(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: ConfigurationOptions): Observable<RoleDto> {
+        return this.roleCreateWithHttpInfo(roleCreateUpdateRequest, _options).pipe(map((apiResponse: HttpInfo<RoleDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public roleDeleteWithHttpInfo(id: string, _options?: ConfigurationOptions): Observable<HttpInfo<void>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.roleDelete(id, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.roleDeleteWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public roleDelete(id: string, _options?: ConfigurationOptions): Observable<void> {
+        return this.roleDeleteWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+    /**
+     */
+    public roleGetAllWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<Array<RoleDto>>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.roleGetAll(_config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.roleGetAllWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public roleGetAll(_options?: ConfigurationOptions): Observable<Array<RoleDto>> {
+        return this.roleGetAllWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<RoleDto>>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public roleGetByIdWithHttpInfo(id: string, _options?: ConfigurationOptions): Observable<HttpInfo<RoleDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.roleGetById(id, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.roleGetByIdWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public roleGetById(id: string, _options?: ConfigurationOptions): Observable<RoleDto> {
+        return this.roleGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RoleDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleUpdateWithHttpInfo(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: ConfigurationOptions): Observable<HttpInfo<RoleDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.roleUpdate(id, roleCreateUpdateRequest, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.roleUpdateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleUpdate(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: ConfigurationOptions): Observable<RoleDto> {
+        return this.roleUpdateWithHttpInfo(id, roleCreateUpdateRequest, _options).pipe(map((apiResponse: HttpInfo<RoleDto>) => apiResponse.data));
     }
 
 }

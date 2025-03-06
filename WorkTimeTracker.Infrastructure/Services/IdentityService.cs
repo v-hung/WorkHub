@@ -128,7 +128,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 				request.Password,
 				request.NewPassword);
 
-		var errors = identityResult.Errors.ToDictionary(e => e.Code, e => e.Description);
+		var errors = identityResult.Errors.ToDictionary(e => e.Code, e => new[] { e.Description });
 
 		if (!identityResult.Succeeded)
 		{

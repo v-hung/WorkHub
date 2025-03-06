@@ -5,14 +5,13 @@ namespace WorkTimeTracker.Application.Responses;
 
 public class ErrorResponse
 {
-    [Required]
-    public int StatusCode { get; set; }
+	[Required]
+	public int StatusCode { get; set; }
 
-    [Required]
-    public required string Message { get; set; }
+	[Required]
+	public required string Message { get; set; }
 
-    public Dictionary<string, string>? Details { get; set; }
+	public Dictionary<string, string[]>? Details { get; set; }
 
-    public override string ToString() =>
-            JsonSerializer.Serialize(this);
+	public override string ToString() => JsonSerializer.Serialize(this);
 }

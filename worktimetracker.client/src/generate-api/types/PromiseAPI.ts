@@ -8,19 +8,21 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
-import { LoginResponse } from '../models/LoginResponse';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
+import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
+import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
 import { UserFullDto } from '../models/UserFullDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
@@ -123,7 +125,7 @@ export class PromiseAccountApi {
     /**
      * @param [loginRequest]
      */
-    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<LoginResponse>> {
+    public accountLoginWithHttpInfo(loginRequest?: LoginRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDtoLoginResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -143,7 +145,7 @@ export class PromiseAccountApi {
     /**
      * @param [loginRequest]
      */
-    public accountLogin(loginRequest?: LoginRequest, _options?: PromiseConfigurationOptions): Promise<LoginResponse> {
+    public accountLogin(loginRequest?: LoginRequest, _options?: PromiseConfigurationOptions): Promise<UserDtoLoginResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -460,6 +462,225 @@ export class PromiseProjectApi {
 	    }
 	}
         const result = this.api.projectUpdate(id, createEditProjectCommand, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableRoleApi } from './ObservableAPI';
+
+import { RoleApiRequestFactory, RoleApiResponseProcessor} from "../apis/RoleApi";
+export class PromiseRoleApi {
+    private api: ObservableRoleApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: RoleApiRequestFactory,
+        responseProcessor?: RoleApiResponseProcessor
+    ) {
+        this.api = new ObservableRoleApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleCreateWithHttpInfo(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleCreateWithHttpInfo(roleCreateUpdateRequest, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleCreate(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<RoleDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleCreate(roleCreateUpdateRequest, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public roleDeleteWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleDeleteWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public roleDelete(id: string, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleDelete(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public roleGetAllWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleGetAllWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public roleGetAll(_options?: PromiseConfigurationOptions): Promise<Array<RoleDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleGetAll(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public roleGetByIdWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleGetByIdWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public roleGetById(id: string, _options?: PromiseConfigurationOptions): Promise<RoleDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleUpdateWithHttpInfo(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleUpdateWithHttpInfo(id, roleCreateUpdateRequest, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [roleCreateUpdateRequest]
+     */
+    public roleUpdate(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<RoleDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleUpdate(id, roleCreateUpdateRequest, observableOptions);
         return result.toPromise();
     }
 

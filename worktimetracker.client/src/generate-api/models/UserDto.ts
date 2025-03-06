@@ -31,6 +31,7 @@ export class UserDto {
     'updatedAt'?: Date | null;
     'createdBy'?: string | null;
     'lastModifiedBy'?: string | null;
+    'roles'?: Array<string> | null;
     'workTime'?: WorkTimeDto;
     'supervisor'?: UserMinimalDto;
     'team'?: TeamMinimalDto;
@@ -116,6 +117,12 @@ export class UserDto {
             "name": "lastModifiedBy",
             "baseName": "lastModifiedBy",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "roles",
+            "baseName": "roles",
+            "type": "Array<string>",
             "format": ""
         },
         {

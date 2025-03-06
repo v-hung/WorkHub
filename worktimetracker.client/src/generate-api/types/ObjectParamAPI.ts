@@ -8,19 +8,21 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
-import { LoginResponse } from '../models/LoginResponse';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
+import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
+import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
 import { UserFullDto } from '../models/UserFullDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
@@ -97,14 +99,14 @@ export class ObjectAccountApi {
     /**
      * @param param the request object
      */
-    public accountLoginWithHttpInfo(param: AccountApiAccountLoginRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<LoginResponse>> {
+    public accountLoginWithHttpInfo(param: AccountApiAccountLoginRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDtoLoginResponse>> {
         return this.api.accountLoginWithHttpInfo(param.loginRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public accountLogin(param: AccountApiAccountLoginRequest = {}, options?: ConfigurationOptions): Promise<LoginResponse> {
+    public accountLogin(param: AccountApiAccountLoginRequest = {}, options?: ConfigurationOptions): Promise<UserDtoLoginResponse> {
         return this.api.accountLogin(param.loginRequest,  options).toPromise();
     }
 
@@ -296,6 +298,136 @@ export class ObjectProjectApi {
      */
     public projectUpdate(param: ProjectApiProjectUpdateRequest, options?: ConfigurationOptions): Promise<ProjectDto> {
         return this.api.projectUpdate(param.id, param.createEditProjectCommand,  options).toPromise();
+    }
+
+}
+
+import { ObservableRoleApi } from "./ObservableAPI";
+import { RoleApiRequestFactory, RoleApiResponseProcessor} from "../apis/RoleApi";
+
+export interface RoleApiRoleCreateRequest {
+    /**
+     * 
+     * @type RoleCreateUpdateRequest
+     * @memberof RoleApiroleCreate
+     */
+    roleCreateUpdateRequest?: RoleCreateUpdateRequest
+}
+
+export interface RoleApiRoleDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof RoleApiroleDelete
+     */
+    id: string
+}
+
+export interface RoleApiRoleGetAllRequest {
+}
+
+export interface RoleApiRoleGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof RoleApiroleGetById
+     */
+    id: string
+}
+
+export interface RoleApiRoleUpdateRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof RoleApiroleUpdate
+     */
+    id: string
+    /**
+     * 
+     * @type RoleCreateUpdateRequest
+     * @memberof RoleApiroleUpdate
+     */
+    roleCreateUpdateRequest?: RoleCreateUpdateRequest
+}
+
+export class ObjectRoleApi {
+    private api: ObservableRoleApi
+
+    public constructor(configuration: Configuration, requestFactory?: RoleApiRequestFactory, responseProcessor?: RoleApiResponseProcessor) {
+        this.api = new ObservableRoleApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleCreateWithHttpInfo(param: RoleApiRoleCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        return this.api.roleCreateWithHttpInfo(param.roleCreateUpdateRequest,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleCreate(param: RoleApiRoleCreateRequest = {}, options?: ConfigurationOptions): Promise<RoleDto> {
+        return this.api.roleCreate(param.roleCreateUpdateRequest,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleDeleteWithHttpInfo(param: RoleApiRoleDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.roleDeleteWithHttpInfo(param.id,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleDelete(param: RoleApiRoleDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.roleDelete(param.id,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleGetAllWithHttpInfo(param: RoleApiRoleGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
+        return this.api.roleGetAllWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleGetAll(param: RoleApiRoleGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<RoleDto>> {
+        return this.api.roleGetAll( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleGetByIdWithHttpInfo(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        return this.api.roleGetByIdWithHttpInfo(param.id,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleGetById(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<RoleDto> {
+        return this.api.roleGetById(param.id,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleUpdateWithHttpInfo(param: RoleApiRoleUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        return this.api.roleUpdateWithHttpInfo(param.id, param.roleCreateUpdateRequest,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleUpdate(param: RoleApiRoleUpdateRequest, options?: ConfigurationOptions): Promise<RoleDto> {
+        return this.api.roleUpdate(param.id, param.roleCreateUpdateRequest,  options).toPromise();
     }
 
 }

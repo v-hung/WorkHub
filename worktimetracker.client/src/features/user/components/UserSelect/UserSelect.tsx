@@ -24,7 +24,7 @@ const UserSelect: FC<State> = (props) => {
   useEffect(() => {
     setOptions((prev) => {
       const newOptions = userPaginated.data.map((item) => ({
-        label: item.fullName,
+        label: item.email,
         value: item.id,
       }));
 

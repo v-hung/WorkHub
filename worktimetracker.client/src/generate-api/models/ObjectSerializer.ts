@@ -4,19 +4,21 @@ export * from '../models/CreateEditTeamCommand';
 export * from '../models/CreateEditWorkTimeCommand';
 export * from '../models/ErrorResponse';
 export * from '../models/LoginRequest';
-export * from '../models/LoginResponse';
 export * from '../models/Nationality';
 export * from '../models/Permission';
 export * from '../models/ProjectDto';
 export * from '../models/ProjectDtoPaginated';
 export * from '../models/ProjectStatus';
 export * from '../models/RefreshTokenResponse';
+export * from '../models/RoleCreateUpdateRequest';
+export * from '../models/RoleDto';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamMinimalDto';
 export * from '../models/UserCreateUpdateRequest';
 export * from '../models/UserDetailDto';
 export * from '../models/UserDto';
+export * from '../models/UserDtoLoginResponse';
 export * from '../models/UserDtoPaginated';
 export * from '../models/UserFullDto';
 export * from '../models/UserMinimalDto';
@@ -31,21 +33,23 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
-import { LoginResponse } from '../models/LoginResponse';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto          } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
+import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto       } from '../models/UserDetailDto';
-import { UserDto                 } from '../models/UserDto';
+import { UserDto                  } from '../models/UserDto';
+import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
-import { UserFullDto                   } from '../models/UserFullDto';
+import { UserFullDto                    } from '../models/UserFullDto';
 import { UserMinimalDto        } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
@@ -79,16 +83,18 @@ let typeMap: {[index: string]: any} = {
     "CreateEditWorkTimeCommand": CreateEditWorkTimeCommand,
     "ErrorResponse": ErrorResponse,
     "LoginRequest": LoginRequest,
-    "LoginResponse": LoginResponse,
     "ProjectDto": ProjectDto,
     "ProjectDtoPaginated": ProjectDtoPaginated,
     "RefreshTokenResponse": RefreshTokenResponse,
+    "RoleCreateUpdateRequest": RoleCreateUpdateRequest,
+    "RoleDto": RoleDto,
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
     "TeamMinimalDto": TeamMinimalDto,
     "UserCreateUpdateRequest": UserCreateUpdateRequest,
     "UserDetailDto": UserDetailDto,
     "UserDto": UserDto,
+    "UserDtoLoginResponse": UserDtoLoginResponse,
     "UserDtoPaginated": UserDtoPaginated,
     "UserFullDto": UserFullDto,
     "UserMinimalDto": UserMinimalDto,

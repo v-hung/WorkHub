@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using WorkTimeTracker.Application.Requests;
-using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Application.DTOs.Identity;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Application.Requests.Identity;
@@ -18,7 +16,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<Paginated<RoleDto>>> GetAll()
+		public async Task<ActionResult<List<RoleDto>>> GetAll()
 		{
 			var data = await _roleService.GetAllAsync<RoleDto>();
 

@@ -1,13 +1,11 @@
 
 
-using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WorkTimeTracker.Application.Configs;
@@ -167,6 +165,7 @@ static class ServiceCollectionExtensions
 			c.OperationFilter<SwaggerErrorResponseFilter>();
 			c.SchemaFilter<SwaggerPermissionSchema>();
 			c.OperationFilter<AddPermissionSchemaOperationFilter>();
+			c.OperationFilter<FluentValidationErrorFilter>();
 		});
 	}
 }

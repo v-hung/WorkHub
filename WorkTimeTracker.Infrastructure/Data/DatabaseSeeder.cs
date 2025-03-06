@@ -7,6 +7,7 @@ using WorkTimeTracker.Domain.Enums;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Domain.Entities.Organization;
 using Microsoft.Extensions.Logging;
+using WorkTimeTracker.Domain.Entities.Time;
 
 namespace WorkTimeTracker.Infrastructure.Data;
 
@@ -18,10 +19,10 @@ public class DatabaseSeeder : IDatabaseSeeder
 	private readonly RoleManager<Role> _roleManager;
 
 	public DatabaseSeeder(
-					ApplicationDbContext context,
-					ILogger<DatabaseSeeder> logger,
-					UserManager<User> userManager,
-					RoleManager<Role> roleManager
+		ApplicationDbContext context,
+		ILogger<DatabaseSeeder> logger,
+		UserManager<User> userManager,
+		RoleManager<Role> roleManager
 	)
 	{
 		_context = context;
@@ -33,6 +34,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 	public async Task Initialize()
 	{
 		var teams = await SeedTeams();
+		await SeedWorkTimes();
 		await SeedAdminUser();
 		await SeedBasicUsers(teams);
 	}
@@ -41,13 +43,13 @@ public class DatabaseSeeder : IDatabaseSeeder
 	{
 
 		var teams = new[]{
-						new Team() { Name = "STNet"},
-						new Team() { Name = "Msr"},
-				};
+			new Team() { Name = "STNet"},
+			new Team() { Name = "Msr"},
+		};
 
 		var newTeams = teams.Where(item => !_context.Teams.Any(t => t.Name == item.Name)).ToList();
 
-		if (newTeams.Any())
+		if (newTeams.Count != 0)
 		{
 			await _context.Teams.AddRangeAsync(newTeams);
 			await _context.SaveChangesAsync();
@@ -155,6 +157,23 @@ public class DatabaseSeeder : IDatabaseSeeder
 					_logger.LogError($"❌ Error creating user hungnv@wbc.vn: {error.Description}");
 				}
 			}
+		}
+	}
+
+	private async Task SeedWorkTimes()
+	{
+		var workTimes = new[]
+		{
+			new WorkTime{Title = "Basic"},
+			new WorkTime{Title = "Early"},
+		};
+
+		var data = workTimes.Where(item => !_context.Teams.Any(t => t.Name == item.Title)).ToList();
+
+		if (data.Count != 0)
+		{
+			await _context.WorkTimes.AddRangeAsync(data);
+			await _context.SaveChangesAsync();
 		}
 	}
 }
