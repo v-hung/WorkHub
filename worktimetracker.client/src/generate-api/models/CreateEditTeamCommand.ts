@@ -16,9 +16,9 @@ export class CreateEditTeamCommand {
     'id'?: number;
     'name': string;
     'description'?: string | null;
-    'totalMembers': number;
-    'completedProjects': number;
-    'activeProjects': number;
+    'totalMembers'?: number;
+    'completedProjects'?: number;
+    'activeProjects'?: number;
     'managerId'?: string | null;
     'memberIds'?: Array<string> | null;
     'projectIds'?: Array<number> | null;

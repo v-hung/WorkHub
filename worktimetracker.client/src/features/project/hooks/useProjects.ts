@@ -2,27 +2,31 @@ import { getMessageError } from "@/common/utils/error";
 import { ProjectDto, ProjectDtoPaginated } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { notification } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useProjects = () => {
+  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
 
   // GET LIST project
   // =============
 
-  const [projects, setProjects] = useState<ProjectDtoPaginated>({
-    data: [],
-    currentPage: 1,
-    pageSize: 10,
-    totalCount: 100,
-    totalPages: 10,
-    hasNextPage: true,
-    hasPreviousPage: false,
-  });
+  const [projectPaginated, setProjectPaginated] = useState<ProjectDtoPaginated>(
+    {
+      data: [],
+      currentPage: 1,
+      pageSize: 25,
+      totalCount: 0,
+      totalPages: 0,
+      hasNextPage: false,
+      hasPreviousPage: false,
+    }
+  );
 
   const [request, setRequest] = useState({
-    pageNumber: 1,
-    pageSize: 10,
+    pageNumber: projectPaginated.currentPage,
+    pageSize: projectPaginated.pageSize,
+    searchString: "",
   });
 
   const fetchProjects = useCallback(async () => {
@@ -32,7 +36,7 @@ export const useProjects = () => {
         request.pageNumber,
         request.pageSize
       );
-      setProjects(data);
+      setProjectPaginated(data);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
@@ -40,6 +44,15 @@ export const useProjects = () => {
     } finally {
       setLoading(false);
     }
+  }, [request]);
+
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+
+    fetchProjects();
   }, [request]);
 
   // GET project BY ID
@@ -62,9 +75,10 @@ export const useProjects = () => {
   };
 
   return {
-    projects,
+    projectPaginated,
     loading,
     fetchProjects,
+    request,
     setRequest,
     project,
     fetchProject,

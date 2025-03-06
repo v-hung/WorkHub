@@ -1,7 +1,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using WorkTimeTracker.Application.DTOs.User;
+using WorkTimeTracker.Application.DTOs.Identity;
 using System.Linq.Dynamic.Core;
 using System.Net;
 using Microsoft.AspNetCore.Identity;
@@ -25,23 +25,20 @@ namespace WorkTimeTracker.Infrastructure.Services
 		private readonly UserManager<User> _userManager;
 		private readonly IMapper _mapper;
 		private readonly IStringLocalizer<UserService> _localizer;
+		private readonly IIdentityService _identityService;
 
-		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer)
+		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer, IIdentityService identityService)
 		{
 			_context = context;
 			_mapper = mapper;
 			_userManager = userManager;
 			_localizer = localizer;
+			_identityService = identityService;
 		}
 
-		public async Task<List<UserDto>> GetAllAsync()
+		public async Task<List<D>> GetAllAsync<D>()
 		{
-			return await _context.Users.ProjectTo<UserDto>(_mapper.ConfigurationProvider).ToListAsync();
-		}
-
-		public async Task<Paginated<UserDto>> SearchAsync(PagedRequest request)
-		{
-			return await SearchAsync<UserDto>(request);
+			return await _context.Users.AsQueryable().ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
 		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class
@@ -76,11 +73,20 @@ namespace WorkTimeTracker.Infrastructure.Services
 			return new Paginated<D>(users, await query.CountAsync(), request.PageNumber, request.PageSize);
 		}
 
-		public async Task<D> GetAsync<D, TId>(TId userId) where D : IEntity<TId> where TId : notnull
+		public async Task<D> GetAsync<D, DId>(DId userId) where D : IEntity<DId> where DId : notnull
 		{
 			return await _context.Users.AsNoTracking()
-					.ProjectTo<D>(_mapper.ConfigurationProvider)
-					.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["User is not found"]);
+				.ProjectTo<D>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync(u => u.Id.Equals(userId)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["User is not found"]);
+		}
+
+		public async Task<D> GetWithRolesAsync<D, DId>(DId userId) where D : IEntity<DId>, IRoleAudit<string> where DId : notnull
+		{
+			var user = await GetAsync<D, DId>(userId);
+
+			user.Roles = await _identityService.GetRolesAsync(userId.ToString()!);
+
+			return user;
 		}
 
 		public async Task<int> GetCountAsync()

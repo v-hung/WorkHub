@@ -5,13 +5,16 @@ import { useEffect, useMemo } from "react";
 import { toDataUserTable } from "@/mappings/user.mapping";
 
 const UserTable = () => {
-  const { users, loading, fetchUsers } = useUsers();
+  const { userPaginated, setRequest, loading } = useUsers();
 
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    setRequest((r) => ({ ...r, pageNumber: 1, searchString: "" }));
+  }, []);
 
-  const data = useMemo(() => users.data.map(toDataUserTable), [users]);
+  const data = useMemo(
+    () => userPaginated.data.map(toDataUserTable),
+    [userPaginated.data]
+  );
 
   return (
     <MainTable columns={userTableColumns} dataSource={data} loading={loading} />

@@ -1,4 +1,3 @@
-using WorkTimeTracker.Application.DTOs.User;
 using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Requests.Identity;
@@ -6,22 +5,22 @@ using WorkTimeTracker.Application.Wrapper;
 
 namespace WorkTimeTracker.Application.Interfaces.Services
 {
-    public interface IUserService
-    {
-        Task<List<UserDto>> GetAllAsync();
+	public interface IUserService
+	{
+		Task<List<D>> GetAllAsync<D>();
 
-        Task<Paginated<UserDto>> SearchAsync(PagedRequest request);
+		Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class;
 
-        Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class;
+		Task<int> GetCountAsync();
 
-        Task<int> GetCountAsync();
+		Task<D> GetAsync<D, DId>(DId userId) where D : IEntity<DId> where DId : notnull;
 
-        Task<D> GetAsync<D, TId>(TId userId) where D : IEntity<TId> where TId : notnull;
+		Task<D> GetWithRolesAsync<D, DId>(DId userId) where D : IEntity<DId>, IRoleAudit<string> where DId : notnull;
 
-        Task<D> CreateAsync<D>(UserCreateUpdateRequest request) where D : class;
+		Task<D> CreateAsync<D>(UserCreateUpdateRequest request) where D : class;
 
-        Task<D?> UpdateAsync<D>(Guid userId, UserCreateUpdateRequest request) where D : class;
+		Task<D?> UpdateAsync<D>(Guid userId, UserCreateUpdateRequest request) where D : class;
 
-        Task DeleteAsync(Guid userId);
-    }
+		Task DeleteAsync(Guid userId);
+	}
 }

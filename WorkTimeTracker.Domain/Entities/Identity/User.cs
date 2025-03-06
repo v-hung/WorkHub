@@ -13,76 +13,79 @@ namespace WorkTimeTracker.Domain.Entities.Identity;
 public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 {
 
-    [Required]
-    public required string FullName { get; set; }
+	[Required]
+	public required string Code { get; set; }
 
-    public string? Image { get; set; }
+	[Required]
+	public required string FullName { get; set; }
 
-    [Required]
-    public required UserPosition UserPosition { get; set; }
+	public string? Image { get; set; }
 
-    [Required]
-    public bool IsFirstLogin { get; set; } = true;
+	[Required]
+	public required UserPosition UserPosition { get; set; }
 
-    [Required]
-    public int LeaveHours { get; set; } = 0;
+	[Required]
+	public bool IsFirstLogin { get; set; } = true;
 
-    [Required]
-    public UserStatus UserStatus { get; set; } = UserStatus.ACTIVE;
+	[Required]
+	public int LeaveHours { get; set; } = 0;
 
-    // AuditEntity
+	[Required]
+	public UserStatus UserStatus { get; set; } = UserStatus.ACTIVE;
 
-    [Required]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+	// AuditEntity
 
-    public DateTime? UpdatedAt { get; set; }
+	[Required]
+	public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public string? CreatedBy { get; set; }
+	public DateTime? UpdatedAt { get; set; }
 
-    public string? LastModifiedBy { get; set; }
+	public string? CreatedBy { get; set; }
 
-    public bool IsDeleted { get; set; } = false;
+	public string? LastModifiedBy { get; set; }
 
-    // Navigation properties
+	public bool IsDeleted { get; set; } = false;
 
-    [Required]
-    public IList<RefreshToken> RefreshTokens { get; set; } = [];
+	// Navigation properties
 
-    [ForeignKey("WorkTime")]
-    public int? WorkTimeId { get; set; }
+	[Required]
+	public IList<RefreshToken> RefreshTokens { get; set; } = [];
 
-    public WorkTime? WorkTime { get; set; }
+	[ForeignKey("WorkTime")]
+	public int? WorkTimeId { get; set; }
 
-    public UserDetail? UserDetail { get; set; }
+	public WorkTime? WorkTime { get; set; }
 
-    public IList<Timesheet> Timesheets { get; set; } = [];
+	public UserDetail? UserDetail { get; set; }
 
-    // Supervisor
-    [ForeignKey("Supervisor")]
-    public Guid? SupervisorId { get; set; }
-    public User? Supervisor { get; set; }
+	public IList<Timesheet> Timesheets { get; set; } = [];
 
-    [DeleteBehavior(DeleteBehavior.Restrict)]
-    [InverseProperty("Supervisor")]
-    public IList<User> Supervisors { get; set; } = [];
+	// Supervisor
+	[ForeignKey("Supervisor")]
+	public Guid? SupervisorId { get; set; }
+	public User? Supervisor { get; set; }
 
-    // Request
-    public IList<Request> Requests { get; set; } = [];
-    public IList<Request> ApprovedRequests { get; set; } = [];
+	[DeleteBehavior(DeleteBehavior.Restrict)]
+	[InverseProperty("Supervisor")]
+	public IList<User> Supervisors { get; set; } = [];
 
-    // Team
-    [ForeignKey("Team")]
-    public int? TeamId { get; set; }
+	// Request
+	public IList<Request> Requests { get; set; } = [];
+	public IList<Request> ApprovedRequests { get; set; } = [];
 
-    public Team? Team { get; set; }
+	// Team
+	[ForeignKey("Team")]
+	public int? TeamId { get; set; }
 
-    [Required]
-    public IList<Team> ManagerTeams { get; set; } = [];
+	public Team? Team { get; set; }
 
-    // Project
-    public IList<Project> ManagerProjects { get; set; } = [];
+	[Required]
+	public IList<Team> ManagerTeams { get; set; } = [];
 
-    [Required]
-    public IList<Project> Projects { get; set; } = [];
+	// Project
+	public IList<Project> ManagerProjects { get; set; } = [];
+
+	[Required]
+	public IList<Project> Projects { get; set; } = [];
 
 }

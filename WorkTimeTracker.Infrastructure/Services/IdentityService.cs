@@ -4,10 +4,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using WorkTimeTracker.Application.DTOs.User;
+using WorkTimeTracker.Application.DTOs.Identity;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Application.Responses.Identity;
+using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Data;
 using WorkTimeTracker.Infrastructure.Exceptions;
@@ -32,7 +33,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-	public async Task<LoginResponse> LoginAsync(LoginRequest request)
+	public async Task<LoginResponse<D>> LoginAsync<D>(LoginRequest request) where D : class, IRoleAudit<string>
 	{
 		var user = await _userManager.FindByNameAsync(request.Email);
 		if (user == null)
@@ -58,18 +59,21 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		// Set token cookie 
 		SetTokenCookie(token, refreshToken.Token, request.RememberMe);
 
-		var response = new LoginResponse
+		var userData = _mapper.Map<D>(user);
+		userData.Roles = await GetRolesAsync(user);
+
+		var response = new LoginResponse<D>
 		{
 			Token = token,
 			RefreshToken = refreshToken.Token,
-			User = _mapper.Map<UserDto>(user)
+			User = userData
 		};
 
 		return response;
 	}
 
 
-	public async Task<UserDto> GetCurrentUserAsync(ClaimsPrincipal claimsPrincipal)
+	public async Task<D> GetCurrentUserAsync<D>(ClaimsPrincipal claimsPrincipal) where D : class, IRoleAudit<string>
 	{
 		var user = await _userManager.GetUserAsync(claimsPrincipal);
 
@@ -78,7 +82,10 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 			throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
 		}
 
-		return _mapper.Map<UserDto>(user);
+		var data = _mapper.Map<D>(user);
+		data.Roles = await GetRolesAsync(user);
+
+		return data;
 	}
 
 	public async Task<RefreshTokenResponse> RefreshTokenAsync(HttpRequest request)
@@ -127,6 +134,19 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		{
 			throw new BusinessException(HttpStatusCode.BadRequest, "Failed to add new roles.", errors);
 		}
+	}
+
+	public async Task<List<string>> GetRolesAsync(User user)
+	{
+
+		return (await _userManager.GetRolesAsync(user)).ToList();
+	}
+
+	public async Task<List<string>> GetRolesAsync(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id.ToString()) ?? throw new BusinessException(HttpStatusCode.NotFound, "");
+
+		return (await _userManager.GetRolesAsync(user)).ToList();
 	}
 
 	private void SetTokenCookie(string token, string refreshToken, bool rememberMe)

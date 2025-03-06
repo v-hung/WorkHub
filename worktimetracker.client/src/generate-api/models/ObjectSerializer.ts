@@ -5,6 +5,7 @@ export * from '../models/CreateEditWorkTimeCommand';
 export * from '../models/ErrorResponse';
 export * from '../models/LoginRequest';
 export * from '../models/LoginResponse';
+export * from '../models/Nationality';
 export * from '../models/Permission';
 export * from '../models/ProjectDto';
 export * from '../models/ProjectDtoPaginated';
@@ -31,6 +32,7 @@ import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
+import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto          } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
@@ -39,8 +41,8 @@ import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
-import { UserCreateUpdateRequest                } from '../models/UserCreateUpdateRequest';
-import { UserDetailDto } from '../models/UserDetailDto';
+import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
+import { UserDetailDto       } from '../models/UserDetailDto';
 import { UserDto                 } from '../models/UserDto';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
 import { UserFullDto                   } from '../models/UserFullDto';
@@ -63,6 +65,7 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "Nationality",
     "Permission",
     "ProjectStatus",
     "UserPosition",

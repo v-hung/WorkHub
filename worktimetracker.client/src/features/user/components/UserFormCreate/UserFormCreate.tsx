@@ -14,6 +14,8 @@ import {
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import styles from "./UserFormCreate.module.css";
 import TeamSelect from "@/features/team/components/TeamSelect/TeamSelect";
+import UserSelect from "../UserSelect/UserSelect";
+import { useAuthStore } from "@/stores/auth.store";
 
 const { useBreakpoint } = Grid;
 
@@ -30,6 +32,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
     const { className, userId, ...rest } = props;
 
     const screens = useBreakpoint();
+    const currentUser = useAuthStore((state) => state.user);
 
     const { createUser, updateUser } = useUserAction();
 
@@ -37,6 +40,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
     const [formState] = useState<UserCreateUpdateRequest>(
       new UserCreateUpdateRequest()
     );
+    const [isChangePass, setIsChangePass] = useState(false);
 
     useImperativeHandle(ref, () => ({
       handelUpsert() {
@@ -64,7 +68,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
                 label="Employee code"
-                name="employeeCode"
+                name="code"
                 rules={[{ max: 36, required: true }]}
               >
                 <Input placeholder="Employee code" />
@@ -92,21 +96,13 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="BirthDate"
-                name="userDetail.birthDate"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="BirthDate" name="userDetail.birthDate">
                 <MyDatePicker style={{ width: "100%" }} />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Phone Number"
-                name="phoneNumber"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="Phone Number" name="phoneNumber">
                 <Input placeholder="email" />
               </Form.Item>
             </Col>
@@ -114,7 +110,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
                 label="Nationality"
-                name="nationality"
+                name="userDetail.nationality"
                 rules={[{ required: true }]}
               >
                 <Select>
@@ -125,11 +121,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Gender"
-                name="userDetail.gender"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="Gender" name="userDetail.gender">
                 <Radio.Group>
                   <Radio value="1"> Male </Radio>
                   <Radio value="0"> Female </Radio>
@@ -138,11 +130,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="User Status"
-                name="userStatus"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="User Status" name="userStatus">
                 <Select
                   options={Object.entries(UserStatus).map(([key, value]) => ({
                     value,
@@ -156,7 +144,6 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
               <Form.Item
                 label="Permanent Address"
                 name="userDetail.permanentAddress"
-                rules={[{ required: true }]}
                 className={styles.colCustomResponsive}
               >
                 <Input placeholder="Permanent Address" />
@@ -167,7 +154,6 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
               <Form.Item
                 label="Contact Address"
                 name="userDetail.contactAddress"
-                rules={[{ required: true }]}
                 className={styles.colCustomResponsive}
               >
                 <Input placeholder="Contact Address" />
@@ -201,12 +187,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 name="supervisorId"
                 rules={[{ required: true }]}
               >
-                <Select
-                  options={Object.entries(UserPosition).map(([key, value]) => ({
-                    value,
-                    label: key,
-                  }))}
-                />
+                <UserSelect withoutIds={[currentUser!.id]} />
               </Form.Item>
             </Col>
 
@@ -242,52 +223,51 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Leave Hours"
-                name="leaveHours"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="Leave Hours" name="leaveHours">
                 <Input />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Years Of Work"
-                name="userDetail.yearsOfWork"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="Years Of Work" name="userDetail.yearsOfWork">
                 <Input />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="Change password" layout="horizontal">
-                <Checkbox />
+                <Checkbox
+                  checked={isChangePass}
+                  onChange={(e) => setIsChangePass(e.target.checked)}
+                />
               </Form.Item>
             </Col>
             <Col span={24} />
 
-            <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={24} />
+            {isChangePass && (
+              <>
+                <Col xs={24} lg={12} xl={8}>
+                  <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[{ required: true }]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={24} />
 
-            <Col xs={24} lg={12} xl={8}>
-              <Form.Item
-                label="Re Password"
-                name="rePassword"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
+                <Col xs={24} lg={12} xl={8}>
+                  <Form.Item
+                    label="Re Password"
+                    name="rePassword"
+                    rules={[{ required: true }]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
           </Row>
         </Form>
       </div>

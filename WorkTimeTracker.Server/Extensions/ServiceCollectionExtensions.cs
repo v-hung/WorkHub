@@ -118,6 +118,7 @@ static class ServiceCollectionExtensions
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
 		services.AddScoped<IUserService, UserService>();
+		services.AddScoped<IRoleService, RoleService>();
 		services.AddScoped<IJwtTokenService, JwtTokenService>();
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();

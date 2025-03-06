@@ -15,11 +15,11 @@ import { HttpFile } from '../http/http';
 export class CreateEditWorkTimeCommand {
     'id'?: number;
     'title': string;
-    'startTimeMorning': string;
-    'endTimeMorning': string;
-    'startTimeAfternoon': string;
-    'endTimeAfternoon': string;
-    'allowedLateMinutes': number;
+    'startTimeMorning'?: string;
+    'endTimeMorning'?: string;
+    'startTimeAfternoon'?: string;
+    'endTimeAfternoon'?: string;
+    'allowedLateMinutes'?: number;
 
     static readonly discriminator: string | undefined = undefined;
 

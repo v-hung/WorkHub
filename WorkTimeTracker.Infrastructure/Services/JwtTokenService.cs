@@ -98,18 +98,18 @@ public class JwtTokenService : IJwtTokenService
 	{
 		var claims = new[]
 		{
-												new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-												new Claim(ClaimTypes.Name, user.UserName ?? ""),
-												new Claim(ClaimTypes.Email, user.Email ?? "")
-								};
+			new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+			new Claim(ClaimTypes.Name, user.UserName ?? ""),
+			new Claim(ClaimTypes.Email, user.Email ?? "")
+		};
 
 		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
 		var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 		var token = new JwtSecurityToken(
-				claims: claims,
-				expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.TokenExpiryMinutes)),
-				signingCredentials: creds
+			claims: claims,
+			expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.TokenExpiryMinutes)),
+			signingCredentials: creds
 		);
 
 		return new JwtSecurityTokenHandler().WriteToken(token);
@@ -128,8 +128,8 @@ public class JwtTokenService : IJwtTokenService
 	public void RevokeExpiredRefreshTokens(User user)
 	{
 		var expiredTokens = _context.RefreshTokens
-						.Where(rt => rt.UserId == user.Id && rt.Expires < DateTime.UtcNow)
-						.ToList();
+			.Where(rt => rt.UserId == user.Id && rt.Expires < DateTime.UtcNow)
+			.ToList();
 
 		if (expiredTokens.Any())
 		{

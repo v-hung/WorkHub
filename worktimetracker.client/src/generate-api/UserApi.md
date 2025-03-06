@@ -28,6 +28,7 @@ const apiInstance = new UserApi(configuration);
 const request: UserApiUserCreateRequest = {
   
   userCreateUpdateRequest: {
+    code: "code_example",
     fullName: "fullName_example",
     userName: "userName_example",
     email: "email_example",
@@ -38,12 +39,12 @@ const request: UserApiUserCreateRequest = {
     userStatus: "ACTIVE",
     workTimeId: 1,
     userDetail: {
-      id: 1,
       birthDate: new Date('1970-01-01T00:00:00.00Z'),
       gender: true,
       permanentAddress: "permanentAddress_example",
       contactAddress: "contactAddress_example",
       yearsOfWork: 1,
+      nationality: "Japanese",
     },
     supervisorId: "supervisorId_example",
     teamId: 1,
@@ -282,6 +283,7 @@ const request: UserApiUserUpdateRequest = {
   id: "id_example",
   
   userCreateUpdateRequest: {
+    code: "code_example",
     fullName: "fullName_example",
     userName: "userName_example",
     email: "email_example",
@@ -292,12 +294,12 @@ const request: UserApiUserUpdateRequest = {
     userStatus: "ACTIVE",
     workTimeId: 1,
     userDetail: {
-      id: 1,
       birthDate: new Date('1970-01-01T00:00:00.00Z'),
       gender: true,
       permanentAddress: "permanentAddress_example",
       contactAddress: "contactAddress_example",
       yearsOfWork: 1,
+      nationality: "Japanese",
     },
     supervisorId: "supervisorId_example",
     teamId: 1,

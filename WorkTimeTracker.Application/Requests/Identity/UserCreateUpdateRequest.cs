@@ -1,11 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using WorkTimeTracker.Application.DTOs.User;
+using WorkTimeTracker.Application.DTOs.Identity;
 using WorkTimeTracker.Domain.Enums;
 
 namespace WorkTimeTracker.Application.Requests.Identity
 {
 	public class UserCreateUpdateRequest
 	{
+		[Required]
+		public required string Code { get; set; }
+
 		[Required]
 		public required string FullName { get; set; }
 
@@ -23,7 +26,6 @@ namespace WorkTimeTracker.Application.Requests.Identity
 		[Required]
 		public required UserPosition UserPosition { get; set; }
 
-		[Required]
 		public int LeaveHours { get; set; } = 0;
 
 		[Required]
@@ -39,10 +41,8 @@ namespace WorkTimeTracker.Application.Requests.Identity
 
 		public int? TeamId { get; set; }
 
-		[Required]
 		public IList<int> ManagerTeamIds { get; set; } = [];
 
-		[Required]
 		public IList<int> ManagerProjectIds { get; set; } = [];
 
 		[Required]

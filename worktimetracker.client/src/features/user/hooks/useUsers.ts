@@ -2,27 +2,29 @@ import { getMessageError } from "@/common/utils/error";
 import { UserDto, UserDtoPaginated } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { notification } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useUsers = () => {
+  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
 
   // GET LIST USER
   // =============
 
-  const [users, setUsers] = useState<UserDtoPaginated>({
+  const [userPaginated, setUserPaginated] = useState<UserDtoPaginated>({
     data: [],
     currentPage: 1,
-    pageSize: 10,
-    totalCount: 100,
-    totalPages: 10,
-    hasNextPage: true,
+    pageSize: 25,
+    totalCount: 0,
+    totalPages: 0,
+    hasNextPage: false,
     hasPreviousPage: false,
   });
 
   const [request, setRequest] = useState({
-    pageNumber: 1,
-    pageSize: 10,
+    pageNumber: userPaginated.currentPage,
+    pageSize: userPaginated.pageSize,
+    searchString: "",
   });
 
   const fetchUsers = useCallback(async () => {
@@ -32,7 +34,7 @@ export const useUsers = () => {
         request.pageNumber,
         request.pageSize
       );
-      setUsers(data);
+      setUserPaginated(data);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
@@ -40,6 +42,15 @@ export const useUsers = () => {
     } finally {
       setLoading(false);
     }
+  }, [request]);
+
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+
+    fetchUsers();
   }, [request]);
 
   // GET USER BY ID
@@ -61,5 +72,13 @@ export const useUsers = () => {
     }
   };
 
-  return { users, loading, fetchUsers, setRequest, user, fetchUser };
+  return {
+    userPaginated,
+    loading,
+    fetchUsers,
+    request,
+    setRequest,
+    user,
+    fetchUser,
+  };
 };

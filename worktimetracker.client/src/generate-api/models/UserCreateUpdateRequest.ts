@@ -16,20 +16,21 @@ import { UserStatus } from '../models/UserStatus';
 import { HttpFile } from '../http/http';
 
 export class UserCreateUpdateRequest {
+    'code': string;
     'fullName': string;
     'userName': string;
     'email': string;
     'phoneNumber'?: string | null;
     'image'?: string | null;
     'userPosition': UserPosition;
-    'leaveHours': number;
+    'leaveHours'?: number;
     'userStatus': UserStatus;
     'workTimeId'?: number | null;
     'userDetail'?: UserDetailDto;
     'supervisorId'?: string | null;
     'teamId'?: number | null;
-    'managerTeamIds': Array<number>;
-    'managerProjectIds': Array<number>;
+    'managerTeamIds'?: Array<number> | null;
+    'managerProjectIds'?: Array<number> | null;
     'roleNames': Array<string>;
 
     static readonly discriminator: string | undefined = undefined;
@@ -37,6 +38,12 @@ export class UserCreateUpdateRequest {
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
+        {
+            "name": "code",
+            "baseName": "code",
+            "type": "string",
+            "format": ""
+        },
         {
             "name": "fullName",
             "baseName": "fullName",

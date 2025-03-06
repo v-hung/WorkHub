@@ -5,7 +5,7 @@ type State = Omit<ComponentProps<typeof Select>, "onPopupScroll"> & {
   scrollInfiniteCb?: () => void;
 };
 
-const SelectApi: FC<State> = ({
+const SelectAsyncScroll: FC<State> = ({
   className,
   options,
   loading = false,
@@ -38,4 +38,4 @@ const SelectApi: FC<State> = ({
   );
 };
 
-export default SelectApi;
+export default SelectAsyncScroll;

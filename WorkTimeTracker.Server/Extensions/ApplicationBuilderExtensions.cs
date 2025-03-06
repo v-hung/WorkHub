@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Localization;
 using WorkTimeTracker.Domain.Constants.Localization;
 using WorkTimeTracker.Application.Interfaces.Data;
 using WorkTimeTracker.Server.Middlewares;
-
 namespace WorkTimeTracker.Server.Extensions;
 
 static class ApplicationBuilderExtensions
@@ -19,6 +18,11 @@ static class ApplicationBuilderExtensions
 	{
 		app.UseSwagger();
 		app.UseSwaggerUI();
+		app.UseReDoc(c =>
+		{
+			c.DocumentTitle = "My API Docs";
+			c.RoutePrefix = "docs";
+		});
 	}
 
 	public static IApplicationBuilder Initialize(this IApplicationBuilder app, IConfiguration _configuration)

@@ -10,6 +10,7 @@ import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { LoginResponse } from '../models/LoginResponse';
+import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
