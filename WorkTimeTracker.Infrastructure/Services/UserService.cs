@@ -129,6 +129,8 @@ namespace WorkTimeTracker.Infrastructure.Services
 		private async Task MapRequestToUser(UserCreateUpdateRequest request, User user, Guid? userUpdateId)
 		{
 
+			user.UserName = request.Email;
+
 			if (request.ManagerTeamIds != null && request.ManagerTeamIds.Any())
 			{
 				if (userUpdateId != null)

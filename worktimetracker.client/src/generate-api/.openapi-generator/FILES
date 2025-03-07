@@ -29,6 +29,7 @@ models/CreateEditProjectCommand.ts
 models/CreateEditTeamCommand.ts
 models/CreateEditWorkTimeCommand.ts
 models/ErrorResponse.ts
+models/ErrorValidateResponse.ts
 models/LoginRequest.ts
 models/Nationality.ts
 models/ObjectSerializer.ts

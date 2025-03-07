@@ -1,8 +1,23 @@
-import { ApiException, ErrorResponse } from "@/generate-api";
+import {
+  ApiException,
+  ErrorResponse,
+  ErrorValidateResponse,
+} from "@/generate-api";
 import i18n from "./i18n";
 
-export const getMessageError = (error: any): string => {
-  return error instanceof ApiException
-    ? (JSON.parse(error.body) as ErrorResponse).message
-    : i18n.t("message.error");
+export const getMessageError = (e: any): string => {
+  try {
+    if (!(e instanceof ApiException)) throw e;
+
+    let error = JSON.parse(e.body) as Partial<
+      ErrorResponse & ErrorValidateResponse
+    >;
+
+    if (error.message) return error.message;
+    if (error.title) return error.title;
+
+    throw e;
+  } catch {
+    return i18n.t("message.error");
+  }
 };

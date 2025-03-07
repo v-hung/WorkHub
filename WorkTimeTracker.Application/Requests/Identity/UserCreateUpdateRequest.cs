@@ -13,9 +13,6 @@ namespace WorkTimeTracker.Application.Requests.Identity
 		public required string FullName { get; set; }
 
 		[Required]
-		public required string UserName { get; set; }
-
-		[Required]
 		public required string Email { get; set; }
 
 

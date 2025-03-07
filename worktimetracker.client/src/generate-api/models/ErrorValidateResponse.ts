@@ -12,10 +12,17 @@
 
 import { HttpFile } from '../http/http';
 
-export class ErrorResponse {
-    'statusCode': number;
-    'message': string;
-    'details'?: { [key: string]: Array<string>; } | null;
+export class ErrorValidateResponse {
+    /**
+    * https://tools.ietf.org/html/rfc9110#section-15.5.1
+    */
+    'type': string;
+    /**
+    * One or more validation errors occurred.
+    */
+    'title': string;
+    'status': number;
+    'errors'?: { [key: string]: Array<string>; } | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -23,26 +30,32 @@ export class ErrorResponse {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "statusCode",
-            "baseName": "statusCode",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "message",
-            "baseName": "message",
+            "name": "type",
+            "baseName": "type",
             "type": "string",
             "format": ""
         },
         {
-            "name": "details",
-            "baseName": "details",
+            "name": "title",
+            "baseName": "title",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "status",
+            "baseName": "status",
+            "type": "number",
+            "format": "int32"
+        },
+        {
+            "name": "errors",
+            "baseName": "errors",
             "type": "{ [key: string]: Array<string>; }",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return ErrorResponse.attributeTypeMap;
+        return ErrorValidateResponse.attributeTypeMap;
     }
 
     public constructor() {

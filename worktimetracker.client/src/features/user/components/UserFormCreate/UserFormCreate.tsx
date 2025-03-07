@@ -48,8 +48,10 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
     useImperativeHandle(ref, () => ({
       handelUpsert() {
         form.validateFields().then(async () => {
+          const formValues = form.getFieldsValue();
           if (!userId) {
-            createUser(formState);
+            console.log({ formValues });
+            createUser(formValues);
           } else {
             updateUser(userId, formState);
           }
@@ -106,7 +108,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item label="BirthDate" name="userDetail.birthDate">
+              <Form.Item label="BirthDate" name={["userDetail", "birthDate"]}>
                 <MyDatePicker style={{ width: "100%" }} />
               </Form.Item>
             </Col>
@@ -120,7 +122,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
                 label="Nationality"
-                name="userDetail.nationality"
+                name={["userDetail", "nationality"]}
                 rules={[{ required: true }]}
               >
                 <Select
@@ -133,7 +135,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item label="Gender" name="userDetail.gender">
+              <Form.Item label="Gender" name={["userDetail", "gender"]}>
                 <Radio.Group>
                   <Radio value="1"> Male </Radio>
                   <Radio value="0"> Female </Radio>
@@ -155,7 +157,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             <Col span={24}>
               <Form.Item
                 label="Permanent Address"
-                name="userDetail.permanentAddress"
+                name={["userDetail", "permanentAddress"]}
                 className={styles.colCustomResponsive}
               >
                 <Input placeholder="Permanent Address" />
@@ -165,7 +167,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             <Col span={24}>
               <Form.Item
                 label="Contact Address"
-                name="userDetail.contactAddress"
+                name={["userDetail", "contactAddress"]}
                 className={styles.colCustomResponsive}
               >
                 <Input placeholder="Contact Address" />
@@ -223,7 +225,10 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item label="Years Of Work" name="userDetail.yearsOfWork">
+              <Form.Item
+                label="Years Of Work"
+                name={["userDetail", "yearsOfWork"]}
+              >
                 <Input />
               </Form.Item>
             </Col>

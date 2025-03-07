@@ -1,6 +1,6 @@
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using WorkTimeTracker.Application.Responses;
 
 namespace WorkTimeTracker.Server.Swagger
 {
@@ -17,21 +17,7 @@ namespace WorkTimeTracker.Server.Swagger
 					{
 						["application/json"] = new OpenApiMediaType
 						{
-							Schema = new OpenApiSchema
-							{
-								Type = "object",
-								Properties = new Dictionary<string, OpenApiSchema>
-								{
-									["type"] = new OpenApiSchema { Type = "string", Example = new OpenApiString("https://tools.ietf.org/html/rfc9110#section-15.5.1") },
-									["title"] = new OpenApiSchema { Type = "string", Example = new OpenApiString("One or more validation errors occurred.") },
-									["status"] = new OpenApiSchema { Type = "integer", Example = new OpenApiInteger(400) },
-									["errors"] = new OpenApiSchema
-									{
-										Type = "object",
-										AdditionalProperties = new OpenApiSchema { Type = "array", Items = new OpenApiSchema { Type = "string" } }
-									}
-								}
-							}
+							Schema = context.SchemaGenerator.GenerateSchema(typeof(ErrorValidateResponse), context.SchemaRepository)
 						}
 					}
 				});

@@ -6,9 +6,9 @@ import {
 import { from, Observable } from "@/generate-api/rxjsStub";
 // import "whatwg-fetch";
 import { accountApi } from "./apiClient";
-import { notification } from "antd";
 import { useAuthStore } from "@/stores/auth.store";
 import i18n from "@/common/utils/i18n";
+import { notification } from "@/common/contexts/FeedbackProvider";
 
 export class FetchHttpLibrary implements HttpLibrary {
   private enableRefreshToken: boolean;
@@ -17,21 +17,19 @@ export class FetchHttpLibrary implements HttpLibrary {
     this.enableRefreshToken = enableRefreshToken;
   }
 
-  private async handleRequest(
+  public send(
     request: RequestContext,
     isRetry: boolean = false
-  ): Promise<ResponseContext> {
+  ): Observable<ResponseContext> {
     const method = request.getHttpMethod().toString();
     const body = request.getBody();
 
-    try {
-      const resp = await fetch(request.getUrl(), {
-        method: method,
-        body: body as any,
-        headers: request.getHeaders(),
-        credentials: "include",
-      });
-
+    const resultPromise = fetch(request.getUrl(), {
+      method: method,
+      body: body as any,
+      headers: request.getHeaders(),
+      credentials: "include",
+    }).then((resp: any) => {
       const headers: { [name: string]: string } = {};
       resp.headers.forEach((value: string, name: string) => {
         headers[name] = value;
@@ -42,25 +40,26 @@ export class FetchHttpLibrary implements HttpLibrary {
         binary: () => resp.blob(),
       });
 
+      // Handle 401 and refresh token if enabled
       if (this.enableRefreshToken && resp.status === 401 && !isRetry) {
-        try {
-          await accountApi.accountRefreshToken();
-          return this.handleRequest(request, true);
-        } catch (e) {
-          useAuthStore.getState().logout();
-          notification.error({
-            message: i18n.t("auth.sessionExpired"),
+        return accountApi
+          .accountRefreshToken()
+          .then(() => {
+            // Retry the original request with isRetry=true
+            return this.send(request, true).toPromise();
+          })
+          .catch(() => {
+            useAuthStore.getState().logout();
+            notification.error({
+              message: i18n.t("auth.sessionExpired"),
+            });
+            return responseContext; // Return original 401 response
           });
-        }
       }
 
       return responseContext;
-    } catch (error) {
-      throw error;
-    }
-  }
+    });
 
-  public send(request: RequestContext): Observable<ResponseContext> {
-    return from(this.handleRequest(request));
+    return from<Promise<ResponseContext>>(resultPromise);
   }
 }

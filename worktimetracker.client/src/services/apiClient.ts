@@ -9,7 +9,6 @@ import {
   server1,
 } from "@/generate-api";
 import type { ConfigurationParameters } from "@/generate-api/configuration";
-import "whatwg-fetch";
 import { FetchHttpLibrary } from "./interceptors";
 
 const baseServer = server1;

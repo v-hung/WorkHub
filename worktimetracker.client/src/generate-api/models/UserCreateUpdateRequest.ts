@@ -18,7 +18,6 @@ import { HttpFile } from '../http/http';
 export class UserCreateUpdateRequest {
     'code': string;
     'fullName': string;
-    'userName': string;
     'email': string;
     'phoneNumber'?: string | null;
     'image'?: string | null;
@@ -47,12 +46,6 @@ export class UserCreateUpdateRequest {
         {
             "name": "fullName",
             "baseName": "fullName",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "userName",
-            "baseName": "userName",
             "type": "string",
             "format": ""
         },

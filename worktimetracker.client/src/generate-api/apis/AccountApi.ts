@@ -10,6 +10,7 @@ import {SecurityAuthentication} from '../auth/auth';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { ErrorResponse } from '../models/ErrorResponse';
+import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { UserDto } from '../models/UserDto';
@@ -217,6 +218,13 @@ export class AccountApiResponseProcessor {
             ) as ErrorResponse;
             throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
         }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
+        }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
@@ -252,6 +260,13 @@ export class AccountApiResponseProcessor {
                 "ErrorResponse", ""
             ) as ErrorResponse;
             throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
@@ -289,6 +304,13 @@ export class AccountApiResponseProcessor {
             ) as ErrorResponse;
             throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
         }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
+        }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
@@ -320,6 +342,13 @@ export class AccountApiResponseProcessor {
                 "ErrorResponse", ""
             ) as ErrorResponse;
             throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
@@ -356,6 +385,13 @@ export class AccountApiResponseProcessor {
                 "ErrorResponse", ""
             ) as ErrorResponse;
             throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

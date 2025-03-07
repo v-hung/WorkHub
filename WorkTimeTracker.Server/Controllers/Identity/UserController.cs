@@ -34,7 +34,7 @@ public class UserController : BaseApiController<UserController>
 	}
 
 	[HttpPost]
-	public async Task<ActionResult<UserDto>> Create(UserCreateUpdateRequest request)
+	public async Task<ActionResult<UserDto>> Create([FromBody] UserCreateUpdateRequest request)
 	{
 		var users = await _userService.CreateAsync<UserDto>(request);
 

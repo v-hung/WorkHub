@@ -7,6 +7,7 @@ import { CreateEditProjectCommand } from '../models/CreateEditProjectCommand';
 import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
+import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';

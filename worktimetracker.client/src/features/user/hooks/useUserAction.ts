@@ -15,6 +15,7 @@ export const useUserAction = () => {
     try {
       return await userApi.userCreate(request);
     } catch (e) {
+      console.log(JSON.stringify(e));
       notification.error({
         message: getMessageError(e),
       });

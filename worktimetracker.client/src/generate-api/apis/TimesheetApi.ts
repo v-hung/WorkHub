@@ -9,6 +9,7 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { ErrorResponse } from '../models/ErrorResponse';
+import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 
 /**
  * no description
@@ -69,6 +70,13 @@ export class TimesheetApiResponseProcessor {
                 "ErrorResponse", ""
             ) as ErrorResponse;
             throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

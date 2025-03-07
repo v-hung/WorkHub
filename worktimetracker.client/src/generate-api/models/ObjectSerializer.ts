@@ -3,6 +3,7 @@ export * from '../models/CreateEditProjectCommand';
 export * from '../models/CreateEditTeamCommand';
 export * from '../models/CreateEditWorkTimeCommand';
 export * from '../models/ErrorResponse';
+export * from '../models/ErrorValidateResponse';
 export * from '../models/LoginRequest';
 export * from '../models/Nationality';
 export * from '../models/Permission';
@@ -32,6 +33,7 @@ import { CreateEditProjectCommand          } from '../models/CreateEditProjectCo
 import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
+import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -44,7 +46,7 @@ import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
-import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
+import { UserCreateUpdateRequest                } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto       } from '../models/UserDetailDto';
 import { UserDto                  } from '../models/UserDto';
 import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
@@ -82,6 +84,7 @@ let typeMap: {[index: string]: any} = {
     "CreateEditTeamCommand": CreateEditTeamCommand,
     "CreateEditWorkTimeCommand": CreateEditWorkTimeCommand,
     "ErrorResponse": ErrorResponse,
+    "ErrorValidateResponse": ErrorValidateResponse,
     "LoginRequest": LoginRequest,
     "ProjectDto": ProjectDto,
     "ProjectDtoPaginated": ProjectDtoPaginated,
