@@ -16,6 +16,7 @@ using WorkTimeTracker.Infrastructure.Exceptions;
 using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Domain.Entities.Organization;
 using WorkTimeTracker.Domain.Entities.Work;
+using WorkTimeTracker.Domain.Constants.Identity;
 
 namespace WorkTimeTracker.Infrastructure.Services
 {
@@ -98,9 +99,19 @@ namespace WorkTimeTracker.Infrastructure.Services
 		{
 			var user = _mapper.Map<User>(request);
 
+			user.LockoutEnabled = true;
+			user.SecurityStamp = Guid.NewGuid().ToString();
+			user.EmailConfirmed = true;
+
 			await MapRequestToUser(request, user, null);
 
-			await _context.Users.AddAsync(user);
+			var result = await _userManager.CreateAsync(user, request.Password ?? UserConst.DefaultPassword);
+			if (!result.Succeeded)
+			{
+			}
+
+			await _userManager.AddToRoleAsync(user, RoleConst.BasicRole);
+
 			await _context.SaveChangesAsync();
 
 			return _mapper.Map<D>(user);
@@ -130,6 +141,9 @@ namespace WorkTimeTracker.Infrastructure.Services
 		{
 
 			user.UserName = request.Email;
+			user.UserName = request.Email;
+			user.NormalizedUserName = request.Email;
+			user.NormalizedEmail = request.Email;
 
 			if (request.ManagerTeamIds != null && request.ManagerTeamIds.Any())
 			{

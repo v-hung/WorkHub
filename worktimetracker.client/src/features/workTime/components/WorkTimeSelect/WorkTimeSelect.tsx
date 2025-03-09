@@ -1,5 +1,12 @@
 import { Select, SelectProps } from "antd";
-import { ComponentProps, FC, useCallback, useEffect, useState } from "react";
+import {
+  ComponentProps,
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
 import { debounce } from "@/common/utils/common.utils";
 import { useWorkTimes } from "../../hooks/useWorkTimes";
@@ -69,3 +76,5 @@ const WorkTimeSelect: FC<State> = (props) => {
 };
 
 export default WorkTimeSelect;
+
+export const WorkTimeSelectMemo = memo(WorkTimeSelect);

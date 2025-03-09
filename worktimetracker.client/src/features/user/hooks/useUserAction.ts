@@ -1,7 +1,7 @@
+import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
 import { UserCreateUpdateRequest } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
-import { notification } from "antd";
 import { useState } from "react";
 
 export const useUserAction = () => {
@@ -15,8 +15,7 @@ export const useUserAction = () => {
     try {
       return await userApi.userCreate(request);
     } catch (e) {
-      console.log(JSON.stringify(e));
-      notification.error({
+      getNotification().error({
         message: getMessageError(e),
       });
     } finally {
@@ -32,7 +31,7 @@ export const useUserAction = () => {
     try {
       return await userApi.userUpdate(id, request);
     } catch (e) {
-      notification.error({
+      getNotification().error({
         message: getMessageError(e),
       });
     } finally {

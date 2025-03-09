@@ -1,6 +1,6 @@
-import { notification } from "antd";
 import { Dispatch, SetStateAction } from "react";
 import { getMessageError } from "./error";
+import { notification } from "antd";
 
 export type PromiseNotificationType<T> = {
   promise: Promise<T>;

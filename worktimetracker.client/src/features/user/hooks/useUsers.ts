@@ -1,12 +1,13 @@
 import { getMessageError } from "@/common/utils/error";
 import { UserDto, UserDtoPaginated } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
-import { notification } from "antd";
+import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useUsers = () => {
   const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
+  const { notification } = App.useApp();
 
   // GET LIST USER
   // =============

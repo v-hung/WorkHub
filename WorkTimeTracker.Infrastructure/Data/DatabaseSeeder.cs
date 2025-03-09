@@ -144,7 +144,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 				TeamId = teams.Where(t => t.Name == "STNet").FirstOrDefault()?.Id ?? null
 			};
 
-			var result = await _userManager.CreateAsync(user, "Admin123!");
+			var result = await _userManager.CreateAsync(user, UserConst.DefaultPassword);
 			if (result.Succeeded)
 			{
 				await _userManager.AddToRoleAsync(user, RoleConst.BasicRole);

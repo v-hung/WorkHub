@@ -1,5 +1,6 @@
 .gitattributes
 .gitignore
+.openapi-generator-ignore
 AccountApi.md
 ProjectApi.md
 README.md

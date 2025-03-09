@@ -1,5 +1,5 @@
 import { Select } from "antd";
-import { ComponentProps, FC, useEffect, useMemo } from "react";
+import { ComponentProps, FC, memo, useEffect, useMemo } from "react";
 import { useRoles } from "../../hooks/useRoles";
 
 type State = ComponentProps<typeof Select>;
@@ -14,7 +14,7 @@ const RoleSelect: FC<State> = (props) => {
   }, []);
 
   const options = useMemo(
-    () => roles.map((role) => ({ label: role.name, value: role.id })),
+    () => roles.map((role) => ({ label: role.name, value: role.name })),
     [roles]
   );
 
@@ -24,3 +24,5 @@ const RoleSelect: FC<State> = (props) => {
 };
 
 export default RoleSelect;
+
+export const RoleSelectMemo = memo(RoleSelect);

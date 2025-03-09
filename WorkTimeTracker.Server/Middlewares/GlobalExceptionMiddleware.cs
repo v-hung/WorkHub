@@ -1,3 +1,4 @@
+using System.Text.Json;
 using WorkTimeTracker.Application.Responses;
 using WorkTimeTracker.Infrastructure.Exceptions;
 
@@ -7,6 +8,12 @@ public class GlobalExceptionMiddleware
 {
 	private readonly RequestDelegate _next;
 	private readonly ILogger<GlobalExceptionMiddleware> _logger;
+
+	private static readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
+	{
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+		WriteIndented = false
+	};
 
 	public GlobalExceptionMiddleware(
 		RequestDelegate next,
@@ -39,12 +46,12 @@ public class GlobalExceptionMiddleware
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = (int)exception.StatusCode;
 
-		return context.Response.WriteAsync(new ErrorResponse
+		return context.Response.WriteAsync(JsonSerializer.Serialize(new ErrorResponse
 		{
 			StatusCode = (int)exception.StatusCode,
 			Message = exception.Message,
 			Details = exception.Details
-		}.ToString());
+		}, _jsonOptions));
 	}
 
 	private Task HandleUnexpectedExceptionAsync(HttpContext context, Exception exception)
@@ -54,10 +61,10 @@ public class GlobalExceptionMiddleware
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = 500;
 
-		return context.Response.WriteAsync(new ErrorResponse
+		return context.Response.WriteAsync(JsonSerializer.Serialize(new ErrorResponse
 		{
 			StatusCode = 500,
 			Message = "Internal Server Error"
-		}.ToString());
+		}, _jsonOptions));
 	}
 }

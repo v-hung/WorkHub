@@ -1,3 +1,5 @@
+import { getNotification } from "@/common/contexts/FeedbackProvider";
+import { getMessageError } from "@/common/utils/error";
 import { LoginRequest } from "@/generate-api";
 import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
@@ -21,7 +23,9 @@ export const useLogin = () => {
 
       navigate(redirectUrl);
     } catch (error) {
-      console.log({ error });
+      getNotification().error({
+        message: getMessageError(error),
+      });
     } finally {
       setLoading(false);
     }

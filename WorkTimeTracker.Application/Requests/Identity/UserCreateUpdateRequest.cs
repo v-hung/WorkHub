@@ -45,5 +45,7 @@ namespace WorkTimeTracker.Application.Requests.Identity
 		[Required]
 		public IList<string> RoleNames { get; set; } = [];
 
+		public string? Password { get; set; }
+
 	}
 }

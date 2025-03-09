@@ -1,5 +1,12 @@
 import { Select, SelectProps } from "antd";
-import { ComponentProps, FC, useCallback, useEffect, useState } from "react";
+import {
+  ComponentProps,
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
 import { debounce } from "@/common/utils/common.utils";
 import { useTeams } from "../../hooks/useTeams";
@@ -69,3 +76,5 @@ const TeamSelect: FC<State> = (props) => {
 };
 
 export default TeamSelect;
+
+export const TeamSelectMemo = memo(TeamSelect);

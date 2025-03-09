@@ -1,6 +1,7 @@
 import { ConfigProvider, App as AppTheme } from "antd";
 import { FC, PropsWithChildren, Suspense } from "react";
 import { authBootstrap } from "./common/bootstrap/auth.bootstrap";
+import { FeedbackProvider } from "./common/contexts/FeedbackProvider";
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
   authBootstrap.read();
@@ -19,7 +20,7 @@ export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
         message={{ maxCount: 1 }}
         notification={{ placement: "topRight" }}
       >
-        {children}
+        <FeedbackProvider>{children}</FeedbackProvider>
       </AppTheme>
     </ConfigProvider>
   );

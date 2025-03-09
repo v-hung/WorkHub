@@ -1,7 +1,20 @@
-import { Checkbox, Col, Form, Grid, Input, Radio, Row, Select } from "antd";
 import {
+  Checkbox,
+  Col,
+  Form,
+  Grid,
+  Input,
+  Radio,
+  Row,
+  Select,
+  Spin,
+} from "antd";
+import {
+  Dispatch,
   forwardRef,
   HTMLAttributes,
+  SetStateAction,
+  useEffect,
   useImperativeHandle,
   useState,
 } from "react";
@@ -14,16 +27,17 @@ import {
 } from "@/generate-api";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import styles from "./UserFormCreate.module.css";
-import TeamSelect from "@/features/team/components/TeamSelect/TeamSelect";
-import UserSelect from "../UserSelect/UserSelect";
+import { TeamSelectMemo } from "@/features/team/components/TeamSelect/TeamSelect";
+import { UserSelectMemo } from "../UserSelect/UserSelect";
 import { useAuthStore } from "@/stores/auth.store";
-import RoleSelect from "@/features/role/components/RoleSelect/RoleSelect";
-import WorkTimeSelect from "@/features/workTime/components/WorkTimeSelect/WorkTimeSelect";
+import { RoleSelectMemo } from "@/features/role/components/RoleSelect/RoleSelect";
+import { WorkTimeSelectMemo } from "@/features/workTime/components/WorkTimeSelect/WorkTimeSelect";
 
 const { useBreakpoint } = Grid;
 
 type State = HTMLAttributes<HTMLDivElement> & {
   userId?: string;
+  setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 
 export type UserFormCreateRefState = {
@@ -32,12 +46,18 @@ export type UserFormCreateRefState = {
 
 const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
   (props, ref) => {
-    const { className, userId, ...rest } = props;
+    const { className, userId, setLoading, ...rest } = props;
 
     const screens = useBreakpoint();
     const currentUser = useAuthStore((state) => state.user);
 
-    const { createUser, updateUser } = useUserAction();
+    const { loading, createUser, updateUser } = useUserAction();
+
+    useEffect(() => {
+      if (setLoading) {
+        setLoading(loading);
+      }
+    }, [loading, setLoading]);
 
     const [form] = Form.useForm();
     const [formState] = useState<UserCreateUpdateRequest>(
@@ -50,7 +70,6 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
         form.validateFields().then(async () => {
           const formValues = form.getFieldsValue();
           if (!userId) {
-            console.log({ formValues });
             createUser(formValues);
           } else {
             updateUser(userId, formState);
@@ -191,13 +210,13 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="Team" name="teamID">
-                <TeamSelect />
+                <TeamSelectMemo />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="Supervisor" name="supervisorId">
-                <UserSelect withoutIds={[currentUser!.id]} />
+                <UserSelectMemo withoutIds={[currentUser!.id]} />
               </Form.Item>
             </Col>
 
@@ -208,13 +227,13 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 rules={[{ required: true }]}
                 className={styles.colCustomResponsive}
               >
-                <RoleSelect />
+                <RoleSelectMemo />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="WorkTime" name="workTimeId">
-                <WorkTimeSelect />
+                <WorkTimeSelectMemo />
               </Form.Item>
             </Col>
 
@@ -269,6 +288,12 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             )}
           </Row>
         </Form>
+
+        {loading && (
+          <div className="loading-container">
+            <Spin />
+          </div>
+        )}
       </div>
     );
   }

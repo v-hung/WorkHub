@@ -7,8 +7,8 @@ import { from, Observable } from "@/generate-api/rxjsStub";
 // import "whatwg-fetch";
 import { accountApi } from "./apiClient";
 import { useAuthStore } from "@/stores/auth.store";
+import { getNotification } from "@/common/contexts/FeedbackProvider";
 import i18n from "@/common/utils/i18n";
-import { notification } from "@/common/contexts/FeedbackProvider";
 
 export class FetchHttpLibrary implements HttpLibrary {
   private enableRefreshToken: boolean;
@@ -21,6 +21,10 @@ export class FetchHttpLibrary implements HttpLibrary {
     request: RequestContext,
     isRetry: boolean = false
   ): Observable<ResponseContext> {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const timer = setTimeout(() => controller.abort(), 10000);
+
     const method = request.getHttpMethod().toString();
     const body = request.getBody();
 
@@ -29,36 +33,41 @@ export class FetchHttpLibrary implements HttpLibrary {
       body: body as any,
       headers: request.getHeaders(),
       credentials: "include",
-    }).then((resp: any) => {
-      const headers: { [name: string]: string } = {};
-      resp.headers.forEach((value: string, name: string) => {
-        headers[name] = value;
-      });
+      signal,
+    })
+      .then((resp: any) => {
+        const headers: { [name: string]: string } = {};
+        resp.headers.forEach((value: string, name: string) => {
+          headers[name] = value;
+        });
 
-      const responseContext = new ResponseContext(resp.status, headers, {
-        text: () => resp.text(),
-        binary: () => resp.blob(),
-      });
+        const responseContext = new ResponseContext(resp.status, headers, {
+          text: () => resp.text(),
+          binary: () => resp.blob(),
+        });
 
-      // Handle 401 and refresh token if enabled
-      if (this.enableRefreshToken && resp.status === 401 && !isRetry) {
-        return accountApi
-          .accountRefreshToken()
-          .then(() => {
-            // Retry the original request with isRetry=true
-            return this.send(request, true).toPromise();
-          })
-          .catch(() => {
-            useAuthStore.getState().logout();
-            notification.error({
-              message: i18n.t("auth.sessionExpired"),
+        // Handle 401 and refresh token if enabled
+        if (this.enableRefreshToken && resp.status === 401 && !isRetry) {
+          return accountApi
+            .accountRefreshToken()
+            .then(() => {
+              // Retry the original request with isRetry=true
+              return this.send(request, true).toPromise();
+            })
+            .catch(() => {
+              useAuthStore.getState().logout();
+              getNotification()?.error({
+                message: i18n.t("auth.sessionExpired"),
+              });
+              return responseContext; // Return original 401 response
             });
-            return responseContext; // Return original 401 response
-          });
-      }
+        }
 
-      return responseContext;
-    });
+        return responseContext;
+      })
+      .finally(() => {
+        clearTimeout(timer);
+      });
 
     return from<Promise<ResponseContext>>(resultPromise);
   }
