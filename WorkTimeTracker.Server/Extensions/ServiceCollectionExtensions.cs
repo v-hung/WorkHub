@@ -11,11 +11,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WorkTimeTracker.Application.Configs;
 using WorkTimeTracker.Application.Interfaces.Data;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Domain.Constants.Permission;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Authorization;
 using WorkTimeTracker.Infrastructure.Data;
+using WorkTimeTracker.Infrastructure.Repositories;
 using WorkTimeTracker.Infrastructure.Services;
 using WorkTimeTracker.Server.Swagger;
 
@@ -123,7 +125,7 @@ static class ServiceCollectionExtensions
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-		services.AddScoped(typeof(IRepositoryService<,>), typeof(RepositoryService<,>));
+		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 

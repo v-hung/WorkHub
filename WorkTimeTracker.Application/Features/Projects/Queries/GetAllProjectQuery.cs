@@ -1,6 +1,6 @@
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Work;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Domain.Entities.Work;
@@ -19,16 +19,16 @@ namespace WorkTimeTracker.Application.Features.Projects.Queries
 
 	public class GetAllProjectQueryHandler : IRequestHandler<GetAllProjectQuery, Paginated<ProjectDto>>
 	{
-		private readonly IRepositoryService<Project, int> _repositoryService;
+		private readonly IRepository<Project, int> _repository;
 
-		public GetAllProjectQueryHandler(IRepositoryService<Project, int> repositoryService)
+		public GetAllProjectQueryHandler(IRepository<Project, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
 		public async Task<Paginated<ProjectDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.SearchAsync<ProjectDto>(query._request);
+			return await _repository.SearchAsync<ProjectDto>(query._request);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Work;
 
 namespace WorkTimeTracker.Application.Features.Projects.Commands
@@ -15,16 +15,16 @@ namespace WorkTimeTracker.Application.Features.Projects.Commands
 
 	public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, int>
 	{
-		private readonly IRepositoryService<Project, int> _repositoryService;
+		private readonly IRepository<Project, int> _repository;
 
-		public DeleteProjectCommandHandler(IRepositoryService<Project, int> repositoryService)
+		public DeleteProjectCommandHandler(IRepository<Project, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
 		public async Task<int> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
 		{
-			await _repositoryService.DeleteAsync(request.Id);
+			await _repository.DeleteAsync(request.Id);
 
 			return request.Id;
 		}

@@ -5,23 +5,22 @@ using WorkTimeTracker.Domain.Entities.Identity;
 
 namespace WorkTimeTracker.Domain.Entities.Time
 {
-    public class Timesheet : Entity<Guid>
-    {
+	public class Timesheet : Entity<Guid>
+	{
+		[Required]
+		public required DateTime StartTime { get; set; }
 
-        public DateTime Date { get; set; }
+		public DateTime EndTime { get; set; }
 
-        public DateTime StartTime { get; set; }
+		public int WorkMinutes { get; set; }
 
-        public DateTime EndTime { get; set; }
+		// Navigation
 
-        public int WorkMinutes { get; set; }
+		[ForeignKey("User")]
+		public Guid? UserId { get; set; }
 
-        // Navigation
+		[Required]
+		public User? User { get; set; }
 
-        [ForeignKey("User")]
-        public Guid? UserId { get; set; }
-
-        [Required]
-        public User? User { get; set; }
-    }
+	}
 }

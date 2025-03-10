@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Time;
 namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 {
@@ -14,9 +14,9 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 
 	public class DeleteWorkTimeCommandHandler : IRequestHandler<DeleteWorkTimeCommand, int>
 	{
-		private readonly IRepositoryService<WorkTime, int> _repositoryService;
+		private readonly IRepository<WorkTime, int> _repositoryService;
 
-		public DeleteWorkTimeCommandHandler(IRepositoryService<WorkTime, int> repositoryService)
+		public DeleteWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

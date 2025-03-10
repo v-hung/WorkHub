@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Work;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Work;
 using WorkTimeTracker.Domain.Enums;
 
@@ -34,17 +34,17 @@ namespace WorkTimeTracker.Application.Features.Projects.Commands
 	public class CreateEditProjectCommandHandler : IRequestHandler<CreateEditProjectCommand, ProjectDto>
 	{
 
-		private readonly IRepositoryService<Project, int> _repositoryService;
+		private readonly IRepository<Project, int> _repository;
 
-		public CreateEditProjectCommandHandler(IRepositoryService<Project, int> repositoryService)
+		public CreateEditProjectCommandHandler(IRepository<Project, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
 		public async Task<ProjectDto> Handle(CreateEditProjectCommand request, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.CreateOrUpdateAsync<ProjectDto, int>(request.Id, request, [
-				async t => await _repositoryService.UpdateRelatedEntitiesAsync(t, t => t.Members, request.MemberIds, request.Id)
+			return await _repository.CreateOrUpdateAsync<ProjectDto, int>(request.Id, request, [
+				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Members, request.MemberIds, request.Id)
 			]);
 		}
 	}

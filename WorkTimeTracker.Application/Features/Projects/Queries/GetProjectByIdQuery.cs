@@ -1,6 +1,6 @@
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Work;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Work;
 
 namespace WorkTimeTracker.Application.Features.Projects.Queries
@@ -17,16 +17,16 @@ namespace WorkTimeTracker.Application.Features.Projects.Queries
 
 	public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDto>
 	{
-		private readonly IRepositoryService<Project, int> _repositoryService;
+		private readonly IRepository<Project, int> _repositoryService;
 
-		public GetProjectByIdQueryHandler(IRepositoryService<Project, int> repositoryService)
+		public GetProjectByIdQueryHandler(IRepository<Project, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}
 
 		public async Task<ProjectDto> Handle(GetProjectByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.GetAsync<ProjectDto, int>(query.Id);
+			return await _repositoryService.GetByIdAsync<ProjectDto, int>(query.Id);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.DTOs.Time;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Time;
 
 namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
@@ -18,11 +18,11 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
 
 	public class GetWorkTimeByIdQueryHandler : IRequestHandler<GetWorkTimeByIdQuery, WorkTimeDto>
 	{
-		private readonly IRepositoryService<WorkTime, int> _repositoryService;
+		private readonly IRepository<WorkTime, int> _repositoryService;
 
 		private readonly IStringLocalizer<GetWorkTimeByIdQueryHandler> _localizer;
 
-		public GetWorkTimeByIdQueryHandler(IRepositoryService<WorkTime, int> repositoryService, IStringLocalizer<GetWorkTimeByIdQueryHandler> localizer)
+		public GetWorkTimeByIdQueryHandler(IRepository<WorkTime, int> repositoryService, IStringLocalizer<GetWorkTimeByIdQueryHandler> localizer)
 		{
 			_repositoryService = repositoryService;
 			_localizer = localizer;
@@ -30,7 +30,7 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
 
 		public async Task<WorkTimeDto> Handle(GetWorkTimeByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.GetAsync<WorkTimeDto, int>(query.Id);
+			return await _repositoryService.GetByIdAsync<WorkTimeDto, int>(query.Id);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Organization;
 
 namespace WorkTimeTracker.Application.Features.Teams.Commands
@@ -15,9 +15,9 @@ namespace WorkTimeTracker.Application.Features.Teams.Commands
 
 	public class DeleteTeamCommandHandler : IRequestHandler<DeleteTeamCommand, int>
 	{
-		private readonly IRepositoryService<Team, int> _repositoryService;
+		private readonly IRepository<Team, int> _repositoryService;
 
-		public DeleteTeamCommandHandler(IRepositoryService<Team, int> repositoryService)
+		public DeleteTeamCommandHandler(IRepository<Team, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

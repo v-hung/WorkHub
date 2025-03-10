@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Organization;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Organization;
 
 namespace WorkTimeTracker.Application.Features.Teams.Commands
@@ -33,9 +33,9 @@ namespace WorkTimeTracker.Application.Features.Teams.Commands
 	public class CreateEditTeamCommandHandler : IRequestHandler<CreateEditTeamCommand, TeamDto>
 	{
 
-		private readonly IRepositoryService<Team, int> _repositoryService;
+		private readonly IRepository<Team, int> _repositoryService;
 
-		public CreateEditTeamCommandHandler(IRepositoryService<Team, int> repositoryService)
+		public CreateEditTeamCommandHandler(IRepository<Team, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Time;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Constants.Timesheet;
 using WorkTimeTracker.Domain.Entities.Time;
 
@@ -28,9 +28,9 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 	public class CreateEditWorkTimeCommandHandler : IRequestHandler<CreateEditWorkTimeCommand, WorkTimeDto>
 	{
 
-		private readonly IRepositoryService<WorkTime, int> _repositoryService;
+		private readonly IRepository<WorkTime, int> _repositoryService;
 
-		public CreateEditWorkTimeCommandHandler(IRepositoryService<WorkTime, int> repositoryService)
+		public CreateEditWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

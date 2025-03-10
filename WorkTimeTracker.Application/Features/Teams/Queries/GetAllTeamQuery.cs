@@ -1,6 +1,6 @@
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Organization;
-using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Domain.Entities.Organization;
@@ -19,9 +19,9 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 
 	public class GetAllTeamQueryHandler : IRequestHandler<GetAllTeamQuery, Paginated<TeamDto>>
 	{
-		private readonly IRepositoryService<Team, int> _repositoryService;
+		private readonly IRepository<Team, int> _repositoryService;
 
-		public GetAllTeamQueryHandler(IRepositoryService<Team, int> repositoryService)
+		public GetAllTeamQueryHandler(IRepository<Team, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}

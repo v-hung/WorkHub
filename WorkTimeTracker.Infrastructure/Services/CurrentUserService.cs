@@ -4,12 +4,21 @@ using WorkTimeTracker.Application.Interfaces.Services;
 
 namespace WorkTimeTracker.Infrastructure.Services;
 
-public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
+public class CurrentUserService : ICurrentUserService
 {
-	public string? UserId { get; } = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+	private readonly IHttpContextAccessor _httpContextAccessor;
 
-	public List<KeyValuePair<string, string>>? Claims { get; set; } = httpContextAccessor.HttpContext?.User?.Claims.AsEnumerable()
-			.Select(item => new KeyValuePair<string, string>(item.Type, item.Value)).ToList();
+	public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+	{
+		_httpContextAccessor = httpContextAccessor;
+	}
 
-	public string? UserName { get; } = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
+	public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+	public string? UserName => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
+
+	public List<KeyValuePair<string, string>> Claims =>
+		_httpContextAccessor.HttpContext?.User?.Claims?
+			.Select(c => new KeyValuePair<string, string>(c.Type, c.Value))
+			.ToList() ?? new List<KeyValuePair<string, string>>();
 }
