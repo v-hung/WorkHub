@@ -95,7 +95,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 				UserPosition = UserPosition.Administrator
 			};
 
-			var result = await _userManager.CreateAsync(user, "Admin123!");
+			var result = await _userManager.CreateAsync(user, UserConst.AdministratorPassword);
 			if (result.Succeeded)
 			{
 				await _userManager.AddToRoleAsync(user, RoleConst.AdministratorRole);

@@ -26,6 +26,10 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 
 		public async Task<TimesheetDto> Handle(GetTodayTimesheetQuery query, CancellationToken cancellationToken)
 		{
+			if (_currentUserService.UserId == Guid.Empty)
+			{
+				BusinessException(HttpStatusCode.BadRequest, "User not found");
+			}
 			return await _timesheetRepository.GetTodayTimesheet<TimesheetDto>(_currentUserService.UserId);
 
 		}

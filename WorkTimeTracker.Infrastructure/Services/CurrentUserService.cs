@@ -13,7 +13,14 @@ public class CurrentUserService : ICurrentUserService
 		_httpContextAccessor = httpContextAccessor;
 	}
 
-	public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+	public Guid? UserId
+	{
+		get
+		{
+			var userIdString = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+			return Guid.TryParse(userIdString, out var userId) ? userId : null;
+		}
+	}
 
 	public string? UserName => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Email);
 

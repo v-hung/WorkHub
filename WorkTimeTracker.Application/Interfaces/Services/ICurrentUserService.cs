@@ -2,7 +2,7 @@ namespace WorkTimeTracker.Application.Interfaces.Services;
 
 public interface ICurrentUserService
 {
-    string? UserId { get; }
+	Guid? UserId { get; }
 
-    string? UserName { get; }
+	string? UserName { get; }
 }
