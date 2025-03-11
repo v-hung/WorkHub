@@ -9,7 +9,7 @@ using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Data;
-using WorkTimeTracker.Infrastructure.Exceptions;
+using WorkTimeTracker.Application.Exceptions;
 
 namespace WorkTimeTracker.Infrastructure.Services
 {

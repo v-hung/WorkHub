@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace WorkTimeTracker.Infrastructure.Exceptions;
+namespace WorkTimeTracker.Application.Exceptions;
 
 public class BusinessException : Exception
 {

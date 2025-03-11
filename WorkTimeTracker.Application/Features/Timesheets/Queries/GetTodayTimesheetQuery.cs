@@ -1,9 +1,9 @@
+using System.Net;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using WorkTimeTracker.Application.DTOs.Time;
+using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Interfaces.Services;
-using WorkTimeTracker.Domain.Entities.Time;
 
 namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 {
@@ -26,11 +26,12 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 
 		public async Task<TimesheetDto> Handle(GetTodayTimesheetQuery query, CancellationToken cancellationToken)
 		{
-			if (_currentUserService.UserId == Guid.Empty)
+			if (_currentUserService.UserId == null)
 			{
-				BusinessException(HttpStatusCode.BadRequest, "User not found");
+				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
 			}
-			return await _timesheetRepository.GetTodayTimesheet<TimesheetDto>(_currentUserService.UserId);
+
+			return await _timesheetRepository.GetTodayTimesheet<TimesheetDto>(_currentUserService.UserId.Value);
 
 		}
 

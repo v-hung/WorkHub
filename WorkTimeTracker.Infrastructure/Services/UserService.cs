@@ -12,7 +12,7 @@ using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Domain.Entities.Audit;
-using WorkTimeTracker.Infrastructure.Exceptions;
+using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Domain.Entities.Organization;
 using WorkTimeTracker.Domain.Entities.Work;

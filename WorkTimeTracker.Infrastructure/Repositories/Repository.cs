@@ -10,7 +10,7 @@ using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Infrastructure.Data;
-using WorkTimeTracker.Infrastructure.Exceptions;
+using WorkTimeTracker.Application.Exceptions;
 
 namespace WorkTimeTracker.Infrastructure.Repositories
 {

@@ -1,6 +1,6 @@
 using System.Text.Json;
 using WorkTimeTracker.Application.Responses;
-using WorkTimeTracker.Infrastructure.Exceptions;
+using WorkTimeTracker.Application.Exceptions;
 
 namespace WorkTimeTracker.Server.Middlewares;
 
