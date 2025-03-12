@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using WorkTimeTracker.Application.Configs;
 using WorkTimeTracker.Application.Interfaces.Data;
@@ -126,6 +127,7 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IIdentityService, IdentityService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -162,6 +164,12 @@ static class ServiceCollectionExtensions
 					},
 					new List<string>()
 				}
+			});
+
+			c.MapType<TimeSpan>(() => new OpenApiSchema
+			{
+				Type = "string",
+				Example = new OpenApiString("00:00:00")
 			});
 
 			c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.ActionDescriptor.RouteValues["action"]}");
