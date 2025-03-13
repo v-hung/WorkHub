@@ -1,6 +1,5 @@
 .gitattributes
 .gitignore
-.openapi-generator-ignore
 AccountApi.md
 ProjectApi.md
 README.md
@@ -44,6 +43,7 @@ models/RoleDto.ts
 models/TeamDto.ts
 models/TeamDtoPaginated.ts
 models/TeamMinimalDto.ts
+models/TimesheetDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts
 models/UserDto.ts

@@ -42,25 +42,25 @@ export class CreateEditWorkTimeCommand {
             "name": "startTimeMorning",
             "baseName": "startTimeMorning",
             "type": "string",
-            "format": "date-span"
+            "format": ""
         },
         {
             "name": "endTimeMorning",
             "baseName": "endTimeMorning",
             "type": "string",
-            "format": "date-span"
+            "format": ""
         },
         {
             "name": "startTimeAfternoon",
             "baseName": "startTimeAfternoon",
             "type": "string",
-            "format": "date-span"
+            "format": ""
         },
         {
             "name": "endTimeAfternoon",
             "baseName": "endTimeAfternoon",
             "type": "string",
-            "format": "date-span"
+            "format": ""
         },
         {
             "name": "allowedLateMinutes",

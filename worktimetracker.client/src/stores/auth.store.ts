@@ -10,7 +10,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
 
-type AuthState = {
+type AuthStoreState = {
   user: UserDto | null;
   permissions: Permission[];
   login: (credentials: LoginRequest) => Promise<void>;
@@ -18,7 +18,7 @@ type AuthState = {
   load: () => Promise<void>;
 };
 
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<AuthStoreState>()(
   immer((set) => ({
     user: null,
     permissions: [],
@@ -36,19 +36,19 @@ export const useAuthStore = create<AuthState>()(
     logout: () => set({ user: null }),
 
     load: async () => {
-      // await new Promise((resolve, reject) => setTimeout(resolve, 1000));
-      // set({
-      //   user: USER,
-      // });
+      await new Promise((resolve, reject) => setTimeout(resolve, 300));
+      set({
+        user: USER,
+      });
 
-      try {
-        const user = await accountApiWithRefreshToken.accountGetCurrentUser();
+      // try {
+      //   const user = await accountApiWithRefreshToken.accountGetCurrentUser();
 
-        set({ user });
-      } catch (error) {
-        console.log({ error });
-        set({ user: null });
-      }
+      //   set({ user });
+      // } catch (error) {
+      //   console.log({ error });
+      //   set({ user: null });
+      // }
     },
   }))
 );

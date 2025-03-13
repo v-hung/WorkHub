@@ -3,6 +3,7 @@ import {
   ProjectApi,
   RoleApi,
   TeamApi,
+  TimesheetApi,
   UserApi,
   WorkTimeApi,
   createConfiguration,
@@ -31,6 +32,7 @@ const teamApi = new TeamApi(configWithRefreshToken);
 const projectApi = new ProjectApi(configWithRefreshToken);
 const workTimeApi = new WorkTimeApi(configWithRefreshToken);
 const roleApi = new RoleApi(configWithRefreshToken);
+const timesheetApi = new TimesheetApi(configWithRefreshToken);
 
 export {
   accountApi,
@@ -40,4 +42,5 @@ export {
   projectApi,
   workTimeApi,
   roleApi,
+  timesheetApi,
 };

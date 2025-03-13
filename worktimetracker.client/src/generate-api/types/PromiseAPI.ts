@@ -20,6 +20,7 @@ import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
+import { TimesheetDto } from '../models/TimesheetDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -933,7 +934,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetTestWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<string>> {
+    public timesheetCheckInWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -946,13 +947,13 @@ export class PromiseTimesheetApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetTestWithHttpInfo(observableOptions);
+        const result = this.api.timesheetCheckInWithHttpInfo(observableOptions);
         return result.toPromise();
     }
 
     /**
      */
-    public timesheetTest(_options?: PromiseConfigurationOptions): Promise<string> {
+    public timesheetCheckIn(_options?: PromiseConfigurationOptions): Promise<TimesheetDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -965,7 +966,125 @@ export class PromiseTimesheetApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetTest(observableOptions);
+        const result = this.api.timesheetCheckIn(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public timesheetCheckOutWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetCheckOutWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public timesheetCheckOut(_options?: PromiseConfigurationOptions): Promise<TimesheetDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetCheckOut(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [month]
+     * @param [year]
+     */
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [month]
+     * @param [year]
+     */
+    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetGetMonthlyTimesheets(month, year, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public timesheetGetTodayTimesheetWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetGetTodayTimesheetWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public timesheetGetTodayTimesheet(_options?: PromiseConfigurationOptions): Promise<TimesheetDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetGetTodayTimesheet(observableOptions);
         return result.toPromise();
     }
 

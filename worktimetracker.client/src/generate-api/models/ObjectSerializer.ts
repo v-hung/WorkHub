@@ -16,6 +16,7 @@ export * from '../models/RoleDto';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamMinimalDto';
+export * from '../models/TimesheetDto';
 export * from '../models/UserCreateUpdateRequest';
 export * from '../models/UserDetailDto';
 export * from '../models/UserDto';
@@ -46,7 +47,8 @@ import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
-import { UserCreateUpdateRequest                } from '../models/UserCreateUpdateRequest';
+import { TimesheetDto } from '../models/TimesheetDto';
+import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto       } from '../models/UserDetailDto';
 import { UserDto                  } from '../models/UserDto';
 import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
@@ -94,6 +96,7 @@ let typeMap: {[index: string]: any} = {
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
     "TeamMinimalDto": TeamMinimalDto,
+    "TimesheetDto": TimesheetDto,
     "UserCreateUpdateRequest": UserCreateUpdateRequest,
     "UserDetailDto": UserDetailDto,
     "UserDto": UserDto,

@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
-type NotificationState = {
+type NotificationStoreState = {
   unReadCount: number;
 };
 
-export const useNotificationStore = create<NotificationState>((set) => ({
+export const useNotificationStore = create<NotificationStoreState>((set) => ({
   unReadCount: 10,
 }));

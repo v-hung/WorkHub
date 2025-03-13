@@ -1,11 +1,11 @@
 import { Layout } from "antd";
 import MainContent from "@/layouts/main/components/MainContent";
-import TImesheetHeader from "@/features/timesheet/TImesheetHeader";
+import TimesheetHeader from "@/features/timesheet/components/TimesheetHeader/TimesheetHeader";
 
 export function Component() {
   return (
     <Layout>
-      <TImesheetHeader />
+      <TimesheetHeader />
       <MainContent>Content</MainContent>
     </Layout>
   );

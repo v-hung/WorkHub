@@ -56,6 +56,7 @@ const request: UserApiUserCreateRequest = {
     roleNames: [
       "roleNames_example",
     ],
+    password: "password_example",
   },
 };
 
@@ -314,6 +315,7 @@ const request: UserApiUserUpdateRequest = {
     roleNames: [
       "roleNames_example",
     ],
+    password: "password_example",
   },
 };
 

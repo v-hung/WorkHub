@@ -30,10 +30,10 @@ const request: WorkTimeApiWorkTimeCreateRequest = {
   createEditWorkTimeCommand: {
     id: 1,
     title: "title_example",
-    startTimeMorning: "startTimeMorning_example",
-    endTimeMorning: "endTimeMorning_example",
-    startTimeAfternoon: "startTimeAfternoon_example",
-    endTimeAfternoon: "endTimeAfternoon_example",
+    startTimeMorning: "00:00:00",
+    endTimeMorning: "00:00:00",
+    startTimeAfternoon: "00:00:00",
+    endTimeAfternoon: "00:00:00",
     allowedLateMinutes: 1,
   },
 };
@@ -267,10 +267,10 @@ const request: WorkTimeApiWorkTimeUpdateRequest = {
   createEditWorkTimeCommand: {
     id: 1,
     title: "title_example",
-    startTimeMorning: "startTimeMorning_example",
-    endTimeMorning: "endTimeMorning_example",
-    startTimeAfternoon: "startTimeAfternoon_example",
-    endTimeAfternoon: "endTimeAfternoon_example",
+    startTimeMorning: "00:00:00",
+    endTimeMorning: "00:00:00",
+    startTimeAfternoon: "00:00:00",
+    endTimeAfternoon: "00:00:00",
     allowedLateMinutes: 1,
   },
 };

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Features.Timesheets.Commands;
 using WorkTimeTracker.Application.Features.Timesheets.Queries;
 
@@ -9,7 +10,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 	{
 
 		[HttpGet("today")]
-		public async Task<IActionResult> GetTodayTimesheet()
+		public async Task<ActionResult<TimesheetDto>> GetTodayTimesheet()
 		{
 			var data = await _mediator.Send(new GetTodayTimesheetQuery());
 
@@ -17,7 +18,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpGet("monthly")]
-		public async Task<IActionResult> GetMonthlyTimesheets(int month, int year)
+		public async Task<ActionResult<List<TimesheetDto>>> GetMonthlyTimesheets(int month, int year)
 		{
 			var data = await _mediator.Send(new GetMonthlyTimesheetsQuery { Month = month, Year = year });
 
@@ -25,7 +26,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpPost("checkin")]
-		public async Task<IActionResult> PerformCheckIn()
+		public async Task<ActionResult<TimesheetDto>> CheckIn()
 		{
 			var data = await _mediator.Send(new CheckInCommand());
 
@@ -33,7 +34,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpPost("checkout")]
-		public async Task<IActionResult> PerformCheckOut()
+		public async Task<ActionResult<TimesheetDto>> CheckOut()
 		{
 			var data = await _mediator.Send(new CheckOutCommand());
 

@@ -31,6 +31,7 @@ export class UserCreateUpdateRequest {
     'managerTeamIds'?: Array<number> | null;
     'managerProjectIds'?: Array<number> | null;
     'roleNames': Array<string>;
+    'password'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -125,6 +126,12 @@ export class UserCreateUpdateRequest {
             "name": "roleNames",
             "baseName": "roleNames",
             "type": "Array<string>",
+            "format": ""
+        },
+        {
+            "name": "password",
+            "baseName": "password",
+            "type": "string",
             "format": ""
         }    ];
 

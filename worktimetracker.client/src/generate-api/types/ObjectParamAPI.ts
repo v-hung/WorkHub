@@ -20,6 +20,7 @@ import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
+import { TimesheetDto } from '../models/TimesheetDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -598,7 +599,30 @@ export class ObjectTeamApi {
 import { ObservableTimesheetApi } from "./ObservableAPI";
 import { TimesheetApiRequestFactory, TimesheetApiResponseProcessor} from "../apis/TimesheetApi";
 
-export interface TimesheetApiTimesheetTestRequest {
+export interface TimesheetApiTimesheetCheckInRequest {
+}
+
+export interface TimesheetApiTimesheetCheckOutRequest {
+}
+
+export interface TimesheetApiTimesheetGetMonthlyTimesheetsRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
+     */
+    month?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
+     */
+    year?: number
+}
+
+export interface TimesheetApiTimesheetGetTodayTimesheetRequest {
 }
 
 export class ObjectTimesheetApi {
@@ -611,15 +635,57 @@ export class ObjectTimesheetApi {
     /**
      * @param param the request object
      */
-    public timesheetTestWithHttpInfo(param: TimesheetApiTimesheetTestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<string>> {
-        return this.api.timesheetTestWithHttpInfo( options).toPromise();
+    public timesheetCheckInWithHttpInfo(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+        return this.api.timesheetCheckInWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetTest(param: TimesheetApiTimesheetTestRequest = {}, options?: ConfigurationOptions): Promise<string> {
-        return this.api.timesheetTest( options).toPromise();
+    public timesheetCheckIn(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDto> {
+        return this.api.timesheetCheckIn( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetCheckOutWithHttpInfo(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+        return this.api.timesheetCheckOutWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetCheckOut(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDto> {
+        return this.api.timesheetCheckOut( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
+        return this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetGetMonthlyTimesheets(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetDto>> {
+        return this.api.timesheetGetMonthlyTimesheets(param.month, param.year,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetGetTodayTimesheetWithHttpInfo(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+        return this.api.timesheetGetTodayTimesheetWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetGetTodayTimesheet(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDto> {
+        return this.api.timesheetGetTodayTimesheet( options).toPromise();
     }
 
 }
