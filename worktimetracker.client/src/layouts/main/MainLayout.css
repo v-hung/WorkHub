@@ -91,10 +91,16 @@
 }
 
 .main-header .header-title {
+  flex: none;
   margin: 0;
   margin-right: auto;
   font-size: 20px;
   line-height: 1.5;
+}
+
+.main-header .header-wrap {
+  line-height: initial;
+  flex: 1;
 }
 
 /* Breadcrumb */

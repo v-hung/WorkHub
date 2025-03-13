@@ -20,7 +20,7 @@ const MainHeader: FC<State> = (props) => {
         onClick={() => setCollapsed(!collapsed)}
       />
       {props?.title && <h1 className="header-title">{props.title}</h1>}
-      {children}
+      <div className="header-wrap">{children}</div>
     </Header>
   );
 };
