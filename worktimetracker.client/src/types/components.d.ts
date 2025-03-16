@@ -7,8 +7,14 @@
 export {}
 declare global {
   const IIonCheckmark: typeof import('~icons/ion/checkmark.jsx')['default']
+  const IIonClock: typeof import('~icons/ion/clock.jsx')['default']
+  const IIonClockCircleOutlined: typeof import('~icons/ion/clock-circle-outlined.jsx')['default']
+  const IIonPause: typeof import('~icons/ion/pause.jsx')['default']
   const IIonPerson: typeof import('~icons/ion/person.jsx')['default']
   const IIonPersonAddOutline: typeof import('~icons/ion/person-add-outline.jsx')['default']
+  const IIonPlay: typeof import('~icons/ion/play.jsx')['default']
+  const IIonPlayCircleOutlined: typeof import('~icons/ion/play-circle-outlined.jsx')['default']
+  const IIonPlus: typeof import('~icons/ion/plus.jsx')['default']
   const IIonSaveOutline: typeof import('~icons/ion/save-outline.jsx')['default']
   const IMdiMenu: typeof import('~icons/mdi/menu.jsx')['default']
   const IMdiMenuOpen: typeof import('~icons/mdi/menu-open.jsx')['default']

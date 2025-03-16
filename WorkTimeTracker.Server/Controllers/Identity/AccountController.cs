@@ -60,4 +60,12 @@ public class AccountController : BaseApiController<AccountController>
 		return Ok();
 	}
 
+	[HttpGet("permissions")]
+	public async Task<IActionResult> GetPermissions()
+	{
+		await Task.Delay(10000);
+
+		return Ok();
+	}
+
 }

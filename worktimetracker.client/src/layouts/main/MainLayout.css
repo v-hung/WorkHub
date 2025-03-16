@@ -101,6 +101,8 @@
 .main-header .header-wrap {
   line-height: initial;
   flex: 1;
+  display: flex;
+  justify-content: end;
 }
 
 /* Breadcrumb */

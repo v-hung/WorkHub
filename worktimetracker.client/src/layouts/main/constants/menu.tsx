@@ -44,21 +44,21 @@ export const getMenuItems = (
       label: t("menus.timesheet"),
     },
     {
-      key: "/metting",
+      key: "/meeting",
       icon: <IonPeopleCircleOutline />,
-      label: t("menus.metting"),
+      label: t("menus.meeting"),
     },
     {
       type: "group",
       label: t("menus.manager"),
     },
     {
-      key: "/project",
+      key: "/projects",
       icon: <IonDocumentsOutline />,
       label: t("menus.project"),
     },
     {
-      key: "/team",
+      key: "/teams",
       icon: <IonPeopleOutline />,
       label: t("menus.team"),
     },
@@ -73,27 +73,27 @@ export const getMenuItems = (
         },
         {
           key: "/work-times",
-          label: t("menus.work-times"),
+          label: t("menus.work-time"),
         },
       ],
     },
     {
-      key: "/permisstion",
+      key: "/permissions",
       icon: <IonLockClosedOutline />,
-      label: t("menus.permisstion"),
+      label: t("menus.permission"),
       children: [
         {
-          key: "/permisstion/role",
+          key: "/permissions/role",
           label: t("menus.members"),
         },
         {
-          key: "/permisstion/permisstion",
+          key: "/permissions/permissions",
           label: t("menus.members"),
         },
       ],
     },
     {
-      key: "/inventory",
+      key: "/inventories",
       icon: <IonCubeOutline />,
       label: t("menus.inventory"),
     },

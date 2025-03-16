@@ -4,15 +4,16 @@ using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Responses.Time;
 
 namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 {
-	public class GetTodayTimesheetQuery : IRequest<TimesheetDto>
+	public class GetTodayTimesheetQuery : IRequest<TimesheetResponse<TimesheetMinimalDto>?>
 	{
 
 	}
 
-	public class GetTodayTimesheetQueryHandler : IRequestHandler<GetTodayTimesheetQuery, TimesheetDto>
+	public class GetTodayTimesheetQueryHandler : IRequestHandler<GetTodayTimesheetQuery, TimesheetResponse<TimesheetMinimalDto>?>
 	{
 
 		private readonly ITimesheetRepository _timesheetRepository;
@@ -24,14 +25,19 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 			_currentUserService = currentUserService;
 		}
 
-		public async Task<TimesheetDto> Handle(GetTodayTimesheetQuery query, CancellationToken cancellationToken)
+		public async Task<TimesheetResponse<TimesheetMinimalDto>?> Handle(GetTodayTimesheetQuery query, CancellationToken cancellationToken)
 		{
 			if (_currentUserService.UserId == null)
 			{
-				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
+				throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
 			}
 
-			return await _timesheetRepository.GetTodayTimesheet<TimesheetDto>(_currentUserService.UserId);
+			var timesheet = await _timesheetRepository.GetTodayTimesheet<TimesheetMinimalDto>(_currentUserService.UserId);
+
+			return timesheet != null ? new TimesheetResponse<TimesheetMinimalDto>
+			{
+				Timesheet = timesheet
+			} : null;
 
 		}
 

@@ -10,21 +10,29 @@
  * Do not edit the class manually.
  */
 
-import { UserDto } from '../models/UserDto';
+import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
 export class TimesheetDto {
+    'id': string;
     'startTime': Date;
-    'endTime'?: Date;
-    'workMinutes'?: number;
-    'userId'?: string | null;
-    'user'?: UserDto;
+    'endTime'?: Date | null;
+    'workMinutes'?: number | null;
+    'requests'?: Array<TimesheetDtoRequestsInner> | null;
+    'user'?: UserMinimalDto;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string",
+            "format": "uuid"
+        },
         {
             "name": "startTime",
             "baseName": "startTime",
@@ -44,15 +52,15 @@ export class TimesheetDto {
             "format": "int32"
         },
         {
-            "name": "userId",
-            "baseName": "userId",
-            "type": "string",
-            "format": "uuid"
+            "name": "requests",
+            "baseName": "requests",
+            "type": "Array<TimesheetDtoRequestsInner>",
+            "format": ""
         },
         {
             "name": "user",
             "baseName": "user",
-            "type": "UserDto",
+            "type": "UserMinimalDto",
             "format": ""
         }    ];
 

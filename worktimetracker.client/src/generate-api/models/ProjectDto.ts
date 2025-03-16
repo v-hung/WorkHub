@@ -19,8 +19,8 @@ export class ProjectDto {
     'id': number;
     'name': string;
     'description'?: string | null;
-    'startDate'?: Date;
-    'endDate'?: Date;
+    'startDate'?: Date | null;
+    'endDate'?: Date | null;
     'status'?: ProjectStatus;
     'team'?: TeamMinimalDto;
     'manager'?: UserMinimalDto;

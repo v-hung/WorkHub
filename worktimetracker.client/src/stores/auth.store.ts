@@ -9,6 +9,7 @@ import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
+import { wrapPromise } from "@/common/utils/promise";
 
 type AuthStoreState = {
   user: UserDto | null;
@@ -36,19 +37,16 @@ export const useAuthStore = create<AuthStoreState>()(
     logout: () => set({ user: null }),
 
     load: async () => {
-      await new Promise((resolve, reject) => setTimeout(resolve, 300));
-      set({
-        user: USER,
-      });
+      // await new Promise((resolve, reject) => setTimeout(resolve, 300));
+      // set({
+      //   user: USER,
+      // });
 
-      // try {
-      //   const user = await accountApiWithRefreshToken.accountGetCurrentUser();
-
-      //   set({ user });
-      // } catch (error) {
-      //   console.log({ error });
-      //   set({ user: null });
-      // }
+      await wrapPromise(() =>
+        accountApiWithRefreshToken
+          .accountGetCurrentUser()
+          .then((user) => set({ user }))
+      );
     },
   }))
 );

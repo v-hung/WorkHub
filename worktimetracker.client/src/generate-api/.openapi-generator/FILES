@@ -30,6 +30,7 @@ models/CreateEditTeamCommand.ts
 models/CreateEditWorkTimeCommand.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
+models/LeaveRequestDto.ts
 models/LoginRequest.ts
 models/Nationality.ts
 models/ObjectSerializer.ts
@@ -38,12 +39,19 @@ models/ProjectDto.ts
 models/ProjectDtoPaginated.ts
 models/ProjectStatus.ts
 models/RefreshTokenResponse.ts
+models/RequestDto.ts
+models/RequestStatus.ts
+models/RequestType.ts
 models/RoleCreateUpdateRequest.ts
 models/RoleDto.ts
 models/TeamDto.ts
 models/TeamDtoPaginated.ts
 models/TeamMinimalDto.ts
 models/TimesheetDto.ts
+models/TimesheetDtoRequestsInner.ts
+models/TimesheetMinimalDto.ts
+models/TimesheetMinimalDtoTimesheetResponse.ts
+models/TimesheetRequestDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts
 models/UserDto.ts

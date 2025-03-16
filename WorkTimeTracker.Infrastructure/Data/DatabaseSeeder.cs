@@ -168,7 +168,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 			new WorkTime{Title = "Early"},
 		};
 
-		var data = workTimes.Where(item => !_context.Teams.Any(t => t.Name == item.Title)).ToList();
+		var data = workTimes.Where(item => !_context.WorkTimes.Any(t => t.Title == item.Title)).ToList();
 
 		if (data.Count != 0)
 		{

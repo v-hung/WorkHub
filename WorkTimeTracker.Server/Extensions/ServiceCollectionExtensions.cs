@@ -139,6 +139,9 @@ static class ServiceCollectionExtensions
 		services.AddSwaggerGen(c =>
 		{
 			c.EnableAnnotations();
+			c.UseOneOfForPolymorphism();
+			c.UseAllOfForInheritance();
+			c.SelectSubTypesUsing(type => type.Assembly.GetTypes().Where(t => t.BaseType == type && type.IsAbstract));
 
 			c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 			{

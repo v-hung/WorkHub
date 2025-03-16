@@ -36,6 +36,35 @@ const router = createBrowserRouter(
             },
           ],
         },
+        {
+          path: "/work-times",
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/workTime/WorkTimePage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/workTime/WorkTimeCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/workTime/WorkTimeCreateUpdatePage"),
+            },
+          ],
+        },
+        {
+          path: "/teams",
+          lazy: () => import("./pages/team/TeamPage"),
+        },
+        {
+          path: "/projects",
+          lazy: () => import("./pages/project/ProjectPage"),
+        },
+        {
+          path: "/inventories",
+          lazy: () => import("./pages/inventory/InventoryPage"),
+        },
       ],
     },
     {

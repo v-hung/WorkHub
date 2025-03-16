@@ -8,6 +8,7 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { LeaveRequestDto } from '../models/LeaveRequestDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -15,12 +16,19 @@ import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RequestDto } from '../models/RequestDto';
+import { RequestStatus } from '../models/RequestStatus';
+import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
+import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
+import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
+import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -46,6 +54,9 @@ export interface AccountApiAccountChangePasswordRequest {
 }
 
 export interface AccountApiAccountGetCurrentUserRequest {
+}
+
+export interface AccountApiAccountGetPermissionsRequest {
 }
 
 export interface AccountApiAccountLoginRequest {
@@ -96,6 +107,20 @@ export class ObjectAccountApi {
      */
     public accountGetCurrentUser(param: AccountApiAccountGetCurrentUserRequest = {}, options?: ConfigurationOptions): Promise<UserDto> {
         return this.api.accountGetCurrentUser( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public accountGetPermissionsWithHttpInfo(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.accountGetPermissionsWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public accountGetPermissions(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<void> {
+        return this.api.accountGetPermissions( options).toPromise();
     }
 
     /**
@@ -605,6 +630,23 @@ export interface TimesheetApiTimesheetCheckInRequest {
 export interface TimesheetApiTimesheetCheckOutRequest {
 }
 
+export interface TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TimesheetApitimesheetGetCurrentUserMonthlyTimesheets
+     */
+    month?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TimesheetApitimesheetGetCurrentUserMonthlyTimesheets
+     */
+    year?: number
+}
+
 export interface TimesheetApiTimesheetGetMonthlyTimesheetsRequest {
     /**
      * 
@@ -635,29 +677,43 @@ export class ObjectTimesheetApi {
     /**
      * @param param the request object
      */
-    public timesheetCheckInWithHttpInfo(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+    public timesheetCheckInWithHttpInfo(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
         return this.api.timesheetCheckInWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetCheckIn(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDto> {
+    public timesheetCheckIn(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
         return this.api.timesheetCheckIn( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetCheckOutWithHttpInfo(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+    public timesheetCheckOutWithHttpInfo(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
         return this.api.timesheetCheckOutWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetCheckOut(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDto> {
+    public timesheetCheckOut(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
         return this.api.timesheetCheckOut( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetMinimalDto>>> {
+        return this.api.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public timesheetGetCurrentUserMonthlyTimesheets(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetMinimalDto>> {
+        return this.api.timesheetGetCurrentUserMonthlyTimesheets(param.month, param.year,  options).toPromise();
     }
 
     /**
@@ -677,14 +733,14 @@ export class ObjectTimesheetApi {
     /**
      * @param param the request object
      */
-    public timesheetGetTodayTimesheetWithHttpInfo(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+    public timesheetGetTodayTimesheetWithHttpInfo(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
         return this.api.timesheetGetTodayTimesheetWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetTodayTimesheet(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDto> {
+    public timesheetGetTodayTimesheet(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
         return this.api.timesheetGetTodayTimesheet( options).toPromise();
     }
 

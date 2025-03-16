@@ -420,6 +420,10 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("TimesheetId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid?>("UserId")
                         .IsRequired()
                         .HasColumnType("char(36)");
@@ -427,6 +431,8 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApprovedById");
+
+                    b.HasIndex("TimesheetId");
 
                     b.HasIndex("UserId");
 
@@ -443,10 +449,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("StartTime")
@@ -542,10 +545,10 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                 {
                     b.HasBaseType("WorkTimeTracker.Domain.Entities.Requests.Request");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime>("BreakEndDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime>("BreakStartDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasDiscriminator().HasValue(1);
@@ -555,20 +558,26 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                 {
                     b.HasBaseType("WorkTimeTracker.Domain.Entities.Requests.Request");
 
-                    b.Property<TimeSpan?>("NewCheckIn")
-                        .HasColumnType("time(6)");
-
-                    b.Property<TimeSpan?>("NewCheckOut")
-                        .HasColumnType("time(6)");
-
-                    b.Property<TimeSpan?>("OldCheckIn")
-                        .HasColumnType("time(6)");
-
-                    b.Property<TimeSpan?>("OldCheckOut")
-                        .HasColumnType("time(6)");
-
-                    b.Property<DateTime>("WorkDate")
+                    b.Property<DateTime>("BreakEndDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("BreakStartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("CheckIn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("CheckOut")
+                        .HasColumnType("datetime(6)");
+
+                    b.ToTable("Requests", t =>
+                        {
+                            t.Property("BreakEndDate")
+                                .HasColumnName("TimesheetRequest_BreakEndDate");
+
+                            t.Property("BreakStartDate")
+                                .HasColumnName("TimesheetRequest_BreakStartDate");
+                        });
 
                     b.HasDiscriminator().HasValue(0);
                 });
@@ -698,6 +707,12 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Time.Timesheet", "Timesheet")
+                        .WithMany("Requests")
+                        .HasForeignKey("TimesheetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "User")
                         .WithMany("Requests")
                         .HasForeignKey("UserId")
@@ -705,6 +720,8 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ApprovedBy");
+
+                    b.Navigation("Timesheet");
 
                     b.Navigation("User");
                 });
@@ -761,6 +778,11 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Navigation("Members");
 
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Time.Timesheet", b =>
+                {
+                    b.Navigation("Requests");
                 });
 
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Time.WorkTime", b =>

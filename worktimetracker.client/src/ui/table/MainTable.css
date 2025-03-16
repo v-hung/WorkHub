@@ -21,6 +21,7 @@
 
 .main-table .ant-table-body {
   max-height: calc(100% - 55px);
+  overflow: auto;
 }
 
 .main-table .ant-spin-container .ant-pagination {

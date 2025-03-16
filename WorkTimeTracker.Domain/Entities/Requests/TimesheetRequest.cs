@@ -2,14 +2,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WorkTimeTracker.Domain.Entities.Requests
 {
-    public class TimesheetRequest : Request
-    {
-        [Required]
-        public DateTime WorkDate { get; set; }
+	public class TimesheetRequest : Request
+	{
+		[Required]
+		public DateTime CheckIn { get; set; }
 
-        public TimeSpan? OldCheckIn { get; set; }
-        public TimeSpan? OldCheckOut { get; set; }
-        public TimeSpan? NewCheckIn { get; set; }
-        public TimeSpan? NewCheckOut { get; set; }
-    }
+		[Required]
+		public DateTime CheckOut { get; set; }
+
+		[Required]
+		public DateTime BreakStartDate { get; set; }
+
+		[Required]
+		public DateTime BreakEndDate { get; set; }
+	}
 }

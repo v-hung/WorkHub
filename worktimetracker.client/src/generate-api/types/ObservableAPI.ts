@@ -9,6 +9,7 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { LeaveRequestDto } from '../models/LeaveRequestDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -16,12 +17,19 @@ import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RequestDto } from '../models/RequestDto';
+import { RequestStatus } from '../models/RequestStatus';
+import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
+import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
+import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
+import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -162,6 +170,62 @@ export class ObservableAccountApi {
      */
     public accountGetCurrentUser(_options?: ConfigurationOptions): Observable<UserDto> {
         return this.accountGetCurrentUserWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<UserDto>) => apiResponse.data));
+    }
+
+    /**
+     */
+    public accountGetPermissionsWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<void>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.accountGetPermissions(_config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.accountGetPermissionsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public accountGetPermissions(_options?: ConfigurationOptions): Observable<void> {
+        return this.accountGetPermissionsWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
     }
 
     /**
@@ -1294,7 +1358,7 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetCheckInWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetDto>> {
+    public timesheetCheckInWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1344,13 +1408,13 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetCheckIn(_options?: ConfigurationOptions): Observable<TimesheetDto> {
-        return this.timesheetCheckInWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetDto>) => apiResponse.data));
+    public timesheetCheckIn(_options?: ConfigurationOptions): Observable<TimesheetMinimalDtoTimesheetResponse> {
+        return this.timesheetCheckInWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetMinimalDtoTimesheetResponse>) => apiResponse.data));
     }
 
     /**
      */
-    public timesheetCheckOutWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetDto>> {
+    public timesheetCheckOutWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1400,8 +1464,68 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetCheckOut(_options?: ConfigurationOptions): Observable<TimesheetDto> {
-        return this.timesheetCheckOutWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetDto>) => apiResponse.data));
+    public timesheetCheckOut(_options?: ConfigurationOptions): Observable<TimesheetMinimalDtoTimesheetResponse> {
+        return this.timesheetCheckOutWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetMinimalDtoTimesheetResponse>) => apiResponse.data));
+    }
+
+    /**
+     * @param [month]
+     * @param [year]
+     */
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TimesheetMinimalDto>>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.timesheetGetCurrentUserMonthlyTimesheets(month, year, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [month]
+     * @param [year]
+     */
+    public timesheetGetCurrentUserMonthlyTimesheets(month?: number, year?: number, _options?: ConfigurationOptions): Observable<Array<TimesheetMinimalDto>> {
+        return this.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month, year, _options).pipe(map((apiResponse: HttpInfo<Array<TimesheetMinimalDto>>) => apiResponse.data));
     }
 
     /**
@@ -1466,7 +1590,7 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheetWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetDto>> {
+    public timesheetGetTodayTimesheetWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1516,8 +1640,8 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheet(_options?: ConfigurationOptions): Observable<TimesheetDto> {
-        return this.timesheetGetTodayTimesheetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetDto>) => apiResponse.data));
+    public timesheetGetTodayTimesheet(_options?: ConfigurationOptions): Observable<TimesheetMinimalDtoTimesheetResponse> {
+        return this.timesheetGetTodayTimesheetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetMinimalDtoTimesheetResponse>) => apiResponse.data));
     }
 
 }

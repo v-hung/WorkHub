@@ -12,6 +12,8 @@ using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Data;
 using WorkTimeTracker.Application.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper.QueryableExtensions;
 
 namespace WorkTimeTracker.Infrastructure.Services;
 
@@ -35,16 +37,16 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	public async Task<LoginResponse<D>> LoginAsync<D>(LoginRequest request) where D : class, IRoleAudit<string>
 	{
-		var user = await _userManager.FindByNameAsync(request.Email);
-		if (user == null)
-		{
-			throw new BusinessException(HttpStatusCode.NotFound, "Account is not exit");
-		}
+		var user = await _userManager.Users.AsNoTracking()
+			.Include(u => u.WorkTime)
+			.Include(u => u.Supervisor)
+			.Include(u => u.Team)
+			.FirstOrDefaultAsync(u => u.Email == request.Email) ?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exist");
 
 		var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 		if (!result.Succeeded)
 		{
-			throw new BusinessException(HttpStatusCode.Unauthorized, "Password is incorrect");
+			throw new BusinessException(HttpStatusCode.Unauthorized, "Invalid email or password");
 		}
 
 		_jwtTokenService.RevokeExpiredRefreshTokens(user);
@@ -75,12 +77,14 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	public async Task<D> GetCurrentUserAsync<D>(ClaimsPrincipal claimsPrincipal) where D : class, IRoleAudit<string>
 	{
-		var user = await _userManager.GetUserAsync(claimsPrincipal);
+		var userId = _userManager.GetUserId(claimsPrincipal)
+			?? throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
 
-		if (user == null)
-		{
-			throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
-		}
+		var user = await _userManager.Users.AsNoTracking()
+			.Include(u => u.WorkTime)
+			.Include(u => u.Supervisor)
+			.Include(u => u.Team).FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId))
+			?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exist");
 
 		var data = _mapper.Map<D>(user);
 		data.Roles = await GetRolesAsync(user);

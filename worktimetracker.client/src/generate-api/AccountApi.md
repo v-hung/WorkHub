@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**accountChangePassword**](AccountApi.md#accountChangePassword) | **POST** /api/identity/change-password | 
 [**accountGetCurrentUser**](AccountApi.md#accountGetCurrentUser) | **GET** /api/identity/current-user | 
+[**accountGetPermissions**](AccountApi.md#accountGetPermissions) | **GET** /api/identity/permissions | 
 [**accountLogin**](AccountApi.md#accountLogin) | **POST** /api/identity/login | 
 [**accountLogout**](AccountApi.md#accountLogout) | **POST** /api/identity/logout | 
 [**accountRefreshToken**](AccountApi.md#accountRefreshToken) | **POST** /api/identity/refresh-token | 
@@ -104,6 +105,53 @@ This endpoint does not need any parameter.
 
  - **Content-Type**: Not defined
  - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **accountGetPermissions**
+> void accountGetPermissions()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, AccountApi } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new AccountApi(configuration);
+
+const request = {};
+
+const data = await apiInstance.accountGetPermissions(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details

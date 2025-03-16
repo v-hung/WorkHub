@@ -4,15 +4,16 @@ using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Responses.Time;
 
 namespace WorkTimeTracker.Application.Features.Timesheets.Commands
 {
-	public class CheckOutCommand : IRequest<TimesheetDto>
+	public class CheckOutCommand : IRequest<TimesheetResponse<TimesheetMinimalDto>>
 	{
 
 	}
 
-	public class CheckOutCommandHandler : IRequestHandler<CheckOutCommand, TimesheetDto>
+	public class CheckOutCommandHandler : IRequestHandler<CheckOutCommand, TimesheetResponse<TimesheetMinimalDto>>
 	{
 		private readonly ITimesheetRepository _timesheetRepository;
 		private readonly ICurrentUserService _currentUserService;
@@ -23,14 +24,19 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Commands
 			_currentUserService = currentUserService;
 		}
 
-		public async Task<TimesheetDto> Handle(CheckOutCommand command, CancellationToken cancellationToken)
+		public async Task<TimesheetResponse<TimesheetMinimalDto>> Handle(CheckOutCommand command, CancellationToken cancellationToken)
 		{
 			if (_currentUserService.UserId == null)
 			{
 				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
 			}
 
-			return await _timesheetRepository.PerformCheckOut<TimesheetDto>(_currentUserService.UserId);
+			var timesheet = await _timesheetRepository.PerformCheckOut<TimesheetDto>(_currentUserService.UserId);
+
+			return new TimesheetResponse<TimesheetMinimalDto>
+			{
+				Timesheet = timesheet
+			};
 
 		}
 

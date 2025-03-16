@@ -8,6 +8,7 @@ import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
 import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { LeaveRequestDto } from '../models/LeaveRequestDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -15,12 +16,19 @@ import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
+import { RequestDto } from '../models/RequestDto';
+import { RequestStatus } from '../models/RequestStatus';
+import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
+import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
+import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
+import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -121,6 +129,44 @@ export class PromiseAccountApi {
 	    }
 	}
         const result = this.api.accountGetCurrentUser(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public accountGetPermissionsWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountGetPermissionsWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public accountGetPermissions(_options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.accountGetPermissions(observableOptions);
         return result.toPromise();
     }
 
@@ -934,7 +980,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckInWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+    public timesheetCheckInWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -953,7 +999,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckIn(_options?: PromiseConfigurationOptions): Promise<TimesheetDto> {
+    public timesheetCheckIn(_options?: PromiseConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -972,7 +1018,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckOutWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+    public timesheetCheckOutWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -991,7 +1037,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckOut(_options?: PromiseConfigurationOptions): Promise<TimesheetDto> {
+    public timesheetCheckOut(_options?: PromiseConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1005,6 +1051,48 @@ export class PromiseTimesheetApi {
 	    }
 	}
         const result = this.api.timesheetCheckOut(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [month]
+     * @param [year]
+     */
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetMinimalDto>>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month, year, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [month]
+     * @param [year]
+     */
+    public timesheetGetCurrentUserMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetMinimalDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetGetCurrentUserMonthlyTimesheets(month, year, observableOptions);
         return result.toPromise();
     }
 
@@ -1052,7 +1140,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheetWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDto>> {
+    public timesheetGetTodayTimesheetWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1071,7 +1159,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheet(_options?: PromiseConfigurationOptions): Promise<TimesheetDto> {
+    public timesheetGetTodayTimesheet(_options?: PromiseConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {

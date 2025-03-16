@@ -2,9 +2,9 @@ import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
 import { TimesheetDto } from "@/generate-api";
 import { timesheetApi } from "@/services/apiClient";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export const useTimesheetAction = () => {
+export const useTimesheets = () => {
   const [loading, setLoading] = useState(false);
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
   const [request, setRequest] = useState({
@@ -32,37 +32,9 @@ export const useTimesheetAction = () => {
     }
   }, [request]);
 
-  // // CheckIn
-  // // =============
-
-  // const checkIn = async () => {
-  //   setLoading(true);
-  //   try {
-  //     return await timesheetApi.timesheetCheckIn();
-  //   } catch (e) {
-  //     getNotification().error({
-  //       message: getMessageError(e),
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // // Checkout
-  // // =============
-
-  // const Checkout = async () => {
-  //   setLoading(true);
-  //   try {
-  //     return await timesheetApi.timesheetCheckOut();
-  //   } catch (e) {
-  //     getNotification().error({
-  //       message: getMessageError(e),
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  useEffect(() => {
+    getTimesheets();
+  }, [request]);
 
   return { timesheets, loading, request, setRequest, getTimesheets };
 };

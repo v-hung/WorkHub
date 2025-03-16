@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Domain.Entities.Identity;
+using WorkTimeTracker.Domain.Entities.Requests;
 
 namespace WorkTimeTracker.Domain.Entities.Time
 {
@@ -10,9 +11,9 @@ namespace WorkTimeTracker.Domain.Entities.Time
 		[Required]
 		public required DateTime StartTime { get; set; }
 
-		public DateTime EndTime { get; set; }
+		public DateTime? EndTime { get; set; }
 
-		public int WorkMinutes { get; set; }
+		public int WorkMinutes { get; set; } = 0;
 
 		// Navigation
 
@@ -21,6 +22,8 @@ namespace WorkTimeTracker.Domain.Entities.Time
 
 		[Required]
 		public User? User { get; set; }
+
+		public List<Request> Requests { get; set; } = [];
 
 	}
 }

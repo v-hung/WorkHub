@@ -29,7 +29,7 @@ public class UserDto : UserMinimalDto, IRoleAudit<string>
 
 	public List<string> Roles { get; set; } = [];
 
-	public WorkTimeDto? WorkTime { get; set; } = new WorkTimeDto();
+	public WorkTimeDto WorkTime { get; set; } = new WorkTimeDto();
 
 	public UserMinimalDto? Supervisor { get; set; }
 
