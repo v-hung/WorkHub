@@ -12,7 +12,7 @@ export const workTimeDisabledTime = () => {
         (minute) => !allowedMinutes.includes(minute)
       );
     },
-    disabledSeconds: () => Array.from({ length: 60 }, (_, i) => i),
+    disabledSeconds: () => Array.from({ length: 59 }, (_, i) => i + 1),
   };
 };
 
@@ -22,6 +22,8 @@ export const workTimeValidateTime = () => (_: any, value: string) => {
   }
 
   const time = localTimeToDate(value);
+
+  console.log({ time }, time.getMinutes());
 
   const validMinutes = allowedMinutes.includes(time.getMinutes());
 

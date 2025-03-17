@@ -7,10 +7,8 @@ using WorkTimeTracker.Domain.Entities.Time;
 
 namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 {
-	public class CreateEditWorkTimeCommand : IRequest<WorkTimeDto>
+	public class CreateWorkTimeCommand : IRequest<WorkTimeDto>
 	{
-		public int Id { get; set; }
-
 		[Required]
 		public string Title { get; set; } = string.Empty;
 
@@ -25,19 +23,19 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 		public int AllowedLateMinutes { get; set; } = TimesheetConst.ALLOWED_LATE_MINUTES;
 	}
 
-	public class CreateEditWorkTimeCommandHandler : IRequestHandler<CreateEditWorkTimeCommand, WorkTimeDto>
+	public class CreateWorkTimeCommandHandler : IRequestHandler<CreateWorkTimeCommand, WorkTimeDto>
 	{
 
 		private readonly IRepository<WorkTime, int> _repositoryService;
 
-		public CreateEditWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
+		public CreateWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
 		{
 			_repositoryService = repositoryService;
 		}
 
-		public async Task<WorkTimeDto> Handle(CreateEditWorkTimeCommand request, CancellationToken cancellationToken)
+		public async Task<WorkTimeDto> Handle(CreateWorkTimeCommand request, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.CreateOrUpdateAsync<WorkTimeDto, int>(request.Id, request);
+			return await _repositoryService.CreateOrUpdateAsync<WorkTimeDto, int>(request);
 		}
 	}
 }

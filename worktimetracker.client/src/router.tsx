@@ -60,14 +60,14 @@ const router = createBrowserRouter(
               path: "",
               lazy: () => import("./pages/team/TeamPage"),
             },
-            {
-              path: "create",
-              lazy: () => import("./pages/team/TeamCreateUpdatePage"),
-            },
-            {
-              path: ":id/edit",
-              lazy: () => import("./pages/team/TeamCreateUpdatePage"),
-            },
+            // {
+            //   path: "create",
+            //   lazy: () => import("./pages/team/TeamCreateUpdatePage"),
+            // },
+            // {
+            //   path: ":id/edit",
+            //   lazy: () => import("./pages/team/TeamCreateUpdatePage"),
+            // },
           ],
         },
         {
@@ -77,14 +77,14 @@ const router = createBrowserRouter(
               path: "",
               lazy: () => import("./pages/project/ProjectPage"),
             },
-            {
-              path: "create",
-              lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
-            },
-            {
-              path: ":id/edit",
-              lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
-            },
+            // {
+            //   path: "create",
+            //   lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
+            // },
+            // {
+            //   path: ":id/edit",
+            //   lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
+            // },
           ],
         },
         {
@@ -94,14 +94,14 @@ const router = createBrowserRouter(
               path: "",
               lazy: () => import("./pages/inventory/InventoryPage"),
             },
-            {
-              path: "create",
-              lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
-            },
-            {
-              path: ":id/edit",
-              lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
-            },
+            // {
+            //   path: "create",
+            //   lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
+            // },
+            // {
+            //   path: ":id/edit",
+            //   lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
+            // },
           ],
         },
       ],

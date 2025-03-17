@@ -1,5 +1,5 @@
 import { DataWorkTimeTableType } from "@/features/workTime/components/WorkTimeTable/constants";
-import { WorkTimeDto } from "@/generate-api";
+import { CreateEditWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 
 export const toDataWorkTimeTable = (
   data: WorkTimeDto
@@ -9,3 +9,9 @@ export const toDataWorkTimeTable = (
     key: data.id,
   };
 };
+
+export const toWorkTimeRequest = (
+  data: WorkTimeDto
+): CreateEditWorkTimeCommand => ({
+  ...data,
+});

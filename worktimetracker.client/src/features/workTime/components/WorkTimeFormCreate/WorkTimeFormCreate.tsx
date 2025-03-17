@@ -8,13 +8,14 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateEditWorkTimeCommand } from "@/generate-api";
+import { CreateEditWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 import { useWorkTimeAction } from "../../hooks/useWorkTimeAction";
 import MyTimePicker from "@/ui/form/MyTimePicker";
 import { workTimeDisabledTime } from "../../utils/workTime.util";
+import { formatDate, localTimeToDate } from "@/common/utils/date.util";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  recordId?: string;
+  record?: WorkTimeDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -24,9 +25,9 @@ export type WorkTimeFormCreateRefState = {
 
 const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
   (props, ref) => {
-    const { className, recordId, setLoading, ...rest } = props;
+    const { className, record, setLoading, ...rest } = props;
 
-    const { loading, create, update } = useWorkTimeAction();
+    const { loading, create, update, formDefault } = useWorkTimeAction();
 
     useEffect(() => {
       if (setLoading) {
@@ -36,7 +37,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
 
     const [form] = Form.useForm();
     const [formState] = useState<CreateEditWorkTimeCommand>(
-      new CreateEditWorkTimeCommand()
+      formDefault(record)
     );
 
     useImperativeHandle(ref, () => ({
@@ -45,10 +46,10 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
           const formValues = form.getFieldsValue();
 
           console.log({ formValues });
-          if (!recordId) {
+          if (!record) {
             create(formValues);
           } else {
-            update(recordId, formState);
+            update(record.id, formState);
           }
         });
       },
@@ -85,11 +86,14 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="Start time morning"
                 name="startTimeMorning"
                 rules={[{ required: true }]}
+                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueProps={(v) => ({
+                  value: v ? localTimeToDate(v) : null,
+                })}
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
                   disabledTime={workTimeDisabledTime}
-                  format={"HH:mm:ss"}
                   hideDisabledOptions
                   showSecond={false}
                   showNow={false}
@@ -102,6 +106,10 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="End time morning"
                 name="endTimeMorning"
                 rules={[{ required: true }]}
+                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueProps={(v) => ({
+                  value: v ? localTimeToDate(v) : null,
+                })}
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
@@ -119,6 +127,10 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="Start time afternoon"
                 name="startTimeAfternoon"
                 rules={[{ required: true }]}
+                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueProps={(v) => ({
+                  value: v ? localTimeToDate(v) : null,
+                })}
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
@@ -136,6 +148,10 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="End time afternoon"
                 name="endTimeAfternoon"
                 rules={[{ required: true }]}
+                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueProps={(v) => ({
+                  value: v ? localTimeToDate(v) : null,
+                })}
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
@@ -149,11 +165,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12}>
-              <Form.Item
-                label="Allowed late minutes"
-                name="allowedLateMinutes"
-                rules={[{ required: true }]}
-              >
+              <Form.Item label="Allowed late minutes" name="allowedLateMinutes">
                 <Input type="number" />
               </Form.Item>
             </Col>

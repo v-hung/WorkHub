@@ -35,7 +35,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpPut("{id}")]
-		public async Task<ActionResult<WorkTimeDto>> Update(CreateEditWorkTimeCommand request)
+		public async Task<ActionResult<WorkTimeDto>> Update(int id, CreateEditWorkTimeCommand request)
 		{
 			var data = await _mediator.Send(request);
 
