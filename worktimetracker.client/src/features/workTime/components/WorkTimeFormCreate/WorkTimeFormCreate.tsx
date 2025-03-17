@@ -86,7 +86,14 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 name="startTimeMorning"
                 rules={[{ required: true }]}
               >
-                <MyTimePicker style={{ width: "100%" }} />
+                <MyTimePicker
+                  style={{ width: "100%" }}
+                  disabledTime={workTimeDisabledTime}
+                  format={"HH:mm:ss"}
+                  hideDisabledOptions
+                  showSecond={false}
+                  showNow={false}
+                />
               </Form.Item>
             </Col>
 
@@ -96,7 +103,14 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 name="endTimeMorning"
                 rules={[{ required: true }]}
               >
-                <MyTimePicker style={{ width: "100%" }} />
+                <MyTimePicker
+                  style={{ width: "100%" }}
+                  disabledTime={workTimeDisabledTime}
+                  format={"HH:mm:ss"}
+                  hideDisabledOptions
+                  showSecond={false}
+                  showNow={false}
+                />
               </Form.Item>
             </Col>
 
@@ -109,6 +123,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 <MyTimePicker
                   style={{ width: "100%" }}
                   disabledTime={workTimeDisabledTime}
+                  format={"HH:mm:ss"}
                   hideDisabledOptions
                   showSecond={false}
                   showNow={false}
@@ -122,7 +137,14 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 name="endTimeAfternoon"
                 rules={[{ required: true }]}
               >
-                <MyTimePicker style={{ width: "100%" }} />
+                <MyTimePicker
+                  style={{ width: "100%" }}
+                  disabledTime={workTimeDisabledTime}
+                  format={"HH:mm:ss"}
+                  hideDisabledOptions
+                  showSecond={false}
+                  showNow={false}
+                />
               </Form.Item>
             </Col>
 

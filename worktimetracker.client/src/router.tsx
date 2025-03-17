@@ -55,15 +55,54 @@ const router = createBrowserRouter(
         },
         {
           path: "/teams",
-          lazy: () => import("./pages/team/TeamPage"),
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/team/TeamPage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/team/TeamCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/team/TeamCreateUpdatePage"),
+            },
+          ],
         },
         {
           path: "/projects",
-          lazy: () => import("./pages/project/ProjectPage"),
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/project/ProjectPage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
+            },
+          ],
         },
         {
           path: "/inventories",
-          lazy: () => import("./pages/inventory/InventoryPage"),
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/inventory/InventoryPage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
+            },
+          ],
         },
       ],
     },

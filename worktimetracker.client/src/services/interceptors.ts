@@ -21,9 +21,9 @@ export class FetchHttpLibrary implements HttpLibrary {
     request: RequestContext,
     isRetry: boolean = false
   ): Observable<ResponseContext> {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const timer = setTimeout(() => controller.abort(), 10000);
+    // const controller = new AbortController();
+    // const signal = controller.signal;
+    // const timer = setTimeout(() => controller.abort(), 10000);
 
     const method = request.getHttpMethod().toString();
     const body = request.getBody();
@@ -33,7 +33,7 @@ export class FetchHttpLibrary implements HttpLibrary {
       body: body as any,
       headers: request.getHeaders(),
       credentials: "include",
-      signal,
+      // signal,
     })
       .then((resp: any) => {
         const headers: { [name: string]: string } = {};
@@ -66,7 +66,7 @@ export class FetchHttpLibrary implements HttpLibrary {
         return responseContext;
       })
       .finally(() => {
-        clearTimeout(timer);
+        // clearTimeout(timer);
       });
 
     return from<Promise<ResponseContext>>(resultPromise);
