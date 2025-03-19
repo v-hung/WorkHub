@@ -14,6 +14,7 @@ import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
+import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto } from '../models/RequestDto';
@@ -23,6 +24,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
+import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
@@ -594,14 +596,14 @@ export class ObjectTeamApi {
     /**
      * @param param the request object
      */
-    public teamGetByIdWithHttpInfo(param: TeamApiTeamGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+    public teamGetByIdWithHttpInfo(param: TeamApiTeamGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamFullDto>> {
         return this.api.teamGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public teamGetById(param: TeamApiTeamGetByIdRequest, options?: ConfigurationOptions): Promise<TeamDto> {
+    public teamGetById(param: TeamApiTeamGetByIdRequest, options?: ConfigurationOptions): Promise<TeamFullDto> {
         return this.api.teamGetById(param.id,  options).toPromise();
     }
 

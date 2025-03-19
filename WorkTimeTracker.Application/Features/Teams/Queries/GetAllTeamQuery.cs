@@ -28,7 +28,7 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 
 		public async Task<Paginated<TeamDto>> Handle(GetAllTeamQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<TeamDto>(query.Request);
+			return await _repository.SearchAsync<TeamDto, int>(query.Request);
 		}
 	}
 }

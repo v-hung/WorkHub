@@ -1,12 +1,11 @@
 using MediatR;
-using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.DTOs.Organization;
 using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Organization;
 
 namespace WorkTimeTracker.Application.Features.Teams.Queries
 {
-	public class GetTeamByIdQuery : IRequest<TeamDto>
+	public class GetTeamByIdQuery : IRequest<TeamFullDto>
 	{
 		public int Id;
 
@@ -16,7 +15,7 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 		}
 	}
 
-	public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamDto>
+	public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamFullDto>
 	{
 		private readonly IRepository<Team, int> _repository;
 
@@ -25,9 +24,9 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 			_repository = repository;
 		}
 
-		public async Task<TeamDto> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
+		public async Task<TeamFullDto> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.GetByIdAsync<TeamDto, int>(query.Id);
+			return await _repository.GetByIdAsync<TeamFullDto, int>(query.Id);
 		}
 	}
 }

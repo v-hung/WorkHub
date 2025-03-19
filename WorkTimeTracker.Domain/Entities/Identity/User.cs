@@ -77,6 +77,7 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 	[ForeignKey("Team")]
 	public int? TeamId { get; set; }
 
+	[DeleteBehavior(DeleteBehavior.SetNull)]
 	public Team? Team { get; set; }
 
 	[Required]

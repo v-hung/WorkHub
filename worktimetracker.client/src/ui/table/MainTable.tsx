@@ -17,6 +17,7 @@ const MainTable = <T,>(props: State<T>) => {
   return (
     <Table
       scroll={scroll}
+      rowKey="id"
       {...rest}
       className={`main-table ${className}`}
     ></Table>

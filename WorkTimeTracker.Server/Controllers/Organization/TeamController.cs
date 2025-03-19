@@ -19,7 +19,7 @@ namespace WorkTimeTracker.Server.Controllers.Organization
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<TeamDto>> GetById(int id)
+		public async Task<ActionResult<TeamFullDto>> GetById(int id)
 		{
 			var team = await _mediator.Send(new GetTeamByIdQuery(id));
 

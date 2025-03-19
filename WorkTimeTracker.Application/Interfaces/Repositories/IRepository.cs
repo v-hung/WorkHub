@@ -10,7 +10,7 @@ namespace WorkTimeTracker.Application.Interfaces.Repositories
 
 		Task<IList<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class;
 
-		Task<Paginated<D>> SearchAsync<D>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class;
+		Task<Paginated<D>> SearchAsync<D, DId>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<DId>;
 
 		Task<D> GetAsync<D>(Expression<Func<T, bool>> filter, bool asNoTracking = true) where D : class;
 

@@ -14,6 +14,7 @@ import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
+import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto } from '../models/RequestDto';
@@ -23,6 +24,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
+import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
@@ -880,7 +882,7 @@ export class PromiseTeamApi {
     /**
      * @param id
      */
-    public teamGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+    public teamGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamFullDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -900,7 +902,7 @@ export class PromiseTeamApi {
     /**
      * @param id
      */
-    public teamGetById(id: number, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
+    public teamGetById(id: number, _options?: PromiseConfigurationOptions): Promise<TeamFullDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {

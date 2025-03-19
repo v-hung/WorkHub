@@ -15,6 +15,7 @@ import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
+import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto } from '../models/RequestDto';
@@ -24,6 +25,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
+import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
@@ -1223,7 +1225,7 @@ export class ObservableTeamApi {
     /**
      * @param id
      */
-    public teamGetByIdWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDto>> {
+    public teamGetByIdWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<TeamFullDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1274,8 +1276,8 @@ export class ObservableTeamApi {
     /**
      * @param id
      */
-    public teamGetById(id: number, _options?: ConfigurationOptions): Observable<TeamDto> {
-        return this.teamGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<TeamDto>) => apiResponse.data));
+    public teamGetById(id: number, _options?: ConfigurationOptions): Observable<TeamFullDto> {
+        return this.teamGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<TeamFullDto>) => apiResponse.data));
     }
 
     /**

@@ -8,14 +8,14 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateTeamCommand, TeamDto } from "@/generate-api";
+import { CreateTeamCommand, TeamFullDto } from "@/generate-api";
 import { useTeamAction } from "../../hooks/useTeamAction";
-import MyTimePicker from "@/ui/form/MyTimePicker";
-import { formatDate, localTimeToDate } from "@/common/utils/date.util";
 import { useNavigate } from "react-router";
+import UserSelect from "@/features/user/components/UserSelect/UserSelect";
+import ProjectSelect from "@/features/project/components/ProjectSelect/ProjectSelect";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: TeamDto;
+  record?: TeamFullDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -50,7 +50,7 @@ const TeamFormCreate = forwardRef<TeamFormCreateRefState, State>(
             await update(record.id, formValues);
           }
 
-          navigate("/work-times");
+          navigate("/teams");
         });
       },
     }));
@@ -71,102 +71,49 @@ const TeamFormCreate = forwardRef<TeamFormCreateRefState, State>(
           <Row wrap gutter={{ sm: 8, md: 16 }}>
             <Col xs={24} lg={12}>
               <Form.Item
-                label="Work time title"
-                name="title"
+                label="Team name"
+                name="name"
                 rules={[{ required: true }]}
               >
-                <Input placeholder="title" />
+                <Input placeholder="name" />
               </Form.Item>
             </Col>
 
             <Col span={24} />
 
             <Col xs={24} lg={12}>
-              <Form.Item
-                label="Start time morning"
-                name="startTimeMorning"
-                rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
-                getValueProps={(v) => ({
-                  value: v ? localTimeToDate(v) : null,
-                })}
-              >
-                <MyTimePicker
-                  style={{ width: "100%" }}
-                  disabledTime={teamDisabledTime}
-                  hideDisabledOptions
-                  showSecond={false}
-                  showNow={false}
-                />
+              <Form.Item label="Description" name="description">
+                <Input placeholder="description" />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12}>
-              <Form.Item
-                label="End time morning"
-                name="endTimeMorning"
-                rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
-                getValueProps={(v) => ({
-                  value: v ? localTimeToDate(v) : null,
-                })}
-              >
-                <MyTimePicker
-                  style={{ width: "100%" }}
-                  disabledTime={teamDisabledTime}
-                  format={"HH:mm:ss"}
-                  hideDisabledOptions
-                  showSecond={false}
-                  showNow={false}
-                />
+              <Form.Item label="Completed Projects" name="completedProjects">
+                <Input type="number" placeholder="completedProjects" />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12}>
-              <Form.Item
-                label="Start time afternoon"
-                name="startTimeAfternoon"
-                rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
-                getValueProps={(v) => ({
-                  value: v ? localTimeToDate(v) : null,
-                })}
-              >
-                <MyTimePicker
-                  style={{ width: "100%" }}
-                  disabledTime={teamDisabledTime}
-                  format={"HH:mm:ss"}
-                  hideDisabledOptions
-                  showSecond={false}
-                  showNow={false}
-                />
+              <Form.Item label="Active Projects" name="activeProjects">
+                <Input type="number" placeholder="activeProjects" />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12}>
-              <Form.Item
-                label="End time afternoon"
-                name="endTimeAfternoon"
-                rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
-                getValueProps={(v) => ({
-                  value: v ? localTimeToDate(v) : null,
-                })}
-              >
-                <MyTimePicker
-                  style={{ width: "100%" }}
-                  disabledTime={teamDisabledTime}
-                  format={"HH:mm:ss"}
-                  hideDisabledOptions
-                  showSecond={false}
-                  showNow={false}
-                />
+              <Form.Item label="Manager" name="managerId">
+                <UserSelect allowClear />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12}>
-              <Form.Item label="Allowed late minutes" name="allowedLateMinutes">
-                <Input type="number" />
+              <Form.Item label="Members" name="memberIds">
+                <UserSelect mode="multiple" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12}>
+              <Form.Item label="Projects" name="projectIds">
+                <ProjectSelect mode="multiple" />
               </Form.Item>
             </Col>
           </Row>

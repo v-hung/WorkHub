@@ -2,19 +2,9 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useTeamsContext } from "../../contexts/TeamContext";
-import { UserMinimalDto } from "@/generate-api";
+import { TeamDto } from "@/generate-api";
 
-export type DataTeamTableType = {
-  key: number;
-  name: string;
-  description?: string | null;
-  totalMembers: number;
-  completedProjects: number;
-  activeProjects: number;
-  manager?: UserMinimalDto;
-};
-
-export const teamTableColumns: TableProps<DataTeamTableType>["columns"] = [
+export const teamTableColumns: TableProps<TeamDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
   {
     title: "Total Members",
@@ -40,7 +30,7 @@ export const teamTableColumns: TableProps<DataTeamTableType>["columns"] = [
       <div>
         <Space size="small">
           <ButtonLink
-            href={`/work-times/${record.key}`}
+            href={`/teams/${record.id}`}
             size="small"
             color="primary"
             variant="outlined"
@@ -48,14 +38,14 @@ export const teamTableColumns: TableProps<DataTeamTableType>["columns"] = [
             View
           </ButtonLink>
           <ButtonLink
-            href={`/work-times/${record.key}/edit`}
+            href={`/teams/${record.id}/edit`}
             size="small"
             color="cyan"
             variant="outlined"
           >
             Edit
           </ButtonLink>
-          <ActionDeleteRender id={record.key} />
+          <ActionDeleteRender id={record.id} />
         </Space>
       </div>
     ),

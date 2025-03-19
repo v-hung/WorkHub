@@ -10,10 +10,11 @@
  * Do not edit the class manually.
  */
 
+import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
-export class TeamDto {
+export class TeamFullDto {
     'id': number;
     'name': string;
     'description'?: string | null;
@@ -21,6 +22,7 @@ export class TeamDto {
     'activeProjects': number;
     'manager'?: UserMinimalDto;
     'members'?: Array<UserMinimalDto> | null;
+    'projects'?: Array<ProjectMinimalDto> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -68,10 +70,16 @@ export class TeamDto {
             "baseName": "members",
             "type": "Array<UserMinimalDto>",
             "format": ""
+        },
+        {
+            "name": "projects",
+            "baseName": "projects",
+            "type": "Array<ProjectMinimalDto>",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return TeamDto.attributeTypeMap;
+        return TeamFullDto.attributeTypeMap;
     }
 
     public constructor() {

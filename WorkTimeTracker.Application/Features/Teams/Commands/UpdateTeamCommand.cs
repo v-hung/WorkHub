@@ -29,8 +29,8 @@ namespace WorkTimeTracker.Application.Features.Teams.Commands
 		{
 			return await _repository.UpdateAsync<TeamDto, int>(command.Id, command.Request,
 			[
-				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Members, command.Request.MemberIds),
-				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Projects, command.Request.ProjectIds)
+				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Members, command.Request.MemberIds, command.Id),
+				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Projects, command.Request.ProjectIds, command.Id)
 			]);
 		}
 	}

@@ -41,7 +41,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			return await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
-		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class
+		public async Task<Paginated<D>> SearchAsync<D, DId>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<DId>
 		{
 			IQueryable<T> query = _context.Set<T>().AsQueryable();
 
@@ -84,6 +84,10 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			{
 				var ordering = string.Join(",", request.OrderBy);
 				projectedQuery = projectedQuery.OrderBy(ordering);
+			}
+			else
+			{
+				projectedQuery = projectedQuery.OrderBy(v => v.Id);
 			}
 
 			var totalRecords = await projectedQuery.CountAsync();
@@ -157,7 +161,11 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			return _mapper.Map<D>(entity);
 		}
 
-		public async Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId>? relatedEntityIds, TId? id) where D : class, IEntity<DId>
+		public async Task UpdateRelatedEntitiesAsync<D, DId>(
+		T entity,
+		Expression<Func<T, ICollection<D>>> navigationProperty,
+		IList<DId>? relatedEntityIds,
+		TId? id) where D : class, IEntity<DId>
 		{
 			if (relatedEntityIds != null && relatedEntityIds.Any())
 			{
@@ -166,17 +174,15 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 				if (id != null && !id.Equals(default(TId)))
 				{
 					await _context.Entry(entity).Collection(GetPropertyName(navigationProperty)).LoadAsync();
-
 					collection.Clear();
 				}
 
-				foreach (var relatedId in relatedEntityIds)
+				List<D> relatedEntities = await _context.Set<D>()
+						.Where(v => relatedEntityIds.Contains(v.Id))
+						.ToListAsync();
+
+				foreach (var relatedEntity in relatedEntities)
 				{
-					var relatedEntity = Activator.CreateInstance<D>();
-					typeof(T).GetProperty("Id")?.SetValue(relatedEntity, relatedId);
-
-					_context.Set<D>().Attach(relatedEntity);
-
 					collection.Add(relatedEntity);
 				}
 			}

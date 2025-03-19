@@ -10,6 +10,7 @@ export * from '../models/Nationality';
 export * from '../models/Permission';
 export * from '../models/ProjectDto';
 export * from '../models/ProjectDtoPaginated';
+export * from '../models/ProjectMinimalDto';
 export * from '../models/ProjectStatus';
 export * from '../models/RefreshTokenResponse';
 export * from '../models/RequestDto';
@@ -19,6 +20,7 @@ export * from '../models/RoleCreateUpdateRequest';
 export * from '../models/RoleDto';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
+export * from '../models/TeamFullDto';
 export * from '../models/TeamMinimalDto';
 export * from '../models/TimesheetDto';
 export * from '../models/TimesheetDtoRequestsInner';
@@ -49,6 +51,7 @@ import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
 import { ProjectDto          } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
+import { ProjectMinimalDto       } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto         } from '../models/RequestDto';
@@ -58,6 +61,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
+import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInnerClass } from '../models/TimesheetDtoRequestsInner';
@@ -109,12 +113,14 @@ let typeMap: {[index: string]: any} = {
     "LoginRequest": LoginRequest,
     "ProjectDto": ProjectDto,
     "ProjectDtoPaginated": ProjectDtoPaginated,
+    "ProjectMinimalDto": ProjectMinimalDto,
     "RefreshTokenResponse": RefreshTokenResponse,
     "RequestDto": RequestDto,
     "RoleCreateUpdateRequest": RoleCreateUpdateRequest,
     "RoleDto": RoleDto,
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
+    "TeamFullDto": TeamFullDto,
     "TeamMinimalDto": TeamMinimalDto,
     "TimesheetDto": TimesheetDto,
     "TimesheetDtoRequestsInner": TimesheetDtoRequestsInnerClass,

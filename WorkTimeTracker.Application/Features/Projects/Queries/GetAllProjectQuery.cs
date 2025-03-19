@@ -28,7 +28,7 @@ namespace WorkTimeTracker.Application.Features.Projects.Queries
 
 		public async Task<Paginated<ProjectDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<ProjectDto>(query.Request);
+			return await _repository.SearchAsync<ProjectDto, int>(query.Request);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
-import { CreateTeamCommand, TeamDto } from "@/generate-api";
+import { CreateTeamCommand, TeamFullDto } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -10,12 +10,17 @@ export const useTeamAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: TeamDto): CreateTeamCommand => {
+  const formDefault = (data?: TeamFullDto): CreateTeamCommand => {
     if (!data) {
       return new CreateTeamCommand();
     }
 
-    return data;
+    return {
+      ...data,
+      managerId: data.manager?.id ?? null,
+      memberIds: data.members?.map((v) => v.id),
+      projectIds: data.projects?.map((v) => v.id),
+    };
   };
 
   // Create

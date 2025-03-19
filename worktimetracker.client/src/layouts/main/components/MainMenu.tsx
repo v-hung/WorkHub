@@ -70,7 +70,7 @@ const MainMenu: FC<State> = (props) => {
         </Dropdown>
         <Menu
           mode="inline"
-          defaultSelectedKeys={selectedKeys}
+          selectedKeys={selectedKeys}
           defaultOpenKeys={openKeys}
           items={menuItems}
           onClick={handleMenuItemClick}

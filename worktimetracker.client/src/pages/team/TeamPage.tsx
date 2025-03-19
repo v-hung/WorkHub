@@ -17,7 +17,7 @@ export function Component() {
       <MainHeader title="Work times Manager">
         <Button
           type="primary"
-          onClick={() => navigate("/work-times/create")}
+          onClick={() => navigate("/teams/create")}
           icon={<IIonPlus width={16} height={16} />}
         >
           Add work time

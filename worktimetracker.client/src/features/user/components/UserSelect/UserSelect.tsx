@@ -12,11 +12,11 @@ import { debounce } from "@/common/utils/common.utils";
 import { useUsers } from "../../hooks/useUsers";
 
 type State = ComponentProps<typeof Select> & {
-  withoutIds: string[];
+  withoutIds?: string[];
 };
 
 const UserSelect: FC<State> = (props) => {
-  const { className, withoutIds, ...rest } = props;
+  const { className, withoutIds = [], ...rest } = props;
 
   const { userPaginated, loading, request, setRequest } = useUsers();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
