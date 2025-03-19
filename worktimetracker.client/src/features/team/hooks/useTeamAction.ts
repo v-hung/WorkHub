@@ -1,18 +1,18 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
-import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
-import { workTimeApi } from "@/services/apiClient";
+import { CreateTeamCommand, TeamDto } from "@/generate-api";
+import { teamApi } from "@/services/apiClient";
 import { useState } from "react";
 
-export const useWorkTimeAction = () => {
+export const useTeamAction = () => {
   const [loading, setLoading] = useState(false);
 
   // Default data
   // =============
 
-  const formDefault = (data?: WorkTimeDto): CreateWorkTimeCommand => {
+  const formDefault = (data?: TeamDto): CreateTeamCommand => {
     if (!data) {
-      return new CreateWorkTimeCommand();
+      return new CreateTeamCommand();
     }
 
     return data;
@@ -21,10 +21,10 @@ export const useWorkTimeAction = () => {
   // Create
   // =============
 
-  const create = async (request: CreateWorkTimeCommand) => {
+  const create = async (request: CreateTeamCommand) => {
     setLoading(true);
     try {
-      await workTimeApi.workTimeCreate(request);
+      await teamApi.teamCreate(request);
       getNotification().success({
         message: "Successfully completed",
       });
@@ -40,10 +40,10 @@ export const useWorkTimeAction = () => {
   // Update
   // =============
 
-  const update = async (id: number, request: CreateWorkTimeCommand) => {
+  const update = async (id: number, request: CreateTeamCommand) => {
     setLoading(true);
     try {
-      await workTimeApi.workTimeUpdate(id, request);
+      await teamApi.teamUpdate(id, request);
       getNotification().success({
         message: "Successfully completed",
       });
@@ -62,7 +62,7 @@ export const useWorkTimeAction = () => {
   const deleteRecord = async (id: number) => {
     setLoading(true);
     try {
-      await workTimeApi.workTimeDelete(id);
+      await teamApi.teamDelete(id);
       getNotification().success({
         message: "Successfully completed",
       });

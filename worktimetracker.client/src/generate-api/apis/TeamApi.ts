@@ -8,7 +8,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
-import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
+import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { TeamDto } from '../models/TeamDto';
@@ -20,9 +20,9 @@ import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 export class TeamApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param createEditTeamCommand 
+     * @param createTeamCommand 
      */
-    public async teamCreate(createEditTeamCommand?: CreateEditTeamCommand, _options?: Configuration): Promise<RequestContext> {
+    public async teamCreate(createTeamCommand?: CreateTeamCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -44,7 +44,7 @@ export class TeamApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createEditTeamCommand, "CreateEditTeamCommand", ""),
+            ObjectSerializer.serialize(createTeamCommand, "CreateTeamCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -207,9 +207,9 @@ export class TeamApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      * @param id 
-     * @param createEditTeamCommand 
+     * @param createTeamCommand 
      */
-    public async teamUpdate(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: Configuration): Promise<RequestContext> {
+    public async teamUpdate(id: number, createTeamCommand?: CreateTeamCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
@@ -238,7 +238,7 @@ export class TeamApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createEditTeamCommand, "CreateEditTeamCommand", ""),
+            ObjectSerializer.serialize(createTeamCommand, "CreateTeamCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);

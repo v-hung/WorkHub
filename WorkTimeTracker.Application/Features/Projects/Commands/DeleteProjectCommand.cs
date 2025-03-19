@@ -22,11 +22,11 @@ namespace WorkTimeTracker.Application.Features.Projects.Commands
 			_repository = repository;
 		}
 
-		public async Task<int> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
+		public async Task<int> Handle(DeleteProjectCommand command, CancellationToken cancellationToken)
 		{
-			await _repository.DeleteAsync(request.Id);
+			await _repository.DeleteAsync(command.Id);
 
-			return request.Id;
+			return command.Id;
 		}
 	}
 }

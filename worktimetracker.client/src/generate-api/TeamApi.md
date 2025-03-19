@@ -27,8 +27,7 @@ const apiInstance = new TeamApi(configuration);
 
 const request: TeamApiTeamCreateRequest = {
   
-  createEditTeamCommand: {
-    id: 1,
+  createTeamCommand: {
     name: "name_example",
     description: "description_example",
     totalMembers: 1,
@@ -53,7 +52,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createEditTeamCommand** | **CreateEditTeamCommand**|  |
+ **createTeamCommand** | **CreateTeamCommand**|  |
 
 
 ### Return type
@@ -268,10 +267,9 @@ const apiInstance = new TeamApi(configuration);
 
 const request: TeamApiTeamUpdateRequest = {
   
-  id: "id_example",
+  id: 1,
   
-  createEditTeamCommand: {
-    id: 1,
+  createTeamCommand: {
     name: "name_example",
     description: "description_example",
     totalMembers: 1,
@@ -296,8 +294,8 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createEditTeamCommand** | **CreateEditTeamCommand**|  |
- **id** | [**string**] |  | defaults to undefined
+ **createTeamCommand** | **CreateTeamCommand**|  |
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type

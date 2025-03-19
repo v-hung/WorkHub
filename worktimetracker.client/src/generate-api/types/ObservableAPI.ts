@@ -4,9 +4,9 @@ import type { Middleware } from '../middleware';
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
-import { CreateEditProjectCommand } from '../models/CreateEditProjectCommand';
-import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
-import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
+import { CreateProjectCommand } from '../models/CreateProjectCommand';
+import { CreateTeamCommand } from '../models/CreateTeamCommand';
+import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto } from '../models/LeaveRequestDto';
@@ -417,9 +417,9 @@ export class ObservableProjectApi {
     }
 
     /**
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectCreateWithHttpInfo(createEditProjectCommand?: CreateEditProjectCommand, _options?: ConfigurationOptions): Observable<HttpInfo<ProjectDto>> {
+    public projectCreateWithHttpInfo(createProjectCommand?: CreateProjectCommand, _options?: ConfigurationOptions): Observable<HttpInfo<ProjectDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -450,7 +450,7 @@ export class ObservableProjectApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.projectCreate(createEditProjectCommand, _config);
+        const requestContextPromise = this.requestFactory.projectCreate(createProjectCommand, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -468,10 +468,10 @@ export class ObservableProjectApi {
     }
 
     /**
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectCreate(createEditProjectCommand?: CreateEditProjectCommand, _options?: ConfigurationOptions): Observable<ProjectDto> {
-        return this.projectCreateWithHttpInfo(createEditProjectCommand, _options).pipe(map((apiResponse: HttpInfo<ProjectDto>) => apiResponse.data));
+    public projectCreate(createProjectCommand?: CreateProjectCommand, _options?: ConfigurationOptions): Observable<ProjectDto> {
+        return this.projectCreateWithHttpInfo(createProjectCommand, _options).pipe(map((apiResponse: HttpInfo<ProjectDto>) => apiResponse.data));
     }
 
     /**
@@ -656,9 +656,9 @@ export class ObservableProjectApi {
 
     /**
      * @param id
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectUpdateWithHttpInfo(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: ConfigurationOptions): Observable<HttpInfo<ProjectDto>> {
+    public projectUpdateWithHttpInfo(id: number, createProjectCommand?: CreateProjectCommand, _options?: ConfigurationOptions): Observable<HttpInfo<ProjectDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -689,7 +689,7 @@ export class ObservableProjectApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.projectUpdate(id, createEditProjectCommand, _config);
+        const requestContextPromise = this.requestFactory.projectUpdate(id, createProjectCommand, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -708,10 +708,10 @@ export class ObservableProjectApi {
 
     /**
      * @param id
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectUpdate(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: ConfigurationOptions): Observable<ProjectDto> {
-        return this.projectUpdateWithHttpInfo(id, createEditProjectCommand, _options).pipe(map((apiResponse: HttpInfo<ProjectDto>) => apiResponse.data));
+    public projectUpdate(id: number, createProjectCommand?: CreateProjectCommand, _options?: ConfigurationOptions): Observable<ProjectDto> {
+        return this.projectUpdateWithHttpInfo(id, createProjectCommand, _options).pipe(map((apiResponse: HttpInfo<ProjectDto>) => apiResponse.data));
     }
 
 }
@@ -1041,9 +1041,9 @@ export class ObservableTeamApi {
     }
 
     /**
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamCreateWithHttpInfo(createEditTeamCommand?: CreateEditTeamCommand, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDto>> {
+    public teamCreateWithHttpInfo(createTeamCommand?: CreateTeamCommand, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1074,7 +1074,7 @@ export class ObservableTeamApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.teamCreate(createEditTeamCommand, _config);
+        const requestContextPromise = this.requestFactory.teamCreate(createTeamCommand, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1092,10 +1092,10 @@ export class ObservableTeamApi {
     }
 
     /**
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamCreate(createEditTeamCommand?: CreateEditTeamCommand, _options?: ConfigurationOptions): Observable<TeamDto> {
-        return this.teamCreateWithHttpInfo(createEditTeamCommand, _options).pipe(map((apiResponse: HttpInfo<TeamDto>) => apiResponse.data));
+    public teamCreate(createTeamCommand?: CreateTeamCommand, _options?: ConfigurationOptions): Observable<TeamDto> {
+        return this.teamCreateWithHttpInfo(createTeamCommand, _options).pipe(map((apiResponse: HttpInfo<TeamDto>) => apiResponse.data));
     }
 
     /**
@@ -1280,9 +1280,9 @@ export class ObservableTeamApi {
 
     /**
      * @param id
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamUpdateWithHttpInfo(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDto>> {
+    public teamUpdateWithHttpInfo(id: number, createTeamCommand?: CreateTeamCommand, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1313,7 +1313,7 @@ export class ObservableTeamApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.teamUpdate(id, createEditTeamCommand, _config);
+        const requestContextPromise = this.requestFactory.teamUpdate(id, createTeamCommand, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1332,10 +1332,10 @@ export class ObservableTeamApi {
 
     /**
      * @param id
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamUpdate(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: ConfigurationOptions): Observable<TeamDto> {
-        return this.teamUpdateWithHttpInfo(id, createEditTeamCommand, _options).pipe(map((apiResponse: HttpInfo<TeamDto>) => apiResponse.data));
+    public teamUpdate(id: number, createTeamCommand?: CreateTeamCommand, _options?: ConfigurationOptions): Observable<TeamDto> {
+        return this.teamUpdateWithHttpInfo(id, createTeamCommand, _options).pipe(map((apiResponse: HttpInfo<TeamDto>) => apiResponse.data));
     }
 
 }
@@ -1979,9 +1979,9 @@ export class ObservableWorkTimeApi {
     }
 
     /**
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeCreateWithHttpInfo(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: ConfigurationOptions): Observable<HttpInfo<WorkTimeDto>> {
+    public workTimeCreateWithHttpInfo(createWorkTimeCommand?: CreateWorkTimeCommand, _options?: ConfigurationOptions): Observable<HttpInfo<WorkTimeDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2012,7 +2012,7 @@ export class ObservableWorkTimeApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.workTimeCreate(createEditWorkTimeCommand, _config);
+        const requestContextPromise = this.requestFactory.workTimeCreate(createWorkTimeCommand, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -2030,10 +2030,10 @@ export class ObservableWorkTimeApi {
     }
 
     /**
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeCreate(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: ConfigurationOptions): Observable<WorkTimeDto> {
-        return this.workTimeCreateWithHttpInfo(createEditWorkTimeCommand, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDto>) => apiResponse.data));
+    public workTimeCreate(createWorkTimeCommand?: CreateWorkTimeCommand, _options?: ConfigurationOptions): Observable<WorkTimeDto> {
+        return this.workTimeCreateWithHttpInfo(createWorkTimeCommand, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDto>) => apiResponse.data));
     }
 
     /**
@@ -2218,9 +2218,9 @@ export class ObservableWorkTimeApi {
 
     /**
      * @param id
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeUpdateWithHttpInfo(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: ConfigurationOptions): Observable<HttpInfo<WorkTimeDto>> {
+    public workTimeUpdateWithHttpInfo(id: number, createWorkTimeCommand?: CreateWorkTimeCommand, _options?: ConfigurationOptions): Observable<HttpInfo<WorkTimeDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2251,7 +2251,7 @@ export class ObservableWorkTimeApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.workTimeUpdate(id, createEditWorkTimeCommand, _config);
+        const requestContextPromise = this.requestFactory.workTimeUpdate(id, createWorkTimeCommand, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -2270,10 +2270,10 @@ export class ObservableWorkTimeApi {
 
     /**
      * @param id
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeUpdate(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: ConfigurationOptions): Observable<WorkTimeDto> {
-        return this.workTimeUpdateWithHttpInfo(id, createEditWorkTimeCommand, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDto>) => apiResponse.data));
+    public workTimeUpdate(id: number, createWorkTimeCommand?: CreateWorkTimeCommand, _options?: ConfigurationOptions): Observable<WorkTimeDto> {
+        return this.workTimeUpdateWithHttpInfo(id, createWorkTimeCommand, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDto>) => apiResponse.data));
     }
 
 }

@@ -1,7 +1,7 @@
 export * from '../models/ChangePasswordRequest';
-export * from '../models/CreateEditProjectCommand';
-export * from '../models/CreateEditTeamCommand';
-export * from '../models/CreateEditWorkTimeCommand';
+export * from '../models/CreateProjectCommand';
+export * from '../models/CreateTeamCommand';
+export * from '../models/CreateWorkTimeCommand';
 export * from '../models/ErrorResponse';
 export * from '../models/ErrorValidateResponse';
 export * from '../models/LeaveRequestDto';
@@ -38,9 +38,9 @@ export * from '../models/WorkTimeDto';
 export * from '../models/WorkTimeDtoPaginated';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
-import { CreateEditProjectCommand          } from '../models/CreateEditProjectCommand';
-import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
-import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
+import { CreateProjectCommand         } from '../models/CreateProjectCommand';
+import { CreateTeamCommand } from '../models/CreateTeamCommand';
+import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto           } from '../models/LeaveRequestDto';
@@ -100,9 +100,9 @@ let enumsMap: Set<string> = new Set<string>([
 
 let typeMap: {[index: string]: any} = {
     "ChangePasswordRequest": ChangePasswordRequest,
-    "CreateEditProjectCommand": CreateEditProjectCommand,
-    "CreateEditTeamCommand": CreateEditTeamCommand,
-    "CreateEditWorkTimeCommand": CreateEditWorkTimeCommand,
+    "CreateProjectCommand": CreateProjectCommand,
+    "CreateTeamCommand": CreateTeamCommand,
+    "CreateWorkTimeCommand": CreateWorkTimeCommand,
     "ErrorResponse": ErrorResponse,
     "ErrorValidateResponse": ErrorValidateResponse,
     "LeaveRequestDto": LeaveRequestDto,

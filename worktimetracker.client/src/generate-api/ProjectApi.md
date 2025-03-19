@@ -27,8 +27,7 @@ const apiInstance = new ProjectApi(configuration);
 
 const request: ProjectApiProjectCreateRequest = {
   
-  createEditProjectCommand: {
-    id: 1,
+  createProjectCommand: {
     name: "name_example",
     description: "description_example",
     startDate: new Date('1970-01-01T00:00:00.00Z'),
@@ -51,7 +50,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createEditProjectCommand** | **CreateEditProjectCommand**|  |
+ **createProjectCommand** | **CreateProjectCommand**|  |
 
 
 ### Return type
@@ -266,10 +265,9 @@ const apiInstance = new ProjectApi(configuration);
 
 const request: ProjectApiProjectUpdateRequest = {
   
-  id: "id_example",
+  id: 1,
   
-  createEditProjectCommand: {
-    id: 1,
+  createProjectCommand: {
     name: "name_example",
     description: "description_example",
     startDate: new Date('1970-01-01T00:00:00.00Z'),
@@ -292,8 +290,8 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createEditProjectCommand** | **CreateEditProjectCommand**|  |
- **id** | [**string**] |  | defaults to undefined
+ **createProjectCommand** | **CreateProjectCommand**|  |
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type

@@ -12,7 +12,7 @@ namespace WorkTimeTracker.Application.Mappings
 			CreateMap<Team, TeamMinimalDto>().ReverseMap();
 			CreateMap<Team, TeamDto>().ReverseMap();
 			CreateMap<Team, TeamFullDto>().ReverseMap();
-			CreateMap<CreateEditTeamCommand, Team>().ReverseMap();
+			CreateMap<CreateTeamCommand, Team>().ReverseMap();
 		}
 	}
 }

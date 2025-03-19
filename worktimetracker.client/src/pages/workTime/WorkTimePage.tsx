@@ -5,6 +5,7 @@ import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import { useNavigate } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import WorkTimeTable from "@/features/workTime/components/WorkTimeTable/WorkTimeTable";
+import { WorkTimeProvider } from "@/features/workTime/contexts/WorkTimeContext";
 
 export const loader = wrapLoaderWithPermission();
 
@@ -28,7 +29,9 @@ export function Component() {
       />
 
       <MainContent>
-        <WorkTimeTable />
+        <WorkTimeProvider>
+          <WorkTimeTable />
+        </WorkTimeProvider>
       </MainContent>
     </Layout>
   );

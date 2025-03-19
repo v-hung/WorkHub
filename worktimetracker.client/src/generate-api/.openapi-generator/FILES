@@ -1,5 +1,6 @@
 .gitattributes
 .gitignore
+.openapi-generator-ignore
 AccountApi.md
 ProjectApi.md
 README.md
@@ -25,9 +26,9 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/ChangePasswordRequest.ts
-models/CreateEditProjectCommand.ts
-models/CreateEditTeamCommand.ts
-models/CreateEditWorkTimeCommand.ts
+models/CreateProjectCommand.ts
+models/CreateTeamCommand.ts
+models/CreateWorkTimeCommand.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
 models/LeaveRequestDto.ts

@@ -15,18 +15,18 @@ namespace WorkTimeTracker.Application.Features.Teams.Commands
 
 	public class DeleteTeamCommandHandler : IRequestHandler<DeleteTeamCommand, int>
 	{
-		private readonly IRepository<Team, int> _repositoryService;
+		private readonly IRepository<Team, int> _repository;
 
-		public DeleteTeamCommandHandler(IRepository<Team, int> repositoryService)
+		public DeleteTeamCommandHandler(IRepository<Team, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
-		public async Task<int> Handle(DeleteTeamCommand request, CancellationToken cancellationToken)
+		public async Task<int> Handle(DeleteTeamCommand command, CancellationToken cancellationToken)
 		{
-			await _repositoryService.DeleteAsync(request.Id);
+			await _repository.DeleteAsync(command.Id);
 
-			return request.Id;
+			return command.Id;
 		}
 	}
 }

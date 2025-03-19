@@ -27,7 +27,7 @@ namespace WorkTimeTracker.Server.Controllers.Organization
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<TeamDto>> Create(CreateEditTeamCommand request)
+		public async Task<ActionResult<TeamDto>> Create(CreateTeamCommand request)
 		{
 			var team = await _mediator.Send(request);
 
@@ -35,9 +35,9 @@ namespace WorkTimeTracker.Server.Controllers.Organization
 		}
 
 		[HttpPut("{id}")]
-		public async Task<ActionResult<TeamDto>> Update(CreateEditTeamCommand request)
+		public async Task<ActionResult<TeamDto>> Update(int id, CreateTeamCommand request)
 		{
-			var team = await _mediator.Send(request);
+			var team = await _mediator.Send(new UpdateTeamCommand { Id = id, Request = request });
 
 			return Ok(team);
 		}

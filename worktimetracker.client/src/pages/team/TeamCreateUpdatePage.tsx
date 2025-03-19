@@ -5,19 +5,17 @@ import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import { redirect, useLoaderData } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import { useRef, useState } from "react";
-import WorkTimeFormCreate, {
-  WorkTimeFormCreateRefState,
-} from "@/features/workTime/components/WorkTimeFormCreate/WorkTimeFormCreate";
-import { workTimeApi } from "@/services/apiClient";
+import TeamFormCreate, {
+  TeamFormCreateRefState,
+} from "@/features/team/components/TeamFormCreate/TeamFormCreate";
+import { teamApi } from "@/services/apiClient";
 import { wrapPromise } from "@/common/utils/promise";
-import { WorkTimeDto } from "@/generate-api";
+import { TeamDto } from "@/generate-api";
 
 export const loader = wrapLoaderWithPermission(async ({ params }) => {
   if (params.id) {
     // await new Promise((res) => setTimeout(res, 1000));
-    const data = await wrapPromise(() =>
-      workTimeApi.workTimeGetById(+params.id!)
-    );
+    const data = await wrapPromise(() => teamApi.teamGetById(+params.id!));
 
     if (!data) {
       throw redirect(`/work-times`);
@@ -28,10 +26,10 @@ export const loader = wrapLoaderWithPermission(async ({ params }) => {
 });
 
 export function Component() {
-  const data = useLoaderData() as WorkTimeDto;
+  const data = useLoaderData() as TeamDto;
 
   const [loading, setLoading] = useState(false);
-  const formRef = useRef<WorkTimeFormCreateRefState | null>(null);
+  const formRef = useRef<TeamFormCreateRefState | null>(null);
 
   const handleSave = () => {
     if (formRef.current) {
@@ -61,11 +59,7 @@ export function Component() {
       />
 
       <MainContent>
-        <WorkTimeFormCreate
-          ref={formRef}
-          setLoading={setLoading}
-          record={data}
-        />
+        <TeamFormCreate ref={formRef} setLoading={setLoading} record={data} />
       </MainContent>
     </Layout>
   );

@@ -3,8 +3,9 @@ import MainContent from "@/layouts/main/components/MainContent";
 import MainHeader from "@/layouts/main/components/MainHeader";
 import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import { useNavigate } from "react-router";
-import UserTable from "@/features/user/components/UserTable/UserTable";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import TeamTable from "@/features/team/components/TeamTable/TeamTable";
+import { TeamProvider } from "@/features/team/contexts/TeamContext";
 
 export const loader = wrapLoaderWithPermission();
 
@@ -13,22 +14,24 @@ export function Component() {
 
   return (
     <Layout className="main-layout h-screen">
-      <MainHeader title="Teams Manager">
+      <MainHeader title="Work times Manager">
         <Button
           type="primary"
-          onClick={() => navigate("/teams/create")}
+          onClick={() => navigate("/work-times/create")}
           icon={<IIonPlus width={16} height={16} />}
         >
-          Add Team
+          Add work time
         </Button>
       </MainHeader>
 
       <MainBreadcrumb
-        items={[{ title: "Home", path: "/" }, { title: "Teams Manager" }]}
+        items={[{ title: "Home", path: "/" }, { title: "Work time Manager" }]}
       />
 
       <MainContent>
-        <UserTable />
+        <TeamProvider>
+          <TeamTable />
+        </TeamProvider>
       </MainContent>
     </Layout>
   );

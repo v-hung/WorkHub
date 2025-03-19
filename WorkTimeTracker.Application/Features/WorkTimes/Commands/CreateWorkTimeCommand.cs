@@ -26,16 +26,16 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 	public class CreateWorkTimeCommandHandler : IRequestHandler<CreateWorkTimeCommand, WorkTimeDto>
 	{
 
-		private readonly IRepository<WorkTime, int> _repositoryService;
+		private readonly IRepository<WorkTime, int> _repository;
 
-		public CreateWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
+		public CreateWorkTimeCommandHandler(IRepository<WorkTime, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
-		public async Task<WorkTimeDto> Handle(CreateWorkTimeCommand request, CancellationToken cancellationToken)
+		public async Task<WorkTimeDto> Handle(CreateWorkTimeCommand command, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.CreateOrUpdateAsync<WorkTimeDto, int>(request);
+			return await _repository.CreateAsync<WorkTimeDto>(command);
 		}
 	}
 }

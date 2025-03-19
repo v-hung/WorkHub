@@ -3,9 +3,9 @@ import { Configuration, ConfigurationOptions } from '../configuration'
 import type { Middleware } from '../middleware';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
-import { CreateEditProjectCommand } from '../models/CreateEditProjectCommand';
-import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
-import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
+import { CreateProjectCommand } from '../models/CreateProjectCommand';
+import { CreateTeamCommand } from '../models/CreateTeamCommand';
+import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto } from '../models/LeaveRequestDto';
@@ -173,10 +173,10 @@ import { ProjectApiRequestFactory, ProjectApiResponseProcessor} from "../apis/Pr
 export interface ProjectApiProjectCreateRequest {
     /**
      * 
-     * @type CreateEditProjectCommand
+     * @type CreateProjectCommand
      * @memberof ProjectApiprojectCreate
      */
-    createEditProjectCommand?: CreateEditProjectCommand
+    createProjectCommand?: CreateProjectCommand
 }
 
 export interface ProjectApiProjectDeleteRequest {
@@ -238,16 +238,16 @@ export interface ProjectApiProjectUpdateRequest {
     /**
      * 
      * Defaults to: undefined
-     * @type string
+     * @type number
      * @memberof ProjectApiprojectUpdate
      */
-    id: string
+    id: number
     /**
      * 
-     * @type CreateEditProjectCommand
+     * @type CreateProjectCommand
      * @memberof ProjectApiprojectUpdate
      */
-    createEditProjectCommand?: CreateEditProjectCommand
+    createProjectCommand?: CreateProjectCommand
 }
 
 export class ObjectProjectApi {
@@ -261,14 +261,14 @@ export class ObjectProjectApi {
      * @param param the request object
      */
     public projectCreateWithHttpInfo(param: ProjectApiProjectCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
-        return this.api.projectCreateWithHttpInfo(param.createEditProjectCommand,  options).toPromise();
+        return this.api.projectCreateWithHttpInfo(param.createProjectCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public projectCreate(param: ProjectApiProjectCreateRequest = {}, options?: ConfigurationOptions): Promise<ProjectDto> {
-        return this.api.projectCreate(param.createEditProjectCommand,  options).toPromise();
+        return this.api.projectCreate(param.createProjectCommand,  options).toPromise();
     }
 
     /**
@@ -317,14 +317,14 @@ export class ObjectProjectApi {
      * @param param the request object
      */
     public projectUpdateWithHttpInfo(param: ProjectApiProjectUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
-        return this.api.projectUpdateWithHttpInfo(param.id, param.createEditProjectCommand,  options).toPromise();
+        return this.api.projectUpdateWithHttpInfo(param.id, param.createProjectCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public projectUpdate(param: ProjectApiProjectUpdateRequest, options?: ConfigurationOptions): Promise<ProjectDto> {
-        return this.api.projectUpdate(param.id, param.createEditProjectCommand,  options).toPromise();
+        return this.api.projectUpdate(param.id, param.createProjectCommand,  options).toPromise();
     }
 
 }
@@ -465,10 +465,10 @@ import { TeamApiRequestFactory, TeamApiResponseProcessor} from "../apis/TeamApi"
 export interface TeamApiTeamCreateRequest {
     /**
      * 
-     * @type CreateEditTeamCommand
+     * @type CreateTeamCommand
      * @memberof TeamApiteamCreate
      */
-    createEditTeamCommand?: CreateEditTeamCommand
+    createTeamCommand?: CreateTeamCommand
 }
 
 export interface TeamApiTeamDeleteRequest {
@@ -530,16 +530,16 @@ export interface TeamApiTeamUpdateRequest {
     /**
      * 
      * Defaults to: undefined
-     * @type string
+     * @type number
      * @memberof TeamApiteamUpdate
      */
-    id: string
+    id: number
     /**
      * 
-     * @type CreateEditTeamCommand
+     * @type CreateTeamCommand
      * @memberof TeamApiteamUpdate
      */
-    createEditTeamCommand?: CreateEditTeamCommand
+    createTeamCommand?: CreateTeamCommand
 }
 
 export class ObjectTeamApi {
@@ -553,14 +553,14 @@ export class ObjectTeamApi {
      * @param param the request object
      */
     public teamCreateWithHttpInfo(param: TeamApiTeamCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
-        return this.api.teamCreateWithHttpInfo(param.createEditTeamCommand,  options).toPromise();
+        return this.api.teamCreateWithHttpInfo(param.createTeamCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public teamCreate(param: TeamApiTeamCreateRequest = {}, options?: ConfigurationOptions): Promise<TeamDto> {
-        return this.api.teamCreate(param.createEditTeamCommand,  options).toPromise();
+        return this.api.teamCreate(param.createTeamCommand,  options).toPromise();
     }
 
     /**
@@ -609,14 +609,14 @@ export class ObjectTeamApi {
      * @param param the request object
      */
     public teamUpdateWithHttpInfo(param: TeamApiTeamUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
-        return this.api.teamUpdateWithHttpInfo(param.id, param.createEditTeamCommand,  options).toPromise();
+        return this.api.teamUpdateWithHttpInfo(param.id, param.createTeamCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public teamUpdate(param: TeamApiTeamUpdateRequest, options?: ConfigurationOptions): Promise<TeamDto> {
-        return this.api.teamUpdate(param.id, param.createEditTeamCommand,  options).toPromise();
+        return this.api.teamUpdate(param.id, param.createTeamCommand,  options).toPromise();
     }
 
 }
@@ -914,10 +914,10 @@ import { WorkTimeApiRequestFactory, WorkTimeApiResponseProcessor} from "../apis/
 export interface WorkTimeApiWorkTimeCreateRequest {
     /**
      * 
-     * @type CreateEditWorkTimeCommand
+     * @type CreateWorkTimeCommand
      * @memberof WorkTimeApiworkTimeCreate
      */
-    createEditWorkTimeCommand?: CreateEditWorkTimeCommand
+    createWorkTimeCommand?: CreateWorkTimeCommand
 }
 
 export interface WorkTimeApiWorkTimeDeleteRequest {
@@ -979,16 +979,16 @@ export interface WorkTimeApiWorkTimeUpdateRequest {
     /**
      * 
      * Defaults to: undefined
-     * @type string
+     * @type number
      * @memberof WorkTimeApiworkTimeUpdate
      */
-    id: string
+    id: number
     /**
      * 
-     * @type CreateEditWorkTimeCommand
+     * @type CreateWorkTimeCommand
      * @memberof WorkTimeApiworkTimeUpdate
      */
-    createEditWorkTimeCommand?: CreateEditWorkTimeCommand
+    createWorkTimeCommand?: CreateWorkTimeCommand
 }
 
 export class ObjectWorkTimeApi {
@@ -1002,14 +1002,14 @@ export class ObjectWorkTimeApi {
      * @param param the request object
      */
     public workTimeCreateWithHttpInfo(param: WorkTimeApiWorkTimeCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
-        return this.api.workTimeCreateWithHttpInfo(param.createEditWorkTimeCommand,  options).toPromise();
+        return this.api.workTimeCreateWithHttpInfo(param.createWorkTimeCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public workTimeCreate(param: WorkTimeApiWorkTimeCreateRequest = {}, options?: ConfigurationOptions): Promise<WorkTimeDto> {
-        return this.api.workTimeCreate(param.createEditWorkTimeCommand,  options).toPromise();
+        return this.api.workTimeCreate(param.createWorkTimeCommand,  options).toPromise();
     }
 
     /**
@@ -1058,14 +1058,14 @@ export class ObjectWorkTimeApi {
      * @param param the request object
      */
     public workTimeUpdateWithHttpInfo(param: WorkTimeApiWorkTimeUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
-        return this.api.workTimeUpdateWithHttpInfo(param.id, param.createEditWorkTimeCommand,  options).toPromise();
+        return this.api.workTimeUpdateWithHttpInfo(param.id, param.createWorkTimeCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public workTimeUpdate(param: WorkTimeApiWorkTimeUpdateRequest, options?: ConfigurationOptions): Promise<WorkTimeDto> {
-        return this.api.workTimeUpdate(param.id, param.createEditWorkTimeCommand,  options).toPromise();
+        return this.api.workTimeUpdate(param.id, param.createWorkTimeCommand,  options).toPromise();
     }
 
 }

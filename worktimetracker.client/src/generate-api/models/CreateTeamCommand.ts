@@ -10,31 +10,23 @@
  * Do not edit the class manually.
  */
 
-import { ProjectStatus } from '../models/ProjectStatus';
 import { HttpFile } from '../http/http';
 
-export class CreateEditProjectCommand {
-    'id'?: number;
+export class CreateTeamCommand {
     'name': string;
     'description'?: string | null;
-    'startDate'?: Date;
-    'endDate'?: Date;
-    'status'?: ProjectStatus;
-    'teamId'?: number | null;
+    'totalMembers'?: number;
+    'completedProjects'?: number;
+    'activeProjects'?: number;
     'managerId'?: string | null;
     'memberIds'?: Array<string> | null;
+    'projectIds'?: Array<number> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "number",
-            "format": "int32"
-        },
         {
             "name": "name",
             "baseName": "name",
@@ -48,26 +40,20 @@ export class CreateEditProjectCommand {
             "format": ""
         },
         {
-            "name": "startDate",
-            "baseName": "startDate",
-            "type": "Date",
-            "format": "date-time"
+            "name": "totalMembers",
+            "baseName": "totalMembers",
+            "type": "number",
+            "format": "int32"
         },
         {
-            "name": "endDate",
-            "baseName": "endDate",
-            "type": "Date",
-            "format": "date-time"
+            "name": "completedProjects",
+            "baseName": "completedProjects",
+            "type": "number",
+            "format": "int32"
         },
         {
-            "name": "status",
-            "baseName": "status",
-            "type": "ProjectStatus",
-            "format": ""
-        },
-        {
-            "name": "teamId",
-            "baseName": "teamId",
+            "name": "activeProjects",
+            "baseName": "activeProjects",
             "type": "number",
             "format": "int32"
         },
@@ -82,14 +68,18 @@ export class CreateEditProjectCommand {
             "baseName": "memberIds",
             "type": "Array<string>",
             "format": "uuid"
+        },
+        {
+            "name": "projectIds",
+            "baseName": "projectIds",
+            "type": "Array<number>",
+            "format": "int32"
         }    ];
 
     static getAttributeTypeMap() {
-        return CreateEditProjectCommand.attributeTypeMap;
+        return CreateTeamCommand.attributeTypeMap;
     }
 
     public constructor() {
     }
 }
-
-

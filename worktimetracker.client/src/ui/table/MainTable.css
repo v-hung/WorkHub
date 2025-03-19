@@ -14,13 +14,20 @@
 }
 
 .main-table .ant-spin-container .ant-table {
-  /* flex-grow: 1;
-  min-height: 0; */
   overflow-y: auto;
 }
 
+.main-table .ant-spin-container .ant-table .ant-table-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-table .ant-table-header {
+  flex: none;
+}
+
 .main-table .ant-table-body {
-  max-height: calc(100% - 55px);
+  /* max-height: calc(100% - 55px); */
   overflow: auto;
 }
 

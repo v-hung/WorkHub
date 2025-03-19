@@ -27,8 +27,7 @@ const apiInstance = new WorkTimeApi(configuration);
 
 const request: WorkTimeApiWorkTimeCreateRequest = {
   
-  createEditWorkTimeCommand: {
-    id: 1,
+  createWorkTimeCommand: {
     title: "title_example",
     startTimeMorning: "00:00:00",
     endTimeMorning: "00:00:00",
@@ -47,7 +46,7 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createEditWorkTimeCommand** | **CreateEditWorkTimeCommand**|  |
+ **createWorkTimeCommand** | **CreateWorkTimeCommand**|  |
 
 
 ### Return type
@@ -262,10 +261,9 @@ const apiInstance = new WorkTimeApi(configuration);
 
 const request: WorkTimeApiWorkTimeUpdateRequest = {
   
-  id: "id_example",
+  id: 1,
   
-  createEditWorkTimeCommand: {
-    id: 1,
+  createWorkTimeCommand: {
     title: "title_example",
     startTimeMorning: "00:00:00",
     endTimeMorning: "00:00:00",
@@ -284,8 +282,8 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createEditWorkTimeCommand** | **CreateEditWorkTimeCommand**|  |
- **id** | [**string**] |  | defaults to undefined
+ **createWorkTimeCommand** | **CreateWorkTimeCommand**|  |
+ **id** | [**number**] |  | defaults to undefined
 
 
 ### Return type

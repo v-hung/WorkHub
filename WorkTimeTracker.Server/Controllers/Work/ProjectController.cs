@@ -27,7 +27,7 @@ namespace WorkTimeTracker.Server.Controllers.Work
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<ProjectDto>> Create(CreateEditProjectCommand request)
+		public async Task<ActionResult<ProjectDto>> Create(CreateProjectCommand request)
 		{
 			var data = await _mediator.Send(request);
 
@@ -35,9 +35,9 @@ namespace WorkTimeTracker.Server.Controllers.Work
 		}
 
 		[HttpPut("{id}")]
-		public async Task<ActionResult<ProjectDto>> Update(CreateEditProjectCommand request)
+		public async Task<ActionResult<ProjectDto>> Update(int id, CreateProjectCommand request)
 		{
-			var data = await _mediator.Send(request);
+			var data = await _mediator.Send(new UpdateProjectCommand { Id = id, Request = request });
 
 			return Ok(data);
 		}

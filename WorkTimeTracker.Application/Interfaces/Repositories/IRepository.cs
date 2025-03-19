@@ -16,9 +16,11 @@ namespace WorkTimeTracker.Application.Interfaces.Repositories
 
 		Task<D> GetByIdAsync<D, DId>(TId id, bool asNoTracking = true) where D : IEntity<DId> where DId : notnull;
 
-		Task<D> CreateOrUpdateAsync<D, DId>(TId id, object request, List<Func<T, Task>>? updateRelations = null) where D : class, IEntity<DId>;
+		Task<D> CreateAsync<D>(object request, List<Func<T, Task>>? updateRelations = null) where D : class;
 
-		Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId>? relatedEntityIds, TId id) where D : class, IEntity<DId>;
+		Task<D> UpdateAsync<D, DId>(TId id, object request, List<Func<T, Task>>? updateRelations = null) where D : class, IEntity<DId>;
+
+		Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId> relatedEntityIds, TId? id = default) where D : class, IEntity<DId>;
 
 		Task DeleteAsync(TId id);
 

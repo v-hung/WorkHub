@@ -1,6 +1,7 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
+import { useWorkTimesContext } from "../../contexts/WorkTimeContext";
 
 export type DataWorkTimeTableType = {
   key: number;
@@ -14,7 +15,7 @@ export type DataWorkTimeTableType = {
 
 export const workTimeTableColumns: TableProps<DataWorkTimeTableType>["columns"] =
   [
-    { title: "title", dataIndex: "title", key: "title" },
+    { title: "Title", dataIndex: "title", key: "title" },
     {
       title: "Start Time Morning",
       dataIndex: "startTimeMorning",
@@ -72,10 +73,16 @@ export const workTimeTableColumns: TableProps<DataWorkTimeTableType>["columns"] 
   ];
 
 const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const confirm = () =>
-    new Promise((resolve) => {
-      setTimeout(() => resolve(null), 3000);
-    });
+  const { setRequest, deleteRecord } = useWorkTimesContext();
+
+  const confirm = async () => {
+    await deleteRecord(id);
+
+    setRequest((state) => ({
+      ...state,
+      pageNumber: 1,
+    }));
+  };
 
   return (
     <Popconfirm

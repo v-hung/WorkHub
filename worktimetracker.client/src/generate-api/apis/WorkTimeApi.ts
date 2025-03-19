@@ -8,7 +8,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
-import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
+import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { WorkTimeDto } from '../models/WorkTimeDto';
@@ -20,9 +20,9 @@ import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param createEditWorkTimeCommand 
+     * @param createWorkTimeCommand 
      */
-    public async workTimeCreate(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeCreate(createWorkTimeCommand?: CreateWorkTimeCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -44,7 +44,7 @@ export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createEditWorkTimeCommand, "CreateEditWorkTimeCommand", ""),
+            ObjectSerializer.serialize(createWorkTimeCommand, "CreateWorkTimeCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -207,9 +207,9 @@ export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      * @param id 
-     * @param createEditWorkTimeCommand 
+     * @param createWorkTimeCommand 
      */
-    public async workTimeUpdate(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeUpdate(id: number, createWorkTimeCommand?: CreateWorkTimeCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
@@ -238,7 +238,7 @@ export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createEditWorkTimeCommand, "CreateEditWorkTimeCommand", ""),
+            ObjectSerializer.serialize(createWorkTimeCommand, "CreateWorkTimeCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);

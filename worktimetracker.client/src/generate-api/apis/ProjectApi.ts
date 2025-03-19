@@ -8,7 +8,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
-import { CreateEditProjectCommand } from '../models/CreateEditProjectCommand';
+import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { ProjectDto } from '../models/ProjectDto';
@@ -20,9 +20,9 @@ import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 export class ProjectApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param createEditProjectCommand 
+     * @param createProjectCommand 
      */
-    public async projectCreate(createEditProjectCommand?: CreateEditProjectCommand, _options?: Configuration): Promise<RequestContext> {
+    public async projectCreate(createProjectCommand?: CreateProjectCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -44,7 +44,7 @@ export class ProjectApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createEditProjectCommand, "CreateEditProjectCommand", ""),
+            ObjectSerializer.serialize(createProjectCommand, "CreateProjectCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -207,9 +207,9 @@ export class ProjectApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      * @param id 
-     * @param createEditProjectCommand 
+     * @param createProjectCommand 
      */
-    public async projectUpdate(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: Configuration): Promise<RequestContext> {
+    public async projectUpdate(id: number, createProjectCommand?: CreateProjectCommand, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
@@ -238,7 +238,7 @@ export class ProjectApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createEditProjectCommand, "CreateEditProjectCommand", ""),
+            ObjectSerializer.serialize(createProjectCommand, "CreateProjectCommand", ""),
             contentType
         );
         requestContext.setBody(serializedBody);

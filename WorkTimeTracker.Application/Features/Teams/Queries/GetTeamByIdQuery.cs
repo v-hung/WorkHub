@@ -18,19 +18,16 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 
 	public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamDto>
 	{
-		private readonly IRepository<Team, int> _repositoryService;
+		private readonly IRepository<Team, int> _repository;
 
-		private readonly IStringLocalizer<GetTeamByIdQueryHandler> _localizer;
-
-		public GetTeamByIdQueryHandler(IRepository<Team, int> repositoryService, IStringLocalizer<GetTeamByIdQueryHandler> localizer)
+		public GetTeamByIdQueryHandler(IRepository<Team, int> repository)
 		{
-			_repositoryService = repositoryService;
-			_localizer = localizer;
+			_repository = repository;
 		}
 
 		public async Task<TeamDto> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.GetByIdAsync<TeamDto, int>(query.Id);
+			return await _repository.GetByIdAsync<TeamDto, int>(query.Id);
 		}
 	}
 }

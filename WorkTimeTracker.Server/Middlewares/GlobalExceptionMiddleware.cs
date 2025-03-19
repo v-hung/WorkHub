@@ -41,7 +41,7 @@ public class GlobalExceptionMiddleware
 
 	private Task HandleBusinessExceptionAsync(HttpContext context, BusinessException exception)
 	{
-		_logger.LogWarning(exception, exception.Message);
+		_logger.LogWarning("BusinessException: {Message}", exception.Message);
 
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = (int)exception.StatusCode;
@@ -56,7 +56,7 @@ public class GlobalExceptionMiddleware
 
 	private Task HandleUnexpectedExceptionAsync(HttpContext context, Exception exception)
 	{
-		_logger.LogError(exception, "Unexpected error occurred");
+		_logger.LogError("Unexpected error occurred: {Message}", exception.Message);
 
 		context.Response.ContentType = "application/json";
 		context.Response.StatusCode = 500;

@@ -1,5 +1,5 @@
 import { getMessageError } from "@/common/utils/error";
-import { TeamDto, TeamDtoPaginated } from "@/generate-api";
+import { TeamDtoPaginated } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { notification } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -54,32 +54,11 @@ export const useTeams = () => {
     fetchTeams();
   }, [request]);
 
-  // GET team BY ID
-  // ==============
-
-  const [team, setTeam] = useState<TeamDto | null>();
-
-  const fetchTeam = async (id: number) => {
-    setLoading(true);
-    try {
-      const data = await teamApi.teamGetById(id);
-      setTeam(data);
-    } catch (e) {
-      notification.error({
-        message: getMessageError(e),
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return {
     teamPaginated,
     loading,
     fetchTeams,
     request,
     setRequest,
-    team,
-    fetchTeam,
   };
 };

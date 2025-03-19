@@ -3,9 +3,9 @@ import { Configuration, ConfigurationOptions, PromiseConfigurationOptions } from
 import { PromiseMiddleware, Middleware, PromiseMiddlewareWrapper } from '../middleware';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
-import { CreateEditProjectCommand } from '../models/CreateEditProjectCommand';
-import { CreateEditTeamCommand } from '../models/CreateEditTeamCommand';
-import { CreateEditWorkTimeCommand } from '../models/CreateEditWorkTimeCommand';
+import { CreateProjectCommand } from '../models/CreateProjectCommand';
+import { CreateTeamCommand } from '../models/CreateTeamCommand';
+import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto } from '../models/LeaveRequestDto';
@@ -306,9 +306,9 @@ export class PromiseProjectApi {
     }
 
     /**
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectCreateWithHttpInfo(createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+    public projectCreateWithHttpInfo(createProjectCommand?: CreateProjectCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -321,14 +321,14 @@ export class PromiseProjectApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.projectCreateWithHttpInfo(createEditProjectCommand, observableOptions);
+        const result = this.api.projectCreateWithHttpInfo(createProjectCommand, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectCreate(createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
+    public projectCreate(createProjectCommand?: CreateProjectCommand, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -341,7 +341,7 @@ export class PromiseProjectApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.projectCreate(createEditProjectCommand, observableOptions);
+        const result = this.api.projectCreate(createProjectCommand, observableOptions);
         return result.toPromise();
     }
 
@@ -473,9 +473,9 @@ export class PromiseProjectApi {
 
     /**
      * @param id
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectUpdateWithHttpInfo(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+    public projectUpdateWithHttpInfo(id: number, createProjectCommand?: CreateProjectCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -488,15 +488,15 @@ export class PromiseProjectApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.projectUpdateWithHttpInfo(id, createEditProjectCommand, observableOptions);
+        const result = this.api.projectUpdateWithHttpInfo(id, createProjectCommand, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
-     * @param [createEditProjectCommand]
+     * @param [createProjectCommand]
      */
-    public projectUpdate(id: string, createEditProjectCommand?: CreateEditProjectCommand, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
+    public projectUpdate(id: number, createProjectCommand?: CreateProjectCommand, _options?: PromiseConfigurationOptions): Promise<ProjectDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -509,7 +509,7 @@ export class PromiseProjectApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.projectUpdate(id, createEditProjectCommand, observableOptions);
+        const result = this.api.projectUpdate(id, createProjectCommand, observableOptions);
         return result.toPromise();
     }
 
@@ -752,9 +752,9 @@ export class PromiseTeamApi {
     }
 
     /**
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamCreateWithHttpInfo(createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+    public teamCreateWithHttpInfo(createTeamCommand?: CreateTeamCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -767,14 +767,14 @@ export class PromiseTeamApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.teamCreateWithHttpInfo(createEditTeamCommand, observableOptions);
+        const result = this.api.teamCreateWithHttpInfo(createTeamCommand, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamCreate(createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
+    public teamCreate(createTeamCommand?: CreateTeamCommand, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -787,7 +787,7 @@ export class PromiseTeamApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.teamCreate(createEditTeamCommand, observableOptions);
+        const result = this.api.teamCreate(createTeamCommand, observableOptions);
         return result.toPromise();
     }
 
@@ -919,9 +919,9 @@ export class PromiseTeamApi {
 
     /**
      * @param id
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamUpdateWithHttpInfo(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+    public teamUpdateWithHttpInfo(id: number, createTeamCommand?: CreateTeamCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -934,15 +934,15 @@ export class PromiseTeamApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.teamUpdateWithHttpInfo(id, createEditTeamCommand, observableOptions);
+        const result = this.api.teamUpdateWithHttpInfo(id, createTeamCommand, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
-     * @param [createEditTeamCommand]
+     * @param [createTeamCommand]
      */
-    public teamUpdate(id: string, createEditTeamCommand?: CreateEditTeamCommand, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
+    public teamUpdate(id: number, createTeamCommand?: CreateTeamCommand, _options?: PromiseConfigurationOptions): Promise<TeamDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -955,7 +955,7 @@ export class PromiseTeamApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.teamUpdate(id, createEditTeamCommand, observableOptions);
+        const result = this.api.teamUpdate(id, createTeamCommand, observableOptions);
         return result.toPromise();
     }
 
@@ -1423,9 +1423,9 @@ export class PromiseWorkTimeApi {
     }
 
     /**
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeCreateWithHttpInfo(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+    public workTimeCreateWithHttpInfo(createWorkTimeCommand?: CreateWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1438,14 +1438,14 @@ export class PromiseWorkTimeApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.workTimeCreateWithHttpInfo(createEditWorkTimeCommand, observableOptions);
+        const result = this.api.workTimeCreateWithHttpInfo(createWorkTimeCommand, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeCreate(createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
+    public workTimeCreate(createWorkTimeCommand?: CreateWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1458,7 +1458,7 @@ export class PromiseWorkTimeApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.workTimeCreate(createEditWorkTimeCommand, observableOptions);
+        const result = this.api.workTimeCreate(createWorkTimeCommand, observableOptions);
         return result.toPromise();
     }
 
@@ -1590,9 +1590,9 @@ export class PromiseWorkTimeApi {
 
     /**
      * @param id
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeUpdateWithHttpInfo(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+    public workTimeUpdateWithHttpInfo(id: number, createWorkTimeCommand?: CreateWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1605,15 +1605,15 @@ export class PromiseWorkTimeApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.workTimeUpdateWithHttpInfo(id, createEditWorkTimeCommand, observableOptions);
+        const result = this.api.workTimeUpdateWithHttpInfo(id, createWorkTimeCommand, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
-     * @param [createEditWorkTimeCommand]
+     * @param [createWorkTimeCommand]
      */
-    public workTimeUpdate(id: string, createEditWorkTimeCommand?: CreateEditWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
+    public workTimeUpdate(id: number, createWorkTimeCommand?: CreateWorkTimeCommand, _options?: PromiseConfigurationOptions): Promise<WorkTimeDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1626,7 +1626,7 @@ export class PromiseWorkTimeApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.workTimeUpdate(id, createEditWorkTimeCommand, observableOptions);
+        const result = this.api.workTimeUpdate(id, createWorkTimeCommand, observableOptions);
         return result.toPromise();
     }
 

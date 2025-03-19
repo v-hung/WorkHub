@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Interfaces.Repositories;
-using WorkTimeTracker.Domain.Constants.Timesheet;
 using WorkTimeTracker.Domain.Entities.Time;
 
 namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
@@ -13,27 +12,22 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 		public int Id { get; set; }
 
 		[Required]
-		public CreateEditWorkTimeCommand Request { get; set; }
-
-		public UpdateWorkTimeCommand(CreateEditWorkTimeCommand request)
-		{
-			Request = request;
-		}
+		public required CreateWorkTimeCommand Request { get; set; }
 	}
 
 	public class UpdateWorkTimeCommandHandler : IRequestHandler<UpdateWorkTimeCommand, WorkTimeDto>
 	{
 
-		private readonly IRepository<WorkTime, int> _repositoryService;
+		private readonly IRepository<WorkTime, int> _repository;
 
-		public UpdateWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
+		public UpdateWorkTimeCommandHandler(IRepository<WorkTime, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
-		public async Task<WorkTimeDto> Handle(UpdateWorkTimeCommand request, CancellationToken cancellationToken)
+		public async Task<WorkTimeDto> Handle(UpdateWorkTimeCommand command, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.CreateOrUpdateAsync<WorkTimeDto, int>(request.Id, request);
+			return await _repository.UpdateAsync<WorkTimeDto, int>(command.Id, command.Request);
 		}
 	}
 }

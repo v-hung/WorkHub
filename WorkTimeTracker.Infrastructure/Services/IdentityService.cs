@@ -4,7 +4,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using WorkTimeTracker.Application.DTOs.Identity;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Application.Responses.Identity;
@@ -13,7 +12,6 @@ using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Data;
 using WorkTimeTracker.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper.QueryableExtensions;
 
 namespace WorkTimeTracker.Infrastructure.Services;
 
@@ -37,13 +35,11 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	public async Task<LoginResponse<D>> LoginAsync<D>(LoginRequest request) where D : class, IRoleAudit<string>
 	{
-		var user = await _userManager.Users.AsNoTracking()
-			.Include(u => u.WorkTime)
-			.Include(u => u.Supervisor)
-			.Include(u => u.Team)
-			.FirstOrDefaultAsync(u => u.Email == request.Email) ?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exist");
+		var user = await _userManager.FindByNameAsync(request.Email)
+			?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exit");
 
 		var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+
 		if (!result.Succeeded)
 		{
 			throw new BusinessException(HttpStatusCode.Unauthorized, "Invalid email or password");
@@ -61,8 +57,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		// Set token cookie 
 		SetTokenCookie(token, refreshToken.Token, request.RememberMe);
 
-		var userData = _mapper.Map<D>(user);
-		userData.Roles = await GetRolesAsync(user);
+		var userData = await GetUserDataAsync<D>(user.Id.ToString());
 
 		var response = new LoginResponse<D>
 		{
@@ -80,16 +75,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		var userId = _userManager.GetUserId(claimsPrincipal)
 			?? throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
 
-		var user = await _userManager.Users.AsNoTracking()
-			.Include(u => u.WorkTime)
-			.Include(u => u.Supervisor)
-			.Include(u => u.Team).FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId))
-			?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exist");
-
-		var data = _mapper.Map<D>(user);
-		data.Roles = await GetRolesAsync(user);
-
-		return data;
+		return await GetUserDataAsync<D>(userId);
 	}
 
 	public async Task<RefreshTokenResponse> RefreshTokenAsync(HttpRequest request)
@@ -160,5 +146,19 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 		var refreshCookieOptions = _jwtTokenService.GenerateRefreshTokenCookieOptions(rememberMe);
 		_httpContextAccessor.HttpContext?.Response.Cookies.Append("refreshToken", refreshToken, refreshCookieOptions);
+	}
+
+	public async Task<D> GetUserDataAsync<D>(string userId) where D : class, IRoleAudit<string>
+	{
+		var user = await _userManager.Users.AsNoTracking()
+			.Include(u => u.WorkTime)
+			.Include(u => u.Supervisor)
+			.Include(u => u.Team).FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId))
+			?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exist");
+
+		var data = _mapper.Map<D>(user);
+		data.Roles = await GetRolesAsync(user);
+
+		return data;
 	}
 }

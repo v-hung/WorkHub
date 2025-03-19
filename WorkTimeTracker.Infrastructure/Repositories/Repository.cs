@@ -118,11 +118,9 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 				.FirstOrDefaultAsync(p => p.Id.Equals(id)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
 		}
 
-		public async Task<D> CreateOrUpdateAsync<D, DId>(TId id, object request, List<Func<T, Task>>? updateRelations = null) where D : class, IEntity<DId>
+		public async Task<D> CreateAsync<D>(object request, List<Func<T, Task>>? updateRelations = null) where D : class
 		{
-			T entity = (id != null && !id.Equals(default(TId)))
-				? await _context.Set<T>().FindAsync(id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name])
-				: Activator.CreateInstance<T>() ?? throw new BusinessException(HttpStatusCode.BadRequest, $"Cannot create an instance of {typeof(T).Name}");
+			T entity = Activator.CreateInstance<T>() ?? throw new BusinessException(HttpStatusCode.BadRequest, $"Cannot create an instance of {typeof(T).Name}");
 
 			_mapper.Map(request, entity);
 
@@ -134,9 +132,24 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 				}
 			}
 
-			if (id == null || id.Equals(default(TId)))
+			await _context.Set<T>().AddAsync(entity);
+			await _context.SaveChangesAsync();
+
+			return _mapper.Map<D>(entity);
+		}
+
+		public async Task<D> UpdateAsync<D, DId>(TId id, object request, List<Func<T, Task>>? updateRelations = null) where D : class, IEntity<DId>
+		{
+			T entity = await _context.Set<T>().FindAsync(id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
+
+			_mapper.Map(request, entity);
+
+			if (updateRelations != null)
 			{
-				await _context.Set<T>().AddAsync(entity);
+				foreach (var updateRelation in updateRelations)
+				{
+					await updateRelation(entity);
+				}
 			}
 
 			await _context.SaveChangesAsync();
@@ -144,13 +157,13 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			return _mapper.Map<D>(entity);
 		}
 
-		public async Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId>? relatedEntityIds, TId id) where D : class, IEntity<DId>
+		public async Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId>? relatedEntityIds, TId? id) where D : class, IEntity<DId>
 		{
 			if (relatedEntityIds != null && relatedEntityIds.Any())
 			{
 				var collection = navigationProperty.Compile()(entity);
 
-				if (id != null)
+				if (id != null && !id.Equals(default(TId)))
 				{
 					await _context.Entry(entity).Collection(GetPropertyName(navigationProperty)).LoadAsync();
 

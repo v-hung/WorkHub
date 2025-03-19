@@ -12,8 +12,7 @@
 
 import { HttpFile } from '../http/http';
 
-export class CreateEditWorkTimeCommand {
-    'id'?: number;
+export class CreateWorkTimeCommand {
     'title': string;
     'startTimeMorning'?: string;
     'endTimeMorning'?: string;
@@ -26,12 +25,6 @@ export class CreateEditWorkTimeCommand {
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "number",
-            "format": "int32"
-        },
         {
             "name": "title",
             "baseName": "title",
@@ -70,7 +63,7 @@ export class CreateEditWorkTimeCommand {
         }    ];
 
     static getAttributeTypeMap() {
-        return CreateEditWorkTimeCommand.attributeTypeMap;
+        return CreateWorkTimeCommand.attributeTypeMap;
     }
 
     public constructor() {

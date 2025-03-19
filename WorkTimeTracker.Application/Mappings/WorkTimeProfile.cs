@@ -10,7 +10,7 @@ namespace WorkTimeTracker.Application.Mappings
 		public WorkTimeProfile()
 		{
 			CreateMap<WorkTime, WorkTimeDto>().ReverseMap();
-			CreateMap<CreateEditWorkTimeCommand, WorkTime>().ReverseMap();
+			CreateMap<CreateWorkTimeCommand, WorkTime>().ReverseMap();
 		}
 	}
 }

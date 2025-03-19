@@ -9,11 +9,11 @@ namespace WorkTimeTracker.Application.Features.Projects.Queries
 {
 	public class GetAllProjectQuery : IRequest<Paginated<ProjectDto>>
 	{
-		public PagedRequest _request { get; }
+		public PagedRequest Request { get; }
 
 		public GetAllProjectQuery(PagedRequest request)
 		{
-			_request = request;
+			Request = request;
 		}
 	}
 
@@ -28,7 +28,7 @@ namespace WorkTimeTracker.Application.Features.Projects.Queries
 
 		public async Task<Paginated<ProjectDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<ProjectDto>(query._request);
+			return await _repository.SearchAsync<ProjectDto>(query.Request);
 		}
 	}
 }

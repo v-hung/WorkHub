@@ -9,11 +9,11 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
 {
 	public class GetAllWorkTimeQuery : IRequest<Paginated<WorkTimeDto>>
 	{
-		public PagedRequest _request { get; }
+		public PagedRequest Request { get; }
 
 		public GetAllWorkTimeQuery(PagedRequest request)
 		{
-			_request = request;
+			Request = request;
 		}
 	}
 
@@ -28,7 +28,7 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
 
 		public async Task<Paginated<WorkTimeDto>> Handle(GetAllWorkTimeQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.SearchAsync<WorkTimeDto>(query._request);
+			return await _repositoryService.SearchAsync<WorkTimeDto>(query.Request);
 		}
 	}
 }

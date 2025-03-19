@@ -9,26 +9,26 @@ namespace WorkTimeTracker.Application.Features.Teams.Queries
 {
 	public class GetAllTeamQuery : IRequest<Paginated<TeamDto>>
 	{
-		public PagedRequest _request { get; set; }
+		public PagedRequest Request { get; set; }
 
 		public GetAllTeamQuery(PagedRequest request)
 		{
-			_request = request;
+			Request = request;
 		}
 	}
 
 	public class GetAllTeamQueryHandler : IRequestHandler<GetAllTeamQuery, Paginated<TeamDto>>
 	{
-		private readonly IRepository<Team, int> _repositoryService;
+		private readonly IRepository<Team, int> _repository;
 
-		public GetAllTeamQueryHandler(IRepository<Team, int> repositoryService)
+		public GetAllTeamQueryHandler(IRepository<Team, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
 		public async Task<Paginated<TeamDto>> Handle(GetAllTeamQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.SearchAsync<TeamDto>(query._request);
+			return await _repository.SearchAsync<TeamDto>(query.Request);
 		}
 	}
 }

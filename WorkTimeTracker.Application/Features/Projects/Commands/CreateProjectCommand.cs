@@ -7,10 +7,8 @@ using WorkTimeTracker.Domain.Enums;
 
 namespace WorkTimeTracker.Application.Features.Projects.Commands
 {
-	public class CreateEditProjectCommand : IRequest<ProjectDto>
+	public class CreateProjectCommand : IRequest<ProjectDto>
 	{
-		public int Id { get; set; } = default;
-
 		[Required]
 		public required string Name { get; set; }
 
@@ -31,20 +29,20 @@ namespace WorkTimeTracker.Application.Features.Projects.Commands
 		public IList<Guid> MemberIds { get; set; } = [];
 	}
 
-	public class CreateEditProjectCommandHandler : IRequestHandler<CreateEditProjectCommand, ProjectDto>
+	public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, ProjectDto>
 	{
 
 		private readonly IRepository<Project, int> _repository;
 
-		public CreateEditProjectCommandHandler(IRepository<Project, int> repository)
+		public CreateProjectCommandHandler(IRepository<Project, int> repository)
 		{
 			_repository = repository;
 		}
 
-		public async Task<ProjectDto> Handle(CreateEditProjectCommand request, CancellationToken cancellationToken)
+		public async Task<ProjectDto> Handle(CreateProjectCommand command, CancellationToken cancellationToken)
 		{
-			return await _repository.CreateOrUpdateAsync<ProjectDto, int>(request.Id, request, [
-				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Members, request.MemberIds, request.Id)
+			return await _repository.CreateAsync<ProjectDto>(command, [
+				async t => await _repository.UpdateRelatedEntitiesAsync(t, t => t.Members, command.MemberIds)
 			]);
 		}
 	}

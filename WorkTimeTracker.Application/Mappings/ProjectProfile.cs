@@ -11,7 +11,7 @@ namespace WorkTimeTracker.Application.Mappings
 		{
 			CreateMap<Project, ProjectMinimalDto>().ReverseMap();
 			CreateMap<Project, ProjectDto>().ReverseMap();
-			CreateMap<CreateEditProjectCommand, Project>().ReverseMap();
+			CreateMap<CreateProjectCommand, Project>().ReverseMap();
 		}
 	}
 }

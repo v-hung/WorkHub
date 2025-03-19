@@ -14,18 +14,18 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Commands
 
 	public class DeleteWorkTimeCommandHandler : IRequestHandler<DeleteWorkTimeCommand, int>
 	{
-		private readonly IRepository<WorkTime, int> _repositoryService;
+		private readonly IRepository<WorkTime, int> _repository;
 
-		public DeleteWorkTimeCommandHandler(IRepository<WorkTime, int> repositoryService)
+		public DeleteWorkTimeCommandHandler(IRepository<WorkTime, int> repository)
 		{
-			_repositoryService = repositoryService;
+			_repository = repository;
 		}
 
-		public async Task<int> Handle(DeleteWorkTimeCommand request, CancellationToken cancellationToken)
+		public async Task<int> Handle(DeleteWorkTimeCommand command, CancellationToken cancellationToken)
 		{
-			await _repositoryService.DeleteAsync(request.Id);
+			await _repository.DeleteAsync(command.Id);
 
-			return request.Id;
+			return command.Id;
 		}
 	}
 }

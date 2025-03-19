@@ -8,28 +8,27 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
-import { useWorkTimeAction } from "../../hooks/useWorkTimeAction";
+import { CreateTeamCommand, TeamDto } from "@/generate-api";
+import { useTeamAction } from "../../hooks/useTeamAction";
 import MyTimePicker from "@/ui/form/MyTimePicker";
-import { workTimeDisabledTime } from "../../utils/workTime.util";
 import { formatDate, localTimeToDate } from "@/common/utils/date.util";
 import { useNavigate } from "react-router";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: WorkTimeDto;
+  record?: TeamDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 
-export type WorkTimeFormCreateRefState = {
+export type TeamFormCreateRefState = {
   handelUpsert: () => void;
 };
 
-const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
+const TeamFormCreate = forwardRef<TeamFormCreateRefState, State>(
   (props, ref) => {
     const { className, record, setLoading, ...rest } = props;
 
     const navigate = useNavigate();
-    const { loading, create, update, formDefault } = useWorkTimeAction();
+    const { loading, create, update, formDefault } = useTeamAction();
 
     useEffect(() => {
       if (setLoading) {
@@ -38,7 +37,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
     }, [loading, setLoading]);
 
     const [form] = Form.useForm();
-    const [formState] = useState<CreateWorkTimeCommand>(formDefault(record));
+    const [formState] = useState<CreateTeamCommand>(formDefault(record));
 
     useImperativeHandle(ref, () => ({
       handelUpsert() {
@@ -94,7 +93,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
-                  disabledTime={workTimeDisabledTime}
+                  disabledTime={teamDisabledTime}
                   hideDisabledOptions
                   showSecond={false}
                   showNow={false}
@@ -114,7 +113,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
-                  disabledTime={workTimeDisabledTime}
+                  disabledTime={teamDisabledTime}
                   format={"HH:mm:ss"}
                   hideDisabledOptions
                   showSecond={false}
@@ -135,7 +134,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
-                  disabledTime={workTimeDisabledTime}
+                  disabledTime={teamDisabledTime}
                   format={"HH:mm:ss"}
                   hideDisabledOptions
                   showSecond={false}
@@ -156,7 +155,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
               >
                 <MyTimePicker
                   style={{ width: "100%" }}
-                  disabledTime={workTimeDisabledTime}
+                  disabledTime={teamDisabledTime}
                   format={"HH:mm:ss"}
                   hideDisabledOptions
                   showSecond={false}
@@ -183,4 +182,4 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
   }
 );
 
-export default WorkTimeFormCreate;
+export default TeamFormCreate;
