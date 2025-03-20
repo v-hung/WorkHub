@@ -6,9 +6,8 @@ using WorkTimeTracker.Domain.Entities.Identity;
 
 namespace WorkTimeTracker.Domain.Entities.Organization
 {
-	public class Team : Entity<int>
+	public class Team : AuditEntity<int>
 	{
-
 		[Required]
 		public required string Name { get; set; }
 

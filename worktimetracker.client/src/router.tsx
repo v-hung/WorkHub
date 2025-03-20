@@ -92,15 +92,15 @@ const router = createBrowserRouter(
         //   children: [
         //     {
         //       path: "",
-        //       lazy: () => import("./pages/inventory/InventoryPage"),
+        //       lazy: () => import("./pages/device/DevicePage"),
         //     },
         //     {
         //       path: "create",
-        //       lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
+        //       lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
         //     },
         //     {
         //       path: ":id/edit",
-        //       lazy: () => import("./pages/inventory/InventoryCreateUpdatePage"),
+        //       lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
         //     },
         //   ],
         // },

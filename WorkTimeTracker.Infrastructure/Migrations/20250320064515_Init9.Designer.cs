@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkTimeTracker.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using WorkTimeTracker.Infrastructure.Data;
 namespace WorkTimeTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250320064515_Init9")]
+    partial class Init9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("DeviceDeviceCategory", b =>
-                {
-                    b.Property<int>("DeviceCategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DevicesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DeviceCategoriesId", "DevicesId");
-
-                    b.HasIndex("DevicesId");
-
-                    b.ToTable("DeviceDeviceCategory");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
@@ -163,8 +151,8 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("AssignedUserId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("AssignedUserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -174,6 +162,12 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("DeviceCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
@@ -185,15 +179,14 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssignedUserId");
+                    b.HasIndex("DeviceCategoryId");
+
+                    b.HasIndex("DeviceId");
 
                     b.ToTable("Device");
                 });
@@ -206,14 +199,25 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("AssignedUserId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Location")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AssignedUserId");
 
                     b.ToTable("DeviceCategories");
                 });
@@ -693,21 +697,6 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue(0);
                 });
 
-            modelBuilder.Entity("DeviceDeviceCategory", b =>
-                {
-                    b.HasOne("WorkTimeTracker.Domain.Entities.Equipment.DeviceCategory", null)
-                        .WithMany()
-                        .HasForeignKey("DeviceCategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorkTimeTracker.Domain.Entities.Equipment.Device", null)
-                        .WithMany()
-                        .HasForeignKey("DevicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("WorkTimeTracker.Domain.Entities.Identity.Role", null)
@@ -775,6 +764,17 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.Device", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Equipment.DeviceCategory", null)
+                        .WithMany("Devices")
+                        .HasForeignKey("DeviceCategoryId");
+
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Equipment.Device", null)
+                        .WithMany("Devices")
+                        .HasForeignKey("DeviceId");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.DeviceCategory", b =>
                 {
                     b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "AssignedUser")
                         .WithMany()
@@ -888,6 +888,16 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.Device", b =>
+                {
+                    b.Navigation("Devices");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.DeviceCategory", b =>
+                {
+                    b.Navigation("Devices");
                 });
 
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Identity.User", b =>

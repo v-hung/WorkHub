@@ -5,9 +5,8 @@ using WorkTimeTracker.Domain.Entities.Identity;
 
 namespace WorkTimeTracker.Domain.Entities.Time
 {
-	public class WorkTime : Entity<int>
+	public class WorkTime : AuditEntity<int>
 	{
-
 		[Required]
 		public string Title { get; set; } = string.Empty;
 

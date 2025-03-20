@@ -95,7 +95,7 @@ export const getMenuItems = (
     {
       key: "/inventories",
       icon: <IonCubeOutline />,
-      label: t("menus.inventory"),
+      label: t("menus.device"),
     },
     {
       type: "group",

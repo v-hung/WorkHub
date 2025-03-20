@@ -9,6 +9,7 @@ using WorkTimeTracker.Domain.Entities.Organization;
 using WorkTimeTracker.Domain.Entities.Requests;
 using WorkTimeTracker.Domain.Entities.Time;
 using WorkTimeTracker.Domain.Entities.Work;
+using WorkTimeTracker.Domain.Entities.Equipment;
 
 namespace WorkTimeTracker.Infrastructure.Data;
 
@@ -25,6 +26,8 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 	public DbSet<Request> Requests { get; set; }
 	public DbSet<LeaveRequest> LeaveRequests { get; set; }
 	public DbSet<TimesheetRequest> TimesheetRequests { get; set; }
+	public DbSet<Device> Device { get; set; }
+	public DbSet<DeviceCategory> DeviceCategories { get; set; }
 
 	public ApplicationDbContext(DbContextOptions options, ICurrentUserService currentUserService) : base(options)
 	{

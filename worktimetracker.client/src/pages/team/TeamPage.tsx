@@ -14,7 +14,7 @@ export function Component() {
 
   return (
     <Layout className="main-layout h-screen">
-      <MainHeader title="Work times Manager">
+      <MainHeader title="Teams Manager">
         <Button
           type="primary"
           onClick={() => navigate("/teams/create")}
@@ -25,7 +25,7 @@ export function Component() {
       </MainHeader>
 
       <MainBreadcrumb
-        items={[{ title: "Home", path: "/" }, { title: "Work time Manager" }]}
+        items={[{ title: "Home", path: "/" }, { title: "Team Manager" }]}
       />
 
       <MainContent>
