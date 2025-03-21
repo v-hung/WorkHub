@@ -19,6 +19,7 @@ namespace WorkTimeTracker.Application.DTOs.Work
 
 		public DateTime? EndDate { get; set; }
 
+		[Required]
 		public ProjectStatus Status { get; set; }
 
 	}

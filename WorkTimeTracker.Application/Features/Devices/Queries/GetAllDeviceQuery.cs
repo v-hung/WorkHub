@@ -1,23 +1,16 @@
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Equipment;
 using WorkTimeTracker.Application.Interfaces.Repositories;
-using WorkTimeTracker.Application.Requests;
-using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Domain.Entities.Equipment;
 
 namespace WorkTimeTracker.Application.Features.Devices.Queries
 {
-	public class GetAllDeviceQuery : IRequest<Paginated<DeviceMinimalDto>>
+	public class GetAllDeviceQuery : IRequest<List<DeviceMinimalDto>>
 	{
-		public PagedRequest Request { get; set; }
-
-		public GetAllDeviceQuery(PagedRequest request)
-		{
-			Request = request;
-		}
+		public List<int> Ids { get; set; } = [];
 	}
 
-	public class GetAllDeviceQueryHandler : IRequestHandler<GetAllDeviceQuery, Paginated<DeviceMinimalDto>>
+	public class GetAllDeviceQueryHandler : IRequestHandler<GetAllDeviceQuery, List<DeviceMinimalDto>>
 	{
 		private readonly IRepository<Device, int> _repository;
 
@@ -26,9 +19,9 @@ namespace WorkTimeTracker.Application.Features.Devices.Queries
 			_repository = repository;
 		}
 
-		public async Task<Paginated<DeviceMinimalDto>> Handle(GetAllDeviceQuery query, CancellationToken cancellationToken)
+		public async Task<List<DeviceMinimalDto>> Handle(GetAllDeviceQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<DeviceMinimalDto, int>(query.Request);
+			return await _repository.GetAllAsync<DeviceMinimalDto>(v => query.Ids.Contains(v.Id));
 		}
 	}
 }

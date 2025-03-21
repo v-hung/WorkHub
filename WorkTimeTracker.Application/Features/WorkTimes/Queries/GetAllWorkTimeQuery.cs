@@ -1,23 +1,16 @@
 using MediatR;
 using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Interfaces.Repositories;
-using WorkTimeTracker.Application.Requests;
-using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Domain.Entities.Time;
 
 namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
 {
-	public class GetAllWorkTimeQuery : IRequest<Paginated<WorkTimeDto>>
+	public class GetAllWorkTimeQuery : IRequest<List<WorkTimeDto>>
 	{
-		public PagedRequest Request { get; }
-
-		public GetAllWorkTimeQuery(PagedRequest request)
-		{
-			Request = request;
-		}
+		public List<int> Ids { get; set; } = [];
 	}
 
-	public class GetAllWorkTimeQueryHandler : IRequestHandler<GetAllWorkTimeQuery, Paginated<WorkTimeDto>>
+	public class GetAllWorkTimeQueryHandler : IRequestHandler<GetAllWorkTimeQuery, List<WorkTimeDto>>
 	{
 		private readonly IRepository<WorkTime, int> _repositoryService;
 
@@ -26,9 +19,9 @@ namespace WorkTimeTracker.Application.Features.WorkTimes.Queries
 			_repositoryService = repositoryService;
 		}
 
-		public async Task<Paginated<WorkTimeDto>> Handle(GetAllWorkTimeQuery query, CancellationToken cancellationToken)
+		public async Task<List<WorkTimeDto>> Handle(GetAllWorkTimeQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.SearchAsync<WorkTimeDto, int>(query.Request);
+			return await _repositoryService.GetAllAsync<WorkTimeDto>(v => query.Ids.Contains(v.Id));
 		}
 	}
 }

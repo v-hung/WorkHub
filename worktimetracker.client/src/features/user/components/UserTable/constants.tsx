@@ -2,7 +2,6 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Space, TableProps } from "antd";
 
 export type DataUserTableType = {
-  key: string;
   id: string;
   email: string;
   fullName: string;

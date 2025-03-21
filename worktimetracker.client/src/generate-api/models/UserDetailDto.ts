@@ -15,7 +15,7 @@ import { HttpFile } from '../http/http';
 
 export class UserDetailDto {
     'birthDate'?: Date;
-    'gender'?: boolean;
+    'gender'?: boolean | null;
     'permanentAddress'?: string | null;
     'contactAddress'?: string | null;
     'yearsOfWork': number;

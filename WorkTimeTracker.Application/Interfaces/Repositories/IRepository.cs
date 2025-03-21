@@ -8,7 +8,7 @@ namespace WorkTimeTracker.Application.Interfaces.Repositories
 	public interface IRepository<T, TId> where T : class, IEntity<TId>
 	{
 
-		Task<IList<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class;
+		Task<List<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class;
 
 		Task<Paginated<D>> SearchAsync<D, DId>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<DId>;
 

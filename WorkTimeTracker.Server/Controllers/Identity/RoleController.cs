@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkTimeTracker.Application.DTOs.Identity;
 using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Requests.Identity;
+using WorkTimeTracker.Application.Wrapper;
 
 namespace WorkTimeTracker.Server.Controllers.Time
 {
@@ -15,12 +17,20 @@ namespace WorkTimeTracker.Server.Controllers.Time
 			_roleService = roleService;
 		}
 
-		[HttpGet]
-		public async Task<ActionResult<List<RoleDto>>> GetAll()
+		[HttpGet("all")]
+		public async Task<ActionResult<List<RoleDto>>> GetAll([FromQuery] List<Guid>? ids = null)
 		{
-			var data = await _roleService.GetAllAsync<RoleDto>();
+			ids ??= [];
+			var data = await _roleService.GetAllAsync<RoleDto>(u => ids.Contains(u.Id));
 
 			return Ok(data);
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<Paginated<RoleDto>>> Search([FromQuery] PagedRequest request)
+		{
+			var users = await _roleService.SearchAsync<UserDto>(request);
+			return Ok(users);
 		}
 
 		[HttpGet("{id}")]

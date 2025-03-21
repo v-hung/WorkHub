@@ -10,7 +10,7 @@ namespace WorkTimeTracker.Application.DTOs.Identity
 		public required Guid Id { get; set; }
 
 		[Required]
-		public string? Email { get; set; }
+		public required string Email { get; set; }
 
 		[Required]
 		public string? FullName { get; set; }

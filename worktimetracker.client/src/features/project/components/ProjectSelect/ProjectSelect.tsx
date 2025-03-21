@@ -1,22 +1,25 @@
 import { Select, SelectProps } from "antd";
 import { ComponentProps, FC, useCallback, useEffect, useState } from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
-import { debounce } from "@/common/utils/common.utils";
+import { debounce } from "@/common/utils/common.util";
 import { useProjects } from "../../hooks/useProjects";
+import { isEmpty } from "@/common/utils/validate.utils";
 
 type State = ComponentProps<typeof Select>;
 
 const ProjectSelect: FC<State> = (props) => {
-  const { className, ...rest } = props;
+  const { className, value, ...rest } = props;
 
-  const { projectPaginated, loading, request, setRequest } = useProjects();
+  const { projectPaginated, loading, request, setRequest, fetchProjects } =
+    useProjects();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
   useEffect(() => {
-    setRequest((request) => ({
-      ...request,
-      pageNumber: 1,
-    }));
+    if (!isEmpty(value)) {
+      fetchProjects(Array.isArray(value) ? value : [value]).then((data) => {
+        setOptions(data.map((v) => ({ label: v.name, value: v.id })));
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -56,14 +59,23 @@ const ProjectSelect: FC<State> = (props) => {
     }
   }, [request, projectPaginated.hasNextPage]);
 
+  const firstOpenDropdown = () => {
+    setRequest((request) => ({
+      ...request,
+      pageNumber: 1,
+    }));
+  };
+
   return (
     <SelectAsyncScroll
-      {...rest}
+      value={value}
       className={className}
       options={options}
       loading={loading}
       onSearch={handleSearch}
       scrollInfiniteCb={handlePopupScroll}
+      firstOpenDropdown={firstOpenDropdown}
+      {...rest}
     />
   );
 };

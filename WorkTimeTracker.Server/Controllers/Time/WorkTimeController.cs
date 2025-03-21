@@ -10,10 +10,18 @@ namespace WorkTimeTracker.Server.Controllers.Time
 	[Route("api/work-times")]
 	public class WorkTimeController : BaseApiController<WorkTimeController>
 	{
-		[HttpGet]
-		public async Task<ActionResult<Paginated<WorkTimeDto>>> GetAll([FromQuery] PagedRequest request)
+		[HttpGet("all")]
+		public async Task<ActionResult<List<WorkTimeDto>>> GetAll([FromQuery] List<int> ids)
 		{
-			var data = await _mediator.Send(new GetAllWorkTimeQuery(request));
+			var data = await _mediator.Send(new GetAllWorkTimeQuery { Ids = ids });
+
+			return Ok(data);
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<Paginated<WorkTimeDto>>> Search([FromQuery] PagedRequest request)
+		{
+			var data = await _mediator.Send(new SearchWorkTimeQuery { Request = request });
 
 			return Ok(data);
 		}

@@ -3,9 +3,18 @@ import { Configuration, ConfigurationOptions, PromiseConfigurationOptions } from
 import { PromiseMiddleware, Middleware, PromiseMiddlewareWrapper } from '../middleware';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
+import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
 import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
+import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
+import { DeviceCategoryMinimalDtoPaginated } from '../models/DeviceCategoryMinimalDtoPaginated';
+import { DeviceDto } from '../models/DeviceDto';
+import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
+import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
+import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto } from '../models/LeaveRequestDto';
@@ -22,6 +31,7 @@ import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
+import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -293,6 +303,540 @@ export class PromiseAccountApi {
 
 
 
+import { ObservableDeviceApi } from './ObservableAPI';
+
+import { DeviceApiRequestFactory, DeviceApiResponseProcessor} from "../apis/DeviceApi";
+export class PromiseDeviceApi {
+    private api: ObservableDeviceApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: DeviceApiRequestFactory,
+        responseProcessor?: DeviceApiResponseProcessor
+    ) {
+        this.api = new ObservableDeviceApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [createDeviceCommand]
+     */
+    public deviceCreateWithHttpInfo(createDeviceCommand?: CreateDeviceCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCreateWithHttpInfo(createDeviceCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [createDeviceCommand]
+     */
+    public deviceCreate(createDeviceCommand?: CreateDeviceCommand, _options?: PromiseConfigurationOptions): Promise<DeviceDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCreate(createDeviceCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceDeleteWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceDeleteWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceDelete(id: number, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceDelete(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<DeviceMinimalDto>>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceGetAllWithHttpInfo(ids, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<DeviceMinimalDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceGetAll(ids, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceGetByIdWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceGetById(id: number, _options?: PromiseConfigurationOptions): Promise<DeviceDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceMinimalDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<DeviceMinimalDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceSearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCommand]
+     */
+    public deviceUpdateWithHttpInfo(id: number, createDeviceCommand?: CreateDeviceCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceUpdateWithHttpInfo(id, createDeviceCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCommand]
+     */
+    public deviceUpdate(id: number, createDeviceCommand?: CreateDeviceCommand, _options?: PromiseConfigurationOptions): Promise<DeviceDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceUpdate(id, createDeviceCommand, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableDeviceCategoryApi } from './ObservableAPI';
+
+import { DeviceCategoryApiRequestFactory, DeviceCategoryApiResponseProcessor} from "../apis/DeviceCategoryApi";
+export class PromiseDeviceCategoryApi {
+    private api: ObservableDeviceCategoryApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: DeviceCategoryApiRequestFactory,
+        responseProcessor?: DeviceCategoryApiResponseProcessor
+    ) {
+        this.api = new ObservableDeviceCategoryApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryCreateWithHttpInfo(createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryCreateWithHttpInfo(createDeviceCategoryCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryCreate(createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: PromiseConfigurationOptions): Promise<DeviceCategoryDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryCreate(createDeviceCategoryCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryDeleteWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryDeleteWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryDelete(id: number, _options?: PromiseConfigurationOptions): Promise<void> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryDelete(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceCategoryGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryMinimalDto>>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryGetAllWithHttpInfo(ids, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceCategoryGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<DeviceCategoryMinimalDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryGetAll(ids, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryGetByIdWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryGetByIdWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryGetById(id: number, _options?: PromiseConfigurationOptions): Promise<DeviceCategoryDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceCategorySearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceCategoryMinimalDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategorySearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceCategorySearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<DeviceCategoryMinimalDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategorySearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryUpdateWithHttpInfo(id: number, createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryUpdateWithHttpInfo(id, createDeviceCategoryCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryUpdate(id: number, createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: PromiseConfigurationOptions): Promise<DeviceCategoryDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.deviceCategoryUpdate(id, createDeviceCategoryCommand, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
 import { ObservableProjectApi } from './ObservableAPI';
 
 import { ProjectApiRequestFactory, ProjectApiResponseProcessor} from "../apis/ProjectApi";
@@ -388,12 +932,9 @@ export class PromiseProjectApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public projectGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDtoPaginated>> {
+    public projectGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<ProjectDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -406,17 +947,14 @@ export class PromiseProjectApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.projectGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.projectGetAllWithHttpInfo(ids, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public projectGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<ProjectDtoPaginated> {
+    public projectGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<ProjectDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -429,7 +967,7 @@ export class PromiseProjectApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.projectGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.projectGetAll(ids, observableOptions);
         return result.toPromise();
     }
 
@@ -470,6 +1008,52 @@ export class PromiseProjectApi {
 	    }
 	}
         const result = this.api.projectGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public projectSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<ProjectDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public projectSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<ProjectDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.projectSearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 
@@ -615,8 +1199,9 @@ export class PromiseRoleApi {
     }
 
     /**
+     * @param [ids]
      */
-    public roleGetAllWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
+    public roleGetAllWithHttpInfo(ids?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -629,13 +1214,14 @@ export class PromiseRoleApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.roleGetAllWithHttpInfo(observableOptions);
+        const result = this.api.roleGetAllWithHttpInfo(ids, observableOptions);
         return result.toPromise();
     }
 
     /**
+     * @param [ids]
      */
-    public roleGetAll(_options?: PromiseConfigurationOptions): Promise<Array<RoleDto>> {
+    public roleGetAll(ids?: Array<string>, _options?: PromiseConfigurationOptions): Promise<Array<RoleDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -648,7 +1234,7 @@ export class PromiseRoleApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.roleGetAll(observableOptions);
+        const result = this.api.roleGetAll(ids, observableOptions);
         return result.toPromise();
     }
 
@@ -689,6 +1275,52 @@ export class PromiseRoleApi {
 	    }
 	}
         const result = this.api.roleGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public roleSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public roleSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<RoleDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleSearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 
@@ -834,12 +1466,9 @@ export class PromiseTeamApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public teamGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDtoPaginated>> {
+    public teamGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TeamDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -852,17 +1481,14 @@ export class PromiseTeamApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.teamGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.teamGetAllWithHttpInfo(ids, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public teamGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<TeamDtoPaginated> {
+    public teamGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<TeamDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -875,7 +1501,7 @@ export class PromiseTeamApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.teamGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.teamGetAll(ids, observableOptions);
         return result.toPromise();
     }
 
@@ -916,6 +1542,52 @@ export class PromiseTeamApi {
 	    }
 	}
         const result = this.api.teamGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public teamSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TeamDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public teamSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<TeamDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.teamSearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 
@@ -1278,12 +1950,9 @@ export class PromiseUserApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public userGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDtoPaginated>> {
+    public userGetAllWithHttpInfo(ids?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<UserDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1296,17 +1965,14 @@ export class PromiseUserApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.userGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.userGetAllWithHttpInfo(ids, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<UserDtoPaginated> {
+    public userGetAll(ids?: Array<string>, _options?: PromiseConfigurationOptions): Promise<Array<UserDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1319,7 +1985,7 @@ export class PromiseUserApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.userGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.userGetAll(ids, observableOptions);
         return result.toPromise();
     }
 
@@ -1360,6 +2026,52 @@ export class PromiseUserApi {
 	    }
 	}
         const result = this.api.userGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public userSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public userSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<UserDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userSearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 
@@ -1505,12 +2217,9 @@ export class PromiseWorkTimeApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public workTimeGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDtoPaginated>> {
+    public workTimeGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<WorkTimeDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1523,17 +2232,14 @@ export class PromiseWorkTimeApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.workTimeGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.workTimeGetAllWithHttpInfo(ids, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public workTimeGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<WorkTimeDtoPaginated> {
+    public workTimeGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<WorkTimeDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1546,7 +2252,7 @@ export class PromiseWorkTimeApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.workTimeGetAll(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        const result = this.api.workTimeGetAll(ids, observableOptions);
         return result.toPromise();
     }
 
@@ -1587,6 +2293,52 @@ export class PromiseWorkTimeApi {
 	    }
 	}
         const result = this.api.workTimeGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public workTimeSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<WorkTimeDtoPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public workTimeSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<WorkTimeDtoPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.workTimeSearch(pageNumber, pageSize, searchString, orderBy, observableOptions);
         return result.toPromise();
     }
 

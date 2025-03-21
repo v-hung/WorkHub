@@ -6,8 +6,9 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**userCreate**](UserApi.md#userCreate) | **POST** /api/users | 
 [**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
-[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users | 
+[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users/all | 
 [**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
+[**userSearch**](UserApi.md#userSearch) | **GET** /api/users | 
 [**userUpdate**](UserApi.md#userUpdate) | **PUT** /api/users/{id} | 
 
 
@@ -150,7 +151,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **userGetAll**
-> UserDtoPaginated userGetAll()
+> Array<UserDto> userGetAll()
 
 
 ### Example
@@ -165,14 +166,8 @@ const apiInstance = new UserApi(configuration);
 
 const request: UserApiUserGetAllRequest = {
   
-  pageNumber: 1,
-  
-  pageSize: 10,
-  
-  searchString: "SearchString_example",
-    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
-  orderBy: [
-    "OrderBy_example",
+  ids: [
+    "ids_example",
   ],
 };
 
@@ -185,15 +180,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pageNumber** | [**number**] |  | defaults to 1
- **pageSize** | [**number**] |  | defaults to 10
- **searchString** | [**string**] |  | (optional) defaults to undefined
- **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+ **ids** | **Array&lt;string&gt;** |  | (optional) defaults to undefined
 
 
 ### Return type
 
-**UserDtoPaginated**
+**Array<UserDto>**
 
 ### Authorization
 
@@ -248,6 +240,71 @@ Name | Type | Description  | Notes
 ### Return type
 
 **UserFullDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **userSearch**
+> UserDtoPaginated userSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+import type { UserApiUserSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request: UserApiUserSearchRequest = {
+  
+  pageNumber: 1,
+  
+  pageSize: 10,
+  
+  searchString: "SearchString_example",
+    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
+  orderBy: [
+    "OrderBy_example",
+  ],
+};
+
+const data = await apiInstance.userSearch(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pageNumber** | [**number**] |  | defaults to 1
+ **pageSize** | [**number**] |  | defaults to 10
+ **searchString** | [**string**] |  | (optional) defaults to undefined
+ **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+
+
+### Return type
+
+**UserDtoPaginated**
 
 ### Authorization
 

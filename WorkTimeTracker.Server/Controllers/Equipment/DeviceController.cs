@@ -10,10 +10,18 @@ namespace WorkTimeTracker.Server.Controllers.Time
 	[Route("api/devices")]
 	public class DeviceController : BaseApiController<DeviceController>
 	{
-		[HttpGet]
-		public async Task<ActionResult<Paginated<DeviceMinimalDto>>> GetAll([FromQuery] PagedRequest request)
+		[HttpGet("all")]
+		public async Task<ActionResult<List<DeviceMinimalDto>>> GetAll([FromQuery] List<int> ids)
 		{
-			var data = await _mediator.Send(new GetAllDeviceQuery(request));
+			var data = await _mediator.Send(new GetAllDeviceQuery { Ids = ids });
+
+			return Ok(data);
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<Paginated<DeviceMinimalDto>>> Search([FromQuery] PagedRequest request)
+		{
+			var data = await _mediator.Send(new SearchDeviceQuery { Request = request });
 
 			return Ok(data);
 		}

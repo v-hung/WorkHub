@@ -4,9 +4,18 @@ import type { Middleware } from '../middleware';
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
+import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
 import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
+import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
+import { DeviceCategoryMinimalDtoPaginated } from '../models/DeviceCategoryMinimalDtoPaginated';
+import { DeviceDto } from '../models/DeviceDto';
+import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
+import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
+import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto } from '../models/LeaveRequestDto';
@@ -23,6 +32,7 @@ import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
+import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -402,6 +412,754 @@ export class ObservableAccountApi {
 
 }
 
+import { DeviceApiRequestFactory, DeviceApiResponseProcessor} from "../apis/DeviceApi";
+export class ObservableDeviceApi {
+    private requestFactory: DeviceApiRequestFactory;
+    private responseProcessor: DeviceApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: DeviceApiRequestFactory,
+        responseProcessor?: DeviceApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new DeviceApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new DeviceApiResponseProcessor();
+    }
+
+    /**
+     * @param [createDeviceCommand]
+     */
+    public deviceCreateWithHttpInfo(createDeviceCommand?: CreateDeviceCommand, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCreate(createDeviceCommand, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCreateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [createDeviceCommand]
+     */
+    public deviceCreate(createDeviceCommand?: CreateDeviceCommand, _options?: ConfigurationOptions): Observable<DeviceDto> {
+        return this.deviceCreateWithHttpInfo(createDeviceCommand, _options).pipe(map((apiResponse: HttpInfo<DeviceDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceDeleteWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<void>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceDelete(id, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceDeleteWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceDelete(id: number, _options?: ConfigurationOptions): Observable<void> {
+        return this.deviceDeleteWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<DeviceMinimalDto>>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceGetAll(ids, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceGetAllWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<DeviceMinimalDto>> {
+        return this.deviceGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<DeviceMinimalDto>>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceGetByIdWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceGetById(id, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceGetByIdWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceGetById(id: number, _options?: ConfigurationOptions): Observable<DeviceDto> {
+        return this.deviceGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<DeviceDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceMinimalDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceSearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceSearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<DeviceMinimalDtoPaginated> {
+        return this.deviceSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<DeviceMinimalDtoPaginated>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCommand]
+     */
+    public deviceUpdateWithHttpInfo(id: number, createDeviceCommand?: CreateDeviceCommand, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceUpdate(id, createDeviceCommand, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceUpdateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCommand]
+     */
+    public deviceUpdate(id: number, createDeviceCommand?: CreateDeviceCommand, _options?: ConfigurationOptions): Observable<DeviceDto> {
+        return this.deviceUpdateWithHttpInfo(id, createDeviceCommand, _options).pipe(map((apiResponse: HttpInfo<DeviceDto>) => apiResponse.data));
+    }
+
+}
+
+import { DeviceCategoryApiRequestFactory, DeviceCategoryApiResponseProcessor} from "../apis/DeviceCategoryApi";
+export class ObservableDeviceCategoryApi {
+    private requestFactory: DeviceCategoryApiRequestFactory;
+    private responseProcessor: DeviceCategoryApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: DeviceCategoryApiRequestFactory,
+        responseProcessor?: DeviceCategoryApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new DeviceCategoryApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new DeviceCategoryApiResponseProcessor();
+    }
+
+    /**
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryCreateWithHttpInfo(createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceCategoryDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCategoryCreate(createDeviceCategoryCommand, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCategoryCreateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryCreate(createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: ConfigurationOptions): Observable<DeviceCategoryDto> {
+        return this.deviceCategoryCreateWithHttpInfo(createDeviceCategoryCommand, _options).pipe(map((apiResponse: HttpInfo<DeviceCategoryDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryDeleteWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<void>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCategoryDelete(id, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCategoryDeleteWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryDelete(id: number, _options?: ConfigurationOptions): Observable<void> {
+        return this.deviceCategoryDeleteWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceCategoryGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<DeviceCategoryMinimalDto>>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCategoryGetAll(ids, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCategoryGetAllWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [ids]
+     */
+    public deviceCategoryGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<DeviceCategoryMinimalDto>> {
+        return this.deviceCategoryGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<DeviceCategoryMinimalDto>>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryGetByIdWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceCategoryDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCategoryGetById(id, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCategoryGetByIdWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     */
+    public deviceCategoryGetById(id: number, _options?: ConfigurationOptions): Observable<DeviceCategoryDto> {
+        return this.deviceCategoryGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<DeviceCategoryDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceCategorySearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceCategoryMinimalDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCategorySearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCategorySearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public deviceCategorySearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<DeviceCategoryMinimalDtoPaginated> {
+        return this.deviceCategorySearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<DeviceCategoryMinimalDtoPaginated>) => apiResponse.data));
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryUpdateWithHttpInfo(id: number, createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceCategoryDto>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.deviceCategoryUpdate(id, createDeviceCategoryCommand, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deviceCategoryUpdateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param id
+     * @param [createDeviceCategoryCommand]
+     */
+    public deviceCategoryUpdate(id: number, createDeviceCategoryCommand?: CreateDeviceCategoryCommand, _options?: ConfigurationOptions): Observable<DeviceCategoryDto> {
+        return this.deviceCategoryUpdateWithHttpInfo(id, createDeviceCategoryCommand, _options).pipe(map((apiResponse: HttpInfo<DeviceCategoryDto>) => apiResponse.data));
+    }
+
+}
+
 import { ProjectApiRequestFactory, ProjectApiResponseProcessor} from "../apis/ProjectApi";
 export class ObservableProjectApi {
     private requestFactory: ProjectApiRequestFactory;
@@ -535,12 +1293,9 @@ export class ObservableProjectApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public projectGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<ProjectDtoPaginated>> {
+    public projectGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<ProjectDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -571,7 +1326,7 @@ export class ObservableProjectApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.projectGetAll(pageNumber, pageSize, searchString, orderBy, _config);
+        const requestContextPromise = this.requestFactory.projectGetAll(ids, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -589,13 +1344,10 @@ export class ObservableProjectApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public projectGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<ProjectDtoPaginated> {
-        return this.projectGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<ProjectDtoPaginated>) => apiResponse.data));
+    public projectGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<ProjectDto>> {
+        return this.projectGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<ProjectDto>>) => apiResponse.data));
     }
 
     /**
@@ -654,6 +1406,70 @@ export class ObservableProjectApi {
      */
     public projectGetById(id: number, _options?: ConfigurationOptions): Observable<ProjectDto> {
         return this.projectGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<ProjectDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public projectSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<ProjectDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.projectSearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.projectSearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public projectSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<ProjectDtoPaginated> {
+        return this.projectSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<ProjectDtoPaginated>) => apiResponse.data));
     }
 
     /**
@@ -851,8 +1667,9 @@ export class ObservableRoleApi {
     }
 
     /**
+     * @param [ids]
      */
-    public roleGetAllWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<Array<RoleDto>>> {
+    public roleGetAllWithHttpInfo(ids?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<RoleDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -883,7 +1700,7 @@ export class ObservableRoleApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.roleGetAll(_config);
+        const requestContextPromise = this.requestFactory.roleGetAll(ids, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -901,9 +1718,10 @@ export class ObservableRoleApi {
     }
 
     /**
+     * @param [ids]
      */
-    public roleGetAll(_options?: ConfigurationOptions): Observable<Array<RoleDto>> {
-        return this.roleGetAllWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<RoleDto>>) => apiResponse.data));
+    public roleGetAll(ids?: Array<string>, _options?: ConfigurationOptions): Observable<Array<RoleDto>> {
+        return this.roleGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<RoleDto>>) => apiResponse.data));
     }
 
     /**
@@ -962,6 +1780,70 @@ export class ObservableRoleApi {
      */
     public roleGetById(id: string, _options?: ConfigurationOptions): Observable<RoleDto> {
         return this.roleGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RoleDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public roleSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<RoleDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.roleSearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.roleSearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public roleSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<RoleDtoPaginated> {
+        return this.roleSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<RoleDtoPaginated>) => apiResponse.data));
     }
 
     /**
@@ -1159,12 +2041,9 @@ export class ObservableTeamApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public teamGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDtoPaginated>> {
+    public teamGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TeamDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1195,7 +2074,7 @@ export class ObservableTeamApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.teamGetAll(pageNumber, pageSize, searchString, orderBy, _config);
+        const requestContextPromise = this.requestFactory.teamGetAll(ids, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1213,13 +2092,10 @@ export class ObservableTeamApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public teamGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<TeamDtoPaginated> {
-        return this.teamGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<TeamDtoPaginated>) => apiResponse.data));
+    public teamGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<TeamDto>> {
+        return this.teamGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<TeamDto>>) => apiResponse.data));
     }
 
     /**
@@ -1278,6 +2154,70 @@ export class ObservableTeamApi {
      */
     public teamGetById(id: number, _options?: ConfigurationOptions): Observable<TeamFullDto> {
         return this.teamGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<TeamFullDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public teamSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<TeamDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.teamSearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.teamSearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public teamSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<TeamDtoPaginated> {
+        return this.teamSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<TeamDtoPaginated>) => apiResponse.data));
     }
 
     /**
@@ -1781,12 +2721,9 @@ export class ObservableUserApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public userGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<UserDtoPaginated>> {
+    public userGetAllWithHttpInfo(ids?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<UserDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1817,7 +2754,7 @@ export class ObservableUserApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.userGetAll(pageNumber, pageSize, searchString, orderBy, _config);
+        const requestContextPromise = this.requestFactory.userGetAll(ids, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1835,13 +2772,10 @@ export class ObservableUserApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public userGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<UserDtoPaginated> {
-        return this.userGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<UserDtoPaginated>) => apiResponse.data));
+    public userGetAll(ids?: Array<string>, _options?: ConfigurationOptions): Observable<Array<UserDto>> {
+        return this.userGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<UserDto>>) => apiResponse.data));
     }
 
     /**
@@ -1900,6 +2834,70 @@ export class ObservableUserApi {
      */
     public userGetById(id: string, _options?: ConfigurationOptions): Observable<UserFullDto> {
         return this.userGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<UserFullDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public userSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<UserDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.userSearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.userSearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public userSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<UserDtoPaginated> {
+        return this.userSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<UserDtoPaginated>) => apiResponse.data));
     }
 
     /**
@@ -2097,12 +3095,9 @@ export class ObservableWorkTimeApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public workTimeGetAllWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<WorkTimeDtoPaginated>> {
+    public workTimeGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<WorkTimeDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2133,7 +3128,7 @@ export class ObservableWorkTimeApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.workTimeGetAll(pageNumber, pageSize, searchString, orderBy, _config);
+        const requestContextPromise = this.requestFactory.workTimeGetAll(ids, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -2151,13 +3146,10 @@ export class ObservableWorkTimeApi {
     }
 
     /**
-     * @param pageNumber
-     * @param pageSize
-     * @param [searchString]
-     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param [ids]
      */
-    public workTimeGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<WorkTimeDtoPaginated> {
-        return this.workTimeGetAllWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDtoPaginated>) => apiResponse.data));
+    public workTimeGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<WorkTimeDto>> {
+        return this.workTimeGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<WorkTimeDto>>) => apiResponse.data));
     }
 
     /**
@@ -2216,6 +3208,70 @@ export class ObservableWorkTimeApi {
      */
     public workTimeGetById(id: number, _options?: ConfigurationOptions): Observable<WorkTimeDto> {
         return this.workTimeGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDto>) => apiResponse.data));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public workTimeSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<WorkTimeDtoPaginated>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.workTimeSearch(pageNumber, pageSize, searchString, orderBy, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.workTimeSearchWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param pageNumber
+     * @param pageSize
+     * @param [searchString]
+     * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public workTimeSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<WorkTimeDtoPaginated> {
+        return this.workTimeSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<WorkTimeDtoPaginated>) => apiResponse.data));
     }
 
     /**

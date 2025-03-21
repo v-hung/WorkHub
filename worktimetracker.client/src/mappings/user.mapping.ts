@@ -4,7 +4,6 @@ import { DataUserTableType } from "@/features/user/components/UserTable/constant
 export const toDataUserTable = (user: UserDto): DataUserTableType => {
   return {
     id: user.id,
-    key: user.id,
     image: user.image,
     email: user.email,
     fullName: user.fullName,

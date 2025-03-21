@@ -1,25 +1,90 @@
-import { Select } from "antd";
-import { ComponentProps, FC, memo, useEffect, useMemo } from "react";
+import { Select, SelectProps } from "antd";
+import {
+  ComponentProps,
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useRoles } from "../../hooks/useRoles";
+import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
+import { debounce } from "@/common/utils/common.util";
+import { isEmpty } from "@/common/utils/validate.utils";
 
 type State = ComponentProps<typeof Select>;
 
 const RoleSelect: FC<State> = (props) => {
-  const { ...rest } = props;
+  const { className, value, ...rest } = props;
 
-  const { roles, loading, fetchRoles } = useRoles();
+  const { rolePaginated, loading, request, setRequest, fetchRoles } =
+    useRoles();
+  const [options, setOptions] = useState<SelectProps["options"]>([]);
 
   useEffect(() => {
-    fetchRoles();
+    if (!isEmpty(value)) {
+      fetchRoles(Array.isArray(value) ? value : [value]).then((data) => {
+        setOptions(data.map((v) => ({ label: v.name, value: v.id })));
+      });
+    }
   }, []);
 
-  const options = useMemo(
-    () => roles.map((role) => ({ label: role.name, value: role.name })),
-    [roles]
+  useEffect(() => {
+    setOptions((prev) => {
+      const newOptions = rolePaginated.data.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+
+      return rolePaginated.currentPage === 1
+        ? newOptions
+        : Array.from(
+            new Map(
+              [...(prev ?? []), ...newOptions].map((item) => [item.value, item])
+            ).values()
+          );
+    });
+  }, [rolePaginated.data]);
+
+  const handleSearch = useCallback(
+    debounce((value: string) => {
+      setRequest((request) => ({
+        ...request,
+        pageNumber: 1,
+        searchString: value,
+      }));
+    }, 300),
+    [request]
   );
 
+  const handlePopupScroll = useCallback(() => {
+    if (rolePaginated.hasNextPage) {
+      setRequest((request) => ({
+        ...request,
+        pageNumber: request.pageNumber + 1,
+      }));
+    }
+  }, [request, rolePaginated.hasNextPage]);
+
+  const firstOpenDropdown = () => {
+    setRequest((request) => ({
+      ...request,
+      pageNumber: 1,
+    }));
+  };
+
   return (
-    <Select {...rest} options={options} loading={loading} mode="multiple" />
+    <SelectAsyncScroll
+      value={value}
+      className={className}
+      options={options}
+      loading={loading}
+      onSearch={handleSearch}
+      scrollInfiniteCb={handlePopupScroll}
+      firstOpenDropdown={firstOpenDropdown}
+      mode="multiple"
+      {...rest}
+    />
   );
 };
 

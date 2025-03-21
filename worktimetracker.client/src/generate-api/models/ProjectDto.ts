@@ -21,7 +21,7 @@ export class ProjectDto {
     'description'?: string | null;
     'startDate'?: Date | null;
     'endDate'?: Date | null;
-    'status'?: ProjectStatus;
+    'status': ProjectStatus;
     'team'?: TeamMinimalDto;
     'manager'?: UserMinimalDto;
     'members'?: Array<UserMinimalDto> | null;

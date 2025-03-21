@@ -19,7 +19,7 @@ export class ProjectMinimalDto {
     'description'?: string | null;
     'startDate'?: Date | null;
     'endDate'?: Date | null;
-    'status'?: ProjectStatus;
+    'status': ProjectStatus;
 
     static readonly discriminator: string | undefined = undefined;
 

@@ -6,8 +6,9 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**workTimeCreate**](WorkTimeApi.md#workTimeCreate) | **POST** /api/work-times | 
 [**workTimeDelete**](WorkTimeApi.md#workTimeDelete) | **DELETE** /api/work-times/{id} | 
-[**workTimeGetAll**](WorkTimeApi.md#workTimeGetAll) | **GET** /api/work-times | 
+[**workTimeGetAll**](WorkTimeApi.md#workTimeGetAll) | **GET** /api/work-times/all | 
 [**workTimeGetById**](WorkTimeApi.md#workTimeGetById) | **GET** /api/work-times/{id} | 
+[**workTimeSearch**](WorkTimeApi.md#workTimeSearch) | **GET** /api/work-times | 
 [**workTimeUpdate**](WorkTimeApi.md#workTimeUpdate) | **PUT** /api/work-times/{id} | 
 
 
@@ -127,7 +128,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **workTimeGetAll**
-> WorkTimeDtoPaginated workTimeGetAll()
+> Array<WorkTimeDto> workTimeGetAll()
 
 
 ### Example
@@ -142,14 +143,8 @@ const apiInstance = new WorkTimeApi(configuration);
 
 const request: WorkTimeApiWorkTimeGetAllRequest = {
   
-  pageNumber: 1,
-  
-  pageSize: 10,
-  
-  searchString: "SearchString_example",
-    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
-  orderBy: [
-    "OrderBy_example",
+  ids: [
+    1,
   ],
 };
 
@@ -162,15 +157,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pageNumber** | [**number**] |  | defaults to 1
- **pageSize** | [**number**] |  | defaults to 10
- **searchString** | [**string**] |  | (optional) defaults to undefined
- **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+ **ids** | **Array&lt;number&gt;** |  | (optional) defaults to undefined
 
 
 ### Return type
 
-**WorkTimeDtoPaginated**
+**Array<WorkTimeDto>**
 
 ### Authorization
 
@@ -225,6 +217,71 @@ Name | Type | Description  | Notes
 ### Return type
 
 **WorkTimeDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **workTimeSearch**
+> WorkTimeDtoPaginated workTimeSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, WorkTimeApi } from '';
+import type { WorkTimeApiWorkTimeSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new WorkTimeApi(configuration);
+
+const request: WorkTimeApiWorkTimeSearchRequest = {
+  
+  pageNumber: 1,
+  
+  pageSize: 10,
+  
+  searchString: "SearchString_example",
+    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
+  orderBy: [
+    "OrderBy_example",
+  ],
+};
+
+const data = await apiInstance.workTimeSearch(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pageNumber** | [**number**] |  | defaults to 1
+ **pageSize** | [**number**] |  | defaults to 10
+ **searchString** | [**string**] |  | (optional) defaults to undefined
+ **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+
+
+### Return type
+
+**WorkTimeDtoPaginated**
 
 ### Authorization
 

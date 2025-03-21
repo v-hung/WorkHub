@@ -8,22 +8,25 @@ import {
   useState,
 } from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
-import { debounce } from "@/common/utils/common.utils";
+import { debounce } from "@/common/utils/common.util";
 import { useWorkTimes } from "../../hooks/useWorkTimes";
+import { isEmpty } from "@/common/utils/validate.utils";
 
 type State = ComponentProps<typeof Select>;
 
 const WorkTimeSelect: FC<State> = (props) => {
-  const { className, ...rest } = props;
+  const { className, value, ...rest } = props;
 
-  const { workTimePaginated, loading, request, setRequest } = useWorkTimes();
+  const { workTimePaginated, loading, request, setRequest, fetchWorkTimes } =
+    useWorkTimes();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
   useEffect(() => {
-    setRequest((request) => ({
-      ...request,
-      pageNumber: 1,
-    }));
+    if (!isEmpty(value)) {
+      fetchWorkTimes(Array.isArray(value) ? value : [value]).then((data) => {
+        setOptions(data.map((v) => ({ label: v.title, value: v.id })));
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -63,14 +66,23 @@ const WorkTimeSelect: FC<State> = (props) => {
     }
   }, [request, workTimePaginated.hasNextPage]);
 
+  const firstOpenDropdown = () => {
+    setRequest((request) => ({
+      ...request,
+      pageNumber: 1,
+    }));
+  };
+
   return (
     <SelectAsyncScroll
-      {...rest}
+      value={value}
       className={className}
       options={options}
       loading={loading}
       onSearch={handleSearch}
       scrollInfiniteCb={handlePopupScroll}
+      firstOpenDropdown={firstOpenDropdown}
+      {...rest}
     />
   );
 };

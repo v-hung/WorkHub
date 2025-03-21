@@ -1,12 +1,13 @@
 import { getMessageError } from "@/common/utils/error";
-import { WorkTimeDto, WorkTimeDtoPaginated } from "@/generate-api";
+import { WorkTimeDtoPaginated } from "@/generate-api";
 import { workTimeApi } from "@/services/apiClient";
-import { notification } from "antd";
+import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useWorkTimes = () => {
   const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
+  const { notification } = App.useApp();
 
   // GET LIST workTime
   // =============
@@ -28,10 +29,10 @@ export const useWorkTimes = () => {
     searchString: "",
   });
 
-  const fetchWorkTimes = useCallback(async () => {
+  const fetchPaginatedWorkTimes = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await workTimeApi.workTimeGetAll(
+      const data = await workTimeApi.workTimeSearch(
         request.pageNumber,
         request.pageSize
       );
@@ -51,23 +52,21 @@ export const useWorkTimes = () => {
       return;
     }
 
-    fetchWorkTimes();
+    fetchPaginatedWorkTimes();
   }, [request]);
 
-  // GET workTime BY ID
+  // GET All
   // ==============
 
-  const [workTime, setWorkTime] = useState<WorkTimeDto | null>();
-
-  const fetchWorkTime = async (id: number) => {
+  const fetchWorkTimes = async (ids: number[]) => {
     setLoading(true);
     try {
-      const data = await workTimeApi.workTimeGetById(id);
-      setWorkTime(data);
+      return await workTimeApi.workTimeGetAll(ids);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
       });
+      return [];
     } finally {
       setLoading(false);
     }
@@ -76,10 +75,9 @@ export const useWorkTimes = () => {
   return {
     workTimePaginated,
     loading,
-    fetchWorkTimes,
+    fetchPaginatedWorkTimes,
     request,
     setRequest,
-    workTime,
-    fetchWorkTime,
+    fetchWorkTimes,
   };
 };

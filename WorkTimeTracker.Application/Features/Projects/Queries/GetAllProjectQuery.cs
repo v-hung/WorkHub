@@ -7,17 +7,12 @@ using WorkTimeTracker.Domain.Entities.Work;
 
 namespace WorkTimeTracker.Application.Features.Projects.Queries
 {
-	public class GetAllProjectQuery : IRequest<Paginated<ProjectDto>>
+	public class GetAllProjectQuery : IRequest<List<ProjectDto>>
 	{
-		public PagedRequest Request { get; }
-
-		public GetAllProjectQuery(PagedRequest request)
-		{
-			Request = request;
-		}
+		public List<int> Ids { get; set; } = [];
 	}
 
-	public class GetAllProjectQueryHandler : IRequestHandler<GetAllProjectQuery, Paginated<ProjectDto>>
+	public class GetAllProjectQueryHandler : IRequestHandler<GetAllProjectQuery, List<ProjectDto>>
 	{
 		private readonly IRepository<Project, int> _repository;
 
@@ -26,9 +21,9 @@ namespace WorkTimeTracker.Application.Features.Projects.Queries
 			_repository = repository;
 		}
 
-		public async Task<Paginated<ProjectDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
+		public async Task<List<ProjectDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<ProjectDto, int>(query.Request);
+			return await _repository.GetAllAsync<ProjectDto>(v => query.Ids.Contains(v.Id));
 		}
 	}
 }

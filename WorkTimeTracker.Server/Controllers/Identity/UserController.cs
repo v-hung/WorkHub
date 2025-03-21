@@ -20,9 +20,17 @@ public class UserController : BaseApiController<UserController>
 
 	// [Authorize(Policy = Permissions.Users.View)]
 	[HttpGet]
-	public async Task<ActionResult<Paginated<UserDto>>> GetAll([FromQuery] PagedRequest request)
+	public async Task<ActionResult<Paginated<UserDto>>> Search([FromQuery] PagedRequest request)
 	{
 		var users = await _userService.SearchAsync<UserDto>(request);
+		return Ok(users);
+	}
+
+	[HttpGet("all")]
+	public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] List<Guid>? ids = null)
+	{
+		ids ??= [];
+		var users = await _userService.GetAllAsync<UserDto>(u => ids.Contains(u.Id));
 		return Ok(users);
 	}
 

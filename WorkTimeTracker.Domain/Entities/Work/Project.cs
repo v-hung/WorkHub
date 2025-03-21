@@ -14,11 +14,11 @@ namespace WorkTimeTracker.Domain.Entities.Work
 
 		public string? Description { get; set; }
 
-		public DateTime StartDate { get; set; }
+		public DateTime? StartDate { get; set; }
 
-		public DateTime EndDate { get; set; }
+		public DateTime? EndDate { get; set; }
 
-		public ProjectStatus Status { get; set; }
+		public ProjectStatus Status { get; set; } = ProjectStatus.ACTIVE;
 
 		// Navigation properties
 

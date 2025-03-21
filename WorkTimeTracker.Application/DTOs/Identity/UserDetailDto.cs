@@ -8,7 +8,7 @@ namespace WorkTimeTracker.Application.DTOs.Identity
 
 		public DateTime BirthDate { get; set; }
 
-		public bool Gender { get; set; }
+		public bool? Gender { get; set; }
 
 		public string? PermanentAddress { get; set; }
 

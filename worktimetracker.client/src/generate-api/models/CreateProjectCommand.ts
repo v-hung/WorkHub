@@ -16,8 +16,8 @@ import { HttpFile } from '../http/http';
 export class CreateProjectCommand {
     'name': string;
     'description'?: string | null;
-    'startDate'?: Date;
-    'endDate'?: Date;
+    'startDate'?: Date | null;
+    'endDate'?: Date | null;
     'status'?: ProjectStatus;
     'teamId'?: number | null;
     'managerId'?: string | null;

@@ -1,8 +1,9 @@
 import { Select, Spin } from "antd";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, FC, useRef } from "react";
 
 type State = Omit<ComponentProps<typeof Select>, "onPopupScroll"> & {
   scrollInfiniteCb?: () => void;
+  firstOpenDropdown?: () => void;
 };
 
 const SelectAsyncScroll: FC<State> = ({
@@ -10,8 +11,18 @@ const SelectAsyncScroll: FC<State> = ({
   options,
   loading = false,
   scrollInfiniteCb,
+  firstOpenDropdown,
   ...rest
 }) => {
+  const isOpened = useRef(false);
+
+  const handleDropdownChange = (open: boolean) => {
+    if (open && !isOpened.current && firstOpenDropdown) {
+      firstOpenDropdown();
+      isOpened.current = true;
+    }
+  };
+
   const handlePopupScroll = (e: React.UIEvent<HTMLDivElement>) => {
     if (!scrollInfiniteCb) return;
 
@@ -26,14 +37,15 @@ const SelectAsyncScroll: FC<State> = ({
 
   return (
     <Select
-      {...rest}
+      onDropdownVisibleChange={handleDropdownChange}
+      notFoundContent={loading ? <Spin size="small" /> : "No data"}
       className={className}
       options={options}
       loading={loading}
       showSearch
       filterOption={false}
-      notFoundContent={loading ? <Spin size="small" /> : "No data"}
       onPopupScroll={handlePopupScroll}
+      {...rest}
     />
   );
 };

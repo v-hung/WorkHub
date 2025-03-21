@@ -6,8 +6,9 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**teamCreate**](TeamApi.md#teamCreate) | **POST** /api/teams | 
 [**teamDelete**](TeamApi.md#teamDelete) | **DELETE** /api/teams/{id} | 
-[**teamGetAll**](TeamApi.md#teamGetAll) | **GET** /api/teams | 
+[**teamGetAll**](TeamApi.md#teamGetAll) | **GET** /api/teams/all | 
 [**teamGetById**](TeamApi.md#teamGetById) | **GET** /api/teams/{id} | 
+[**teamSearch**](TeamApi.md#teamSearch) | **GET** /api/teams | 
 [**teamUpdate**](TeamApi.md#teamUpdate) | **PUT** /api/teams/{id} | 
 
 
@@ -133,7 +134,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **teamGetAll**
-> TeamDtoPaginated teamGetAll()
+> Array<TeamDto> teamGetAll()
 
 
 ### Example
@@ -148,14 +149,8 @@ const apiInstance = new TeamApi(configuration);
 
 const request: TeamApiTeamGetAllRequest = {
   
-  pageNumber: 1,
-  
-  pageSize: 10,
-  
-  searchString: "SearchString_example",
-    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
-  orderBy: [
-    "OrderBy_example",
+  ids: [
+    1,
   ],
 };
 
@@ -168,15 +163,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pageNumber** | [**number**] |  | defaults to 1
- **pageSize** | [**number**] |  | defaults to 10
- **searchString** | [**string**] |  | (optional) defaults to undefined
- **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+ **ids** | **Array&lt;number&gt;** |  | (optional) defaults to undefined
 
 
 ### Return type
 
-**TeamDtoPaginated**
+**Array<TeamDto>**
 
 ### Authorization
 
@@ -231,6 +223,71 @@ Name | Type | Description  | Notes
 ### Return type
 
 **TeamFullDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **teamSearch**
+> TeamDtoPaginated teamSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new TeamApi(configuration);
+
+const request: TeamApiTeamSearchRequest = {
+  
+  pageNumber: 1,
+  
+  pageSize: 10,
+  
+  searchString: "SearchString_example",
+    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
+  orderBy: [
+    "OrderBy_example",
+  ],
+};
+
+const data = await apiInstance.teamSearch(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pageNumber** | [**number**] |  | defaults to 1
+ **pageSize** | [**number**] |  | defaults to 10
+ **searchString** | [**string**] |  | (optional) defaults to undefined
+ **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+
+
+### Return type
+
+**TeamDtoPaginated**
 
 ### Authorization
 

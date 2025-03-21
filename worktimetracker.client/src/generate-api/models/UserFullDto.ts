@@ -33,7 +33,7 @@ export class UserFullDto {
     'createdBy'?: string | null;
     'lastModifiedBy'?: string | null;
     'roles'?: Array<string> | null;
-    'workTime'?: WorkTimeDto;
+    'workTime': WorkTimeDto;
     'supervisor'?: UserMinimalDto;
     'team'?: TeamMinimalDto;
     'userDetail'?: UserDetailDto;

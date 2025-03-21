@@ -6,8 +6,9 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**roleCreate**](RoleApi.md#roleCreate) | **POST** /api/roles | 
 [**roleDelete**](RoleApi.md#roleDelete) | **DELETE** /api/roles/{id} | 
-[**roleGetAll**](RoleApi.md#roleGetAll) | **GET** /api/roles | 
+[**roleGetAll**](RoleApi.md#roleGetAll) | **GET** /api/roles/all | 
 [**roleGetById**](RoleApi.md#roleGetById) | **GET** /api/roles/{id} | 
+[**roleSearch**](RoleApi.md#roleSearch) | **GET** /api/roles | 
 [**roleUpdate**](RoleApi.md#roleUpdate) | **PUT** /api/roles/{id} | 
 
 
@@ -132,11 +133,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleGetAllRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RoleApi(configuration);
 
-const request = {};
+const request: RoleApiRoleGetAllRequest = {
+  
+  ids: [
+    "ids_example",
+  ],
+};
 
 const data = await apiInstance.roleGetAll(request);
 console.log('API called successfully. Returned data:', data);
@@ -144,7 +151,10 @@ console.log('API called successfully. Returned data:', data);
 
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ids** | **Array&lt;string&gt;** |  | (optional) defaults to undefined
 
 
 ### Return type
@@ -204,6 +214,71 @@ Name | Type | Description  | Notes
 ### Return type
 
 **RoleDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **roleSearch**
+> RoleDtoPaginated roleSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RoleApi(configuration);
+
+const request: RoleApiRoleSearchRequest = {
+  
+  pageNumber: 1,
+  
+  pageSize: 10,
+  
+  searchString: "SearchString_example",
+    // of the form fieldname [ascending|descending],fieldname [ascending|descending]... (optional)
+  orderBy: [
+    "OrderBy_example",
+  ],
+};
+
+const data = await apiInstance.roleSearch(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pageNumber** | [**number**] |  | defaults to 1
+ **pageSize** | [**number**] |  | defaults to 10
+ **searchString** | [**string**] |  | (optional) defaults to undefined
+ **orderBy** | **Array&lt;string&gt;** | of the form fieldname [ascending|descending],fieldname [ascending|descending]... | (optional) defaults to undefined
+
+
+### Return type
+
+**RoleDtoPaginated**
 
 ### Authorization
 

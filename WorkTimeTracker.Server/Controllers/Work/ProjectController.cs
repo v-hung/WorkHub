@@ -10,10 +10,18 @@ namespace WorkTimeTracker.Server.Controllers.Work
 	[Route("api/projects")]
 	public class ProjectController : BaseApiController<ProjectController>
 	{
-		[HttpGet]
-		public async Task<ActionResult<Paginated<ProjectDto>>> GetAll([FromQuery] PagedRequest request)
+		[HttpGet("all")]
+		public async Task<ActionResult<List<ProjectDto>>> GetAll([FromQuery] List<int> ids)
 		{
-			var data = await _mediator.Send(new GetAllProjectQuery(request));
+			var data = await _mediator.Send(new GetAllProjectQuery { Ids = ids });
+
+			return Ok(data);
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<Paginated<ProjectDto>>> Search([FromQuery] PagedRequest request)
+		{
+			var data = await _mediator.Send(new SearchProjectQuery { Request = request });
 
 			return Ok(data);
 		}

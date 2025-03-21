@@ -101,55 +101,24 @@ export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
-     * @param pageNumber 
-     * @param pageSize 
-     * @param searchString 
-     * @param orderBy of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     * @param ids 
      */
-    public async workTimeGetAll(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
+    public async workTimeGetAll(ids?: Array<number>, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
-
-        // verify required parameter 'pageNumber' is not null or undefined
-        if (pageNumber === null || pageNumber === undefined) {
-            throw new RequiredError("WorkTimeApi", "workTimeGetAll", "pageNumber");
-        }
-
-
-        // verify required parameter 'pageSize' is not null or undefined
-        if (pageSize === null || pageSize === undefined) {
-            throw new RequiredError("WorkTimeApi", "workTimeGetAll", "pageSize");
-        }
-
-
 
 
         // Path Params
-        const localVarPath = '/api/work-times';
+        const localVarPath = '/api/work-times/all';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
 
         // Query Params
-        if (pageNumber !== undefined) {
-            requestContext.setQueryParam("PageNumber", ObjectSerializer.serialize(pageNumber, "number", "int32"));
-        }
-
-        // Query Params
-        if (pageSize !== undefined) {
-            requestContext.setQueryParam("PageSize", ObjectSerializer.serialize(pageSize, "number", "int32"));
-        }
-
-        // Query Params
-        if (searchString !== undefined) {
-            requestContext.setQueryParam("SearchString", ObjectSerializer.serialize(searchString, "string", ""));
-        }
-
-        // Query Params
-        if (orderBy !== undefined) {
-            const serializedParams = ObjectSerializer.serialize(orderBy, "Array<string>", "");
+        if (ids !== undefined) {
+            const serializedParams = ObjectSerializer.serialize(ids, "Array<number>", "int32");
             for (const serializedParam of serializedParams) {
-                requestContext.appendQueryParam("OrderBy", serializedParam);
+                requestContext.appendQueryParam("ids", serializedParam);
             }
         }
 
@@ -188,6 +157,75 @@ export class WorkTimeApiRequestFactory extends BaseAPIRequestFactory {
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * @param pageNumber 
+     * @param pageSize 
+     * @param searchString 
+     * @param orderBy of the form fieldname [ascending|descending],fieldname [ascending|descending]...
+     */
+    public async workTimeSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'pageNumber' is not null or undefined
+        if (pageNumber === null || pageNumber === undefined) {
+            throw new RequiredError("WorkTimeApi", "workTimeSearch", "pageNumber");
+        }
+
+
+        // verify required parameter 'pageSize' is not null or undefined
+        if (pageSize === null || pageSize === undefined) {
+            throw new RequiredError("WorkTimeApi", "workTimeSearch", "pageSize");
+        }
+
+
+
+
+        // Path Params
+        const localVarPath = '/api/work-times';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+        // Query Params
+        if (pageNumber !== undefined) {
+            requestContext.setQueryParam("PageNumber", ObjectSerializer.serialize(pageNumber, "number", "int32"));
+        }
+
+        // Query Params
+        if (pageSize !== undefined) {
+            requestContext.setQueryParam("PageSize", ObjectSerializer.serialize(pageSize, "number", "int32"));
+        }
+
+        // Query Params
+        if (searchString !== undefined) {
+            requestContext.setQueryParam("SearchString", ObjectSerializer.serialize(searchString, "string", ""));
+        }
+
+        // Query Params
+        if (orderBy !== undefined) {
+            const serializedParams = ObjectSerializer.serialize(orderBy, "Array<string>", "");
+            for (const serializedParam of serializedParams) {
+                requestContext.appendQueryParam("OrderBy", serializedParam);
+            }
+        }
 
 
         let authMethod: SecurityAuthentication | undefined;
@@ -351,13 +389,13 @@ export class WorkTimeApiResponseProcessor {
      * @params response Response returned by the server for a request to workTimeGetAll
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async workTimeGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<WorkTimeDtoPaginated >> {
+     public async workTimeGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<WorkTimeDto> >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: WorkTimeDtoPaginated = ObjectSerializer.deserialize(
+            const body: Array<WorkTimeDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "WorkTimeDtoPaginated", ""
-            ) as WorkTimeDtoPaginated;
+                "Array<WorkTimeDto>", ""
+            ) as Array<WorkTimeDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -377,10 +415,10 @@ export class WorkTimeApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: WorkTimeDtoPaginated = ObjectSerializer.deserialize(
+            const body: Array<WorkTimeDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "WorkTimeDtoPaginated", ""
-            ) as WorkTimeDtoPaginated;
+                "Array<WorkTimeDto>", ""
+            ) as Array<WorkTimeDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -424,6 +462,49 @@ export class WorkTimeApiResponseProcessor {
                 ObjectSerializer.parse(await response.body.text(), contentType),
                 "WorkTimeDto", ""
             ) as WorkTimeDto;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to workTimeSearch
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async workTimeSearchWithHttpInfo(response: ResponseContext): Promise<HttpInfo<WorkTimeDtoPaginated >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: WorkTimeDtoPaginated = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "WorkTimeDtoPaginated", ""
+            ) as WorkTimeDtoPaginated;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            const body: ErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorResponse", ""
+            ) as ErrorResponse;
+            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: WorkTimeDtoPaginated = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "WorkTimeDtoPaginated", ""
+            ) as WorkTimeDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

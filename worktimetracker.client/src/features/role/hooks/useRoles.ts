@@ -1,22 +1,41 @@
 import { getMessageError } from "@/common/utils/error";
-import { RoleDto } from "@/generate-api";
+import { RoleDtoPaginated } from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
-import { notification } from "antd";
-import { useCallback, useState } from "react";
+import { App } from "antd";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useRoles = () => {
+  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
+  const { notification } = App.useApp();
 
   // GET LIST role
   // =============
 
-  const [roles, setRoles] = useState<RoleDto[]>([]);
+  const [rolePaginated, setRolePaginated] = useState<RoleDtoPaginated>({
+    data: [],
+    currentPage: 1,
+    pageSize: 25,
+    totalCount: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  });
 
-  const fetchRoles = useCallback(async () => {
+  const [request, setRequest] = useState({
+    pageNumber: rolePaginated.currentPage,
+    pageSize: rolePaginated.pageSize,
+    searchString: "",
+  });
+
+  const fetchPaginatedRoles = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await roleApi.roleGetAll();
-      setRoles(data);
+      const data = await roleApi.roleSearch(
+        request.pageNumber,
+        request.pageSize
+      );
+      setRolePaginated(data);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
@@ -24,32 +43,40 @@ export const useRoles = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [request]);
 
-  // GET role BY ID
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+
+    fetchPaginatedRoles();
+  }, [request]);
+
+  // GET All
   // ==============
 
-  const [role, setRole] = useState<RoleDto | null>();
-
-  const fetchRole = async (id: string) => {
+  const fetchRoles = async (ids: string[]) => {
     setLoading(true);
     try {
-      const data = await roleApi.roleGetById(id);
-      setRole(data);
+      return await roleApi.roleGetAll(ids);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
       });
+      return [];
     } finally {
       setLoading(false);
     }
   };
 
   return {
-    roles,
+    rolePaginated,
     loading,
+    fetchPaginatedRoles,
+    request,
+    setRequest,
     fetchRoles,
-    role,
-    fetchRole,
   };
 };

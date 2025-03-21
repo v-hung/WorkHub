@@ -4,7 +4,6 @@ namespace WorkTimeTracker.Application.DTOs.Work
 {
 	public class ProjectDto : ProjectMinimalDto
 	{
-
 		public TeamMinimalDto? Team { get; set; }
 
 		public UserMinimalDto? Manager { get; set; }

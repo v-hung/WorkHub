@@ -2,12 +2,14 @@ using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Application.Wrapper;
+using System.Linq.Expressions;
+using WorkTimeTracker.Domain.Entities.Identity;
 
 namespace WorkTimeTracker.Application.Interfaces.Services
 {
 	public interface IUserService
 	{
-		Task<List<D>> GetAllAsync<D>();
+		Task<List<D>> GetAllAsync<D>(Expression<Func<User, bool>>? filter = null);
 
 		Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class;
 

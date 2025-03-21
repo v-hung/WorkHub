@@ -1,12 +1,13 @@
 import { getMessageError } from "@/common/utils/error";
 import { TeamDtoPaginated } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
-import { notification } from "antd";
+import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useTeams = () => {
   const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
+  const { notification } = App.useApp();
 
   // GET LIST team
   // =============
@@ -27,10 +28,10 @@ export const useTeams = () => {
     searchString: "",
   });
 
-  const fetchTeams = useCallback(async () => {
+  const fetchPaginatedTeams = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await teamApi.teamGetAll(
+      const data = await teamApi.teamSearch(
         request.pageNumber,
         request.pageSize,
         request.searchString
@@ -51,14 +52,32 @@ export const useTeams = () => {
       return;
     }
 
-    fetchTeams();
+    fetchPaginatedTeams();
   }, [request]);
+
+  // GET All
+  // ==============
+
+  const fetchTeams = async (ids: number[]) => {
+    setLoading(true);
+    try {
+      return await teamApi.teamGetAll(ids);
+    } catch (e) {
+      notification.error({
+        message: getMessageError(e),
+      });
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     teamPaginated,
     loading,
-    fetchTeams,
+    fetchPaginatedTeams,
     request,
     setRequest,
+    fetchTeams,
   };
 };

@@ -20,8 +20,8 @@ export class RequestDto {
     'id': number;
     'requestType': RequestType;
     'reason': string;
-    'status'?: RequestStatus;
-    'createdAt'?: Date;
+    'status': RequestStatus;
+    'createdAt': Date;
     'user': UserMinimalDto;
     'approvedBy': UserMinimalDto;
     'timesheet': TimesheetMinimalDto;

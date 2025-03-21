@@ -27,7 +27,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			_localizer = localizer;
 		}
 
-		public async Task<IList<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class
+		public async Task<List<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class
 		{
 
 			IQueryable<T> query = _context.Set<T>().AsQueryable();

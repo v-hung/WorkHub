@@ -1,6 +1,9 @@
 .gitattributes
 .gitignore
+.openapi-generator-ignore
 AccountApi.md
+DeviceApi.md
+DeviceCategoryApi.md
 ProjectApi.md
 README.md
 RoleApi.md
@@ -9,6 +12,8 @@ TimesheetApi.md
 UserApi.md
 WorkTimeApi.md
 apis/AccountApi.ts
+apis/DeviceApi.ts
+apis/DeviceCategoryApi.ts
 apis/ProjectApi.ts
 apis/RoleApi.ts
 apis/TeamApi.ts
@@ -25,9 +30,18 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/ChangePasswordRequest.ts
+models/CreateDeviceCategoryCommand.ts
+models/CreateDeviceCommand.ts
 models/CreateProjectCommand.ts
 models/CreateTeamCommand.ts
 models/CreateWorkTimeCommand.ts
+models/DeviceCategoryDto.ts
+models/DeviceCategoryMinimalDto.ts
+models/DeviceCategoryMinimalDtoPaginated.ts
+models/DeviceDto.ts
+models/DeviceMinimalDto.ts
+models/DeviceMinimalDtoPaginated.ts
+models/DeviceStatus.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
 models/LeaveRequestDto.ts
@@ -45,6 +59,7 @@ models/RequestStatus.ts
 models/RequestType.ts
 models/RoleCreateUpdateRequest.ts
 models/RoleDto.ts
+models/RoleDtoPaginated.ts
 models/TeamDto.ts
 models/TeamDtoPaginated.ts
 models/TeamFullDto.ts

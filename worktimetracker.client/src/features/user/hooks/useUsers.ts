@@ -1,5 +1,5 @@
 import { getMessageError } from "@/common/utils/error";
-import { UserDto, UserDtoPaginated } from "@/generate-api";
+import { UserDtoPaginated } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -28,10 +28,10 @@ export const useUsers = () => {
     searchString: "",
   });
 
-  const fetchUsers = useCallback(async () => {
+  const fetchPaginatedUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await userApi.userGetAll(
+      const data = await userApi.userSearch(
         request.pageNumber,
         request.pageSize
       );
@@ -51,23 +51,21 @@ export const useUsers = () => {
       return;
     }
 
-    fetchUsers();
+    fetchPaginatedUsers();
   }, [request]);
 
-  // GET USER BY ID
+  // GET All USER
   // ==============
 
-  const [user, setUser] = useState<UserDto | null>();
-
-  const fetchUser = async (id: string) => {
+  const fetchUsers = async (ids: string[]) => {
     setLoading(true);
     try {
-      const data = await userApi.userGetById(id);
-      setUser(data);
+      return await userApi.userGetAll(ids);
     } catch (e) {
       notification.error({
         message: getMessageError(e),
       });
+      return [];
     } finally {
       setLoading(false);
     }
@@ -76,10 +74,9 @@ export const useUsers = () => {
   return {
     userPaginated,
     loading,
-    fetchUsers,
+    fetchPaginatedUsers,
     request,
     setRequest,
-    user,
-    fetchUser,
+    fetchUsers,
   };
 };

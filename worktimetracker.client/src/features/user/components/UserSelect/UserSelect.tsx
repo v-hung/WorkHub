@@ -8,24 +8,27 @@ import {
   useState,
 } from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
-import { debounce } from "@/common/utils/common.utils";
+import { debounce } from "@/common/utils/common.util";
 import { useUsers } from "../../hooks/useUsers";
+import { isEmpty } from "@/common/utils/validate.utils";
 
 type State = ComponentProps<typeof Select> & {
   withoutIds?: string[];
 };
 
 const UserSelect: FC<State> = (props) => {
-  const { className, withoutIds = [], ...rest } = props;
+  const { className, withoutIds = [], value, ...rest } = props;
 
-  const { userPaginated, loading, request, setRequest } = useUsers();
+  const { userPaginated, loading, request, setRequest, fetchUsers } =
+    useUsers();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
   useEffect(() => {
-    setRequest((request) => ({
-      ...request,
-      pageNumber: 1,
-    }));
+    if (!isEmpty(value)) {
+      fetchUsers(Array.isArray(value) ? value : [value]).then((data) => {
+        setOptions(data.map((v) => ({ label: v.email, value: v.id })));
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -67,14 +70,23 @@ const UserSelect: FC<State> = (props) => {
     }
   }, [request, userPaginated.hasNextPage]);
 
+  const firstOpenDropdown = () => {
+    setRequest((request) => ({
+      ...request,
+      pageNumber: 1,
+    }));
+  };
+
   return (
     <SelectAsyncScroll
-      {...rest}
+      value={value}
       className={className}
       options={options}
       loading={loading}
       onSearch={handleSearch}
       scrollInfiniteCb={handlePopupScroll}
+      firstOpenDropdown={firstOpenDropdown}
+      {...rest}
     />
   );
 };

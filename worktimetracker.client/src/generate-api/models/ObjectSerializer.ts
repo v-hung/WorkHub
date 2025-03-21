@@ -1,7 +1,16 @@
 export * from '../models/ChangePasswordRequest';
+export * from '../models/CreateDeviceCategoryCommand';
+export * from '../models/CreateDeviceCommand';
 export * from '../models/CreateProjectCommand';
 export * from '../models/CreateTeamCommand';
 export * from '../models/CreateWorkTimeCommand';
+export * from '../models/DeviceCategoryDto';
+export * from '../models/DeviceCategoryMinimalDto';
+export * from '../models/DeviceCategoryMinimalDtoPaginated';
+export * from '../models/DeviceDto';
+export * from '../models/DeviceMinimalDto';
+export * from '../models/DeviceMinimalDtoPaginated';
+export * from '../models/DeviceStatus';
 export * from '../models/ErrorResponse';
 export * from '../models/ErrorValidateResponse';
 export * from '../models/LeaveRequestDto';
@@ -18,6 +27,7 @@ export * from '../models/RequestStatus';
 export * from '../models/RequestType';
 export * from '../models/RoleCreateUpdateRequest';
 export * from '../models/RoleDto';
+export * from '../models/RoleDtoPaginated';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamFullDto';
@@ -40,9 +50,18 @@ export * from '../models/WorkTimeDto';
 export * from '../models/WorkTimeDtoPaginated';
 
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
+import { CreateDeviceCommand       } from '../models/CreateDeviceCommand';
 import { CreateProjectCommand         } from '../models/CreateProjectCommand';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
+import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
+import { DeviceCategoryMinimalDtoPaginated } from '../models/DeviceCategoryMinimalDtoPaginated';
+import { DeviceDto        } from '../models/DeviceDto';
+import { DeviceMinimalDto      } from '../models/DeviceMinimalDto';
+import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
+import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LeaveRequestDto           } from '../models/LeaveRequestDto';
@@ -59,6 +78,7 @@ import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
+import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -93,6 +113,7 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "DeviceStatus",
     "Nationality",
     "Permission",
     "ProjectStatus",
@@ -104,9 +125,17 @@ let enumsMap: Set<string> = new Set<string>([
 
 let typeMap: {[index: string]: any} = {
     "ChangePasswordRequest": ChangePasswordRequest,
+    "CreateDeviceCategoryCommand": CreateDeviceCategoryCommand,
+    "CreateDeviceCommand": CreateDeviceCommand,
     "CreateProjectCommand": CreateProjectCommand,
     "CreateTeamCommand": CreateTeamCommand,
     "CreateWorkTimeCommand": CreateWorkTimeCommand,
+    "DeviceCategoryDto": DeviceCategoryDto,
+    "DeviceCategoryMinimalDto": DeviceCategoryMinimalDto,
+    "DeviceCategoryMinimalDtoPaginated": DeviceCategoryMinimalDtoPaginated,
+    "DeviceDto": DeviceDto,
+    "DeviceMinimalDto": DeviceMinimalDto,
+    "DeviceMinimalDtoPaginated": DeviceMinimalDtoPaginated,
     "ErrorResponse": ErrorResponse,
     "ErrorValidateResponse": ErrorValidateResponse,
     "LeaveRequestDto": LeaveRequestDto,
@@ -118,6 +147,7 @@ let typeMap: {[index: string]: any} = {
     "RequestDto": RequestDto,
     "RoleCreateUpdateRequest": RoleCreateUpdateRequest,
     "RoleDto": RoleDto,
+    "RoleDtoPaginated": RoleDtoPaginated,
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
     "TeamFullDto": TeamFullDto,

@@ -1,19 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkTimeTracker.Application.DTOs.Organization;
 using WorkTimeTracker.Application.Features.Teams.Queries;
-using WorkTimeTracker.Application.Requests;
 using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Application.Features.Teams.Commands;
+using WorkTimeTracker.Application.Requests;
 
 namespace WorkTimeTracker.Server.Controllers.Organization
 {
 	[Route("api/teams")]
 	public class TeamController : BaseApiController<TeamController>
 	{
-		[HttpGet]
-		public async Task<ActionResult<Paginated<TeamDto>>> GetAll([FromQuery] PagedRequest request)
+		[HttpGet("all")]
+		public async Task<ActionResult<List<TeamDto>>> GetAll([FromQuery] List<int> ids)
 		{
-			var teams = await _mediator.Send(new GetAllTeamQuery(request));
+			var teams = await _mediator.Send(new GetAllTeamQuery { Ids = ids });
+
+			return Ok(teams);
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<Paginated<TeamDto>>> Search([FromQuery] PagedRequest request)
+		{
+			var teams = await _mediator.Send(new SearchTeamQuery { Request = request });
 
 			return Ok(teams);
 		}

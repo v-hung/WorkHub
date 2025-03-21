@@ -17,6 +17,7 @@ using WorkTimeTracker.Application.Requests.Identity;
 using WorkTimeTracker.Domain.Entities.Organization;
 using WorkTimeTracker.Domain.Entities.Work;
 using WorkTimeTracker.Domain.Constants.Identity;
+using System.Linq.Expressions;
 
 namespace WorkTimeTracker.Infrastructure.Services
 {
@@ -37,9 +38,14 @@ namespace WorkTimeTracker.Infrastructure.Services
 			_identityService = identityService;
 		}
 
-		public async Task<List<D>> GetAllAsync<D>()
+		public async Task<List<D>> GetAllAsync<D>(Expression<Func<User, bool>>? filter = null)
 		{
-			return await _context.Users.AsQueryable().ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
+			var query = _context.Users.AsQueryable();
+			if (filter != null)
+			{
+				query = query.Where(filter);
+			}
+			return await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
 		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class
