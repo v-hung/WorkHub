@@ -8,12 +8,12 @@ using WorkTimeTracker.Application.Responses.Time;
 
 namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 {
-	public class GetTodayTimesheetQuery : IRequest<TimesheetResponse<TimesheetMinimalDto>?>
+	public class GetTodayTimesheetQuery : IRequest<TimesheetResponse<TimesheetDto>?>
 	{
 
 	}
 
-	public class GetTodayTimesheetQueryHandler : IRequestHandler<GetTodayTimesheetQuery, TimesheetResponse<TimesheetMinimalDto>?>
+	public class GetTodayTimesheetQueryHandler : IRequestHandler<GetTodayTimesheetQuery, TimesheetResponse<TimesheetDto>?>
 	{
 
 		private readonly ITimesheetRepository _timesheetRepository;
@@ -25,16 +25,16 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 			_currentUserService = currentUserService;
 		}
 
-		public async Task<TimesheetResponse<TimesheetMinimalDto>?> Handle(GetTodayTimesheetQuery query, CancellationToken cancellationToken)
+		public async Task<TimesheetResponse<TimesheetDto>?> Handle(GetTodayTimesheetQuery query, CancellationToken cancellationToken)
 		{
 			if (_currentUserService.UserId == null)
 			{
 				throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
 			}
 
-			var timesheet = await _timesheetRepository.GetTodayTimesheet<TimesheetMinimalDto>(_currentUserService.UserId);
+			var timesheet = await _timesheetRepository.GetTodayTimesheet(_currentUserService.UserId);
 
-			return timesheet != null ? new TimesheetResponse<TimesheetMinimalDto>
+			return timesheet != null ? new TimesheetResponse<TimesheetDto>
 			{
 				Timesheet = timesheet
 			} : null;

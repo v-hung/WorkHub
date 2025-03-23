@@ -1,5 +1,4 @@
 {
-	"hello": "Hello",
 	"menus": {
 		"menu": "Menu",
 		"home": "Home",
@@ -9,12 +8,14 @@
 		"manager": "Manager",
 		"project": "Project",
 		"team": "Team",
-		"personal": "Personal",
+		"person": "Person",
 		"employee": "Employee",
 		"work-time": "Work Time",
 		"permission": "Permission",
 		"members": "Members",
+		"equipment": "Equipment",
 		"device": "Device",
+		"deviceCategory": "Device Category",
 		"system": "System",
 		"setting": "Setting",
 		"send-mail": "Send mail",

@@ -11,7 +11,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 	public class DeviceController : BaseApiController<DeviceController>
 	{
 		[HttpGet("all")]
-		public async Task<ActionResult<List<DeviceMinimalDto>>> GetAll([FromQuery] List<int> ids)
+		public async Task<ActionResult<List<DeviceDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var data = await _mediator.Send(new GetAllDeviceQuery { Ids = ids });
 
@@ -19,7 +19,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<Paginated<DeviceMinimalDto>>> Search([FromQuery] PagedRequest request)
+		public async Task<ActionResult<Paginated<DeviceDto>>> Search([FromQuery] PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchDeviceQuery { Request = request });
 

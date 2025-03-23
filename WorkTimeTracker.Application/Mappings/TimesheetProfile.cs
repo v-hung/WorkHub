@@ -10,6 +10,7 @@ namespace WorkTimeTracker.Application.Mappings
 		{
 			CreateMap<Timesheet, TimesheetMinimalDto>().ReverseMap();
 			CreateMap<Timesheet, TimesheetDto>().ReverseMap();
+			CreateMap<Timesheet, TimesheetFullDto>().ReverseMap();
 		}
 	}
 }

@@ -52,7 +52,7 @@
 }
 .main-menu .ant-menu-item.ant-menu-item-selected {
   background-color: var(--color-second);
-  color: var(--color-text);
+  /* color: var(--color-text); */
 }
 
 .menu-item-inbox {

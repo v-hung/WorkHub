@@ -1,27 +1,34 @@
 {
-	"hello": "Hello",
 	"menus": {
-		"menu": "Menu",
-		"home": "Home",
-		"inbox": "Inbox",
-		"timesheet": "Timesheet",
-		"meeting": "Meeting",
-		"manager": "Manager",
-		"project": "Project",
-		"team": "Team",
-		"personal": "Personal",
-		"employee": "Employee",
-		"work-time": "Work Time",
-		"permission": "Permission",
-		"members": "Members",
-		"device": "Device",
-		"system": "System",
-		"setting": "Setting",
-		"send-mail": "Send mail",
-		"report": "Report"
+		"menu": "Danh mục",
+		"home": "Trang chủ",
+		"inbox": "Thông báo",
+		"timesheet": "Chấm công",
+		"meeting": "Cuộc họp",
+		"manager": "Quản trị",
+		"project": "Dự án",
+		"team": "Nhóm",
+		"person": "Tài khoản",
+		"employee": "Nhân viên",
+		"work-time": "Thời gian làm việc",
+		"permission": "Phân quyền",
+		"members": "Thành viên",
+		"equipment": "Thiết bị",
+		"device": "Thiết bị",
+		"deviceCategory": "Danh mục thiết bị",
+		"system": "Hệ thống",
+		"setting": "Cài đặt",
+		"send-mail": "Gửi mail",
+		"report": "Báo cáo"
 	},
 	"locale": {
-		"vi": "Tiếng Việt",
-		"en": "Tiếng Anh"
+		"vi": "Tiếng việt",
+		"en": "Tiếng anh"
+	},
+	"auth": {
+		"sessionExpired": "Phiên của bạn đã hết hạn. Vui lòng đăng nhập lại."
+	},
+	"message": {
+		"error": "Oh no! Có gì đó đã sai!"
 	}
 }

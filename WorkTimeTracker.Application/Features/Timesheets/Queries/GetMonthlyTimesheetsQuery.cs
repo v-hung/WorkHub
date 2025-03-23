@@ -4,13 +4,13 @@ using WorkTimeTracker.Application.Interfaces.Repositories;
 
 namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 {
-	public class GetMonthlyTimesheetsQuery : IRequest<List<TimesheetDto>>
+	public class GetMonthlyTimesheetsQuery : IRequest<List<TimesheetFullDto>>
 	{
 		public int Month { get; set; }
 		public int Year { get; set; }
 	}
 
-	public class GetMonthlyTimesheetsQueryHandler : IRequestHandler<GetMonthlyTimesheetsQuery, List<TimesheetDto>>
+	public class GetMonthlyTimesheetsQueryHandler : IRequestHandler<GetMonthlyTimesheetsQuery, List<TimesheetFullDto>>
 	{
 		private readonly ITimesheetRepository _timesheetRepository;
 
@@ -19,10 +19,10 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 			_timesheetRepository = timesheetRepository;
 		}
 
-		public async Task<List<TimesheetDto>> Handle(GetMonthlyTimesheetsQuery query, CancellationToken cancellationToken)
+		public async Task<List<TimesheetFullDto>> Handle(GetMonthlyTimesheetsQuery query, CancellationToken cancellationToken)
 		{
 
-			return await _timesheetRepository.GetMonthlyTimesheets<TimesheetDto>(query.Month, query.Year);
+			return await _timesheetRepository.GetMonthlyTimesheets(query.Month, query.Year);
 
 		}
 

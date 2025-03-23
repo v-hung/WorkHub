@@ -9,15 +9,15 @@ import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
+import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
-import { DeviceCategoryMinimalDtoPaginated } from '../models/DeviceCategoryMinimalDtoPaginated';
 import { DeviceDto } from '../models/DeviceDto';
+import { DeviceDtoPaginated } from '../models/DeviceDtoPaginated';
 import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
-import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
+import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -27,6 +27,7 @@ import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto } from '../models/RequestDto';
+import { RequestMinimalDto } from '../models/RequestMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -38,9 +39,10 @@ import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
+import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
+import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -400,7 +402,7 @@ export class PromiseDeviceApi {
     /**
      * @param [ids]
      */
-    public deviceGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<DeviceMinimalDto>>> {
+    public deviceGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<DeviceDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -420,7 +422,7 @@ export class PromiseDeviceApi {
     /**
      * @param [ids]
      */
-    public deviceGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<DeviceMinimalDto>> {
+    public deviceGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<DeviceDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -483,7 +485,7 @@ export class PromiseDeviceApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceMinimalDtoPaginated>> {
+    public deviceSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceDtoPaginated>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -506,7 +508,7 @@ export class PromiseDeviceApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<DeviceMinimalDtoPaginated> {
+    public deviceSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<DeviceDtoPaginated> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -667,7 +669,7 @@ export class PromiseDeviceCategoryApi {
     /**
      * @param [ids]
      */
-    public deviceCategoryGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryMinimalDto>>> {
+    public deviceCategoryGetAllWithHttpInfo(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -687,7 +689,7 @@ export class PromiseDeviceCategoryApi {
     /**
      * @param [ids]
      */
-    public deviceCategoryGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<DeviceCategoryMinimalDto>> {
+    public deviceCategoryGetAll(ids?: Array<number>, _options?: PromiseConfigurationOptions): Promise<Array<DeviceCategoryDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -750,7 +752,7 @@ export class PromiseDeviceCategoryApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceCategorySearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceCategoryMinimalDtoPaginated>> {
+    public deviceCategorySearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<DeviceCategoryDtoPaginated>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -773,7 +775,7 @@ export class PromiseDeviceCategoryApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceCategorySearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<DeviceCategoryMinimalDtoPaginated> {
+    public deviceCategorySearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: PromiseConfigurationOptions): Promise<DeviceCategoryDtoPaginated> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1654,7 +1656,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckInWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetCheckInWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1673,7 +1675,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckIn(_options?: PromiseConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
+    public timesheetCheckIn(_options?: PromiseConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1692,7 +1694,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckOutWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetCheckOutWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1711,7 +1713,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetCheckOut(_options?: PromiseConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
+    public timesheetCheckOut(_options?: PromiseConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1732,7 +1734,7 @@ export class PromiseTimesheetApi {
      * @param [month]
      * @param [year]
      */
-    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetMinimalDto>>> {
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1753,7 +1755,7 @@ export class PromiseTimesheetApi {
      * @param [month]
      * @param [year]
      */
-    public timesheetGetCurrentUserMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetMinimalDto>> {
+    public timesheetGetCurrentUserMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1774,7 +1776,7 @@ export class PromiseTimesheetApi {
      * @param [month]
      * @param [year]
      */
-    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetFullDto>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1795,7 +1797,7 @@ export class PromiseTimesheetApi {
      * @param [month]
      * @param [year]
      */
-    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetDto>> {
+    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetFullDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1814,7 +1816,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheetWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetGetTodayTimesheetWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1833,7 +1835,7 @@ export class PromiseTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheet(_options?: PromiseConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
+    public timesheetGetTodayTimesheet(_options?: PromiseConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {

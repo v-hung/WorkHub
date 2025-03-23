@@ -130,7 +130,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **deviceGetAll**
-> Array<DeviceMinimalDto> deviceGetAll()
+> Array<DeviceDto> deviceGetAll()
 
 
 ### Example
@@ -164,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Array<DeviceMinimalDto>**
+**Array<DeviceDto>**
 
 ### Authorization
 
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **deviceSearch**
-> DeviceMinimalDtoPaginated deviceSearch()
+> DeviceDtoPaginated deviceSearch()
 
 
 ### Example
@@ -283,7 +283,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**DeviceMinimalDtoPaginated**
+**DeviceDtoPaginated**
 
 ### Authorization
 

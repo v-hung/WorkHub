@@ -45,6 +45,7 @@ const SelectAsyncScroll: FC<State> = ({
       showSearch
       filterOption={false}
       onPopupScroll={handlePopupScroll}
+      allowClear={true}
       {...rest}
     />
   );

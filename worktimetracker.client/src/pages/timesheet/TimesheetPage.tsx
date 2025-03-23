@@ -9,7 +9,7 @@ export const loader = wrapLoaderWithPermission();
 
 export function Component() {
   return (
-    <Layout>
+    <Layout className="main-layout h-screen">
       <TimesheetHeader />
       <MainBreadcrumb
         items={[{ title: "Home", path: "/" }, { title: "Timesheets Manager" }]}

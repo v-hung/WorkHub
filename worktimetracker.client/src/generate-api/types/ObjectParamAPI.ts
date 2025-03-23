@@ -9,15 +9,15 @@ import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
+import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
-import { DeviceCategoryMinimalDtoPaginated } from '../models/DeviceCategoryMinimalDtoPaginated';
 import { DeviceDto } from '../models/DeviceDto';
+import { DeviceDtoPaginated } from '../models/DeviceDtoPaginated';
 import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
-import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
+import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -27,6 +27,7 @@ import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto } from '../models/RequestDto';
+import { RequestMinimalDto } from '../models/RequestMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -38,9 +39,10 @@ import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
+import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
+import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -310,14 +312,14 @@ export class ObjectDeviceApi {
     /**
      * @param param the request object
      */
-    public deviceGetAllWithHttpInfo(param: DeviceApiDeviceGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceMinimalDto>>> {
+    public deviceGetAllWithHttpInfo(param: DeviceApiDeviceGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceDto>>> {
         return this.api.deviceGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public deviceGetAll(param: DeviceApiDeviceGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceMinimalDto>> {
+    public deviceGetAll(param: DeviceApiDeviceGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceDto>> {
         return this.api.deviceGetAll(param.ids,  options).toPromise();
     }
 
@@ -338,14 +340,14 @@ export class ObjectDeviceApi {
     /**
      * @param param the request object
      */
-    public deviceSearchWithHttpInfo(param: DeviceApiDeviceSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceMinimalDtoPaginated>> {
+    public deviceSearchWithHttpInfo(param: DeviceApiDeviceSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDtoPaginated>> {
         return this.api.deviceSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public deviceSearch(param: DeviceApiDeviceSearchRequest, options?: ConfigurationOptions): Promise<DeviceMinimalDtoPaginated> {
+    public deviceSearch(param: DeviceApiDeviceSearchRequest, options?: ConfigurationOptions): Promise<DeviceDtoPaginated> {
         return this.api.deviceSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
@@ -496,14 +498,14 @@ export class ObjectDeviceCategoryApi {
     /**
      * @param param the request object
      */
-    public deviceCategoryGetAllWithHttpInfo(param: DeviceCategoryApiDeviceCategoryGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryMinimalDto>>> {
+    public deviceCategoryGetAllWithHttpInfo(param: DeviceCategoryApiDeviceCategoryGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryDto>>> {
         return this.api.deviceCategoryGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public deviceCategoryGetAll(param: DeviceCategoryApiDeviceCategoryGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceCategoryMinimalDto>> {
+    public deviceCategoryGetAll(param: DeviceCategoryApiDeviceCategoryGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceCategoryDto>> {
         return this.api.deviceCategoryGetAll(param.ids,  options).toPromise();
     }
 
@@ -524,14 +526,14 @@ export class ObjectDeviceCategoryApi {
     /**
      * @param param the request object
      */
-    public deviceCategorySearchWithHttpInfo(param: DeviceCategoryApiDeviceCategorySearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryMinimalDtoPaginated>> {
+    public deviceCategorySearchWithHttpInfo(param: DeviceCategoryApiDeviceCategorySearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDtoPaginated>> {
         return this.api.deviceCategorySearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public deviceCategorySearch(param: DeviceCategoryApiDeviceCategorySearchRequest, options?: ConfigurationOptions): Promise<DeviceCategoryMinimalDtoPaginated> {
+    public deviceCategorySearch(param: DeviceCategoryApiDeviceCategorySearchRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDtoPaginated> {
         return this.api.deviceCategorySearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
@@ -1165,70 +1167,70 @@ export class ObjectTimesheetApi {
     /**
      * @param param the request object
      */
-    public timesheetCheckInWithHttpInfo(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetCheckInWithHttpInfo(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
         return this.api.timesheetCheckInWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetCheckIn(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
+    public timesheetCheckIn(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
         return this.api.timesheetCheckIn( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetCheckOutWithHttpInfo(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetCheckOutWithHttpInfo(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
         return this.api.timesheetCheckOutWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetCheckOut(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
+    public timesheetCheckOut(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
         return this.api.timesheetCheckOut( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetMinimalDto>>> {
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
         return this.api.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetCurrentUserMonthlyTimesheets(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetMinimalDto>> {
+    public timesheetGetCurrentUserMonthlyTimesheets(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetDto>> {
         return this.api.timesheetGetCurrentUserMonthlyTimesheets(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetFullDto>>> {
         return this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetMonthlyTimesheets(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetDto>> {
+    public timesheetGetMonthlyTimesheets(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetFullDto>> {
         return this.api.timesheetGetMonthlyTimesheets(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetTodayTimesheetWithHttpInfo(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetGetTodayTimesheetWithHttpInfo(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
         return this.api.timesheetGetTodayTimesheetWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetTodayTimesheet(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetMinimalDtoTimesheetResponse> {
+    public timesheetGetTodayTimesheet(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
         return this.api.timesheetGetTodayTimesheet( options).toPromise();
     }
 

@@ -10,15 +10,15 @@ import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
+import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
-import { DeviceCategoryMinimalDtoPaginated } from '../models/DeviceCategoryMinimalDtoPaginated';
 import { DeviceDto } from '../models/DeviceDto';
+import { DeviceDtoPaginated } from '../models/DeviceDtoPaginated';
 import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
-import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
+import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -28,6 +28,7 @@ import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
 import { RequestDto } from '../models/RequestDto';
+import { RequestMinimalDto } from '../models/RequestMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -39,9 +40,10 @@ import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
+import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
+import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -547,7 +549,7 @@ export class ObservableDeviceApi {
     /**
      * @param [ids]
      */
-    public deviceGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<DeviceMinimalDto>>> {
+    public deviceGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<DeviceDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -598,8 +600,8 @@ export class ObservableDeviceApi {
     /**
      * @param [ids]
      */
-    public deviceGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<DeviceMinimalDto>> {
-        return this.deviceGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<DeviceMinimalDto>>) => apiResponse.data));
+    public deviceGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<DeviceDto>> {
+        return this.deviceGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<DeviceDto>>) => apiResponse.data));
     }
 
     /**
@@ -666,7 +668,7 @@ export class ObservableDeviceApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceMinimalDtoPaginated>> {
+    public deviceSearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceDtoPaginated>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -720,8 +722,8 @@ export class ObservableDeviceApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<DeviceMinimalDtoPaginated> {
-        return this.deviceSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<DeviceMinimalDtoPaginated>) => apiResponse.data));
+    public deviceSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<DeviceDtoPaginated> {
+        return this.deviceSearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<DeviceDtoPaginated>) => apiResponse.data));
     }
 
     /**
@@ -921,7 +923,7 @@ export class ObservableDeviceCategoryApi {
     /**
      * @param [ids]
      */
-    public deviceCategoryGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<DeviceCategoryMinimalDto>>> {
+    public deviceCategoryGetAllWithHttpInfo(ids?: Array<number>, _options?: ConfigurationOptions): Observable<HttpInfo<Array<DeviceCategoryDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -972,8 +974,8 @@ export class ObservableDeviceCategoryApi {
     /**
      * @param [ids]
      */
-    public deviceCategoryGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<DeviceCategoryMinimalDto>> {
-        return this.deviceCategoryGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<DeviceCategoryMinimalDto>>) => apiResponse.data));
+    public deviceCategoryGetAll(ids?: Array<number>, _options?: ConfigurationOptions): Observable<Array<DeviceCategoryDto>> {
+        return this.deviceCategoryGetAllWithHttpInfo(ids, _options).pipe(map((apiResponse: HttpInfo<Array<DeviceCategoryDto>>) => apiResponse.data));
     }
 
     /**
@@ -1040,7 +1042,7 @@ export class ObservableDeviceCategoryApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceCategorySearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceCategoryMinimalDtoPaginated>> {
+    public deviceCategorySearchWithHttpInfo(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<DeviceCategoryDtoPaginated>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1094,8 +1096,8 @@ export class ObservableDeviceCategoryApi {
      * @param [searchString]
      * @param [orderBy] of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public deviceCategorySearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<DeviceCategoryMinimalDtoPaginated> {
-        return this.deviceCategorySearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<DeviceCategoryMinimalDtoPaginated>) => apiResponse.data));
+    public deviceCategorySearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: ConfigurationOptions): Observable<DeviceCategoryDtoPaginated> {
+        return this.deviceCategorySearchWithHttpInfo(pageNumber, pageSize, searchString, orderBy, _options).pipe(map((apiResponse: HttpInfo<DeviceCategoryDtoPaginated>) => apiResponse.data));
     }
 
     /**
@@ -2300,7 +2302,7 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetCheckInWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetCheckInWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetDtoTimesheetResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2350,13 +2352,13 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetCheckIn(_options?: ConfigurationOptions): Observable<TimesheetMinimalDtoTimesheetResponse> {
-        return this.timesheetCheckInWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetMinimalDtoTimesheetResponse>) => apiResponse.data));
+    public timesheetCheckIn(_options?: ConfigurationOptions): Observable<TimesheetDtoTimesheetResponse> {
+        return this.timesheetCheckInWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetDtoTimesheetResponse>) => apiResponse.data));
     }
 
     /**
      */
-    public timesheetCheckOutWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetCheckOutWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetDtoTimesheetResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2406,15 +2408,15 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetCheckOut(_options?: ConfigurationOptions): Observable<TimesheetMinimalDtoTimesheetResponse> {
-        return this.timesheetCheckOutWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetMinimalDtoTimesheetResponse>) => apiResponse.data));
+    public timesheetCheckOut(_options?: ConfigurationOptions): Observable<TimesheetDtoTimesheetResponse> {
+        return this.timesheetCheckOutWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetDtoTimesheetResponse>) => apiResponse.data));
     }
 
     /**
      * @param [month]
      * @param [year]
      */
-    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TimesheetMinimalDto>>> {
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TimesheetDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2466,15 +2468,15 @@ export class ObservableTimesheetApi {
      * @param [month]
      * @param [year]
      */
-    public timesheetGetCurrentUserMonthlyTimesheets(month?: number, year?: number, _options?: ConfigurationOptions): Observable<Array<TimesheetMinimalDto>> {
-        return this.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month, year, _options).pipe(map((apiResponse: HttpInfo<Array<TimesheetMinimalDto>>) => apiResponse.data));
+    public timesheetGetCurrentUserMonthlyTimesheets(month?: number, year?: number, _options?: ConfigurationOptions): Observable<Array<TimesheetDto>> {
+        return this.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(month, year, _options).pipe(map((apiResponse: HttpInfo<Array<TimesheetDto>>) => apiResponse.data));
     }
 
     /**
      * @param [month]
      * @param [year]
      */
-    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TimesheetDto>>> {
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TimesheetFullDto>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2526,13 +2528,13 @@ export class ObservableTimesheetApi {
      * @param [month]
      * @param [year]
      */
-    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: ConfigurationOptions): Observable<Array<TimesheetDto>> {
-        return this.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, _options).pipe(map((apiResponse: HttpInfo<Array<TimesheetDto>>) => apiResponse.data));
+    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: ConfigurationOptions): Observable<Array<TimesheetFullDto>> {
+        return this.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, _options).pipe(map((apiResponse: HttpInfo<Array<TimesheetFullDto>>) => apiResponse.data));
     }
 
     /**
      */
-    public timesheetGetTodayTimesheetWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetMinimalDtoTimesheetResponse>> {
+    public timesheetGetTodayTimesheetWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<TimesheetDtoTimesheetResponse>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2582,8 +2584,8 @@ export class ObservableTimesheetApi {
 
     /**
      */
-    public timesheetGetTodayTimesheet(_options?: ConfigurationOptions): Observable<TimesheetMinimalDtoTimesheetResponse> {
-        return this.timesheetGetTodayTimesheetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetMinimalDtoTimesheetResponse>) => apiResponse.data));
+    public timesheetGetTodayTimesheet(_options?: ConfigurationOptions): Observable<TimesheetDtoTimesheetResponse> {
+        return this.timesheetGetTodayTimesheetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<TimesheetDtoTimesheetResponse>) => apiResponse.data));
     }
 
 }

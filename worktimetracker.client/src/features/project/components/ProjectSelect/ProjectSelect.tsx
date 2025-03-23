@@ -1,5 +1,12 @@
 import { Select, SelectProps } from "antd";
-import { ComponentProps, FC, useCallback, useEffect, useState } from "react";
+import {
+  ComponentProps,
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
 import { debounce } from "@/common/utils/common.util";
 import { useProjects } from "../../hooks/useProjects";
@@ -81,3 +88,5 @@ const ProjectSelect: FC<State> = (props) => {
 };
 
 export default ProjectSelect;
+
+export const ProjectSelectMemo = memo(ProjectSelect);

@@ -1,25 +1,106 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
-import { Button, Popconfirm, Space, TableProps } from "antd";
+import {
+  Avatar,
+  Button,
+  Popconfirm,
+  Space,
+  TableProps,
+  Tag,
+  Tooltip,
+} from "antd";
 import { FC } from "react";
 import { useProjectsContext } from "../../contexts/ProjectContext";
-import { ProjectDto } from "@/generate-api";
+import { ProjectDto, UserMinimalDto } from "@/generate-api";
+import { formatDate } from "@/common/utils/date.util";
+import { getUniqueColor } from "@/common/utils/color.util";
+import { differenceInDays } from "date-fns";
 
 export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
   {
-    title: "Total Members",
-    dataIndex: "totalMembers",
-    key: "totalMembers",
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
   },
   {
-    title: "Active Projects",
-    dataIndex: "activeProjects",
-    key: "activeProjects",
+    title: "Completion Time",
+    key: "completionTime",
+    render: (_, record) => {
+      if (!record.startDate || !record.endDate) return "N/A";
+
+      const startDate = formatDate(record.startDate, "dd/MM/yyyy");
+      const endDate = formatDate(record.endDate, "dd/MM/yyyy");
+
+      const daysDifference = differenceInDays(record.endDate, record.startDate);
+
+      return (
+        <>
+          <span>{`${startDate} - ${endDate}`}</span>
+          {daysDifference && <b>&nbsp;({daysDifference} Days)</b>}
+        </>
+      );
+    },
   },
   {
-    title: "Manager",
-    dataIndex: "manager",
-    key: "manager",
+    title: "Team",
+    key: "team",
+    render: (_, record) =>
+      record.team ? (
+        <Tag color={getUniqueColor("team-" + record.team.id)}>
+          {record.team.name}
+        </Tag>
+      ) : (
+        "N/A"
+      ),
+  },
+  {
+    title: "Members",
+    key: "members",
+    render: (_, record) => {
+      const members: UserMinimalDto[] = [
+        ...(record.manager ? [record.manager] : []),
+        ...(record.members ?? []),
+      ];
+
+      if (members.length === 0) return "No members";
+
+      const uniqueMembers = Array.from(
+        new Map(members.map((m) => [m.id, m])).values()
+      );
+
+      const colors = uniqueMembers.map((v) =>
+        getUniqueColor("user-" + v.id, true)
+      );
+
+      return (
+        <Avatar.Group max={{ count: 5 }}>
+          {uniqueMembers.map((member, index) => (
+            <Tooltip
+              key={member.id || index}
+              title={member.fullName}
+              placement="top"
+            >
+              <Avatar
+                size={30}
+                style={{
+                  backgroundColor: colors[index],
+                  border:
+                    member.id === record.manager?.id
+                      ? "1px solid #eb2f96"
+                      : "none",
+                }}
+                icon={<IIonPerson />}
+              />
+            </Tooltip>
+          ))}
+        </Avatar.Group>
+      );
+    },
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
   },
   {
     title: "Action",

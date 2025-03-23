@@ -31,7 +31,7 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Queries
 				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
 			}
 
-			return await _timesheetRepository.GetCurrentUserMonthlyTimesheets<TimesheetDto>(_currentUserService.UserId, query.Month, query.Year);
+			return await _timesheetRepository.GetCurrentUserMonthlyTimesheets(_currentUserService.UserId, query.Month, query.Year);
 
 		}
 

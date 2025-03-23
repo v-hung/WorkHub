@@ -11,7 +11,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 	{
 
 		[HttpGet("today")]
-		public async Task<ActionResult<TimesheetResponse<TimesheetMinimalDto>?>> GetTodayTimesheet()
+		public async Task<ActionResult<TimesheetResponse<TimesheetDto>?>> GetTodayTimesheet()
 		{
 			var data = await _mediator.Send(new GetTodayTimesheetQuery());
 
@@ -19,7 +19,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpGet("monthly")]
-		public async Task<ActionResult<List<TimesheetMinimalDto>>> GetCurrentUserMonthlyTimesheets(int month, int year)
+		public async Task<ActionResult<List<TimesheetDto>>> GetCurrentUserMonthlyTimesheets(int month, int year)
 		{
 			var data = await _mediator.Send(new GetCurrentUserMonthlyTimesheetsQuery { Month = month, Year = year });
 
@@ -27,7 +27,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpGet("monthly/all")]
-		public async Task<ActionResult<List<TimesheetDto>>> GetMonthlyTimesheets(int month, int year)
+		public async Task<ActionResult<List<TimesheetFullDto>>> GetMonthlyTimesheets(int month, int year)
 		{
 			var data = await _mediator.Send(new GetMonthlyTimesheetsQuery { Month = month, Year = year });
 
@@ -35,7 +35,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpPost("checkin")]
-		public async Task<ActionResult<TimesheetResponse<TimesheetMinimalDto>>> CheckIn()
+		public async Task<ActionResult<TimesheetResponse<TimesheetDto>>> CheckIn()
 		{
 			var data = await _mediator.Send(new CheckInCommand());
 
@@ -43,7 +43,7 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		}
 
 		[HttpPost("checkout")]
-		public async Task<ActionResult<TimesheetResponse<TimesheetMinimalDto>>> CheckOut()
+		public async Task<ActionResult<TimesheetResponse<TimesheetDto>>> CheckOut()
 		{
 			var data = await _mediator.Send(new CheckOutCommand());
 

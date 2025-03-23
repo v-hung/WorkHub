@@ -10,8 +10,7 @@ import {SecurityAuthentication} from '../auth/auth';
 
 import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
 import { DeviceDto } from '../models/DeviceDto';
-import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
-import { DeviceMinimalDtoPaginated } from '../models/DeviceMinimalDtoPaginated';
+import { DeviceDtoPaginated } from '../models/DeviceDtoPaginated';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 
@@ -390,13 +389,13 @@ export class DeviceApiResponseProcessor {
      * @params response Response returned by the server for a request to deviceGetAll
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async deviceGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<DeviceMinimalDto> >> {
+     public async deviceGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<DeviceDto> >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: Array<DeviceMinimalDto> = ObjectSerializer.deserialize(
+            const body: Array<DeviceDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<DeviceMinimalDto>", ""
-            ) as Array<DeviceMinimalDto>;
+                "Array<DeviceDto>", ""
+            ) as Array<DeviceDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -416,10 +415,10 @@ export class DeviceApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: Array<DeviceMinimalDto> = ObjectSerializer.deserialize(
+            const body: Array<DeviceDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<DeviceMinimalDto>", ""
-            ) as Array<DeviceMinimalDto>;
+                "Array<DeviceDto>", ""
+            ) as Array<DeviceDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -476,13 +475,13 @@ export class DeviceApiResponseProcessor {
      * @params response Response returned by the server for a request to deviceSearch
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async deviceSearchWithHttpInfo(response: ResponseContext): Promise<HttpInfo<DeviceMinimalDtoPaginated >> {
+     public async deviceSearchWithHttpInfo(response: ResponseContext): Promise<HttpInfo<DeviceDtoPaginated >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: DeviceMinimalDtoPaginated = ObjectSerializer.deserialize(
+            const body: DeviceDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "DeviceMinimalDtoPaginated", ""
-            ) as DeviceMinimalDtoPaginated;
+                "DeviceDtoPaginated", ""
+            ) as DeviceDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -502,10 +501,10 @@ export class DeviceApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: DeviceMinimalDtoPaginated = ObjectSerializer.deserialize(
+            const body: DeviceDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "DeviceMinimalDtoPaginated", ""
-            ) as DeviceMinimalDtoPaginated;
+                "DeviceDtoPaginated", ""
+            ) as DeviceDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

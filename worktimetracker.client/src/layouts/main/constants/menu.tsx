@@ -63,9 +63,9 @@ export const getMenuItems = (
       label: t("menus.team"),
     },
     {
-      key: "/personal",
+      key: "/person",
       icon: <IonPersonOutline />,
-      label: t("menus.personal"),
+      label: t("menus.person"),
       children: [
         {
           key: "/users",
@@ -93,9 +93,19 @@ export const getMenuItems = (
       ],
     },
     {
-      key: "/inventories",
+      key: "/equipment",
       icon: <IonCubeOutline />,
-      label: t("menus.device"),
+      label: t("menus.equipment"),
+      children: [
+        {
+          key: "/devices",
+          label: t("menus.device"),
+        },
+        {
+          key: "/device-categories",
+          label: t("menus.deviceCategory"),
+        },
+      ],
     },
     {
       type: "group",

@@ -18,7 +18,7 @@ export const loader = wrapLoaderWithPermission(async ({ params }) => {
     const data = await wrapPromise(() => teamApi.teamGetById(+params.id!));
 
     if (!data) {
-      throw redirect(`/work-times`);
+      throw redirect(`/teams`);
     }
 
     return data;

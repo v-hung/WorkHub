@@ -9,6 +9,9 @@ namespace WorkTimeTracker.Domain.Entities.Time
 	public class Timesheet : Entity<Guid>
 	{
 		[Required]
+		public required DateTime Date { get; set; }
+
+		[Required]
 		public required DateTime StartTime { get; set; }
 
 		public DateTime? EndTime { get; set; }

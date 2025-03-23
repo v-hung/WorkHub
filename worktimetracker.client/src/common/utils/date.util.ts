@@ -1,4 +1,4 @@
-import { format, Locale, parse } from "date-fns";
+import { format, formatDistance, Locale, parse } from "date-fns";
 import { enUS, vi } from "date-fns/locale";
 
 const LOCALE_MAP: Record<string, Locale> = {
@@ -7,10 +7,11 @@ const LOCALE_MAP: Record<string, Locale> = {
 };
 
 export function formatDate(date: Date, formatStr: string = "HH:mm:ss"): string {
-  const storedLocale = localStorage.getItem("locale") ?? "";
-  const locale = LOCALE_MAP[storedLocale] || enUS;
+  return format(date, formatStr, { locale: getCurrentDateLocale() });
+}
 
-  return format(date, formatStr, { locale });
+export function formatDistanceDate(startDate: Date, endDate: Date) {
+  return formatDistance(startDate, endDate, { locale: getCurrentDateLocale() });
 }
 
 export function localTimeToDate(localTime: string) {
@@ -19,3 +20,8 @@ export function localTimeToDate(localTime: string) {
 
   return parse(dateTimeString, "yyyy-MM-dd'T'HH:mm:ss", new Date());
 }
+
+const getCurrentDateLocale = () => {
+  const storedLocale = localStorage.getItem("locale") ?? "";
+  return LOCALE_MAP[storedLocale] || enUS;
+};

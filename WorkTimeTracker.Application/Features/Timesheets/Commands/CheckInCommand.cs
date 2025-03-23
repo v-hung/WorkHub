@@ -8,12 +8,12 @@ using WorkTimeTracker.Application.Responses.Time;
 
 namespace WorkTimeTracker.Application.Features.Timesheets.Commands
 {
-	public class CheckInCommand : IRequest<TimesheetResponse<TimesheetMinimalDto>>
+	public class CheckInCommand : IRequest<TimesheetResponse<TimesheetDto>>
 	{
 
 	}
 
-	public class CheckInCommandHandler : IRequestHandler<CheckInCommand, TimesheetResponse<TimesheetMinimalDto>>
+	public class CheckInCommandHandler : IRequestHandler<CheckInCommand, TimesheetResponse<TimesheetDto>>
 	{
 		private readonly ITimesheetRepository _timesheetRepository;
 		private readonly ICurrentUserService _currentUserService;
@@ -24,16 +24,16 @@ namespace WorkTimeTracker.Application.Features.Timesheets.Commands
 			_currentUserService = currentUserService;
 		}
 
-		public async Task<TimesheetResponse<TimesheetMinimalDto>> Handle(CheckInCommand command, CancellationToken cancellationToken)
+		public async Task<TimesheetResponse<TimesheetDto>> Handle(CheckInCommand command, CancellationToken cancellationToken)
 		{
 			if (_currentUserService.UserId == null)
 			{
 				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
 			}
 
-			var timesheet = await _timesheetRepository.PerformCheckIn<TimesheetMinimalDto>(_currentUserService.UserId);
+			var timesheet = await _timesheetRepository.PerformCheckIn(_currentUserService.UserId);
 
-			return new TimesheetResponse<TimesheetMinimalDto>
+			return new TimesheetResponse<TimesheetDto>
 			{
 				Timesheet = timesheet
 			};

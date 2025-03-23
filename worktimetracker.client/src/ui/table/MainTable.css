@@ -35,3 +35,6 @@
   flex: none;
   margin-bottom: 0;
 }
+.main-table .ant-table-cell.ant-table-cell-scrollbar {
+  width: 0;
+}

@@ -1,16 +1,18 @@
+using WorkTimeTracker.Application.DTOs.Time;
+
 namespace WorkTimeTracker.Application.Interfaces.Repositories
 {
 	public interface ITimesheetRepository
 	{
-		Task<D?> GetTodayTimesheet<D>(string userId) where D : class;
+		Task<TimesheetDto?> GetTodayTimesheet(string userId);
 
-		Task<List<D>> GetCurrentUserMonthlyTimesheets<D>(string userId, int month, int year) where D : class;
+		Task<List<TimesheetDto>> GetCurrentUserMonthlyTimesheets(string userId, int month, int year);
 
-		Task<List<D>> GetMonthlyTimesheets<D>(int month, int year) where D : class;
+		Task<List<TimesheetFullDto>> GetMonthlyTimesheets(int month, int year);
 
-		Task<D> PerformCheckIn<D>(string userId) where D : class;
+		Task<TimesheetDto> PerformCheckIn(string userId);
 
-		Task<D> PerformCheckOut<D>(string userId) where D : class;
+		Task<TimesheetDto> PerformCheckOut(string userId);
 
 	}
 }

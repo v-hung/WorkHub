@@ -1,10 +1,9 @@
-using WorkTimeTracker.Application.DTOs.Identity;
+using WorkTimeTracker.Application.DTOs.Requests;
 
 namespace WorkTimeTracker.Application.DTOs.Time
 {
 	public class TimesheetDto : TimesheetMinimalDto
 	{
-		public UserMinimalDto? User { get; set; }
-
+		public List<RequestMinimalDto> Requests { get; set; } = [];
 	}
 }

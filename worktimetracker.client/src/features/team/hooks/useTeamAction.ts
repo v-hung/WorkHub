@@ -17,6 +17,7 @@ export const useTeamAction = () => {
 
     return {
       ...data,
+      managerId: data.manager?.id || null,
       memberIds: data.members?.map((v) => v.id),
       projectIds: data.projects?.map((v) => v.id),
     };

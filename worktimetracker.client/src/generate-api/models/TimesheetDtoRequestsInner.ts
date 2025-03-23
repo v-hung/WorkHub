@@ -10,8 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
+import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
+import { RequestDto } from '../models/RequestDto';
+import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { HttpFile } from '../http/http';
 
 /**
@@ -19,7 +20,7 @@ import { HttpFile } from '../http/http';
  * Type
  * @export
  */
-export type TimesheetDtoRequestsInner = LeaveRequestDto | TimesheetRequestDto;
+export type TimesheetDtoRequestsInner = LeaveRequestMinimalDto | RequestDto | TimesheetRequestMinimalDto;
 
 /**
 * @type TimesheetDtoRequestsInnerClass
@@ -30,4 +31,5 @@ export class TimesheetDtoRequestsInnerClass {
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 }
+
 

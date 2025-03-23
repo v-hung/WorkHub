@@ -5,11 +5,24 @@ import { useTimesheet } from "../../hooks/useTimesheet";
 import { formatDate } from "@/common/utils/date.util";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { blueDark, red } from "@ant-design/colors";
+import { useMemo } from "react";
+import { useAuthStore } from "@/stores/auth.store";
+import { isAfter, isBefore } from "date-fns";
 
 const TImesheetHeader = () => {
   const { loading, timeString } = useTimesheet();
 
   const { startTime, endTime, checkIn, checkOut } = useTimesheetStore();
+  const workTime = useAuthStore((state) => state.user?.workTime!);
+
+  const is_paid_time = useMemo(
+    () =>
+      !!startTime &&
+      !endTime &&
+      (isBefore(workTime.startTimeMorning, Date.now()) ||
+        isAfter(workTime.endTimeAfternoon, Date.now())),
+    [startTime, endTime, workTime]
+  );
 
   return (
     <MainHeader title="Timesheet">
@@ -30,6 +43,7 @@ const TImesheetHeader = () => {
                     style={{ color: endTime ? red.primary : blueDark.primary }}
                   />
                 }
+                danger={is_paid_time}
                 style={{ pointerEvents: "none" }}
               >
                 {timeString}

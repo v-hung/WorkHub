@@ -3,6 +3,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Domain.Entities.Time;
@@ -23,7 +24,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			_localizer = localizer;
 		}
 
-		public async Task<List<D>> GetCurrentUserMonthlyTimesheets<D>(string userId, int month, int year) where D : class
+		public async Task<List<TimesheetDto>> GetCurrentUserMonthlyTimesheets(string userId, int month, int year)
 		{
 
 			if (!Guid.TryParse(userId, out var guidUserId))
@@ -32,34 +33,80 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			}
 
 			var startDate = new DateTime(year, month, 1);
+			var daysInMonth = DateTime.DaysInMonth(year, month);
 			var endDate = startDate.AddMonths(1);
 
-			return await _context.Timesheets.AsNoTracking()
+			var allDays = Enumerable.Range(0, daysInMonth)
+				.Select(day => startDate.AddDays(day).Date)
+				.ToList();
+
+			var timesheets = await _context.Timesheets.AsNoTracking()
 				.Where(t => t.UserId == guidUserId && t.StartTime >= startDate && t.StartTime < endDate)
-				.ProjectTo<D>(_mapper.ConfigurationProvider)
+				.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
+
+			var result = allDays.GroupJoin(
+				timesheets,
+				day => day,
+				timesheet => timesheet.Date.Date,
+				(day, times) => new TimesheetDto
+				{
+					Id = times.FirstOrDefault()?.Id ?? Guid.NewGuid(),
+					Date = day,
+					StartTime = times.FirstOrDefault()?.StartTime,
+					EndTime = times.FirstOrDefault()?.EndTime,
+					Requests = times.FirstOrDefault()?.Requests ?? [],
+					WorkMinutes = times.FirstOrDefault()?.WorkMinutes,
+				}).ToList();
+
+			return result;
 		}
 
-		public async Task<List<D>> GetMonthlyTimesheets<D>(int month, int year) where D : class
+		public async Task<List<TimesheetFullDto>> GetMonthlyTimesheets(int month, int year)
 		{
 			var startDate = new DateTime(year, month, 1);
+			var daysInMonth = DateTime.DaysInMonth(year, month);
 			var endDate = startDate.AddMonths(1);
 
-			return await _context.Timesheets.AsNoTracking()
+			var allDays = Enumerable.Range(0, daysInMonth)
+				.Select(day => startDate.AddDays(day).Date)
+				.ToList();
+
+			var timesheets = await _context.Timesheets.AsNoTracking()
 				.Where(t => t.StartTime >= startDate && t.StartTime < endDate)
-				.ProjectTo<D>(_mapper.ConfigurationProvider)
+				.ProjectTo<TimesheetFullDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
+
+			var result = allDays.GroupJoin(
+				timesheets,
+				day => day,
+				timesheet => timesheet.Date.Date,
+				(day, times) => new TimesheetFullDto
+				{
+					Id = times.FirstOrDefault()?.Id ?? Guid.NewGuid(),
+					Date = day,
+					StartTime = times.FirstOrDefault()?.StartTime,
+					EndTime = times.FirstOrDefault()?.EndTime,
+					Requests = times.FirstOrDefault()?.Requests ?? [],
+					WorkMinutes = times.FirstOrDefault()?.WorkMinutes,
+					User = times.FirstOrDefault()?.User,
+				}).ToList();
+
+			return result;
 		}
 
-		public async Task<D?> GetTodayTimesheet<D>(string userId) where D : class
+		public async Task<TimesheetDto?> GetTodayTimesheet(string userId)
 		{
+			var today = DateTime.Today;
+			var tomorrow = today.AddDays(1);
+
 			return await _context.Timesheets.AsNoTracking()
-				.Where(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today)
-				.ProjectTo<D>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync();
+					.Where(t => t.UserId == new Guid(userId) && t.StartTime >= today && t.StartTime < tomorrow)
+					.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
+					.FirstOrDefaultAsync();
 		}
 
-		public async Task<D> PerformCheckIn<D>(string userId) where D : class
+		public async Task<TimesheetDto> PerformCheckIn(string userId)
 		{
 			Timesheet? timesheetDb = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today);
 
@@ -71,17 +118,18 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			Timesheet timesheet = new Timesheet
 			{
 				UserId = new Guid(userId),
-				StartTime = DateTime.Now
+				Date = DateTime.Now.Date,
+				StartTime = DateTime.Now,
 			};
 
 			_context.Timesheets.Add(timesheet);
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<D>(timesheet);
+			return _mapper.Map<TimesheetDto>(timesheet);
 
 		}
 
-		public async Task<D> PerformCheckOut<D>(string userId) where D : class
+		public async Task<TimesheetDto> PerformCheckOut(string userId)
 		{
 			Timesheet timesheet = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
 
@@ -95,7 +143,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<D>(timesheet);
+			return _mapper.Map<TimesheetDto>(timesheet);
 
 		}
 	}

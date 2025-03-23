@@ -536,6 +536,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime(6)");
 

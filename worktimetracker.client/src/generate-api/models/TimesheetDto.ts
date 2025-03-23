@@ -11,16 +11,15 @@
  */
 
 import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
-import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
 export class TimesheetDto {
     'id': string;
-    'startTime': Date;
+    'date': Date;
+    'startTime'?: Date | null;
     'endTime'?: Date | null;
     'workMinutes'?: number | null;
     'requests'?: Array<TimesheetDtoRequestsInner> | null;
-    'user'?: UserMinimalDto;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -32,6 +31,12 @@ export class TimesheetDto {
             "baseName": "id",
             "type": "string",
             "format": "uuid"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date",
+            "format": "date-time"
         },
         {
             "name": "startTime",
@@ -55,12 +60,6 @@ export class TimesheetDto {
             "name": "requests",
             "baseName": "requests",
             "type": "Array<TimesheetDtoRequestsInner>",
-            "format": ""
-        },
-        {
-            "name": "user",
-            "baseName": "user",
-            "type": "UserMinimalDto",
             "format": ""
         }    ];
 

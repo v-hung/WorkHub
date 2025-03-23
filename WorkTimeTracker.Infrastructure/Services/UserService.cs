@@ -65,7 +65,11 @@ namespace WorkTimeTracker.Infrastructure.Services
 			if (request.OrderBy?.Any() == true)
 			{
 				var ordering = string.Join(",", request.OrderBy);
-				query.OrderBy(ordering); // require system.linq.dynamic.core
+				query = query.OrderBy(ordering); // require system.linq.dynamic.core
+			}
+			else
+			{
+				query = query.OrderBy(u => u.Id);
 			}
 
 			// Navigation

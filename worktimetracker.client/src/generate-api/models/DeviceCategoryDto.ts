@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { DeviceDto } from '../models/DeviceDto';
+import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { HttpFile } from '../http/http';
 
 export class DeviceCategoryDto {
     'id': number;
     'name': string;
     'description'?: string | null;
-    'devices'?: Array<DeviceDto> | null;
+    'devices'?: Array<DeviceMinimalDto> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -45,7 +45,7 @@ export class DeviceCategoryDto {
         {
             "name": "devices",
             "baseName": "devices",
-            "type": "Array<DeviceDto>",
+            "type": "Array<DeviceMinimalDto>",
             "format": ""
         }    ];
 

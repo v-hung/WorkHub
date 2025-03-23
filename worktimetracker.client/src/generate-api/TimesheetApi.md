@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **timesheetCheckIn**
-> TimesheetMinimalDtoTimesheetResponse timesheetCheckIn()
+> TimesheetDtoTimesheetResponse timesheetCheckIn()
 
 
 ### Example
@@ -37,7 +37,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**TimesheetMinimalDtoTimesheetResponse**
+**TimesheetDtoTimesheetResponse**
 
 ### Authorization
 
@@ -59,7 +59,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **timesheetCheckOut**
-> TimesheetMinimalDtoTimesheetResponse timesheetCheckOut()
+> TimesheetDtoTimesheetResponse timesheetCheckOut()
 
 
 ### Example
@@ -84,7 +84,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**TimesheetMinimalDtoTimesheetResponse**
+**TimesheetDtoTimesheetResponse**
 
 ### Authorization
 
@@ -106,7 +106,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **timesheetGetCurrentUserMonthlyTimesheets**
-> Array<TimesheetMinimalDto> timesheetGetCurrentUserMonthlyTimesheets()
+> Array<TimesheetDto> timesheetGetCurrentUserMonthlyTimesheets()
 
 
 ### Example
@@ -127,63 +127,6 @@ const request: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {
 };
 
 const data = await apiInstance.timesheetGetCurrentUserMonthlyTimesheets(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **month** | [**number**] |  | (optional) defaults to undefined
- **year** | [**number**] |  | (optional) defaults to undefined
-
-
-### Return type
-
-**Array<TimesheetMinimalDto>**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **timesheetGetMonthlyTimesheets**
-> Array<TimesheetDto> timesheetGetMonthlyTimesheets()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, TimesheetApi } from '';
-import type { TimesheetApiTimesheetGetMonthlyTimesheetsRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new TimesheetApi(configuration);
-
-const request: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {
-  
-  month: 1,
-  
-  year: 1,
-};
-
-const data = await apiInstance.timesheetGetMonthlyTimesheets(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -219,8 +162,65 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
+# **timesheetGetMonthlyTimesheets**
+> Array<TimesheetFullDto> timesheetGetMonthlyTimesheets()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, TimesheetApi } from '';
+import type { TimesheetApiTimesheetGetMonthlyTimesheetsRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new TimesheetApi(configuration);
+
+const request: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {
+  
+  month: 1,
+  
+  year: 1,
+};
+
+const data = await apiInstance.timesheetGetMonthlyTimesheets(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **month** | [**number**] |  | (optional) defaults to undefined
+ **year** | [**number**] |  | (optional) defaults to undefined
+
+
+### Return type
+
+**Array<TimesheetFullDto>**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
 # **timesheetGetTodayTimesheet**
-> TimesheetMinimalDtoTimesheetResponse timesheetGetTodayTimesheet()
+> TimesheetDtoTimesheetResponse timesheetGetTodayTimesheet()
 
 
 ### Example
@@ -245,7 +245,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**TimesheetMinimalDtoTimesheetResponse**
+**TimesheetDtoTimesheetResponse**
 
 ### Authorization
 

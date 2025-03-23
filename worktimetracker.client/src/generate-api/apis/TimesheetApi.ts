@@ -11,8 +11,8 @@ import {SecurityAuthentication} from '../auth/auth';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { TimesheetDto } from '../models/TimesheetDto';
-import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetMinimalDtoTimesheetResponse } from '../models/TimesheetMinimalDtoTimesheetResponse';
+import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
+import { TimesheetFullDto } from '../models/TimesheetFullDto';
 
 /**
  * no description
@@ -198,13 +198,13 @@ export class TimesheetApiResponseProcessor {
      * @params response Response returned by the server for a request to timesheetCheckIn
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetCheckInWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse >> {
+     public async timesheetCheckInWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetDtoTimesheetResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetMinimalDtoTimesheetResponse = ObjectSerializer.deserialize(
+            const body: TimesheetDtoTimesheetResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetMinimalDtoTimesheetResponse", ""
-            ) as TimesheetMinimalDtoTimesheetResponse;
+                "TimesheetDtoTimesheetResponse", ""
+            ) as TimesheetDtoTimesheetResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -224,10 +224,10 @@ export class TimesheetApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetMinimalDtoTimesheetResponse = ObjectSerializer.deserialize(
+            const body: TimesheetDtoTimesheetResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetMinimalDtoTimesheetResponse", ""
-            ) as TimesheetMinimalDtoTimesheetResponse;
+                "TimesheetDtoTimesheetResponse", ""
+            ) as TimesheetDtoTimesheetResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -241,13 +241,13 @@ export class TimesheetApiResponseProcessor {
      * @params response Response returned by the server for a request to timesheetCheckOut
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetCheckOutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse >> {
+     public async timesheetCheckOutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetDtoTimesheetResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetMinimalDtoTimesheetResponse = ObjectSerializer.deserialize(
+            const body: TimesheetDtoTimesheetResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetMinimalDtoTimesheetResponse", ""
-            ) as TimesheetMinimalDtoTimesheetResponse;
+                "TimesheetDtoTimesheetResponse", ""
+            ) as TimesheetDtoTimesheetResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -267,10 +267,10 @@ export class TimesheetApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetMinimalDtoTimesheetResponse = ObjectSerializer.deserialize(
+            const body: TimesheetDtoTimesheetResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetMinimalDtoTimesheetResponse", ""
-            ) as TimesheetMinimalDtoTimesheetResponse;
+                "TimesheetDtoTimesheetResponse", ""
+            ) as TimesheetDtoTimesheetResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -284,13 +284,13 @@ export class TimesheetApiResponseProcessor {
      * @params response Response returned by the server for a request to timesheetGetCurrentUserMonthlyTimesheets
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<TimesheetMinimalDto> >> {
+     public async timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<TimesheetDto> >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: Array<TimesheetMinimalDto> = ObjectSerializer.deserialize(
+            const body: Array<TimesheetDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<TimesheetMinimalDto>", ""
-            ) as Array<TimesheetMinimalDto>;
+                "Array<TimesheetDto>", ""
+            ) as Array<TimesheetDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -310,10 +310,10 @@ export class TimesheetApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: Array<TimesheetMinimalDto> = ObjectSerializer.deserialize(
+            const body: Array<TimesheetDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<TimesheetMinimalDto>", ""
-            ) as Array<TimesheetMinimalDto>;
+                "Array<TimesheetDto>", ""
+            ) as Array<TimesheetDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -327,13 +327,13 @@ export class TimesheetApiResponseProcessor {
      * @params response Response returned by the server for a request to timesheetGetMonthlyTimesheets
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetGetMonthlyTimesheetsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<TimesheetDto> >> {
+     public async timesheetGetMonthlyTimesheetsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<TimesheetFullDto> >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: Array<TimesheetDto> = ObjectSerializer.deserialize(
+            const body: Array<TimesheetFullDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<TimesheetDto>", ""
-            ) as Array<TimesheetDto>;
+                "Array<TimesheetFullDto>", ""
+            ) as Array<TimesheetFullDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -353,10 +353,10 @@ export class TimesheetApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: Array<TimesheetDto> = ObjectSerializer.deserialize(
+            const body: Array<TimesheetFullDto> = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<TimesheetDto>", ""
-            ) as Array<TimesheetDto>;
+                "Array<TimesheetFullDto>", ""
+            ) as Array<TimesheetFullDto>;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -370,13 +370,13 @@ export class TimesheetApiResponseProcessor {
      * @params response Response returned by the server for a request to timesheetGetTodayTimesheet
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetGetTodayTimesheetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetMinimalDtoTimesheetResponse >> {
+     public async timesheetGetTodayTimesheetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetDtoTimesheetResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetMinimalDtoTimesheetResponse = ObjectSerializer.deserialize(
+            const body: TimesheetDtoTimesheetResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetMinimalDtoTimesheetResponse", ""
-            ) as TimesheetMinimalDtoTimesheetResponse;
+                "TimesheetDtoTimesheetResponse", ""
+            ) as TimesheetDtoTimesheetResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -396,10 +396,10 @@ export class TimesheetApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetMinimalDtoTimesheetResponse = ObjectSerializer.deserialize(
+            const body: TimesheetDtoTimesheetResponse = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetMinimalDtoTimesheetResponse", ""
-            ) as TimesheetMinimalDtoTimesheetResponse;
+                "TimesheetDtoTimesheetResponse", ""
+            ) as TimesheetDtoTimesheetResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

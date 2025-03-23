@@ -1,5 +1,7 @@
 import {
   AccountApi,
+  DeviceApi,
+  DeviceCategoryApi,
   ProjectApi,
   RoleApi,
   TeamApi,
@@ -33,6 +35,8 @@ const projectApi = new ProjectApi(configWithRefreshToken);
 const workTimeApi = new WorkTimeApi(configWithRefreshToken);
 const roleApi = new RoleApi(configWithRefreshToken);
 const timesheetApi = new TimesheetApi(configWithRefreshToken);
+const deviceApi = new DeviceApi(configWithRefreshToken);
+const deviceCategoryApi = new DeviceCategoryApi(configWithRefreshToken);
 
 export {
   accountApi,
@@ -43,4 +47,6 @@ export {
   workTimeApi,
   roleApi,
   timesheetApi,
+  deviceApi,
+  deviceCategoryApi,
 };

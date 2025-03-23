@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row, Spin } from "antd";
+import { Col, Form, Input, Row, Select, Spin } from "antd";
 import {
   Dispatch,
   forwardRef,
@@ -8,9 +8,19 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateProjectCommand, ProjectDto } from "@/generate-api";
-import { useProjectAction } from "../../hooks/useProjectAction";
+import {
+  CreateProjectCommand,
+  ProjectDto,
+  ProjectStatus,
+} from "@/generate-api";
+import {
+  CreateProjectCommandCustomType,
+  useProjectAction,
+} from "../../hooks/useProjectAction";
 import { useNavigate } from "react-router";
+import { TeamSelectMemo } from "@/features/team/components/TeamSelect/TeamSelect";
+import { UserSelectMemo } from "@/features/user/components/UserSelect/UserSelect";
+import MyRangePicker from "@/ui/form/MyRangePicker";
 
 type State = HTMLAttributes<HTMLDivElement> & {
   record?: ProjectDto;
@@ -34,18 +44,26 @@ const ProjectFormCreate = forwardRef<ProjectFormCreateRefState, State>(
       }
     }, [loading, setLoading]);
 
-    const [form] = Form.useForm();
-    const [formState] = useState<CreateProjectCommand>(formDefault(record));
+    const [form] = Form.useForm<CreateProjectCommandCustomType>();
+    const [formState] = useState<CreateProjectCommandCustomType>(
+      formDefault(record)
+    );
 
     useImperativeHandle(ref, () => ({
       handelUpsert() {
         form.validateFields().then(async () => {
           const formValues = form.getFieldsValue();
 
+          const body: CreateProjectCommand = {
+            ...formValues,
+            startDate: formValues.completionTime?.[0] || null,
+            endDate: formValues.completionTime?.[1] || null,
+          };
+
           if (!record) {
-            await create(formValues);
+            await create(body);
           } else {
-            await update(record.id, formValues);
+            await update(record.id, body);
           }
 
           navigate("/projects");
@@ -77,11 +95,50 @@ const ProjectFormCreate = forwardRef<ProjectFormCreateRefState, State>(
               </Form.Item>
             </Col>
 
-            <Col span={24} />
-
-            <Col xs={24} lg={12}>
+            <Col xs={24}>
               <Form.Item label="Description" name="description">
                 <Input placeholder="description" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12}>
+              <Form.Item label="Completion Time" name="completionTime">
+                <MyRangePicker />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item label="Status" name="status">
+                <Select
+                  options={Object.entries(ProjectStatus).map(
+                    ([key, value]) => ({
+                      value,
+                      label: key,
+                    })
+                  )}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item label="Team" name="teamId">
+                <TeamSelectMemo />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item
+                label="Manager"
+                name="managerId"
+                rules={[{ required: true }]}
+              >
+                <UserSelectMemo />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item label="Members" name="memberIds">
+                <UserSelectMemo mode="multiple" />
               </Form.Item>
             </Col>
           </Row>

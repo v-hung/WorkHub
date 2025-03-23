@@ -21,7 +21,7 @@ export class DeviceDto {
     'description'?: string | null;
     'location'?: string | null;
     'status'?: DeviceStatus;
-    'assignedUserId'?: UserMinimalDto;
+    'assignedUser'?: UserMinimalDto;
     'deviceCategories'?: Array<DeviceCategoryMinimalDto> | null;
 
     static readonly discriminator: string | undefined = undefined;
@@ -60,8 +60,8 @@ export class DeviceDto {
             "format": ""
         },
         {
-            "name": "assignedUserId",
-            "baseName": "assignedUserId",
+            "name": "assignedUser",
+            "baseName": "assignedUser",
             "type": "UserMinimalDto",
             "format": ""
         },

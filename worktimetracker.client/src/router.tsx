@@ -70,40 +70,59 @@ const router = createBrowserRouter(
             },
           ],
         },
-        // {
-        //   path: "/projects",
-        //   children: [
-        //     {
-        //       path: "",
-        //       lazy: () => import("./pages/project/ProjectPage"),
-        //     },
-        //     {
-        //       path: "create",
-        //       lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
-        //     },
-        //     {
-        //       path: ":id/edit",
-        //       lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
-        //     },
-        //   ],
-        // },
-        // {
-        //   path: "/inventories",
-        //   children: [
-        //     {
-        //       path: "",
-        //       lazy: () => import("./pages/device/DevicePage"),
-        //     },
-        //     {
-        //       path: "create",
-        //       lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
-        //     },
-        //     {
-        //       path: ":id/edit",
-        //       lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
-        //     },
-        //   ],
-        // },
+        {
+          path: "/projects",
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/project/ProjectPage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/project/ProjectCreateUpdatePage"),
+            },
+          ],
+        },
+        {
+          path: "/devices",
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/device/DevicePage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
+            },
+          ],
+        },
+        {
+          path: "/device-categories",
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/deviceCategory/DeviceCategoryPage"),
+            },
+            {
+              path: "create",
+              lazy: () =>
+                import("./pages/deviceCategory/DeviceCategoryCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () =>
+                import("./pages/deviceCategory/DeviceCategoryCreateUpdatePage"),
+            },
+          ],
+        },
       ],
     },
     {

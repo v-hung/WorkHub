@@ -12,7 +12,7 @@ export function calculateWorkDay(
   const startTimeMorning = localTimeToDate(workTime.startTimeMorning);
   const endTimeMorning = localTimeToDate(workTime.endTimeMorning);
   const startTimeAfternoon = localTimeToDate(workTime.startTimeAfternoon);
-  const endTimeAfternoon = localTimeToDate(workTime.endTimeAfternoon);
+  let endTimeAfternoon = localTimeToDate(workTime.endTimeAfternoon); // dynamic end time afternoon
 
   if (
     isInvalidTimeRange(startTime, endTime, startTimeMorning, endTimeAfternoon)
@@ -20,6 +20,7 @@ export function calculateWorkDay(
     return totalWorkingSeconds;
   }
 
+  // Recalculate finish time due to late arrival time
   if (isAfter(startTime, startTimeMorning)) {
     let lateSeconds = differenceInSeconds(startTimeMorning, startTime);
     let adjustedSeconds = Math.min(
@@ -53,8 +54,8 @@ export function calculateWorkDay(
       ? startTimeAfternoon
       : startTime;
     let validAfternoonEnd = isAfter(endTime, endTimeAfternoon)
-      ? endTime
-      : endTimeAfternoon;
+      ? endTimeAfternoon
+      : endTime;
 
     if (isBefore(validAfternoonStart, validAfternoonEnd)) {
       totalWorkingSeconds += differenceInSeconds(

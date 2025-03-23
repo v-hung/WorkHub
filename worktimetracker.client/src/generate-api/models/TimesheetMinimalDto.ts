@@ -10,15 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
 import { HttpFile } from '../http/http';
 
 export class TimesheetMinimalDto {
     'id': string;
-    'startTime': Date;
+    'date': Date;
+    'startTime'?: Date | null;
     'endTime'?: Date | null;
     'workMinutes'?: number | null;
-    'requests'?: Array<TimesheetDtoRequestsInner> | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -30,6 +29,12 @@ export class TimesheetMinimalDto {
             "baseName": "id",
             "type": "string",
             "format": "uuid"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date",
+            "format": "date-time"
         },
         {
             "name": "startTime",
@@ -48,12 +53,6 @@ export class TimesheetMinimalDto {
             "baseName": "workMinutes",
             "type": "number",
             "format": "int32"
-        },
-        {
-            "name": "requests",
-            "baseName": "requests",
-            "type": "Array<TimesheetDtoRequestsInner>",
-            "format": ""
         }    ];
 
     static getAttributeTypeMap() {

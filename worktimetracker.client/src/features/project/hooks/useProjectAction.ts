@@ -4,20 +4,31 @@ import { CreateProjectCommand, ProjectDto } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { useState } from "react";
 
+export type CreateProjectCommandCustomType = CreateProjectCommand & {
+  completionTime: [Date | null, Date | null];
+};
+
 export const useProjectAction = () => {
   const [loading, setLoading] = useState(false);
 
   // Default data
   // =============
 
-  const formDefault = (data?: ProjectDto): CreateProjectCommand => {
+  const formDefault = (data?: ProjectDto): CreateProjectCommandCustomType => {
     if (!data) {
-      return new CreateProjectCommand();
+      const form = new CreateProjectCommand();
+      return {
+        ...form,
+        completionTime: [null, null],
+      };
     }
 
     return {
       ...data,
+      managerId: data.manager?.id || null,
+      teamId: data.team?.id || null,
       memberIds: data.members?.map((v) => v.id),
+      completionTime: [data.startDate || null, data.endDate || null],
     };
   };
 
@@ -27,6 +38,7 @@ export const useProjectAction = () => {
   const create = async (request: CreateProjectCommand) => {
     setLoading(true);
     try {
+      console.log({ request });
       await projectApi.projectCreate(request);
       getNotification().success({
         message: "Successfully completed",

@@ -6,7 +6,7 @@ export type DataUserTableType = {
   email: string;
   fullName: string;
   image?: string | null;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
@@ -46,24 +46,3 @@ export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
     ),
   },
 ];
-
-// const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
-
-//   const confirm = () =>
-//     new Promise((resolve) => {
-//       setTimeout(() => resolve(null), 3000);
-//     });
-
-//   return (
-//     <Popconfirm
-//       title="Delete the user"
-//       description="Are you sure to delete this user?"
-//       onConfirm={confirm}
-//       placement="bottomRight"
-//     >
-//       <Button size="small" danger>
-//         Delete
-//       </Button>
-//     </Popconfirm>
-//   );
-// };

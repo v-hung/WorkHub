@@ -7,12 +7,12 @@ using WorkTimeTracker.Domain.Entities.Equipment;
 
 namespace WorkTimeTracker.Application.Features.Devices.Queries
 {
-	public class SearchDeviceQuery : IRequest<Paginated<DeviceMinimalDto>>
+	public class SearchDeviceQuery : IRequest<Paginated<DeviceDto>>
 	{
 		public required PagedRequest Request { get; set; }
 	}
 
-	public class SearchDeviceQueryHandler : IRequestHandler<SearchDeviceQuery, Paginated<DeviceMinimalDto>>
+	public class SearchDeviceQueryHandler : IRequestHandler<SearchDeviceQuery, Paginated<DeviceDto>>
 	{
 		private readonly IRepository<Device, int> _repository;
 
@@ -21,9 +21,9 @@ namespace WorkTimeTracker.Application.Features.Devices.Queries
 			_repository = repository;
 		}
 
-		public async Task<Paginated<DeviceMinimalDto>> Handle(SearchDeviceQuery query, CancellationToken cancellationToken)
+		public async Task<Paginated<DeviceDto>> Handle(SearchDeviceQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<DeviceMinimalDto, int>(query.Request);
+			return await _repository.SearchAsync<DeviceDto, int>(query.Request);
 		}
 	}
 }

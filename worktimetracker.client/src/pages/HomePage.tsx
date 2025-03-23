@@ -8,12 +8,11 @@ export const loader = wrapLoaderWithPermission(async () => {
 });
 
 export function Component() {
-  console.log("home.tsx component");
   return (
     <Layout>
       <MainHeader title="Home"></MainHeader>
 
-      <MainContent>sf</MainContent>
+      <MainContent>Home</MainContent>
     </Layout>
   );
 }

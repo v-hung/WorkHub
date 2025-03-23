@@ -11,8 +11,8 @@ import {
 import { CreateTeamCommand, TeamFullDto } from "@/generate-api";
 import { useTeamAction } from "../../hooks/useTeamAction";
 import { useNavigate } from "react-router";
-import UserSelect from "@/features/user/components/UserSelect/UserSelect";
-import ProjectSelect from "@/features/project/components/ProjectSelect/ProjectSelect";
+import { UserSelectMemo } from "@/features/user/components/UserSelect/UserSelect";
+import { ProjectSelectMemo } from "@/features/project/components/ProjectSelect/ProjectSelect";
 
 type State = HTMLAttributes<HTMLDivElement> & {
   record?: TeamFullDto;
@@ -101,19 +101,19 @@ const TeamFormCreate = forwardRef<TeamFormCreateRefState, State>(
 
             <Col xs={24} lg={12}>
               <Form.Item label="Manager" name="managerId">
-                <UserSelect allowClear />
+                <UserSelectMemo />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12}>
               <Form.Item label="Members" name="memberIds">
-                <UserSelect mode="multiple" />
+                <UserSelectMemo mode="multiple" />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12}>
               <Form.Item label="Projects" name="projectIds">
-                <ProjectSelect mode="multiple" />
+                <ProjectSelectMemo mode="multiple" />
               </Form.Item>
             </Col>
           </Row>

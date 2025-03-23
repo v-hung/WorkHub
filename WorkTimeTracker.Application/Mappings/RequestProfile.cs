@@ -14,6 +14,13 @@ namespace WorkTimeTracker.Application.Mappings
 
 			CreateMap<LeaveRequest, LeaveRequestDto>().ReverseMap();
 			CreateMap<TimesheetRequest, TimesheetRequestDto>().ReverseMap();
+
+			CreateMap<Request, RequestMinimalDto>()
+				.Include<LeaveRequest, LeaveRequestMinimalDto>()
+				.Include<TimesheetRequest, TimesheetRequestMinimalDto>();
+
+			CreateMap<LeaveRequest, LeaveRequestMinimalDto>().ReverseMap();
+			CreateMap<TimesheetRequest, TimesheetRequestMinimalDto>().ReverseMap();
 		}
 	}
 }

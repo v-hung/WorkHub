@@ -209,7 +209,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item label="Team" name="teamID">
+              <Form.Item label="Team" name="teamId">
                 <TeamSelectMemo />
               </Form.Item>
             </Col>

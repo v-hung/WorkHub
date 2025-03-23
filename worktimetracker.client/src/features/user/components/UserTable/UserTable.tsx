@@ -1,8 +1,8 @@
 import MainTable from "@/ui/table/MainTable";
-import { userTableColumns } from "./constants";
+import { DataUserTableType, userTableColumns } from "./constants";
 import { useUsers } from "../../hooks/useUsers";
 import { useEffect, useMemo } from "react";
-import { toDataUserTable } from "@/mappings/user.mapping";
+import { formatDate } from "@/common/utils/date.util";
 
 const UserTable = () => {
   const { userPaginated, setRequest, loading } = useUsers();
@@ -12,7 +12,14 @@ const UserTable = () => {
   }, []);
 
   const data = useMemo(
-    () => userPaginated.data.map(toDataUserTable),
+    () =>
+      userPaginated.data.map<DataUserTableType>((v) => ({
+        id: v.id,
+        email: v.email,
+        fullName: v.fullName,
+        image: v.email,
+        createdAt: formatDate(v.createdAt, "dd/MM/yyyy"),
+      })),
     [userPaginated.data]
   );
 
