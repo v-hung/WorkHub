@@ -12,7 +12,7 @@ import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 import { useWorkTimeAction } from "../../hooks/useWorkTimeAction";
 import MyTimePicker from "@/ui/form/MyTimePicker";
 import { workTimeDisabledTime } from "../../utils/workTime.util";
-import { formatDate, localTimeToDate } from "@/common/utils/date.util";
+import { format, localTimeToDate } from "@/common/utils/date.util";
 import { useNavigate } from "react-router";
 
 type State = HTMLAttributes<HTMLDivElement> & {
@@ -87,7 +87,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="Start time morning"
                 name="startTimeMorning"
                 rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueFromEvent={(v) => v && format(v)}
                 getValueProps={(v) => ({
                   value: v ? localTimeToDate(v) : null,
                 })}
@@ -107,7 +107,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="End time morning"
                 name="endTimeMorning"
                 rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueFromEvent={(v) => v && format(v)}
                 getValueProps={(v) => ({
                   value: v ? localTimeToDate(v) : null,
                 })}
@@ -128,7 +128,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="Start time afternoon"
                 name="startTimeAfternoon"
                 rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueFromEvent={(v) => v && format(v)}
                 getValueProps={(v) => ({
                   value: v ? localTimeToDate(v) : null,
                 })}
@@ -149,7 +149,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                 label="End time afternoon"
                 name="endTimeAfternoon"
                 rules={[{ required: true }]}
-                getValueFromEvent={(v) => v && formatDate(v)}
+                getValueFromEvent={(v) => v && format(v)}
                 getValueProps={(v) => ({
                   value: v ? localTimeToDate(v) : null,
                 })}

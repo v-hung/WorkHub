@@ -2,21 +2,30 @@ import MainTable from "@/ui/table/MainTable";
 import { DataTimesheetTableType, userTimesheetColumns } from "./constants";
 import { useMemo } from "react";
 import { useTimesheets } from "../../hooks/useTimesheets";
-import { formatDate } from "@/common/utils/date.util";
+import { format, formatDuration } from "@/common/utils/date.util";
 import "./TimesheetTable.css";
-import { isWeekend } from "date-fns";
+import { intervalToDuration, isWeekend } from "date-fns";
+import { Button, Flex } from "antd";
+import MyDatePicker from "@/ui/form/MyDatePicker";
+import { blue } from "@ant-design/colors";
+import { useAuthStore } from "@/stores/auth.store";
 
 const TimesheetTable = () => {
-  const { timesheets, loading } = useTimesheets();
+  const { timesheets, loading, selectedDate, setSelectedDate, isCurrentMonth } =
+    useTimesheets();
+
+  const remainingLeaveMinutes = useAuthStore(
+    (state) => state.user?.remainingLeaveMinutes
+  );
 
   const data = useMemo(
     () =>
       timesheets.map<DataTimesheetTableType>((v) => ({
         id: v.id,
         date: v.date,
-        dateString: formatDate(v.date, "dd/MM/yyyy"),
-        startTime: v.startTime ? formatDate(v.startTime) : undefined,
-        endTime: v.endTime ? formatDate(v.endTime) : undefined,
+        dateString: format(v.date, "dd/MM/yyyy"),
+        startTime: v.startTime ? format(v.startTime) : undefined,
+        endTime: v.endTime ? format(v.endTime) : undefined,
         workMinutes: v.workMinutes,
         requests: v.requests,
       })),
@@ -24,43 +33,47 @@ const TimesheetTable = () => {
   );
 
   return (
-		<div class="mb-2 flex flex-none justify-between gap-2 px-6">
-    <DatePicker v-model:value="month" picker="month" />
-    <a-button
-      :icon="h(BxCalendarCheck, { class: 'w-5' })"
-      class="mr-auto text-gray-600"
-      :class="{ '!text-sky-500': isSameMonth(month, new Date()) }"
-      @click.prevent="month = new Date()"
-    ></a-button>
-    <a-dropdown :trigger="['click']" placement="bottomLeft">
-      <a-button class="flex items-center text-sm" type="text">
-        <IonList class="mr-1 w-5" />
-        <span>List view</span>
-        <DownOutlined class="text-xs leading-none" />
-      </a-button>
-      <template #overlay>
-        <a-menu>
-          <a-menu-item key="1"
-            >Clicking me will not close the menu.</a-menu-item
-          >
-          <a-menu-item key="2"
-            >Clicking me will not close the menu also.</a-menu-item
-          >
-          <a-menu-item key="3">Clicking me will close the menu</a-menu-item>
-        </a-menu>
-      </template>
-    </a-dropdown>
-  </div>
-    <MainTable
-      className="timesheet-table"
-      columns={userTimesheetColumns}
-      dataSource={data}
-      loading={loading}
-      pagination={false}
-      rowClassName={(record) => {
-        return isWeekend(record.date) ? "weekend-row" : "";
-      }}
-    />
+    <>
+      <Flex
+        gap="small"
+        justify="space-between"
+        align="end"
+        style={{ marginBottom: "1rem" }}
+      >
+        <div style={{ marginRight: "auto" }}>
+          Remaining leave balance:{" "}
+          {formatDuration(
+            intervalToDuration({
+              start: 0,
+              end: (remainingLeaveMinutes ?? 0) * 60 * 1000,
+            }),
+            { zero: true }
+          )}
+        </div>
+        <MyDatePicker
+          picker="month"
+          value={selectedDate}
+          onChange={(v) => setSelectedDate(v)}
+          showNow
+        />
+        <Button
+          icon={<IBxCalendarCheck />}
+          style={{ color: isCurrentMonth ? blue.primary : "inherit" }}
+          onClick={() => setSelectedDate(new Date())}
+        ></Button>
+      </Flex>
+
+      <MainTable
+        className="timesheet-table"
+        columns={userTimesheetColumns}
+        dataSource={data}
+        loading={loading}
+        pagination={false}
+        rowClassName={(record) => {
+          return isWeekend(record.date) ? "weekend-row" : "";
+        }}
+      />
+    </>
   );
 };
 

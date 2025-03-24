@@ -1,4 +1,4 @@
-import { formatDate } from "@/common/utils/date.util";
+import { format } from "@/common/utils/date.util";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { calculateWorkDay } from "../utils/timesheet.util";
@@ -22,7 +22,7 @@ export const useTimesheet = () => {
       setTimeString(`${durationWork.toFixed(2)}`);
     } else {
       const currentServerTime = new Date(Date.now() - timeDifference);
-      const currentServerTimeFormatted = formatDate(currentServerTime);
+      const currentServerTimeFormatted = format(currentServerTime);
       const durationWork = calculateWorkDay(
         startTime,
         currentServerTime,

@@ -2,7 +2,7 @@ import MainHeader from "@/layouts/main/components/MainHeader";
 import { Button, Popconfirm, Skeleton, Tag } from "antd";
 import styles from "./TimesheetHeader.module.css";
 import { useTimesheet } from "../../hooks/useTimesheet";
-import { formatDate } from "@/common/utils/date.util";
+import { format } from "@/common/utils/date.util";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { blueDark, red } from "@ant-design/colors";
 import { useMemo } from "react";
@@ -27,7 +27,7 @@ const TImesheetHeader = () => {
   return (
     <MainHeader title="Timesheet">
       <div className={styles.headerContainer}>
-        {startTime && <Tag color="blue">{formatDate(startTime)}</Tag>}
+        {startTime && <Tag color="blue">{format(startTime)}</Tag>}
         <div className="action">
           {loading ? (
             <Skeleton.Input active />

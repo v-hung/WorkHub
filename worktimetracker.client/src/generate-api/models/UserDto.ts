@@ -26,7 +26,7 @@ export class UserDto {
     'userPosition': UserPosition;
     'userStatus': UserStatus;
     'isFirstLogin': boolean;
-    'leaveHours': number;
+    'remainingLeaveMinutes': number;
     'createdAt': Date;
     'updatedAt'?: Date | null;
     'createdBy'?: string | null;
@@ -90,8 +90,8 @@ export class UserDto {
             "format": ""
         },
         {
-            "name": "leaveHours",
-            "baseName": "leaveHours",
+            "name": "remainingLeaveMinutes",
+            "baseName": "remainingLeaveMinutes",
             "type": "number",
             "format": "int32"
         },

@@ -2,7 +2,7 @@ import MainTable from "@/ui/table/MainTable";
 import { DataUserTableType, userTableColumns } from "./constants";
 import { useUsers } from "../../hooks/useUsers";
 import { useEffect, useMemo } from "react";
-import { formatDate } from "@/common/utils/date.util";
+import { format } from "@/common/utils/date.util";
 
 const UserTable = () => {
   const { userPaginated, setRequest, loading } = useUsers();
@@ -18,7 +18,7 @@ const UserTable = () => {
         email: v.email,
         fullName: v.fullName,
         image: v.email,
-        createdAt: formatDate(v.createdAt, "dd/MM/yyyy"),
+        createdAt: format(v.createdAt, "dd/MM/yyyy"),
       })),
     [userPaginated.data]
   );

@@ -28,7 +28,7 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 	public bool IsFirstLogin { get; set; } = true;
 
 	[Required]
-	public int LeaveHours { get; set; } = 0;
+	public int RemainingLeaveMinutes { get; set; } = 0;
 
 	[Required]
 	public UserStatus UserStatus { get; set; } = UserStatus.ACTIVE;

@@ -7,12 +7,11 @@ namespace WorkTimeTracker.Application.DTOs.Identity;
 
 public class UserDto : UserMinimalDto, IRoleAudit<string>
 {
-
 	[Required]
 	public bool IsFirstLogin { get; set; } = true;
 
 	[Required]
-	public int LeaveHours { get; set; } = 0;
+	public int RemainingLeaveMinutes { get; set; } = 0;
 
 	// AuditEntity
 
@@ -35,5 +34,4 @@ public class UserDto : UserMinimalDto, IRoleAudit<string>
 	public UserMinimalDto? Supervisor { get; set; }
 
 	public TeamMinimalDto? Team { get; set; }
-
 }

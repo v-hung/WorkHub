@@ -11,7 +11,7 @@ import {
 import { FC } from "react";
 import { useProjectsContext } from "../../contexts/ProjectContext";
 import { ProjectDto, UserMinimalDto } from "@/generate-api";
-import { formatDate } from "@/common/utils/date.util";
+import { format } from "@/common/utils/date.util";
 import { getUniqueColor } from "@/common/utils/color.util";
 import { differenceInDays } from "date-fns";
 
@@ -28,8 +28,8 @@ export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
     render: (_, record) => {
       if (!record.startDate || !record.endDate) return "N/A";
 
-      const startDate = formatDate(record.startDate, "dd/MM/yyyy");
-      const endDate = formatDate(record.endDate, "dd/MM/yyyy");
+      const startDate = format(record.startDate, "dd/MM/yyyy");
+      const endDate = format(record.endDate, "dd/MM/yyyy");
 
       const daysDifference = differenceInDays(record.endDate, record.startDate);
 
