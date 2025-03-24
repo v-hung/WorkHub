@@ -5,24 +5,23 @@ import { useTimesheet } from "../../hooks/useTimesheet";
 import { format } from "@/common/utils/date.util";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { blueDark, red } from "@ant-design/colors";
-import { useMemo } from "react";
-import { useAuthStore } from "@/stores/auth.store";
-import { isAfter, isBefore } from "date-fns";
+import { useTimesheetContext } from "../../context/TimesheetContext";
+import { useTimesheetRequestContext } from "../../context/TimesheetRequestContext";
 
 const TImesheetHeader = () => {
   const { loading, timeString } = useTimesheet();
 
   const { startTime, endTime, checkIn, checkOut } = useTimesheetStore();
-  const workTime = useAuthStore((state) => state.user?.workTime!);
+  const { getTimesheets, isCurrentMonth } = useTimesheetContext();
+  const { setOpen } = useTimesheetRequestContext();
 
-  const is_paid_time = useMemo(
-    () =>
-      !!startTime &&
-      !endTime &&
-      (isBefore(workTime.startTimeMorning, Date.now()) ||
-        isAfter(workTime.endTimeAfternoon, Date.now())),
-    [startTime, endTime, workTime]
-  );
+  const handleTimeAction = async (cb: () => Promise<void>) => {
+    await cb();
+
+    if (isCurrentMonth) {
+      await getTimesheets();
+    }
+  };
 
   return (
     <MainHeader title="Timesheet">
@@ -33,8 +32,12 @@ const TImesheetHeader = () => {
             <Skeleton.Input active />
           ) : (
             <>
-              <Button key="3">Edit</Button>
-              <Button key="2">Leave</Button>
+              <Button key="3" onClick={() => setOpen(true)}>
+                Edit
+              </Button>
+              <Button key="2" onClick={() => setOpen(true)}>
+                Leave
+              </Button>
 
               <Button
                 icon={
@@ -43,14 +46,13 @@ const TImesheetHeader = () => {
                     style={{ color: endTime ? red.primary : blueDark.primary }}
                   />
                 }
-                danger={is_paid_time}
                 style={{ pointerEvents: "none" }}
               >
                 {timeString}
               </Button>
 
               {!startTime ? (
-                <Button onClick={() => checkIn()}>
+                <Button onClick={() => handleTimeAction(checkIn)}>
                   <IIonPlay />
                 </Button>
               ) : (
@@ -59,7 +61,7 @@ const TImesheetHeader = () => {
                   okText="Yes"
                   cancelText="No"
                   placement="bottomRight"
-                  onConfirm={() => checkOut()}
+                  onConfirm={() => handleTimeAction(checkOut)}
                 >
                   <Button danger disabled={!!endTime}>
                     <IIonPause />

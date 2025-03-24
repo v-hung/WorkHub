@@ -10,7 +10,7 @@ import { useTeams } from "../hooks/useTeams";
 import { useTeamAction } from "../hooks/useTeamAction";
 import { TeamDtoPaginated } from "@/generate-api";
 
-type TeamsContextType = {
+type TeamContextType = {
   teamPaginated: TeamDtoPaginated;
   setRequest: Dispatch<
     SetStateAction<{
@@ -23,23 +23,23 @@ type TeamsContextType = {
   deleteRecord: (id: number) => Promise<void>;
 };
 
-const TeamsContext = createContext<TeamsContextType | null>(null);
+const TeamContext = createContext<TeamContextType | null>(null);
 
 export const TeamProvider: FC<PropsWithChildren> = ({ children }) => {
   const { teamPaginated, setRequest, loading } = useTeams();
   const { deleteRecord } = useTeamAction();
 
   return (
-    <TeamsContext.Provider
+    <TeamContext.Provider
       value={{ teamPaginated, setRequest, loading, deleteRecord }}
     >
       {children}
-    </TeamsContext.Provider>
+    </TeamContext.Provider>
   );
 };
 
-export const useTeamsContext = () => {
-  const currentContext = useContext(TeamsContext);
+export const useTeamContext = () => {
+  const currentContext = useContext(TeamContext);
 
   if (!currentContext) {
     throw new Error("currentContext has to be used");

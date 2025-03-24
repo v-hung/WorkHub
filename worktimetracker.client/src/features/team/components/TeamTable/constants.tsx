@@ -1,7 +1,7 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
-import { useTeamsContext } from "../../contexts/TeamContext";
+import { useTeamContext } from "../../contexts/TeamContext";
 import { TeamDto } from "@/generate-api";
 
 export const teamTableColumns: TableProps<TeamDto>["columns"] = [
@@ -53,7 +53,7 @@ export const teamTableColumns: TableProps<TeamDto>["columns"] = [
 ];
 
 const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useTeamsContext();
+  const { setRequest, deleteRecord } = useTeamContext();
 
   const confirm = async () => {
     await deleteRecord(id);

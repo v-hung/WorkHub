@@ -2,10 +2,10 @@ import MainTable from "@/ui/table/MainTable";
 // import { useTeams } from "../../hooks/useTeams";
 import { useEffect, useMemo } from "react";
 import { teamTableColumns } from "./constants";
-import { useTeamsContext } from "../../contexts/TeamContext";
+import { useTeamContext } from "../../contexts/TeamContext";
 
 const TeamTable = () => {
-  const { teamPaginated, setRequest, loading } = useTeamsContext();
+  const { teamPaginated, setRequest, loading } = useTeamContext();
 
   useEffect(() => {
     setRequest((r) => ({ ...r, pageNumber: 1, searchString: "" }));

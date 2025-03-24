@@ -7,8 +7,8 @@ type TimesheetStoreState = {
   startTime: Date | null;
   timeDifference: number;
   endTime: Date | null;
-  checkIn: () => void;
-  checkOut: () => void;
+  checkIn: () => Promise<void>;
+  checkOut: () => Promise<void>;
   fetchTodayTimesheet: () => Promise<void>;
 };
 

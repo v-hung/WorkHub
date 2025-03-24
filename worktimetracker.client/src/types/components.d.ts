@@ -8,7 +8,9 @@ export {}
 declare global {
   const IBxCalendarCheck: typeof import('~icons/bx/calendar-check.jsx')['default']
   const IIonCheckmark: typeof import('~icons/ion/checkmark.jsx')['default']
+  const IIonChevronBack: typeof import('~icons/ion/chevron-back.jsx')['default']
   const IIonChevronDown: typeof import('~icons/ion/chevron-down.jsx')['default']
+  const IIonChevronForward: typeof import('~icons/ion/chevron-forward.jsx')['default']
   const IIonClock: typeof import('~icons/ion/clock.jsx')['default']
   const IIonClockCircleOutlined: typeof import('~icons/ion/clock-circle-outlined.jsx')['default']
   const IIonList: typeof import('~icons/ion/list.jsx')['default']

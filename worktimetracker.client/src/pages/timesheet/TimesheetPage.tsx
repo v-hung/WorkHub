@@ -4,20 +4,35 @@ import TimesheetHeader from "@/features/timesheet/components/TimesheetHeader/Tim
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import TimesheetTable from "@/features/timesheet/components/TimesheetTable/TimesheetTable";
+import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext";
+import { lazy } from "react";
+import { TimesheetRequestProvider } from "@/features/timesheet/context/TimesheetRequestContext";
+
+const TimesheetRequestLazy = lazy(
+  () =>
+    import("@/features/timesheet/components/TimesheetRequest/TimesheetRequest")
+);
 
 export const loader = wrapLoaderWithPermission();
 
 export function Component() {
   return (
-    <Layout className="main-layout h-screen">
-      <TimesheetHeader />
-      <MainBreadcrumb
-        items={[{ title: "Home", path: "/" }, { title: "Timesheets Manager" }]}
-      />
-
-      <MainContent>
-        <TimesheetTable />
-      </MainContent>
-    </Layout>
+    <TimesheetProvider>
+      <TimesheetRequestProvider>
+        <Layout className="main-layout h-screen">
+          <TimesheetHeader />
+          <MainBreadcrumb
+            items={[
+              { title: "Home", path: "/" },
+              { title: "Timesheets Manager" },
+            ]}
+          />
+          <MainContent>
+            <TimesheetTable />
+          </MainContent>
+          <TimesheetRequestLazy />
+        </Layout>
+      </TimesheetRequestProvider>
+    </TimesheetProvider>
   );
 }
