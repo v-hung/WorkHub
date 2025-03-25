@@ -1,6 +1,17 @@
 import { useLogin } from "@/common/hooks/auth/useLogin";
+import { wrapLoader } from "@/common/utils/loader";
 import { LoginRequest } from "@/generate-api";
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
+import { redirect } from "react-router";
+
+export const loader = wrapLoader(async ({ request }, user) => {
+  console.log("user", user);
+  if (user) {
+    const redirectUrl =
+      new URL(request.url).searchParams.get("redirectUrl") || "/";
+    throw redirect(redirectUrl);
+  }
+});
 
 export function Component() {
   const { loading, login } = useLogin();

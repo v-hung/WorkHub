@@ -1,9 +1,11 @@
-using WorkTimeTracker.Domain.Entities.Requests;
-
 namespace WorkTimeTracker.Application.Interfaces.Services
 {
 	public interface IApprovalService
 	{
-		Task<D> CreateRequestAsync<D>(Request request) where D : class;
+		Task<bool> CanApproveRequestAsync(string userId, string approverId);
+
+		Task<D> ApproveRequestAsync<D>(string requestId) where D : class;
+
+		Task<D> RejectRequestAsync<D>(string requestId) where D : class;
 	}
 }

@@ -2,8 +2,8 @@
 
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using WorkTimeTracker.Application.Features.Requests.DTOs;
 using WorkTimeTracker.Application.Features.Requests.Validators;
-using WorkTimeTracker.Domain.Entities.Requests;
 
 namespace WorkTimeTracker.Application.Extensions;
 
@@ -16,8 +16,8 @@ public static class ServiceCollectionExtensions
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-		services.AddScoped<IRequestValidator<LeaveRequest>, LeaveRequestValidator>();
-		services.AddScoped<IRequestValidator<TimesheetRequest>, TimesheetRequestValidator>();
+		services.AddScoped<IRequestValidator<CreateLeaveRequestDto>, LeaveRequestValidator>();
+		services.AddScoped<IRequestValidator<CreateTimesheetRequestDto>, TimesheetRequestValidator>();
 
 	}
 }

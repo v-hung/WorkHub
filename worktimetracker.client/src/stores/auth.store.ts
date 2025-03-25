@@ -16,7 +16,7 @@ type AuthStoreState = {
   permissions: Permission[];
   login: (credentials: LoginRequest) => Promise<void>;
   logout: () => void;
-  load: () => Promise<void>;
+  load: () => Promise<UserDto | undefined>;
 };
 
 export const useAuthStore = create<AuthStoreState>()(
@@ -42,10 +42,11 @@ export const useAuthStore = create<AuthStoreState>()(
       //   user: USER,
       // });
 
-      await wrapPromise(() =>
-        accountApiWithRefreshToken
-          .accountGetCurrentUser()
-          .then((user) => set({ user }))
+      return await wrapPromise(() =>
+        accountApiWithRefreshToken.accountGetCurrentUser().then((user) => {
+          set({ user });
+          return user;
+        })
       );
     },
   }))

@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
-using WorkTimeTracker.Domain.Entities.Requests;
+using WorkTimeTracker.Application.Features.Requests.DTOs;
 
 namespace WorkTimeTracker.Application.Features.Requests.Validators
 {
-	public class LeaveRequestValidator : IRequestValidator<LeaveRequest>
+	public class LeaveRequestValidator : IRequestValidator<CreateLeaveRequestDto>
 	{
-		public void Validate(LeaveRequest request)
+		public void Validate(CreateLeaveRequestDto request)
 		{
 			if (request.BreakStartDate > request.BreakEndDate)
 			{
-				throw new ValidationException("Ngày bắt đầu không được lớn hơn ngày kết thúc.");
+				throw new ValidationException("The starting date is not bigger than the end..");
 			}
 		}
 	}

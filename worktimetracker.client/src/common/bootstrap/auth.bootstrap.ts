@@ -7,6 +7,6 @@ export const authBootstrap = createSuspender(
     if (!i18n.isInitialized) {
       await i18n.init();
     }
-    await useAuthStore.getState().load();
+    return await useAuthStore.getState().load();
   })()
 );

@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
-using WorkTimeTracker.Domain.Entities.Requests;
+using WorkTimeTracker.Application.Features.Requests.DTOs;
 
 namespace WorkTimeTracker.Application.Features.Requests.Validators
 {
-	public class TimesheetRequestValidator : IRequestValidator<TimesheetRequest>
+	public class TimesheetRequestValidator : IRequestValidator<CreateTimesheetRequestDto>
 	{
-		public void Validate(TimesheetRequest request)
+		public void Validate(CreateTimesheetRequestDto request)
 		{
 			if (request.CheckIn >= request.CheckOut)
-				throw new ValidationException("Giờ check-in phải nhỏ hơn giờ check-out.");
+				throw new ValidationException("Check-in time must be less than check-out.");
 		}
 	}
 }

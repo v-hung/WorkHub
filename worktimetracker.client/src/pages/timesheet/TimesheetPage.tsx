@@ -5,7 +5,7 @@ import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import TimesheetTable from "@/features/timesheet/components/TimesheetTable/TimesheetTable";
 import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { TimesheetRequestProvider } from "@/features/timesheet/context/TimesheetRequestContext";
 
 const TimesheetRequestLazy = lazy(
@@ -30,7 +30,9 @@ export function Component() {
           <MainContent>
             <TimesheetTable />
           </MainContent>
-          <TimesheetRequestLazy />
+          <Suspense fallback={null}>
+            <TimesheetRequestLazy />
+          </Suspense>
         </Layout>
       </TimesheetRequestProvider>
     </TimesheetProvider>

@@ -1,18 +1,18 @@
 using MediatR;
+using WorkTimeTracker.Application.Features.Requests.DTOs;
 using WorkTimeTracker.Application.Features.Requests.Validators;
 using WorkTimeTracker.Application.Interfaces.Services;
-using WorkTimeTracker.Domain.Entities.Requests;
 
 namespace WorkTimeTracker.Application.Features.Requests.Commands
 {
-	public class CreateRequestCommand<D, TRequest> : IRequest<D> where D : class where TRequest : Request
+	public class CreateRequestCommand<D, TRequest> : IRequest<D> where D : class where TRequest : CreateRequestDto
 	{
 		public required TRequest Request { get; set; }
 	}
 
 	public class CreateRequestHandler<D, TRequest> : IRequestHandler<CreateRequestCommand<D, TRequest>, D>
 		where D : class
-		where TRequest : Request
+		where TRequest : CreateRequestDto
 	{
 		private readonly IRequestService _requestService;
 		private readonly IRequestValidator<TRequest> _validator;

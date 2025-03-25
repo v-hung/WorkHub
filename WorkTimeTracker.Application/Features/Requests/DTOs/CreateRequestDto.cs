@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Domain.Enums;
 
-namespace WorkTimeTracker.Application.DTOs.Requests
+namespace WorkTimeTracker.Application.Features.Requests.DTOs
 {
-	public abstract class RequestMinimalDto : IEntity<int>
+	public abstract class CreateRequestDto
 	{
 		[Required]
 		public required int Id { get; set; }
@@ -21,5 +20,13 @@ namespace WorkTimeTracker.Application.DTOs.Requests
 
 		[Required]
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+		// Navigation properties
+
+		public Guid UserId { get; set; }
+
+		public Guid ApprovedById { get; set; }
+
+		public Guid TimesheetId { get; set; }
 	}
 }
