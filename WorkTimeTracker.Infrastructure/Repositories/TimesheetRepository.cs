@@ -1,12 +1,9 @@
-using System.Net;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.DTOs.Time;
-using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Interfaces.Repositories;
-using WorkTimeTracker.Domain.Entities.Time;
 using WorkTimeTracker.Infrastructure.Data;
 
 namespace WorkTimeTracker.Infrastructure.Repositories
@@ -104,47 +101,6 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 					.Where(t => t.UserId == new Guid(userId) && t.StartTime >= today && t.StartTime < tomorrow)
 					.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
 					.FirstOrDefaultAsync();
-		}
-
-		public async Task<TimesheetDto> PerformCheckIn(string userId)
-		{
-			Timesheet? timesheetDb = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today);
-
-			if (timesheetDb != null)
-			{
-				throw new BusinessException(HttpStatusCode.BadRequest, _localizer["CheckInAlreadyPerformed"]);
-			}
-
-			Timesheet timesheet = new Timesheet
-			{
-				UserId = new Guid(userId),
-				Date = DateTime.Now.Date,
-				StartTime = DateTime.Now,
-			};
-
-			_context.Timesheets.Add(timesheet);
-			await _context.SaveChangesAsync();
-
-			return _mapper.Map<TimesheetDto>(timesheet);
-
-		}
-
-		public async Task<TimesheetDto> PerformCheckOut(string userId)
-		{
-			Timesheet timesheet = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
-
-			if (timesheet.EndTime != null)
-			{
-				throw new BusinessException(HttpStatusCode.Conflict, _localizer["Checked out"]);
-			}
-
-			timesheet.EndTime = DateTime.Now;
-			_context.Timesheets.Update(timesheet);
-
-			await _context.SaveChangesAsync();
-
-			return _mapper.Map<TimesheetDto>(timesheet);
-
 		}
 	}
 }

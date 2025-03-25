@@ -10,9 +10,5 @@ namespace WorkTimeTracker.Application.Interfaces.Repositories
 
 		Task<List<TimesheetFullDto>> GetMonthlyTimesheets(int month, int year);
 
-		Task<TimesheetDto> PerformCheckIn(string userId);
-
-		Task<TimesheetDto> PerformCheckOut(string userId);
-
 	}
 }

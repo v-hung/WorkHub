@@ -128,6 +128,7 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
+		services.AddScoped<ITimesheetService, TimesheetService>();
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 
