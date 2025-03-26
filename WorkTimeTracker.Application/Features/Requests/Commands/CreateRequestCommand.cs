@@ -14,10 +14,10 @@ namespace WorkTimeTracker.Application.Features.Requests.Commands
 		where D : class
 		where TRequest : CreateRequestDto
 	{
-		private readonly IRequestService _requestService;
+		private readonly IRequestService<TRequest> _requestService;
 		private readonly IRequestValidator<TRequest> _validator;
 
-		public CreateRequestHandler(IRequestService requestService, IRequestValidator<TRequest> validator)
+		public CreateRequestHandler(IRequestService<TRequest> requestService, IRequestValidator<TRequest> validator)
 		{
 			_requestService = requestService;
 			_validator = validator;
