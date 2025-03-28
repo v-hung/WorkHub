@@ -9,30 +9,29 @@ using WorkTimeTracker.Infrastructure.Data;
 
 namespace WorkTimeTracker.Infrastructure.Services.Requests
 {
-	public class LeaveRequestService : RequestService<CreateLeaveRequestDto>
+	public class TimesheetRequestService : RequestService<CreateTimesheetRequestDto>
 	{
 		private readonly IApprovalService _approvalService;
 
-		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IApprovalService approvalService)
+		public TimesheetRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetRequestService> localizer, ICurrentUserService currentUserService, IApprovalService approvalService)
 			: base(context, mapper, localizer, currentUserService)
 		{
 			_approvalService = approvalService;
 		}
 
-		public override async Task<D> CreateRequestAsync<D>(CreateLeaveRequestDto request)
+		public override async Task<D> CreateRequestAsync<D>(CreateTimesheetRequestDto request)
 		{
-
 			if (!await _approvalService.CanApproveRequestAsync(request.UserId.ToString(), request.ApprovedById.ToString()))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["The specified approver is not authorized to approve this request."]);
 			}
 
-			LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(request);
+			TimesheetRequest timesheetRequest = _mapper.Map<TimesheetRequest>(request);
 
-			await _context.LeaveRequests.AddAsync(leaveRequest);
+			await _context.TimesheetRequests.AddAsync(timesheetRequest);
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<D>(leaveRequest);
+			return _mapper.Map<D>(timesheetRequest);
 		}
 	}
 }

@@ -6,6 +6,6 @@ namespace WorkTimeTracker.Application.Interfaces.Services
 	{
 		Task<D> CreateRequestAsync<D>(TRequest request) where D : class;
 
-		Task<D> CancelRequestAsync<D>(Guid requestId) where D : class;
+		Task<D> CancelRequestAsync<D>(int requestId) where D : class;
 	}
 }

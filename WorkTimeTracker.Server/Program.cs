@@ -18,9 +18,9 @@ builder.Services.AddCustomControllers();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityConfiguration();
+builder.Services.AddApplicationServices();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer();
-builder.Services.AddApplicationServices();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();

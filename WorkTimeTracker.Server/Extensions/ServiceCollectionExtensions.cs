@@ -1,5 +1,6 @@
 
 
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -12,13 +13,11 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using WorkTimeTracker.Application.Configs;
 using WorkTimeTracker.Application.Interfaces.Data;
-using WorkTimeTracker.Application.Interfaces.Repositories;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Domain.Constants.Permission;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Authorization;
 using WorkTimeTracker.Infrastructure.Data;
-using WorkTimeTracker.Infrastructure.Repositories;
 using WorkTimeTracker.Infrastructure.Services;
 using WorkTimeTracker.Server.Swagger;
 
@@ -113,8 +112,8 @@ static class ServiceCollectionExtensions
 
 	public static void AddApplicationServices(this IServiceCollection services)
 	{
-		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
 		// services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
 		// services.AddSingleton(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
@@ -126,9 +125,6 @@ static class ServiceCollectionExtensions
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
-		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
-		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
-		services.AddScoped<ITimesheetService, TimesheetService>();
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 
