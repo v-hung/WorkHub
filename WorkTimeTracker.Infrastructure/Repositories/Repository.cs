@@ -11,6 +11,7 @@ using WorkTimeTracker.Application.Wrapper;
 using WorkTimeTracker.Domain.Entities.Audit;
 using WorkTimeTracker.Infrastructure.Data;
 using WorkTimeTracker.Application.Exceptions;
+using System.Reflection;
 
 namespace WorkTimeTracker.Infrastructure.Repositories
 {
@@ -18,13 +19,13 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 	{
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
-		private readonly IStringLocalizer<Repository<T, TId>> _localizer;
+		private readonly IStringLocalizer _localizer;
 
-		public Repository(ApplicationDbContext context, IMapper mapper, IStringLocalizer<Repository<T, TId>> localizer)
+		public Repository(ApplicationDbContext context, IMapper mapper, IStringLocalizerFactory localizerFactory)
 		{
 			_context = context;
 			_mapper = mapper;
-			_localizer = localizer;
+			_localizer = localizerFactory.Create("Repositories.Repository", Assembly.GetExecutingAssembly().GetName().Name ?? "");
 		}
 
 		public async Task<List<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class

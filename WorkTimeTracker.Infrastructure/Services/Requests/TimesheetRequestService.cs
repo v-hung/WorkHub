@@ -11,9 +11,9 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 {
 	public class TimesheetRequestService : RequestService<CreateTimesheetRequestDto>
 	{
-		private readonly IApprovalService _approvalService;
+		private readonly IRequestApprovalService<TimesheetRequest> _approvalService;
 
-		public TimesheetRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetRequestService> localizer, ICurrentUserService currentUserService, IApprovalService approvalService)
+		public TimesheetRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<TimesheetRequest> approvalService)
 			: base(context, mapper, localizer, currentUserService)
 		{
 			_approvalService = approvalService;

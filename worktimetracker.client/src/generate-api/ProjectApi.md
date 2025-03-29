@@ -4,81 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**projectCreate**](ProjectApi.md#projectCreate) | **POST** /api/projects | 
-[**projectDelete**](ProjectApi.md#projectDelete) | **DELETE** /api/projects/{id} | 
-[**projectGetAll**](ProjectApi.md#projectGetAll) | **GET** /api/projects/all | 
-[**projectGetById**](ProjectApi.md#projectGetById) | **GET** /api/projects/{id} | 
-[**projectSearch**](ProjectApi.md#projectSearch) | **GET** /api/projects | 
-[**projectUpdate**](ProjectApi.md#projectUpdate) | **PUT** /api/projects/{id} | 
+[**apiProjectsAllGet**](ProjectApi.md#apiProjectsAllGet) | **GET** /api/projects/all | 
+[**apiProjectsGet**](ProjectApi.md#apiProjectsGet) | **GET** /api/projects | 
+[**apiProjectsIdDelete**](ProjectApi.md#apiProjectsIdDelete) | **DELETE** /api/projects/{id} | 
+[**apiProjectsIdGet**](ProjectApi.md#apiProjectsIdGet) | **GET** /api/projects/{id} | 
+[**apiProjectsIdPut**](ProjectApi.md#apiProjectsIdPut) | **PUT** /api/projects/{id} | 
+[**apiProjectsPost**](ProjectApi.md#apiProjectsPost) | **POST** /api/projects | 
 
 
-# **projectCreate**
-> ProjectDto projectCreate()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, ProjectApi } from '';
-import type { ProjectApiProjectCreateRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new ProjectApi(configuration);
-
-const request: ProjectApiProjectCreateRequest = {
-  
-  createProjectCommand: {
-    name: "name_example",
-    description: "description_example",
-    startDate: new Date('1970-01-01T00:00:00.00Z'),
-    endDate: new Date('1970-01-01T00:00:00.00Z'),
-    status: "ACTIVE",
-    teamId: 1,
-    managerId: "managerId_example",
-    memberIds: [
-      "memberIds_example",
-    ],
-  },
-};
-
-const data = await apiInstance.projectCreate(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createProjectCommand** | **CreateProjectCommand**|  |
-
-
-### Return type
-
-**ProjectDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **projectDelete**
-> void projectDelete()
+# **apiProjectsAllGet**
+> Array<ProjectDto> apiProjectsAllGet()
 
 
 ### Example
@@ -86,73 +21,19 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, ProjectApi } from '';
-import type { ProjectApiProjectDeleteRequest } from '';
+import type { ProjectApiApiProjectsAllGetRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new ProjectApi(configuration);
 
-const request: ProjectApiProjectDeleteRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.projectDelete(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **projectGetAll**
-> Array<ProjectDto> projectGetAll()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, ProjectApi } from '';
-import type { ProjectApiProjectGetAllRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new ProjectApi(configuration);
-
-const request: ProjectApiProjectGetAllRequest = {
+const request: ProjectApiApiProjectsAllGetRequest = {
   
   ids: [
     1,
   ],
 };
 
-const data = await apiInstance.projectGetAll(request);
+const data = await apiInstance.apiProjectsAllGet(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -187,8 +68,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **projectGetById**
-> ProjectDto projectGetById()
+# **apiProjectsGet**
+> ProjectDtoPaginated apiProjectsGet()
 
 
 ### Example
@@ -196,66 +77,12 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, ProjectApi } from '';
-import type { ProjectApiProjectGetByIdRequest } from '';
+import type { ProjectApiApiProjectsGetRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new ProjectApi(configuration);
 
-const request: ProjectApiProjectGetByIdRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.projectGetById(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**ProjectDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **projectSearch**
-> ProjectDtoPaginated projectSearch()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, ProjectApi } from '';
-import type { ProjectApiProjectSearchRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new ProjectApi(configuration);
-
-const request: ProjectApiProjectSearchRequest = {
+const request: ProjectApiApiProjectsGetRequest = {
   
   pageNumber: 1,
   
@@ -268,7 +95,7 @@ const request: ProjectApiProjectSearchRequest = {
   ],
 };
 
-const data = await apiInstance.projectSearch(request);
+const data = await apiInstance.apiProjectsGet(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -306,8 +133,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **projectUpdate**
-> ProjectDto projectUpdate()
+# **apiProjectsIdDelete**
+> void apiProjectsIdDelete()
 
 
 ### Example
@@ -315,12 +142,120 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, ProjectApi } from '';
-import type { ProjectApiProjectUpdateRequest } from '';
+import type { ProjectApiApiProjectsIdDeleteRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new ProjectApi(configuration);
 
-const request: ProjectApiProjectUpdateRequest = {
+const request: ProjectApiApiProjectsIdDeleteRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.apiProjectsIdDelete(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **apiProjectsIdGet**
+> ProjectDto apiProjectsIdGet()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiApiProjectsIdGetRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new ProjectApi(configuration);
+
+const request: ProjectApiApiProjectsIdGetRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.apiProjectsIdGet(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**ProjectDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **apiProjectsIdPut**
+> ProjectDto apiProjectsIdPut()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiApiProjectsIdPutRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new ProjectApi(configuration);
+
+const request: ProjectApiApiProjectsIdPutRequest = {
   
   id: 1,
   
@@ -338,7 +273,7 @@ const request: ProjectApiProjectUpdateRequest = {
   },
 };
 
-const data = await apiInstance.projectUpdate(request);
+const data = await apiInstance.apiProjectsIdPut(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -349,6 +284,71 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **createProjectCommand** | **CreateProjectCommand**|  |
  **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**ProjectDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **apiProjectsPost**
+> ProjectDto apiProjectsPost()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, ProjectApi } from '';
+import type { ProjectApiApiProjectsPostRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new ProjectApi(configuration);
+
+const request: ProjectApiApiProjectsPostRequest = {
+  
+  createProjectCommand: {
+    name: "name_example",
+    description: "description_example",
+    startDate: new Date('1970-01-01T00:00:00.00Z'),
+    endDate: new Date('1970-01-01T00:00:00.00Z'),
+    status: "ACTIVE",
+    teamId: 1,
+    managerId: "managerId_example",
+    memberIds: [
+      "memberIds_example",
+    ],
+  },
+};
+
+const data = await apiInstance.apiProjectsPost(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createProjectCommand** | **CreateProjectCommand**|  |
 
 
 ### Return type

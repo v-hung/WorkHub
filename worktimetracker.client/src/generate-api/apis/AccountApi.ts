@@ -24,7 +24,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param changePasswordRequest 
      */
-    public async accountChangePassword(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<RequestContext> {
+    public async apiIdentityChangePasswordPost(changePasswordRequest?: ChangePasswordRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -68,7 +68,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      */
-    public async accountGetCurrentUser(_options?: Configuration): Promise<RequestContext> {
+    public async apiIdentityCurrentUserGet(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
@@ -95,37 +95,9 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
-     */
-    public async accountGetPermissions(_options?: Configuration): Promise<RequestContext> {
-        let _config = _options || this.configuration;
-
-        // Path Params
-        const localVarPath = '/api/identity/permissions';
-
-        // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
-        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
-
-
-        let authMethod: SecurityAuthentication | undefined;
-        // Apply auth methods
-        authMethod = _config.authMethods["Bearer"]
-        if (authMethod?.applySecurityAuthentication) {
-            await authMethod?.applySecurityAuthentication(requestContext);
-        }
-        
-        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
-        if (defaultAuth?.applySecurityAuthentication) {
-            await defaultAuth?.applySecurityAuthentication(requestContext);
-        }
-
-        return requestContext;
-    }
-
-    /**
      * @param loginRequest 
      */
-    public async accountLogin(loginRequest?: LoginRequest, _options?: Configuration): Promise<RequestContext> {
+    public async apiIdentityLoginPost(loginRequest?: LoginRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -169,7 +141,7 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      */
-    public async accountLogout(_options?: Configuration): Promise<RequestContext> {
+    public async apiIdentityLogoutPost(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
@@ -197,7 +169,35 @@ export class AccountApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      */
-    public async accountRefreshToken(_options?: Configuration): Promise<RequestContext> {
+    public async apiIdentityPermissionsGet(_options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // Path Params
+        const localVarPath = '/api/identity/permissions';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     */
+    public async apiIdentityRefreshTokenPost(_options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // Path Params
@@ -231,10 +231,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountChangePassword
+     * @params response Response returned by the server for a request to apiIdentityChangePasswordPost
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountChangePasswordWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async apiIdentityChangePasswordPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -270,10 +270,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountGetCurrentUser
+     * @params response Response returned by the server for a request to apiIdentityCurrentUserGet
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountGetCurrentUserWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
+     public async apiIdentityCurrentUserGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: UserDto = ObjectSerializer.deserialize(
@@ -313,49 +313,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountGetPermissions
+     * @params response Response returned by the server for a request to apiIdentityLoginPost
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountGetPermissionsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
-        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
-        if (isCodeInRange("200", response.httpStatusCode)) {
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
-        }
-        if (isCodeInRange("500", response.httpStatusCode)) {
-            const body: ErrorResponse = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "ErrorResponse", ""
-            ) as ErrorResponse;
-            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
-        }
-        if (isCodeInRange("400", response.httpStatusCode)) {
-            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "ErrorValidateResponse", ""
-            ) as ErrorValidateResponse;
-            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
-        }
-
-        // Work around for missing responses in specification, e.g. for petstore.yaml
-        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: void = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "void", ""
-            ) as void;
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
-        }
-
-        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
-    }
-
-    /**
-     * Unwraps the actual response sent by the server from the response context and deserializes the response content
-     * to the expected objects
-     *
-     * @params response Response returned by the server for a request to accountLogin
-     * @throws ApiException if the response code was not in [200, 299]
-     */
-     public async accountLoginWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDtoLoginResponse >> {
+     public async apiIdentityLoginPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<UserDtoLoginResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: UserDtoLoginResponse = ObjectSerializer.deserialize(
@@ -395,10 +356,10 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountLogout
+     * @params response Response returned by the server for a request to apiIdentityLogoutPost
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountLogoutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async apiIdentityLogoutPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -434,10 +395,49 @@ export class AccountApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to accountRefreshToken
+     * @params response Response returned by the server for a request to apiIdentityPermissionsGet
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async accountRefreshTokenWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RefreshTokenResponse >> {
+     public async apiIdentityPermissionsGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            const body: ErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorResponse", ""
+            ) as ErrorResponse;
+            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: void = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "void", ""
+            ) as void;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to apiIdentityRefreshTokenPost
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async apiIdentityRefreshTokenPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RefreshTokenResponse >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: RefreshTokenResponse = ObjectSerializer.deserialize(

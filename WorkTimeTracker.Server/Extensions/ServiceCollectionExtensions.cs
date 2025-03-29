@@ -140,6 +140,9 @@ static class ServiceCollectionExtensions
 			c.UseAllOfForInheritance();
 			c.SelectSubTypesUsing(type => type.Assembly.GetTypes().Where(t => t.BaseType == type && type.IsAbstract));
 
+			c.TagActionsBy(api => [api.GroupName ?? api.ActionDescriptor.RouteValues["controller"]]);
+			c.DocInclusionPredicate((groupName, api) => true);
+
 			c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 			{
 				Name = "Authorization",
@@ -171,8 +174,6 @@ static class ServiceCollectionExtensions
 				Type = "string",
 				Example = new OpenApiString("00:00:00")
 			});
-
-			c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.ActionDescriptor.RouteValues["action"]}");
 
 			c.OperationFilter<SwaggerErrorResponseFilter>();
 			c.SchemaFilter<SwaggerPermissionSchema>();

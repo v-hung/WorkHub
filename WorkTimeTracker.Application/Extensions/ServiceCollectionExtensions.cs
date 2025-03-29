@@ -18,6 +18,5 @@ public static class ServiceCollectionExtensions
 
 		services.AddScoped<IRequestValidator<CreateLeaveRequestDto>, LeaveRequestValidator>();
 		services.AddScoped<IRequestValidator<CreateTimesheetRequestDto>, TimesheetRequestValidator>();
-
 	}
 }

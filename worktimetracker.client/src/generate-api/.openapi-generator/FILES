@@ -1,10 +1,12 @@
 .gitattributes
 .gitignore
+.openapi-generator-ignore
 AccountApi.md
 DeviceApi.md
 DeviceCategoryApi.md
 ProjectApi.md
 README.md
+RequestsApi.md
 RoleApi.md
 TeamApi.md
 TimesheetApi.md
@@ -14,6 +16,7 @@ apis/AccountApi.ts
 apis/DeviceApi.ts
 apis/DeviceCategoryApi.ts
 apis/ProjectApi.ts
+apis/RequestsApi.ts
 apis/RoleApi.ts
 apis/TeamApi.ts
 apis/TimesheetApi.ts
@@ -31,8 +34,11 @@ middleware.ts
 models/ChangePasswordRequest.ts
 models/CreateDeviceCategoryCommand.ts
 models/CreateDeviceCommand.ts
+models/CreateLeaveRequestDto.ts
 models/CreateProjectCommand.ts
+models/CreateRequestDto.ts
 models/CreateTeamCommand.ts
+models/CreateTimesheetRequestDto.ts
 models/CreateWorkTimeCommand.ts
 models/DeviceCategoryDto.ts
 models/DeviceCategoryDtoPaginated.ts
@@ -43,6 +49,7 @@ models/DeviceMinimalDto.ts
 models/DeviceStatus.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
+models/LeaveRequestDto.ts
 models/LeaveRequestMinimalDto.ts
 models/LoginRequest.ts
 models/Nationality.ts
@@ -69,6 +76,7 @@ models/TimesheetDtoRequestsInner.ts
 models/TimesheetDtoTimesheetResponse.ts
 models/TimesheetFullDto.ts
 models/TimesheetMinimalDto.ts
+models/TimesheetRequestDto.ts
 models/TimesheetRequestMinimalDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts

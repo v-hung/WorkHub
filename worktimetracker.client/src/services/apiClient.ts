@@ -3,6 +3,7 @@ import {
   DeviceApi,
   DeviceCategoryApi,
   ProjectApi,
+  RequestsApi,
   RoleApi,
   TeamApi,
   TimesheetApi,
@@ -37,6 +38,7 @@ const roleApi = new RoleApi(configWithRefreshToken);
 const timesheetApi = new TimesheetApi(configWithRefreshToken);
 const deviceApi = new DeviceApi(configWithRefreshToken);
 const deviceCategoryApi = new DeviceCategoryApi(configWithRefreshToken);
+const requestApi = new RequestsApi(configWithRefreshToken);
 
 export {
   accountApi,
@@ -49,4 +51,5 @@ export {
   timesheetApi,
   deviceApi,
   deviceCategoryApi,
+  requestApi,
 };

@@ -11,9 +11,9 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 {
 	public class LeaveRequestService : RequestService<CreateLeaveRequestDto>
 	{
-		private readonly IApprovalService _approvalService;
+		private readonly IRequestApprovalService<LeaveRequest> _approvalService;
 
-		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IApprovalService approvalService)
+		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<LeaveRequest> approvalService)
 			: base(context, mapper, localizer, currentUserService)
 		{
 			_approvalService = approvalService;

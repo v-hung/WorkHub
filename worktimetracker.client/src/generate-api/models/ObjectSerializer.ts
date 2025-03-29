@@ -1,8 +1,11 @@
 export * from '../models/ChangePasswordRequest';
 export * from '../models/CreateDeviceCategoryCommand';
 export * from '../models/CreateDeviceCommand';
+export * from '../models/CreateLeaveRequestDto';
 export * from '../models/CreateProjectCommand';
+export * from '../models/CreateRequestDto';
 export * from '../models/CreateTeamCommand';
+export * from '../models/CreateTimesheetRequestDto';
 export * from '../models/CreateWorkTimeCommand';
 export * from '../models/DeviceCategoryDto';
 export * from '../models/DeviceCategoryDtoPaginated';
@@ -13,6 +16,7 @@ export * from '../models/DeviceMinimalDto';
 export * from '../models/DeviceStatus';
 export * from '../models/ErrorResponse';
 export * from '../models/ErrorValidateResponse';
+export * from '../models/LeaveRequestDto';
 export * from '../models/LeaveRequestMinimalDto';
 export * from '../models/LoginRequest';
 export * from '../models/Nationality';
@@ -38,6 +42,7 @@ export * from '../models/TimesheetDtoRequestsInner';
 export * from '../models/TimesheetDtoTimesheetResponse';
 export * from '../models/TimesheetFullDto';
 export * from '../models/TimesheetMinimalDto';
+export * from '../models/TimesheetRequestDto';
 export * from '../models/TimesheetRequestMinimalDto';
 export * from '../models/UserCreateUpdateRequest';
 export * from '../models/UserDetailDto';
@@ -54,8 +59,11 @@ export * from '../models/WorkTimeDtoPaginated';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand       } from '../models/CreateDeviceCommand';
+import { CreateLeaveRequestDto           } from '../models/CreateLeaveRequestDto';
 import { CreateProjectCommand         } from '../models/CreateProjectCommand';
+import { CreateRequestDto         } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
+import { CreateTimesheetRequestDto             } from '../models/CreateTimesheetRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
@@ -66,6 +74,7 @@ import { DeviceMinimalDto      } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { LeaveRequestDto           } from '../models/LeaveRequestDto';
 import { LeaveRequestMinimalDto        } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
@@ -91,6 +100,7 @@ import { TimesheetDtoRequestsInnerClass } from '../models/TimesheetDtoRequestsIn
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
+import { TimesheetRequestDto             } from '../models/TimesheetRequestDto';
 import { TimesheetRequestMinimalDto          } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto       } from '../models/UserDetailDto';
@@ -131,8 +141,11 @@ let typeMap: {[index: string]: any} = {
     "ChangePasswordRequest": ChangePasswordRequest,
     "CreateDeviceCategoryCommand": CreateDeviceCategoryCommand,
     "CreateDeviceCommand": CreateDeviceCommand,
+    "CreateLeaveRequestDto": CreateLeaveRequestDto,
     "CreateProjectCommand": CreateProjectCommand,
+    "CreateRequestDto": CreateRequestDto,
     "CreateTeamCommand": CreateTeamCommand,
+    "CreateTimesheetRequestDto": CreateTimesheetRequestDto,
     "CreateWorkTimeCommand": CreateWorkTimeCommand,
     "DeviceCategoryDto": DeviceCategoryDto,
     "DeviceCategoryDtoPaginated": DeviceCategoryDtoPaginated,
@@ -142,6 +155,7 @@ let typeMap: {[index: string]: any} = {
     "DeviceMinimalDto": DeviceMinimalDto,
     "ErrorResponse": ErrorResponse,
     "ErrorValidateResponse": ErrorValidateResponse,
+    "LeaveRequestDto": LeaveRequestDto,
     "LeaveRequestMinimalDto": LeaveRequestMinimalDto,
     "LoginRequest": LoginRequest,
     "ProjectDto": ProjectDto,
@@ -162,6 +176,7 @@ let typeMap: {[index: string]: any} = {
     "TimesheetDtoTimesheetResponse": TimesheetDtoTimesheetResponse,
     "TimesheetFullDto": TimesheetFullDto,
     "TimesheetMinimalDto": TimesheetMinimalDto,
+    "TimesheetRequestDto": TimesheetRequestDto,
     "TimesheetRequestMinimalDto": TimesheetRequestMinimalDto,
     "UserCreateUpdateRequest": UserCreateUpdateRequest,
     "UserDetailDto": UserDetailDto,

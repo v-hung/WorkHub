@@ -1,25 +1,27 @@
+using AutoMapper;
 using MediatR;
 using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Domain.Entities.Requests;
 
 namespace WorkTimeTracker.Application.Features.Approvals.Commands
 {
-	public class ApproveRequestCommand<D> : IRequest<D>
+	public class ApproveRequestCommand<D, TRequest> : IRequest<D> where TRequest : Request
 	{
-		public required string RequestId { get; set; }
+		public required int RequestId { get; set; }
 	}
 
-	public class ApproveRequestCommandHandler<D> : IRequestHandler<ApproveRequestCommand<D>, D> where D : class
+	public class ApproveRequestCommandHandler<D, TRequest> : IRequestHandler<ApproveRequestCommand<D, TRequest>, D> where D : class where TRequest : Request
 	{
-		private readonly IApprovalService _approvalService;
+		private readonly IRequestApprovalService<TRequest> _approvalRequestService;
 
-		public ApproveRequestCommandHandler(IApprovalService approvalService)
+		public ApproveRequestCommandHandler(IRequestApprovalService<TRequest> approvalService)
 		{
-			_approvalService = approvalService;
+			_approvalRequestService = approvalService;
 		}
 
-		public async Task<D> Handle(ApproveRequestCommand<D> command, CancellationToken cancellationToken)
+		public async Task<D> Handle(ApproveRequestCommand<D, TRequest> command, CancellationToken cancellationToken)
 		{
-			return await _approvalService.ApproveRequestAsync<D>(command.RequestId);
+			return await _approvalRequestService.ApproveRequestAsync<D>(command.RequestId);
 		}
 	}
 }
