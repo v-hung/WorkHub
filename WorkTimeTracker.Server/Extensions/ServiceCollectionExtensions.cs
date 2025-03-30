@@ -140,6 +140,7 @@ static class ServiceCollectionExtensions
 			c.UseAllOfForInheritance();
 			c.SelectSubTypesUsing(type => type.Assembly.GetTypes().Where(t => t.BaseType == type && type.IsAbstract));
 
+			c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.ActionDescriptor.RouteValues["action"]}");
 			c.TagActionsBy(api => [api.GroupName ?? api.ActionDescriptor.RouteValues["controller"]]);
 			c.DocInclusionPredicate((groupName, api) => true);
 

@@ -24,8 +24,7 @@ namespace WorkTimeTracker.Application.Features.Projects.Commands
 
 		public int? TeamId { get; set; }
 
-		[Required]
-		public required Guid ManagerId { get; set; }
+		public Guid? ManagerId { get; set; }
 
 		public IList<Guid> MemberIds { get; set; } = [];
 	}

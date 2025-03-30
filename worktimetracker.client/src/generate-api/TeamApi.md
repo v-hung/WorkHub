@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiTeamsAllGet**](TeamApi.md#apiTeamsAllGet) | **GET** /api/teams/all | 
-[**apiTeamsGet**](TeamApi.md#apiTeamsGet) | **GET** /api/teams | 
-[**apiTeamsIdDelete**](TeamApi.md#apiTeamsIdDelete) | **DELETE** /api/teams/{id} | 
-[**apiTeamsIdGet**](TeamApi.md#apiTeamsIdGet) | **GET** /api/teams/{id} | 
-[**apiTeamsIdPut**](TeamApi.md#apiTeamsIdPut) | **PUT** /api/teams/{id} | 
-[**apiTeamsPost**](TeamApi.md#apiTeamsPost) | **POST** /api/teams | 
+[**teamCreate**](TeamApi.md#teamCreate) | **POST** /api/teams | 
+[**teamDelete**](TeamApi.md#teamDelete) | **DELETE** /api/teams/{id} | 
+[**teamGetAll**](TeamApi.md#teamGetAll) | **GET** /api/teams/all | 
+[**teamGetById**](TeamApi.md#teamGetById) | **GET** /api/teams/{id} | 
+[**teamSearch**](TeamApi.md#teamSearch) | **GET** /api/teams | 
+[**teamUpdate**](TeamApi.md#teamUpdate) | **PUT** /api/teams/{id} | 
 
 
-# **apiTeamsAllGet**
-> Array<TeamDto> apiTeamsAllGet()
+# **teamCreate**
+> TeamDto teamCreate()
 
 
 ### Example
@@ -21,19 +21,140 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, TeamApi } from '';
-import type { TeamApiApiTeamsAllGetRequest } from '';
+import type { TeamApiTeamCreateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new TeamApi(configuration);
 
-const request: TeamApiApiTeamsAllGetRequest = {
+const request: TeamApiTeamCreateRequest = {
+  
+  createTeamCommand: {
+    name: "name_example",
+    description: "description_example",
+    totalMembers: 1,
+    completedProjects: 1,
+    activeProjects: 1,
+    managerId: "managerId_example",
+    memberIds: [
+      "memberIds_example",
+    ],
+    projectIds: [
+      1,
+    ],
+  },
+};
+
+const data = await apiInstance.teamCreate(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createTeamCommand** | **CreateTeamCommand**|  |
+
+
+### Return type
+
+**TeamDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **teamDelete**
+> void teamDelete()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamDeleteRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new TeamApi(configuration);
+
+const request: TeamApiTeamDeleteRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.teamDelete(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **teamGetAll**
+> Array<TeamDto> teamGetAll()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamGetAllRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new TeamApi(configuration);
+
+const request: TeamApiTeamGetAllRequest = {
   
   ids: [
     1,
   ],
 };
 
-const data = await apiInstance.apiTeamsAllGet(request);
+const data = await apiInstance.teamGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,8 +189,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiTeamsGet**
-> TeamDtoPaginated apiTeamsGet()
+# **teamGetById**
+> TeamFullDto teamGetById()
 
 
 ### Example
@@ -77,12 +198,66 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, TeamApi } from '';
-import type { TeamApiApiTeamsGetRequest } from '';
+import type { TeamApiTeamGetByIdRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new TeamApi(configuration);
 
-const request: TeamApiApiTeamsGetRequest = {
+const request: TeamApiTeamGetByIdRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.teamGetById(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**TeamFullDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **teamSearch**
+> TeamDtoPaginated teamSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, TeamApi } from '';
+import type { TeamApiTeamSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new TeamApi(configuration);
+
+const request: TeamApiTeamSearchRequest = {
   
   pageNumber: 1,
   
@@ -95,7 +270,7 @@ const request: TeamApiApiTeamsGetRequest = {
   ],
 };
 
-const data = await apiInstance.apiTeamsGet(request);
+const data = await apiInstance.teamSearch(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -133,8 +308,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiTeamsIdDelete**
-> void apiTeamsIdDelete()
+# **teamUpdate**
+> TeamDto teamUpdate()
 
 
 ### Example
@@ -142,120 +317,12 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, TeamApi } from '';
-import type { TeamApiApiTeamsIdDeleteRequest } from '';
+import type { TeamApiTeamUpdateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new TeamApi(configuration);
 
-const request: TeamApiApiTeamsIdDeleteRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiTeamsIdDelete(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiTeamsIdGet**
-> TeamFullDto apiTeamsIdGet()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, TeamApi } from '';
-import type { TeamApiApiTeamsIdGetRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new TeamApi(configuration);
-
-const request: TeamApiApiTeamsIdGetRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiTeamsIdGet(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**TeamFullDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiTeamsIdPut**
-> TeamDto apiTeamsIdPut()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, TeamApi } from '';
-import type { TeamApiApiTeamsIdPutRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new TeamApi(configuration);
-
-const request: TeamApiApiTeamsIdPutRequest = {
+const request: TeamApiTeamUpdateRequest = {
   
   id: 1,
   
@@ -275,7 +342,7 @@ const request: TeamApiApiTeamsIdPutRequest = {
   },
 };
 
-const data = await apiInstance.apiTeamsIdPut(request);
+const data = await apiInstance.teamUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -286,73 +353,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **createTeamCommand** | **CreateTeamCommand**|  |
  **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**TeamDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiTeamsPost**
-> TeamDto apiTeamsPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, TeamApi } from '';
-import type { TeamApiApiTeamsPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new TeamApi(configuration);
-
-const request: TeamApiApiTeamsPostRequest = {
-  
-  createTeamCommand: {
-    name: "name_example",
-    description: "description_example",
-    totalMembers: 1,
-    completedProjects: 1,
-    activeProjects: 1,
-    managerId: "managerId_example",
-    memberIds: [
-      "memberIds_example",
-    ],
-    projectIds: [
-      1,
-    ],
-  },
-};
-
-const data = await apiInstance.apiTeamsPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createTeamCommand** | **CreateTeamCommand**|  |
 
 
 ### Return type

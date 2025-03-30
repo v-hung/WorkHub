@@ -10,19 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { HttpFile } from '../http/http';
 
 export class CreateRequestDto {
-    'id': number;
+    'date': Date;
     'requestType': RequestType;
     'reason': string;
-    'status': RequestStatus;
-    'createdAt': Date;
-    'userId'?: string;
     'approvedById'?: string;
-    'timesheetId'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -30,10 +25,10 @@ export class CreateRequestDto {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "id",
-            "baseName": "id",
-            "type": "number",
-            "format": "int32"
+            "name": "date",
+            "baseName": "date",
+            "type": "Date",
+            "format": "date-time"
         },
         {
             "name": "requestType",
@@ -48,32 +43,8 @@ export class CreateRequestDto {
             "format": ""
         },
         {
-            "name": "status",
-            "baseName": "status",
-            "type": "RequestStatus",
-            "format": ""
-        },
-        {
-            "name": "createdAt",
-            "baseName": "createdAt",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "userId",
-            "baseName": "userId",
-            "type": "string",
-            "format": "uuid"
-        },
-        {
             "name": "approvedById",
             "baseName": "approvedById",
-            "type": "string",
-            "format": "uuid"
-        },
-        {
-            "name": "timesheetId",
-            "baseName": "timesheetId",
             "type": "string",
             "format": "uuid"
         }    ];

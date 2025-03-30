@@ -6,11 +6,14 @@ import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
 import TimesheetTable from "@/features/timesheet/components/TimesheetTable/TimesheetTable";
 import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext";
 import { lazy, Suspense } from "react";
-import { TimesheetRequestProvider } from "@/features/timesheet/context/TimesheetRequestContext";
+import { RequestProvider } from "@/features/request/contexts/RequestContext";
 
 const TimesheetRequestLazy = lazy(
   () =>
-    import("@/features/timesheet/components/TimesheetRequest/TimesheetRequest")
+    import("@/features/request/components/TimesheetRequest/TimesheetRequest")
+);
+const LeaveRequestLazy = lazy(
+  () => import("@/features/request/components/LeaveRequest/LeaveRequest")
 );
 
 export const loader = wrapLoaderWithPermission();
@@ -18,7 +21,7 @@ export const loader = wrapLoaderWithPermission();
 export function Component() {
   return (
     <TimesheetProvider>
-      <TimesheetRequestProvider>
+      <RequestProvider>
         <Layout className="main-layout h-screen">
           <TimesheetHeader />
           <MainBreadcrumb
@@ -30,11 +33,13 @@ export function Component() {
           <MainContent>
             <TimesheetTable />
           </MainContent>
+
           <Suspense fallback={null}>
+            <LeaveRequestLazy />
             <TimesheetRequestLazy />
           </Suspense>
         </Layout>
-      </TimesheetRequestProvider>
+      </RequestProvider>
     </TimesheetProvider>
   );
 }

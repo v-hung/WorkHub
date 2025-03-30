@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiRequestsIdLeaveApprovalPost**](RequestsApi.md#apiRequestsIdLeaveApprovalPost) | **POST** /api/requests/{id}/leave-approval | 
-[**apiRequestsIdLeaveCancelPost**](RequestsApi.md#apiRequestsIdLeaveCancelPost) | **POST** /api/requests/{id}/leave-cancel | 
-[**apiRequestsIdLeaveRejectPost**](RequestsApi.md#apiRequestsIdLeaveRejectPost) | **POST** /api/requests/{id}/leave-reject | 
-[**apiRequestsIdTimesheetApprovalPost**](RequestsApi.md#apiRequestsIdTimesheetApprovalPost) | **POST** /api/requests/{id}/timesheet-approval | 
-[**apiRequestsIdTimesheetCancelPost**](RequestsApi.md#apiRequestsIdTimesheetCancelPost) | **POST** /api/requests/{id}/timesheet-cancel | 
-[**apiRequestsIdTimesheetRejectPost**](RequestsApi.md#apiRequestsIdTimesheetRejectPost) | **POST** /api/requests/{id}/timesheet-reject | 
-[**apiRequestsLeavePost**](RequestsApi.md#apiRequestsLeavePost) | **POST** /api/requests/leave | 
-[**apiRequestsTimesheetPost**](RequestsApi.md#apiRequestsTimesheetPost) | **POST** /api/requests/timesheet | 
+[**leaveRequestApprovalRequest**](RequestsApi.md#leaveRequestApprovalRequest) | **POST** /api/requests/{id}/leave-approval | 
+[**leaveRequestCancelRequest**](RequestsApi.md#leaveRequestCancelRequest) | **POST** /api/requests/{id}/leave-cancel | 
+[**leaveRequestCreateRequest**](RequestsApi.md#leaveRequestCreateRequest) | **POST** /api/requests/leave | 
+[**leaveRequestRejectRequest**](RequestsApi.md#leaveRequestRejectRequest) | **POST** /api/requests/{id}/leave-reject | 
+[**timesheetRequestApprovalRequest**](RequestsApi.md#timesheetRequestApprovalRequest) | **POST** /api/requests/{id}/timesheet-approval | 
+[**timesheetRequestCancelRequest**](RequestsApi.md#timesheetRequestCancelRequest) | **POST** /api/requests/{id}/timesheet-cancel | 
+[**timesheetRequestCreateRequest**](RequestsApi.md#timesheetRequestCreateRequest) | **POST** /api/requests/timesheet | 
+[**timesheetRequestRejectRequest**](RequestsApi.md#timesheetRequestRejectRequest) | **POST** /api/requests/{id}/timesheet-reject | 
 
 
-# **apiRequestsIdLeaveApprovalPost**
-> LeaveRequestDto apiRequestsIdLeaveApprovalPost()
+# **leaveRequestApprovalRequest**
+> LeaveRequestDto leaveRequestApprovalRequest()
 
 
 ### Example
@@ -23,17 +23,17 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsIdLeaveApprovalPostRequest } from '';
+import type { RequestsApiLeaveRequestApprovalRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiApiRequestsIdLeaveApprovalPostRequest = {
+const request: RequestsApiLeaveRequestApprovalRequestRequest = {
   
   id: 1,
 };
 
-const data = await apiInstance.apiRequestsIdLeaveApprovalPost(request);
+const data = await apiInstance.leaveRequestApprovalRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,8 +68,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiRequestsIdLeaveCancelPost**
-> LeaveRequestDto apiRequestsIdLeaveCancelPost()
+# **leaveRequestCancelRequest**
+> LeaveRequestDto leaveRequestCancelRequest()
 
 
 ### Example
@@ -77,17 +77,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsIdLeaveCancelPostRequest } from '';
+import type { RequestsApiLeaveRequestCancelRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiApiRequestsIdLeaveCancelPostRequest = {
+const request: RequestsApiLeaveRequestCancelRequestRequest = {
   
   id: 1,
 };
 
-const data = await apiInstance.apiRequestsIdLeaveCancelPost(request);
+const data = await apiInstance.leaveRequestCancelRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -122,8 +122,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiRequestsIdLeaveRejectPost**
-> LeaveRequestDto apiRequestsIdLeaveRejectPost()
+# **leaveRequestCreateRequest**
+> LeaveRequestDto leaveRequestCreateRequest()
 
 
 ### Example
@@ -131,233 +131,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsIdLeaveRejectPostRequest } from '';
+import type { RequestsApiLeaveRequestCreateRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiApiRequestsIdLeaveRejectPostRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiRequestsIdLeaveRejectPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**LeaveRequestDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRequestsIdTimesheetApprovalPost**
-> TimesheetRequestDto apiRequestsIdTimesheetApprovalPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsIdTimesheetApprovalPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RequestsApi(configuration);
-
-const request: RequestsApiApiRequestsIdTimesheetApprovalPostRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiRequestsIdTimesheetApprovalPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**TimesheetRequestDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRequestsIdTimesheetCancelPost**
-> TimesheetRequestDto apiRequestsIdTimesheetCancelPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsIdTimesheetCancelPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RequestsApi(configuration);
-
-const request: RequestsApiApiRequestsIdTimesheetCancelPostRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiRequestsIdTimesheetCancelPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**TimesheetRequestDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRequestsIdTimesheetRejectPost**
-> TimesheetRequestDto apiRequestsIdTimesheetRejectPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsIdTimesheetRejectPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RequestsApi(configuration);
-
-const request: RequestsApiApiRequestsIdTimesheetRejectPostRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiRequestsIdTimesheetRejectPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**TimesheetRequestDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRequestsLeavePost**
-> LeaveRequestDto apiRequestsLeavePost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsLeavePostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RequestsApi(configuration);
-
-const request: RequestsApiApiRequestsLeavePostRequest = {
+const request: RequestsApiLeaveRequestCreateRequestRequest = {
   
   createLeaveRequestDto: null,
 };
 
-const data = await apiInstance.apiRequestsLeavePost(request);
+const data = await apiInstance.leaveRequestCreateRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -392,8 +176,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiRequestsTimesheetPost**
-> TimesheetRequestDto apiRequestsTimesheetPost()
+# **leaveRequestRejectRequest**
+> LeaveRequestDto leaveRequestRejectRequest()
 
 
 ### Example
@@ -401,17 +185,179 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiApiRequestsTimesheetPostRequest } from '';
+import type { RequestsApiLeaveRequestRejectRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiApiRequestsTimesheetPostRequest = {
+const request: RequestsApiLeaveRequestRejectRequestRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.leaveRequestRejectRequest(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**LeaveRequestDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **timesheetRequestApprovalRequest**
+> TimesheetRequestDto timesheetRequestApprovalRequest()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RequestsApi } from '';
+import type { RequestsApiTimesheetRequestApprovalRequestRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RequestsApi(configuration);
+
+const request: RequestsApiTimesheetRequestApprovalRequestRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.timesheetRequestApprovalRequest(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**TimesheetRequestDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **timesheetRequestCancelRequest**
+> TimesheetRequestDto timesheetRequestCancelRequest()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RequestsApi } from '';
+import type { RequestsApiTimesheetRequestCancelRequestRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RequestsApi(configuration);
+
+const request: RequestsApiTimesheetRequestCancelRequestRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.timesheetRequestCancelRequest(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**TimesheetRequestDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **timesheetRequestCreateRequest**
+> TimesheetRequestDto timesheetRequestCreateRequest()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RequestsApi } from '';
+import type { RequestsApiTimesheetRequestCreateRequestRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RequestsApi(configuration);
+
+const request: RequestsApiTimesheetRequestCreateRequestRequest = {
   
   createTimesheetRequestDto: null,
 };
 
-const data = await apiInstance.apiRequestsTimesheetPost(request);
+const data = await apiInstance.timesheetRequestCreateRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -434,6 +380,60 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **timesheetRequestRejectRequest**
+> TimesheetRequestDto timesheetRequestRejectRequest()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RequestsApi } from '';
+import type { RequestsApiTimesheetRequestRejectRequestRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RequestsApi(configuration);
+
+const request: RequestsApiTimesheetRequestRejectRequestRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.timesheetRequestRejectRequest(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**TimesheetRequestDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: text/plain, application/json, text/json
 
 

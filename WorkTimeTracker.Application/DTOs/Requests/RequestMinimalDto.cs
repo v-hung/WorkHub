@@ -10,6 +10,9 @@ namespace WorkTimeTracker.Application.DTOs.Requests
 		public required int Id { get; set; }
 
 		[Required]
+		public required DateTime Date { get; set; }
+
+		[Required]
 		public RequestType RequestType { get; set; }
 
 		[Required]

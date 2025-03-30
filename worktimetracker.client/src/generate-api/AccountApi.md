@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiIdentityChangePasswordPost**](AccountApi.md#apiIdentityChangePasswordPost) | **POST** /api/identity/change-password | 
-[**apiIdentityCurrentUserGet**](AccountApi.md#apiIdentityCurrentUserGet) | **GET** /api/identity/current-user | 
-[**apiIdentityLoginPost**](AccountApi.md#apiIdentityLoginPost) | **POST** /api/identity/login | 
-[**apiIdentityLogoutPost**](AccountApi.md#apiIdentityLogoutPost) | **POST** /api/identity/logout | 
-[**apiIdentityPermissionsGet**](AccountApi.md#apiIdentityPermissionsGet) | **GET** /api/identity/permissions | 
-[**apiIdentityRefreshTokenPost**](AccountApi.md#apiIdentityRefreshTokenPost) | **POST** /api/identity/refresh-token | 
+[**accountChangePassword**](AccountApi.md#accountChangePassword) | **POST** /api/identity/change-password | 
+[**accountGetCurrentUser**](AccountApi.md#accountGetCurrentUser) | **GET** /api/identity/current-user | 
+[**accountGetPermissions**](AccountApi.md#accountGetPermissions) | **GET** /api/identity/permissions | 
+[**accountLogin**](AccountApi.md#accountLogin) | **POST** /api/identity/login | 
+[**accountLogout**](AccountApi.md#accountLogout) | **POST** /api/identity/logout | 
+[**accountRefreshToken**](AccountApi.md#accountRefreshToken) | **POST** /api/identity/refresh-token | 
 
 
-# **apiIdentityChangePasswordPost**
-> void apiIdentityChangePasswordPost()
+# **accountChangePassword**
+> void accountChangePassword()
 
 
 ### Example
@@ -21,12 +21,12 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, AccountApi } from '';
-import type { AccountApiApiIdentityChangePasswordPostRequest } from '';
+import type { AccountApiAccountChangePasswordRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new AccountApi(configuration);
 
-const request: AccountApiApiIdentityChangePasswordPostRequest = {
+const request: AccountApiAccountChangePasswordRequest = {
   
   changePasswordRequest: {
     password: "password_example",
@@ -34,7 +34,7 @@ const request: AccountApiApiIdentityChangePasswordPostRequest = {
   },
 };
 
-const data = await apiInstance.apiIdentityChangePasswordPost(request);
+const data = await apiInstance.accountChangePassword(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -69,8 +69,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityCurrentUserGet**
-> UserDto apiIdentityCurrentUserGet()
+# **accountGetCurrentUser**
+> UserDto accountGetCurrentUser()
 
 
 ### Example
@@ -84,7 +84,7 @@ const apiInstance = new AccountApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.apiIdentityCurrentUserGet(request);
+const data = await apiInstance.accountGetCurrentUser(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -116,8 +116,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityLoginPost**
-> UserDtoLoginResponse apiIdentityLoginPost()
+# **accountGetPermissions**
+> void accountGetPermissions()
 
 
 ### Example
@@ -125,12 +125,59 @@ This endpoint does not need any parameter.
 
 ```typescript
 import { createConfiguration, AccountApi } from '';
-import type { AccountApiApiIdentityLoginPostRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new AccountApi(configuration);
 
-const request: AccountApiApiIdentityLoginPostRequest = {
+const request = {};
+
+const data = await apiInstance.accountGetPermissions(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **accountLogin**
+> UserDtoLoginResponse accountLogin()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, AccountApi } from '';
+import type { AccountApiAccountLoginRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new AccountApi(configuration);
+
+const request: AccountApiAccountLoginRequest = {
   
   loginRequest: {
     email: "email_example",
@@ -141,7 +188,7 @@ const request: AccountApiApiIdentityLoginPostRequest = {
   },
 };
 
-const data = await apiInstance.apiIdentityLoginPost(request);
+const data = await apiInstance.accountLogin(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -176,8 +223,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityLogoutPost**
-> void apiIdentityLogoutPost()
+# **accountLogout**
+> void accountLogout()
 
 
 ### Example
@@ -191,7 +238,7 @@ const apiInstance = new AccountApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.apiIdentityLogoutPost(request);
+const data = await apiInstance.accountLogout(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -223,8 +270,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiIdentityPermissionsGet**
-> void apiIdentityPermissionsGet()
+# **accountRefreshToken**
+> RefreshTokenResponse accountRefreshToken()
 
 
 ### Example
@@ -238,54 +285,7 @@ const apiInstance = new AccountApi(configuration);
 
 const request = {};
 
-const data = await apiInstance.apiIdentityPermissionsGet(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-This endpoint does not need any parameter.
-
-
-### Return type
-
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiIdentityRefreshTokenPost**
-> RefreshTokenResponse apiIdentityRefreshTokenPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, AccountApi } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new AccountApi(configuration);
-
-const request = {};
-
-const data = await apiInstance.apiIdentityRefreshTokenPost(request);
+const data = await apiInstance.accountRefreshToken(request);
 console.log('API called successfully. Returned data:', data);
 ```
 

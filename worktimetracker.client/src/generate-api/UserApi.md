@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiUsersAllGet**](UserApi.md#apiUsersAllGet) | **GET** /api/users/all | 
-[**apiUsersGet**](UserApi.md#apiUsersGet) | **GET** /api/users | 
-[**apiUsersIdDelete**](UserApi.md#apiUsersIdDelete) | **DELETE** /api/users/{id} | 
-[**apiUsersIdGet**](UserApi.md#apiUsersIdGet) | **GET** /api/users/{id} | 
-[**apiUsersIdPut**](UserApi.md#apiUsersIdPut) | **PUT** /api/users/{id} | 
-[**apiUsersPost**](UserApi.md#apiUsersPost) | **POST** /api/users | 
+[**userCreate**](UserApi.md#userCreate) | **POST** /api/users | 
+[**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
+[**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users/all | 
+[**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
+[**userSearch**](UserApi.md#userSearch) | **GET** /api/users | 
+[**userUpdate**](UserApi.md#userUpdate) | **PUT** /api/users/{id} | 
 
 
-# **apiUsersAllGet**
-> Array<UserDto> apiUsersAllGet()
+# **userCreate**
+> UserDto userCreate()
 
 
 ### Example
@@ -21,19 +21,157 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersAllGetRequest } from '';
+import type { UserApiUserCreateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new UserApi(configuration);
 
-const request: UserApiApiUsersAllGetRequest = {
+const request: UserApiUserCreateRequest = {
+  
+  userCreateUpdateRequest: {
+    code: "code_example",
+    fullName: "fullName_example",
+    email: "email_example",
+    phoneNumber: "phoneNumber_example",
+    image: "image_example",
+    userPosition: "Administrator",
+    leaveHours: 1,
+    userStatus: "ACTIVE",
+    workTimeId: 1,
+    userDetail: {
+      birthDate: new Date('1970-01-01T00:00:00.00Z'),
+      gender: true,
+      permanentAddress: "permanentAddress_example",
+      contactAddress: "contactAddress_example",
+      yearsOfWork: 1,
+      nationality: "Japanese",
+    },
+    supervisorId: "supervisorId_example",
+    teamId: 1,
+    managerTeamIds: [
+      1,
+    ],
+    managerProjectIds: [
+      1,
+    ],
+    roleNames: [
+      "roleNames_example",
+    ],
+    password: "password_example",
+  },
+};
+
+const data = await apiInstance.userCreate(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
+
+
+### Return type
+
+**UserDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **userDelete**
+> void userDelete()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+import type { UserApiUserDeleteRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request: UserApiUserDeleteRequest = {
+  
+  id: "id_example",
+};
+
+const data = await apiInstance.userDelete(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **userGetAll**
+> Array<UserDto> userGetAll()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+import type { UserApiUserGetAllRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request: UserApiUserGetAllRequest = {
   
   ids: [
     "ids_example",
   ],
 };
 
-const data = await apiInstance.apiUsersAllGet(request);
+const data = await apiInstance.userGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,8 +206,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiUsersGet**
-> UserDtoPaginated apiUsersGet()
+# **userGetById**
+> UserFullDto userGetById()
 
 
 ### Example
@@ -77,12 +215,66 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersGetRequest } from '';
+import type { UserApiUserGetByIdRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new UserApi(configuration);
 
-const request: UserApiApiUsersGetRequest = {
+const request: UserApiUserGetByIdRequest = {
+  
+  id: "id_example",
+};
+
+const data = await apiInstance.userGetById(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**UserFullDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **userSearch**
+> UserDtoPaginated userSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+import type { UserApiUserSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request: UserApiUserSearchRequest = {
   
   pageNumber: 1,
   
@@ -95,7 +287,7 @@ const request: UserApiApiUsersGetRequest = {
   ],
 };
 
-const data = await apiInstance.apiUsersGet(request);
+const data = await apiInstance.userSearch(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -133,8 +325,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiUsersIdDelete**
-> void apiUsersIdDelete()
+# **userUpdate**
+> UserDto userUpdate()
 
 
 ### Example
@@ -142,120 +334,12 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersIdDeleteRequest } from '';
+import type { UserApiUserUpdateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new UserApi(configuration);
 
-const request: UserApiApiUsersIdDeleteRequest = {
-  
-  id: "id_example",
-};
-
-const data = await apiInstance.apiUsersIdDelete(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiUsersIdGet**
-> UserFullDto apiUsersIdGet()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersIdGetRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
-
-const request: UserApiApiUsersIdGetRequest = {
-  
-  id: "id_example",
-};
-
-const data = await apiInstance.apiUsersIdGet(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**UserFullDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiUsersIdPut**
-> UserDto apiUsersIdPut()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersIdPutRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
-
-const request: UserApiApiUsersIdPutRequest = {
+const request: UserApiUserUpdateRequest = {
   
   id: "id_example",
   
@@ -292,7 +376,7 @@ const request: UserApiApiUsersIdPutRequest = {
   },
 };
 
-const data = await apiInstance.apiUsersIdPut(request);
+const data = await apiInstance.userUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -303,90 +387,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
  **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**UserDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiUsersPost**
-> UserDto apiUsersPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, UserApi } from '';
-import type { UserApiApiUsersPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new UserApi(configuration);
-
-const request: UserApiApiUsersPostRequest = {
-  
-  userCreateUpdateRequest: {
-    code: "code_example",
-    fullName: "fullName_example",
-    email: "email_example",
-    phoneNumber: "phoneNumber_example",
-    image: "image_example",
-    userPosition: "Administrator",
-    leaveHours: 1,
-    userStatus: "ACTIVE",
-    workTimeId: 1,
-    userDetail: {
-      birthDate: new Date('1970-01-01T00:00:00.00Z'),
-      gender: true,
-      permanentAddress: "permanentAddress_example",
-      contactAddress: "contactAddress_example",
-      yearsOfWork: 1,
-      nationality: "Japanese",
-    },
-    supervisorId: "supervisorId_example",
-    teamId: 1,
-    managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
-      1,
-    ],
-    roleNames: [
-      "roleNames_example",
-    ],
-    password: "password_example",
-  },
-};
-
-const data = await apiInstance.apiUsersPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **userCreateUpdateRequest** | **UserCreateUpdateRequest**|  |
 
 
 ### Return type

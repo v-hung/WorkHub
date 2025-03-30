@@ -6,14 +6,15 @@ import { format } from "@/common/utils/date.util";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { blueDark, red } from "@ant-design/colors";
 import { useTimesheetContext } from "../../context/TimesheetContext";
-import { useTimesheetRequestContext } from "../../context/TimesheetRequestContext";
+import { useRequestContext } from "@/features/request/contexts/RequestContext";
+import { RequestType } from "@/generate-api";
 
 const TImesheetHeader = () => {
   const { loading, timeString } = useTimesheet();
 
   const { startTime, endTime, checkIn, checkOut } = useTimesheetStore();
   const { getTimesheets, isCurrentMonth } = useTimesheetContext();
-  const { setOpen } = useTimesheetRequestContext();
+  const { openRequest } = useRequestContext();
 
   const handleTimeAction = async (cb: () => Promise<void>) => {
     await cb();
@@ -32,10 +33,12 @@ const TImesheetHeader = () => {
             <Skeleton.Input active />
           ) : (
             <>
-              <Button key="3" onClick={() => setOpen(true)}>
+              <Button
+                onClick={() => openRequest(RequestType.TimesheetAdjustment)}
+              >
                 Edit
               </Button>
-              <Button key="2" onClick={() => setOpen(true)}>
+              <Button onClick={() => openRequest(RequestType.LeaveRequest)}>
                 Leave
               </Button>
 

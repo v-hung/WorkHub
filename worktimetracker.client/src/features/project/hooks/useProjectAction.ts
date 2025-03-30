@@ -38,7 +38,6 @@ export const useProjectAction = () => {
   const create = async (request: CreateProjectCommand) => {
     setLoading(true);
     try {
-      console.log({ request });
       await projectApi.projectCreate(request);
       getNotification().success({
         message: "Successfully completed",

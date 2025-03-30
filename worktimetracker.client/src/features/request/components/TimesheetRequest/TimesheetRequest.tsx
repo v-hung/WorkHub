@@ -1,45 +1,59 @@
 import { Form, Input, Modal } from "antd";
 import { memo, useState, type ComponentProps, type FC } from "react";
-import { useTimesheetRequestContext } from "../../context/TimesheetRequestContext";
 import { useAuthStore } from "@/stores/auth.store";
 import MyDatePicker from "@/ui/form/MyDatePicker";
+import { useRequestContext } from "../../contexts/RequestContext";
+import { CreateTimesheetRequestDto, RequestType } from "@/generate-api";
+import { useTimesheetRequestAction } from "../../hooks/useTimesheetRequestAction";
 
 type State = ComponentProps<typeof Modal>;
 
 const TimesheetRequest: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
-  const { open, setOpen } = useTimesheetRequestContext();
-  const [confirmLoading, setConfirmLoading] = useState(false);
+  const { open, requestType, closeRequest } = useRequestContext();
+  const { loading, create } = useTimesheetRequestAction();
 
   const supervisor = useAuthStore((state) => state.user!.supervisor);
 
   const [form] = Form.useForm();
-  const [formState] = useState<any>();
+  const [formState] = useState<CreateTimesheetRequestDto>();
 
   const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
+    form.validateFields().then(async () => {
+      const formValues = form.getFieldsValue();
+
+      await create(formValues).then(() => {
+        closeRequest();
+      });
+    });
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    closeRequest();
   };
 
   return (
     <Modal
-      open={open}
+      open={open && requestType == RequestType.TimesheetAdjustment}
       {...rest}
       className={`${className}`}
       title="Timesheet Request"
       onOk={handleOk}
-      confirmLoading={confirmLoading}
+      confirmLoading={loading}
       onCancel={handleCancel}
     >
-      <Form autoComplete="off" layout="vertical" style={{ marginTop: "2rem" }}>
+      <Form
+        form={form}
+        initialValues={formState}
+        validateTrigger="onBlur"
+        name="timesheetRequest"
+        autoComplete="off"
+        layout="vertical"
+        style={{ marginTop: "2rem" }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+      >
         <Form.Item
           label="Reviewer"
           name="reviewerId"

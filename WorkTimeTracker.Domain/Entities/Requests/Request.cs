@@ -11,6 +11,9 @@ namespace WorkTimeTracker.Domain.Entities.Requests
 	{
 
 		[Required]
+		public required DateTime Date { get; set; }
+
+		[Required]
 		public RequestType RequestType { get; set; }
 
 		[Required]

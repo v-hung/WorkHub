@@ -63,34 +63,34 @@ import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 import { ObservableAccountApi } from "./ObservableAPI";
 import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
 
-export interface AccountApiApiIdentityChangePasswordPostRequest {
+export interface AccountApiAccountChangePasswordRequest {
     /**
      * 
      * @type ChangePasswordRequest
-     * @memberof AccountApiapiIdentityChangePasswordPost
+     * @memberof AccountApiaccountChangePassword
      */
     changePasswordRequest?: ChangePasswordRequest
 }
 
-export interface AccountApiApiIdentityCurrentUserGetRequest {
+export interface AccountApiAccountGetCurrentUserRequest {
 }
 
-export interface AccountApiApiIdentityLoginPostRequest {
+export interface AccountApiAccountGetPermissionsRequest {
+}
+
+export interface AccountApiAccountLoginRequest {
     /**
      * 
      * @type LoginRequest
-     * @memberof AccountApiapiIdentityLoginPost
+     * @memberof AccountApiaccountLogin
      */
     loginRequest?: LoginRequest
 }
 
-export interface AccountApiApiIdentityLogoutPostRequest {
+export interface AccountApiAccountLogoutRequest {
 }
 
-export interface AccountApiApiIdentityPermissionsGetRequest {
-}
-
-export interface AccountApiApiIdentityRefreshTokenPostRequest {
+export interface AccountApiAccountRefreshTokenRequest {
 }
 
 export class ObjectAccountApi {
@@ -103,85 +103,85 @@ export class ObjectAccountApi {
     /**
      * @param param the request object
      */
-    public apiIdentityChangePasswordPostWithHttpInfo(param: AccountApiApiIdentityChangePasswordPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiIdentityChangePasswordPostWithHttpInfo(param.changePasswordRequest,  options).toPromise();
+    public accountChangePasswordWithHttpInfo(param: AccountApiAccountChangePasswordRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.accountChangePasswordWithHttpInfo(param.changePasswordRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityChangePasswordPost(param: AccountApiApiIdentityChangePasswordPostRequest = {}, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiIdentityChangePasswordPost(param.changePasswordRequest,  options).toPromise();
+    public accountChangePassword(param: AccountApiAccountChangePasswordRequest = {}, options?: ConfigurationOptions): Promise<void> {
+        return this.api.accountChangePassword(param.changePasswordRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityCurrentUserGetWithHttpInfo(param: AccountApiApiIdentityCurrentUserGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
-        return this.api.apiIdentityCurrentUserGetWithHttpInfo( options).toPromise();
+    public accountGetCurrentUserWithHttpInfo(param: AccountApiAccountGetCurrentUserRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
+        return this.api.accountGetCurrentUserWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityCurrentUserGet(param: AccountApiApiIdentityCurrentUserGetRequest = {}, options?: ConfigurationOptions): Promise<UserDto> {
-        return this.api.apiIdentityCurrentUserGet( options).toPromise();
+    public accountGetCurrentUser(param: AccountApiAccountGetCurrentUserRequest = {}, options?: ConfigurationOptions): Promise<UserDto> {
+        return this.api.accountGetCurrentUser( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLoginPostWithHttpInfo(param: AccountApiApiIdentityLoginPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDtoLoginResponse>> {
-        return this.api.apiIdentityLoginPostWithHttpInfo(param.loginRequest,  options).toPromise();
+    public accountGetPermissionsWithHttpInfo(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.accountGetPermissionsWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLoginPost(param: AccountApiApiIdentityLoginPostRequest = {}, options?: ConfigurationOptions): Promise<UserDtoLoginResponse> {
-        return this.api.apiIdentityLoginPost(param.loginRequest,  options).toPromise();
+    public accountGetPermissions(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<void> {
+        return this.api.accountGetPermissions( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLogoutPostWithHttpInfo(param: AccountApiApiIdentityLogoutPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiIdentityLogoutPostWithHttpInfo( options).toPromise();
+    public accountLoginWithHttpInfo(param: AccountApiAccountLoginRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDtoLoginResponse>> {
+        return this.api.accountLoginWithHttpInfo(param.loginRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityLogoutPost(param: AccountApiApiIdentityLogoutPostRequest = {}, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiIdentityLogoutPost( options).toPromise();
+    public accountLogin(param: AccountApiAccountLoginRequest = {}, options?: ConfigurationOptions): Promise<UserDtoLoginResponse> {
+        return this.api.accountLogin(param.loginRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityPermissionsGetWithHttpInfo(param: AccountApiApiIdentityPermissionsGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiIdentityPermissionsGetWithHttpInfo( options).toPromise();
+    public accountLogoutWithHttpInfo(param: AccountApiAccountLogoutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.accountLogoutWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityPermissionsGet(param: AccountApiApiIdentityPermissionsGetRequest = {}, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiIdentityPermissionsGet( options).toPromise();
+    public accountLogout(param: AccountApiAccountLogoutRequest = {}, options?: ConfigurationOptions): Promise<void> {
+        return this.api.accountLogout( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityRefreshTokenPostWithHttpInfo(param: AccountApiApiIdentityRefreshTokenPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RefreshTokenResponse>> {
-        return this.api.apiIdentityRefreshTokenPostWithHttpInfo( options).toPromise();
+    public accountRefreshTokenWithHttpInfo(param: AccountApiAccountRefreshTokenRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RefreshTokenResponse>> {
+        return this.api.accountRefreshTokenWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiIdentityRefreshTokenPost(param: AccountApiApiIdentityRefreshTokenPostRequest = {}, options?: ConfigurationOptions): Promise<RefreshTokenResponse> {
-        return this.api.apiIdentityRefreshTokenPost( options).toPromise();
+    public accountRefreshToken(param: AccountApiAccountRefreshTokenRequest = {}, options?: ConfigurationOptions): Promise<RefreshTokenResponse> {
+        return this.api.accountRefreshToken( options).toPromise();
     }
 
 }
@@ -189,24 +189,53 @@ export class ObjectAccountApi {
 import { ObservableDeviceApi } from "./ObservableAPI";
 import { DeviceApiRequestFactory, DeviceApiResponseProcessor} from "../apis/DeviceApi";
 
-export interface DeviceApiApiDevicesAllGetRequest {
+export interface DeviceApiDeviceCreateRequest {
+    /**
+     * 
+     * @type CreateDeviceCommand
+     * @memberof DeviceApideviceCreate
+     */
+    createDeviceCommand?: CreateDeviceCommand
+}
+
+export interface DeviceApiDeviceDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof DeviceApideviceDelete
+     */
+    id: number
+}
+
+export interface DeviceApiDeviceGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;number&gt;
-     * @memberof DeviceApiapiDevicesAllGet
+     * @memberof DeviceApideviceGetAll
      */
     ids?: Array<number>
 }
 
-export interface DeviceApiApiDevicesGetRequest {
+export interface DeviceApiDeviceGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof DeviceApideviceGetById
+     */
+    id: number
+}
+
+export interface DeviceApiDeviceSearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof DeviceApiapiDevicesGet
+     * @memberof DeviceApideviceSearch
      */
     pageNumber: number
     /**
@@ -215,66 +244,37 @@ export interface DeviceApiApiDevicesGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof DeviceApiapiDevicesGet
+     * @memberof DeviceApideviceSearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof DeviceApiapiDevicesGet
+     * @memberof DeviceApideviceSearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof DeviceApiapiDevicesGet
+     * @memberof DeviceApideviceSearch
      */
     orderBy?: Array<string>
 }
 
-export interface DeviceApiApiDevicesIdDeleteRequest {
+export interface DeviceApiDeviceUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof DeviceApiapiDevicesIdDelete
-     */
-    id: number
-}
-
-export interface DeviceApiApiDevicesIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof DeviceApiapiDevicesIdGet
-     */
-    id: number
-}
-
-export interface DeviceApiApiDevicesIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof DeviceApiapiDevicesIdPut
+     * @memberof DeviceApideviceUpdate
      */
     id: number
     /**
      * 
      * @type CreateDeviceCommand
-     * @memberof DeviceApiapiDevicesIdPut
-     */
-    createDeviceCommand?: CreateDeviceCommand
-}
-
-export interface DeviceApiApiDevicesPostRequest {
-    /**
-     * 
-     * @type CreateDeviceCommand
-     * @memberof DeviceApiapiDevicesPost
+     * @memberof DeviceApideviceUpdate
      */
     createDeviceCommand?: CreateDeviceCommand
 }
@@ -289,85 +289,85 @@ export class ObjectDeviceApi {
     /**
      * @param param the request object
      */
-    public apiDevicesAllGetWithHttpInfo(param: DeviceApiApiDevicesAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceDto>>> {
-        return this.api.apiDevicesAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public deviceCreateWithHttpInfo(param: DeviceApiDeviceCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
+        return this.api.deviceCreateWithHttpInfo(param.createDeviceCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesAllGet(param: DeviceApiApiDevicesAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceDto>> {
-        return this.api.apiDevicesAllGet(param.ids,  options).toPromise();
+    public deviceCreate(param: DeviceApiDeviceCreateRequest = {}, options?: ConfigurationOptions): Promise<DeviceDto> {
+        return this.api.deviceCreate(param.createDeviceCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesGetWithHttpInfo(param: DeviceApiApiDevicesGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDtoPaginated>> {
-        return this.api.apiDevicesGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public deviceDeleteWithHttpInfo(param: DeviceApiDeviceDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.deviceDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesGet(param: DeviceApiApiDevicesGetRequest, options?: ConfigurationOptions): Promise<DeviceDtoPaginated> {
-        return this.api.apiDevicesGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public deviceDelete(param: DeviceApiDeviceDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.deviceDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesIdDeleteWithHttpInfo(param: DeviceApiApiDevicesIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiDevicesIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public deviceGetAllWithHttpInfo(param: DeviceApiDeviceGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceDto>>> {
+        return this.api.deviceGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesIdDelete(param: DeviceApiApiDevicesIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiDevicesIdDelete(param.id,  options).toPromise();
+    public deviceGetAll(param: DeviceApiDeviceGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceDto>> {
+        return this.api.deviceGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesIdGetWithHttpInfo(param: DeviceApiApiDevicesIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
-        return this.api.apiDevicesIdGetWithHttpInfo(param.id,  options).toPromise();
+    public deviceGetByIdWithHttpInfo(param: DeviceApiDeviceGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
+        return this.api.deviceGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesIdGet(param: DeviceApiApiDevicesIdGetRequest, options?: ConfigurationOptions): Promise<DeviceDto> {
-        return this.api.apiDevicesIdGet(param.id,  options).toPromise();
+    public deviceGetById(param: DeviceApiDeviceGetByIdRequest, options?: ConfigurationOptions): Promise<DeviceDto> {
+        return this.api.deviceGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesIdPutWithHttpInfo(param: DeviceApiApiDevicesIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
-        return this.api.apiDevicesIdPutWithHttpInfo(param.id, param.createDeviceCommand,  options).toPromise();
+    public deviceSearchWithHttpInfo(param: DeviceApiDeviceSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDtoPaginated>> {
+        return this.api.deviceSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesIdPut(param: DeviceApiApiDevicesIdPutRequest, options?: ConfigurationOptions): Promise<DeviceDto> {
-        return this.api.apiDevicesIdPut(param.id, param.createDeviceCommand,  options).toPromise();
+    public deviceSearch(param: DeviceApiDeviceSearchRequest, options?: ConfigurationOptions): Promise<DeviceDtoPaginated> {
+        return this.api.deviceSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesPostWithHttpInfo(param: DeviceApiApiDevicesPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
-        return this.api.apiDevicesPostWithHttpInfo(param.createDeviceCommand,  options).toPromise();
+    public deviceUpdateWithHttpInfo(param: DeviceApiDeviceUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceDto>> {
+        return this.api.deviceUpdateWithHttpInfo(param.id, param.createDeviceCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDevicesPost(param: DeviceApiApiDevicesPostRequest = {}, options?: ConfigurationOptions): Promise<DeviceDto> {
-        return this.api.apiDevicesPost(param.createDeviceCommand,  options).toPromise();
+    public deviceUpdate(param: DeviceApiDeviceUpdateRequest, options?: ConfigurationOptions): Promise<DeviceDto> {
+        return this.api.deviceUpdate(param.id, param.createDeviceCommand,  options).toPromise();
     }
 
 }
@@ -375,24 +375,53 @@ export class ObjectDeviceApi {
 import { ObservableDeviceCategoryApi } from "./ObservableAPI";
 import { DeviceCategoryApiRequestFactory, DeviceCategoryApiResponseProcessor} from "../apis/DeviceCategoryApi";
 
-export interface DeviceCategoryApiApiDeviceCategoriesAllGetRequest {
+export interface DeviceCategoryApiDeviceCategoryCreateRequest {
+    /**
+     * 
+     * @type CreateDeviceCategoryCommand
+     * @memberof DeviceCategoryApideviceCategoryCreate
+     */
+    createDeviceCategoryCommand?: CreateDeviceCategoryCommand
+}
+
+export interface DeviceCategoryApiDeviceCategoryDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof DeviceCategoryApideviceCategoryDelete
+     */
+    id: number
+}
+
+export interface DeviceCategoryApiDeviceCategoryGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;number&gt;
-     * @memberof DeviceCategoryApiapiDeviceCategoriesAllGet
+     * @memberof DeviceCategoryApideviceCategoryGetAll
      */
     ids?: Array<number>
 }
 
-export interface DeviceCategoryApiApiDeviceCategoriesGetRequest {
+export interface DeviceCategoryApiDeviceCategoryGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof DeviceCategoryApideviceCategoryGetById
+     */
+    id: number
+}
+
+export interface DeviceCategoryApiDeviceCategorySearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof DeviceCategoryApiapiDeviceCategoriesGet
+     * @memberof DeviceCategoryApideviceCategorySearch
      */
     pageNumber: number
     /**
@@ -401,66 +430,37 @@ export interface DeviceCategoryApiApiDeviceCategoriesGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof DeviceCategoryApiapiDeviceCategoriesGet
+     * @memberof DeviceCategoryApideviceCategorySearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof DeviceCategoryApiapiDeviceCategoriesGet
+     * @memberof DeviceCategoryApideviceCategorySearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof DeviceCategoryApiapiDeviceCategoriesGet
+     * @memberof DeviceCategoryApideviceCategorySearch
      */
     orderBy?: Array<string>
 }
 
-export interface DeviceCategoryApiApiDeviceCategoriesIdDeleteRequest {
+export interface DeviceCategoryApiDeviceCategoryUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof DeviceCategoryApiapiDeviceCategoriesIdDelete
-     */
-    id: number
-}
-
-export interface DeviceCategoryApiApiDeviceCategoriesIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof DeviceCategoryApiapiDeviceCategoriesIdGet
-     */
-    id: number
-}
-
-export interface DeviceCategoryApiApiDeviceCategoriesIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof DeviceCategoryApiapiDeviceCategoriesIdPut
+     * @memberof DeviceCategoryApideviceCategoryUpdate
      */
     id: number
     /**
      * 
      * @type CreateDeviceCategoryCommand
-     * @memberof DeviceCategoryApiapiDeviceCategoriesIdPut
-     */
-    createDeviceCategoryCommand?: CreateDeviceCategoryCommand
-}
-
-export interface DeviceCategoryApiApiDeviceCategoriesPostRequest {
-    /**
-     * 
-     * @type CreateDeviceCategoryCommand
-     * @memberof DeviceCategoryApiapiDeviceCategoriesPost
+     * @memberof DeviceCategoryApideviceCategoryUpdate
      */
     createDeviceCategoryCommand?: CreateDeviceCategoryCommand
 }
@@ -475,85 +475,85 @@ export class ObjectDeviceCategoryApi {
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesAllGetWithHttpInfo(param: DeviceCategoryApiApiDeviceCategoriesAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryDto>>> {
-        return this.api.apiDeviceCategoriesAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public deviceCategoryCreateWithHttpInfo(param: DeviceCategoryApiDeviceCategoryCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
+        return this.api.deviceCategoryCreateWithHttpInfo(param.createDeviceCategoryCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesAllGet(param: DeviceCategoryApiApiDeviceCategoriesAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceCategoryDto>> {
-        return this.api.apiDeviceCategoriesAllGet(param.ids,  options).toPromise();
+    public deviceCategoryCreate(param: DeviceCategoryApiDeviceCategoryCreateRequest = {}, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
+        return this.api.deviceCategoryCreate(param.createDeviceCategoryCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesGetWithHttpInfo(param: DeviceCategoryApiApiDeviceCategoriesGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDtoPaginated>> {
-        return this.api.apiDeviceCategoriesGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public deviceCategoryDeleteWithHttpInfo(param: DeviceCategoryApiDeviceCategoryDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.deviceCategoryDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesGet(param: DeviceCategoryApiApiDeviceCategoriesGetRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDtoPaginated> {
-        return this.api.apiDeviceCategoriesGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public deviceCategoryDelete(param: DeviceCategoryApiDeviceCategoryDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.deviceCategoryDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesIdDeleteWithHttpInfo(param: DeviceCategoryApiApiDeviceCategoriesIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiDeviceCategoriesIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public deviceCategoryGetAllWithHttpInfo(param: DeviceCategoryApiDeviceCategoryGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<DeviceCategoryDto>>> {
+        return this.api.deviceCategoryGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesIdDelete(param: DeviceCategoryApiApiDeviceCategoriesIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiDeviceCategoriesIdDelete(param.id,  options).toPromise();
+    public deviceCategoryGetAll(param: DeviceCategoryApiDeviceCategoryGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<DeviceCategoryDto>> {
+        return this.api.deviceCategoryGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesIdGetWithHttpInfo(param: DeviceCategoryApiApiDeviceCategoriesIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
-        return this.api.apiDeviceCategoriesIdGetWithHttpInfo(param.id,  options).toPromise();
+    public deviceCategoryGetByIdWithHttpInfo(param: DeviceCategoryApiDeviceCategoryGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
+        return this.api.deviceCategoryGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesIdGet(param: DeviceCategoryApiApiDeviceCategoriesIdGetRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
-        return this.api.apiDeviceCategoriesIdGet(param.id,  options).toPromise();
+    public deviceCategoryGetById(param: DeviceCategoryApiDeviceCategoryGetByIdRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
+        return this.api.deviceCategoryGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesIdPutWithHttpInfo(param: DeviceCategoryApiApiDeviceCategoriesIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
-        return this.api.apiDeviceCategoriesIdPutWithHttpInfo(param.id, param.createDeviceCategoryCommand,  options).toPromise();
+    public deviceCategorySearchWithHttpInfo(param: DeviceCategoryApiDeviceCategorySearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDtoPaginated>> {
+        return this.api.deviceCategorySearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesIdPut(param: DeviceCategoryApiApiDeviceCategoriesIdPutRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
-        return this.api.apiDeviceCategoriesIdPut(param.id, param.createDeviceCategoryCommand,  options).toPromise();
+    public deviceCategorySearch(param: DeviceCategoryApiDeviceCategorySearchRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDtoPaginated> {
+        return this.api.deviceCategorySearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesPostWithHttpInfo(param: DeviceCategoryApiApiDeviceCategoriesPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
-        return this.api.apiDeviceCategoriesPostWithHttpInfo(param.createDeviceCategoryCommand,  options).toPromise();
+    public deviceCategoryUpdateWithHttpInfo(param: DeviceCategoryApiDeviceCategoryUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<DeviceCategoryDto>> {
+        return this.api.deviceCategoryUpdateWithHttpInfo(param.id, param.createDeviceCategoryCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiDeviceCategoriesPost(param: DeviceCategoryApiApiDeviceCategoriesPostRequest = {}, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
-        return this.api.apiDeviceCategoriesPost(param.createDeviceCategoryCommand,  options).toPromise();
+    public deviceCategoryUpdate(param: DeviceCategoryApiDeviceCategoryUpdateRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
+        return this.api.deviceCategoryUpdate(param.id, param.createDeviceCategoryCommand,  options).toPromise();
     }
 
 }
@@ -561,24 +561,53 @@ export class ObjectDeviceCategoryApi {
 import { ObservableProjectApi } from "./ObservableAPI";
 import { ProjectApiRequestFactory, ProjectApiResponseProcessor} from "../apis/ProjectApi";
 
-export interface ProjectApiApiProjectsAllGetRequest {
+export interface ProjectApiProjectCreateRequest {
+    /**
+     * 
+     * @type CreateProjectCommand
+     * @memberof ProjectApiprojectCreate
+     */
+    createProjectCommand?: CreateProjectCommand
+}
+
+export interface ProjectApiProjectDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof ProjectApiprojectDelete
+     */
+    id: number
+}
+
+export interface ProjectApiProjectGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;number&gt;
-     * @memberof ProjectApiapiProjectsAllGet
+     * @memberof ProjectApiprojectGetAll
      */
     ids?: Array<number>
 }
 
-export interface ProjectApiApiProjectsGetRequest {
+export interface ProjectApiProjectGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof ProjectApiprojectGetById
+     */
+    id: number
+}
+
+export interface ProjectApiProjectSearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof ProjectApiapiProjectsGet
+     * @memberof ProjectApiprojectSearch
      */
     pageNumber: number
     /**
@@ -587,66 +616,37 @@ export interface ProjectApiApiProjectsGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof ProjectApiapiProjectsGet
+     * @memberof ProjectApiprojectSearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof ProjectApiapiProjectsGet
+     * @memberof ProjectApiprojectSearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof ProjectApiapiProjectsGet
+     * @memberof ProjectApiprojectSearch
      */
     orderBy?: Array<string>
 }
 
-export interface ProjectApiApiProjectsIdDeleteRequest {
+export interface ProjectApiProjectUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof ProjectApiapiProjectsIdDelete
-     */
-    id: number
-}
-
-export interface ProjectApiApiProjectsIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof ProjectApiapiProjectsIdGet
-     */
-    id: number
-}
-
-export interface ProjectApiApiProjectsIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof ProjectApiapiProjectsIdPut
+     * @memberof ProjectApiprojectUpdate
      */
     id: number
     /**
      * 
      * @type CreateProjectCommand
-     * @memberof ProjectApiapiProjectsIdPut
-     */
-    createProjectCommand?: CreateProjectCommand
-}
-
-export interface ProjectApiApiProjectsPostRequest {
-    /**
-     * 
-     * @type CreateProjectCommand
-     * @memberof ProjectApiapiProjectsPost
+     * @memberof ProjectApiprojectUpdate
      */
     createProjectCommand?: CreateProjectCommand
 }
@@ -661,85 +661,85 @@ export class ObjectProjectApi {
     /**
      * @param param the request object
      */
-    public apiProjectsAllGetWithHttpInfo(param: ProjectApiApiProjectsAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<ProjectDto>>> {
-        return this.api.apiProjectsAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public projectCreateWithHttpInfo(param: ProjectApiProjectCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+        return this.api.projectCreateWithHttpInfo(param.createProjectCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsAllGet(param: ProjectApiApiProjectsAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<ProjectDto>> {
-        return this.api.apiProjectsAllGet(param.ids,  options).toPromise();
+    public projectCreate(param: ProjectApiProjectCreateRequest = {}, options?: ConfigurationOptions): Promise<ProjectDto> {
+        return this.api.projectCreate(param.createProjectCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsGetWithHttpInfo(param: ProjectApiApiProjectsGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDtoPaginated>> {
-        return this.api.apiProjectsGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public projectDeleteWithHttpInfo(param: ProjectApiProjectDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.projectDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsGet(param: ProjectApiApiProjectsGetRequest, options?: ConfigurationOptions): Promise<ProjectDtoPaginated> {
-        return this.api.apiProjectsGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public projectDelete(param: ProjectApiProjectDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.projectDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsIdDeleteWithHttpInfo(param: ProjectApiApiProjectsIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiProjectsIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public projectGetAllWithHttpInfo(param: ProjectApiProjectGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<ProjectDto>>> {
+        return this.api.projectGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsIdDelete(param: ProjectApiApiProjectsIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiProjectsIdDelete(param.id,  options).toPromise();
+    public projectGetAll(param: ProjectApiProjectGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<ProjectDto>> {
+        return this.api.projectGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsIdGetWithHttpInfo(param: ProjectApiApiProjectsIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
-        return this.api.apiProjectsIdGetWithHttpInfo(param.id,  options).toPromise();
+    public projectGetByIdWithHttpInfo(param: ProjectApiProjectGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+        return this.api.projectGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsIdGet(param: ProjectApiApiProjectsIdGetRequest, options?: ConfigurationOptions): Promise<ProjectDto> {
-        return this.api.apiProjectsIdGet(param.id,  options).toPromise();
+    public projectGetById(param: ProjectApiProjectGetByIdRequest, options?: ConfigurationOptions): Promise<ProjectDto> {
+        return this.api.projectGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsIdPutWithHttpInfo(param: ProjectApiApiProjectsIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
-        return this.api.apiProjectsIdPutWithHttpInfo(param.id, param.createProjectCommand,  options).toPromise();
+    public projectSearchWithHttpInfo(param: ProjectApiProjectSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDtoPaginated>> {
+        return this.api.projectSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsIdPut(param: ProjectApiApiProjectsIdPutRequest, options?: ConfigurationOptions): Promise<ProjectDto> {
-        return this.api.apiProjectsIdPut(param.id, param.createProjectCommand,  options).toPromise();
+    public projectSearch(param: ProjectApiProjectSearchRequest, options?: ConfigurationOptions): Promise<ProjectDtoPaginated> {
+        return this.api.projectSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsPostWithHttpInfo(param: ProjectApiApiProjectsPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
-        return this.api.apiProjectsPostWithHttpInfo(param.createProjectCommand,  options).toPromise();
+    public projectUpdateWithHttpInfo(param: ProjectApiProjectUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<ProjectDto>> {
+        return this.api.projectUpdateWithHttpInfo(param.id, param.createProjectCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiProjectsPost(param: ProjectApiApiProjectsPostRequest = {}, options?: ConfigurationOptions): Promise<ProjectDto> {
-        return this.api.apiProjectsPost(param.createProjectCommand,  options).toPromise();
+    public projectUpdate(param: ProjectApiProjectUpdateRequest, options?: ConfigurationOptions): Promise<ProjectDto> {
+        return this.api.projectUpdate(param.id, param.createProjectCommand,  options).toPromise();
     }
 
 }
@@ -747,82 +747,82 @@ export class ObjectProjectApi {
 import { ObservableRequestsApi } from "./ObservableAPI";
 import { RequestsApiRequestFactory, RequestsApiResponseProcessor} from "../apis/RequestsApi";
 
-export interface RequestsApiApiRequestsIdLeaveApprovalPostRequest {
+export interface RequestsApiLeaveRequestApprovalRequestRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof RequestsApiapiRequestsIdLeaveApprovalPost
+     * @memberof RequestsApileaveRequestApprovalRequest
      */
     id: number
 }
 
-export interface RequestsApiApiRequestsIdLeaveCancelPostRequest {
+export interface RequestsApiLeaveRequestCancelRequestRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof RequestsApiapiRequestsIdLeaveCancelPost
+     * @memberof RequestsApileaveRequestCancelRequest
      */
     id: number
 }
 
-export interface RequestsApiApiRequestsIdLeaveRejectPostRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof RequestsApiapiRequestsIdLeaveRejectPost
-     */
-    id: number
-}
-
-export interface RequestsApiApiRequestsIdTimesheetApprovalPostRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof RequestsApiapiRequestsIdTimesheetApprovalPost
-     */
-    id: number
-}
-
-export interface RequestsApiApiRequestsIdTimesheetCancelPostRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof RequestsApiapiRequestsIdTimesheetCancelPost
-     */
-    id: number
-}
-
-export interface RequestsApiApiRequestsIdTimesheetRejectPostRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof RequestsApiapiRequestsIdTimesheetRejectPost
-     */
-    id: number
-}
-
-export interface RequestsApiApiRequestsLeavePostRequest {
+export interface RequestsApiLeaveRequestCreateRequestRequest {
     /**
      * 
      * @type CreateLeaveRequestDto
-     * @memberof RequestsApiapiRequestsLeavePost
+     * @memberof RequestsApileaveRequestCreateRequest
      */
     createLeaveRequestDto?: CreateLeaveRequestDto
 }
 
-export interface RequestsApiApiRequestsTimesheetPostRequest {
+export interface RequestsApiLeaveRequestRejectRequestRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof RequestsApileaveRequestRejectRequest
+     */
+    id: number
+}
+
+export interface RequestsApiTimesheetRequestApprovalRequestRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof RequestsApitimesheetRequestApprovalRequest
+     */
+    id: number
+}
+
+export interface RequestsApiTimesheetRequestCancelRequestRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof RequestsApitimesheetRequestCancelRequest
+     */
+    id: number
+}
+
+export interface RequestsApiTimesheetRequestCreateRequestRequest {
     /**
      * 
      * @type CreateTimesheetRequestDto
-     * @memberof RequestsApiapiRequestsTimesheetPost
+     * @memberof RequestsApitimesheetRequestCreateRequest
      */
     createTimesheetRequestDto?: CreateTimesheetRequestDto
+}
+
+export interface RequestsApiTimesheetRequestRejectRequestRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof RequestsApitimesheetRequestRejectRequest
+     */
+    id: number
 }
 
 export class ObjectRequestsApi {
@@ -835,113 +835,113 @@ export class ObjectRequestsApi {
     /**
      * @param param the request object
      */
-    public apiRequestsIdLeaveApprovalPostWithHttpInfo(param: RequestsApiApiRequestsIdLeaveApprovalPostRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
-        return this.api.apiRequestsIdLeaveApprovalPostWithHttpInfo(param.id,  options).toPromise();
+    public leaveRequestApprovalRequestWithHttpInfo(param: RequestsApiLeaveRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+        return this.api.leaveRequestApprovalRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdLeaveApprovalPost(param: RequestsApiApiRequestsIdLeaveApprovalPostRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
-        return this.api.apiRequestsIdLeaveApprovalPost(param.id,  options).toPromise();
+    public leaveRequestApprovalRequest(param: RequestsApiLeaveRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+        return this.api.leaveRequestApprovalRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdLeaveCancelPostWithHttpInfo(param: RequestsApiApiRequestsIdLeaveCancelPostRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
-        return this.api.apiRequestsIdLeaveCancelPostWithHttpInfo(param.id,  options).toPromise();
+    public leaveRequestCancelRequestWithHttpInfo(param: RequestsApiLeaveRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+        return this.api.leaveRequestCancelRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdLeaveCancelPost(param: RequestsApiApiRequestsIdLeaveCancelPostRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
-        return this.api.apiRequestsIdLeaveCancelPost(param.id,  options).toPromise();
+    public leaveRequestCancelRequest(param: RequestsApiLeaveRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+        return this.api.leaveRequestCancelRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdLeaveRejectPostWithHttpInfo(param: RequestsApiApiRequestsIdLeaveRejectPostRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
-        return this.api.apiRequestsIdLeaveRejectPostWithHttpInfo(param.id,  options).toPromise();
+    public leaveRequestCreateRequestWithHttpInfo(param: RequestsApiLeaveRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+        return this.api.leaveRequestCreateRequestWithHttpInfo(param.createLeaveRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdLeaveRejectPost(param: RequestsApiApiRequestsIdLeaveRejectPostRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
-        return this.api.apiRequestsIdLeaveRejectPost(param.id,  options).toPromise();
+    public leaveRequestCreateRequest(param: RequestsApiLeaveRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+        return this.api.leaveRequestCreateRequest(param.createLeaveRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdTimesheetApprovalPostWithHttpInfo(param: RequestsApiApiRequestsIdTimesheetApprovalPostRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.apiRequestsIdTimesheetApprovalPostWithHttpInfo(param.id,  options).toPromise();
+    public leaveRequestRejectRequestWithHttpInfo(param: RequestsApiLeaveRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+        return this.api.leaveRequestRejectRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdTimesheetApprovalPost(param: RequestsApiApiRequestsIdTimesheetApprovalPostRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.apiRequestsIdTimesheetApprovalPost(param.id,  options).toPromise();
+    public leaveRequestRejectRequest(param: RequestsApiLeaveRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+        return this.api.leaveRequestRejectRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdTimesheetCancelPostWithHttpInfo(param: RequestsApiApiRequestsIdTimesheetCancelPostRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.apiRequestsIdTimesheetCancelPostWithHttpInfo(param.id,  options).toPromise();
+    public timesheetRequestApprovalRequestWithHttpInfo(param: RequestsApiTimesheetRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+        return this.api.timesheetRequestApprovalRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdTimesheetCancelPost(param: RequestsApiApiRequestsIdTimesheetCancelPostRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.apiRequestsIdTimesheetCancelPost(param.id,  options).toPromise();
+    public timesheetRequestApprovalRequest(param: RequestsApiTimesheetRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
+        return this.api.timesheetRequestApprovalRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdTimesheetRejectPostWithHttpInfo(param: RequestsApiApiRequestsIdTimesheetRejectPostRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.apiRequestsIdTimesheetRejectPostWithHttpInfo(param.id,  options).toPromise();
+    public timesheetRequestCancelRequestWithHttpInfo(param: RequestsApiTimesheetRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+        return this.api.timesheetRequestCancelRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsIdTimesheetRejectPost(param: RequestsApiApiRequestsIdTimesheetRejectPostRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.apiRequestsIdTimesheetRejectPost(param.id,  options).toPromise();
+    public timesheetRequestCancelRequest(param: RequestsApiTimesheetRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
+        return this.api.timesheetRequestCancelRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsLeavePostWithHttpInfo(param: RequestsApiApiRequestsLeavePostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
-        return this.api.apiRequestsLeavePostWithHttpInfo(param.createLeaveRequestDto,  options).toPromise();
+    public timesheetRequestCreateRequestWithHttpInfo(param: RequestsApiTimesheetRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+        return this.api.timesheetRequestCreateRequestWithHttpInfo(param.createTimesheetRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsLeavePost(param: RequestsApiApiRequestsLeavePostRequest = {}, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
-        return this.api.apiRequestsLeavePost(param.createLeaveRequestDto,  options).toPromise();
+    public timesheetRequestCreateRequest(param: RequestsApiTimesheetRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
+        return this.api.timesheetRequestCreateRequest(param.createTimesheetRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsTimesheetPostWithHttpInfo(param: RequestsApiApiRequestsTimesheetPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.apiRequestsTimesheetPostWithHttpInfo(param.createTimesheetRequestDto,  options).toPromise();
+    public timesheetRequestRejectRequestWithHttpInfo(param: RequestsApiTimesheetRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+        return this.api.timesheetRequestRejectRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRequestsTimesheetPost(param: RequestsApiApiRequestsTimesheetPostRequest = {}, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.apiRequestsTimesheetPost(param.createTimesheetRequestDto,  options).toPromise();
+    public timesheetRequestRejectRequest(param: RequestsApiTimesheetRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
+        return this.api.timesheetRequestRejectRequest(param.id,  options).toPromise();
     }
 
 }
@@ -949,24 +949,53 @@ export class ObjectRequestsApi {
 import { ObservableRoleApi } from "./ObservableAPI";
 import { RoleApiRequestFactory, RoleApiResponseProcessor} from "../apis/RoleApi";
 
-export interface RoleApiApiRolesAllGetRequest {
+export interface RoleApiRoleCreateRequest {
+    /**
+     * 
+     * @type RoleCreateUpdateRequest
+     * @memberof RoleApiroleCreate
+     */
+    roleCreateUpdateRequest?: RoleCreateUpdateRequest
+}
+
+export interface RoleApiRoleDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof RoleApiroleDelete
+     */
+    id: string
+}
+
+export interface RoleApiRoleGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof RoleApiapiRolesAllGet
+     * @memberof RoleApiroleGetAll
      */
     ids?: Array<string>
 }
 
-export interface RoleApiApiRolesGetRequest {
+export interface RoleApiRoleGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof RoleApiroleGetById
+     */
+    id: string
+}
+
+export interface RoleApiRoleSearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof RoleApiapiRolesGet
+     * @memberof RoleApiroleSearch
      */
     pageNumber: number
     /**
@@ -975,66 +1004,37 @@ export interface RoleApiApiRolesGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof RoleApiapiRolesGet
+     * @memberof RoleApiroleSearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof RoleApiapiRolesGet
+     * @memberof RoleApiroleSearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof RoleApiapiRolesGet
+     * @memberof RoleApiroleSearch
      */
     orderBy?: Array<string>
 }
 
-export interface RoleApiApiRolesIdDeleteRequest {
+export interface RoleApiRoleUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof RoleApiapiRolesIdDelete
-     */
-    id: string
-}
-
-export interface RoleApiApiRolesIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type string
-     * @memberof RoleApiapiRolesIdGet
-     */
-    id: string
-}
-
-export interface RoleApiApiRolesIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type string
-     * @memberof RoleApiapiRolesIdPut
+     * @memberof RoleApiroleUpdate
      */
     id: string
     /**
      * 
      * @type RoleCreateUpdateRequest
-     * @memberof RoleApiapiRolesIdPut
-     */
-    roleCreateUpdateRequest?: RoleCreateUpdateRequest
-}
-
-export interface RoleApiApiRolesPostRequest {
-    /**
-     * 
-     * @type RoleCreateUpdateRequest
-     * @memberof RoleApiapiRolesPost
+     * @memberof RoleApiroleUpdate
      */
     roleCreateUpdateRequest?: RoleCreateUpdateRequest
 }
@@ -1049,85 +1049,85 @@ export class ObjectRoleApi {
     /**
      * @param param the request object
      */
-    public apiRolesAllGetWithHttpInfo(param: RoleApiApiRolesAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
-        return this.api.apiRolesAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public roleCreateWithHttpInfo(param: RoleApiRoleCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        return this.api.roleCreateWithHttpInfo(param.roleCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesAllGet(param: RoleApiApiRolesAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<RoleDto>> {
-        return this.api.apiRolesAllGet(param.ids,  options).toPromise();
+    public roleCreate(param: RoleApiRoleCreateRequest = {}, options?: ConfigurationOptions): Promise<RoleDto> {
+        return this.api.roleCreate(param.roleCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesGetWithHttpInfo(param: RoleApiApiRolesGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDtoPaginated>> {
-        return this.api.apiRolesGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public roleDeleteWithHttpInfo(param: RoleApiRoleDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.roleDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesGet(param: RoleApiApiRolesGetRequest, options?: ConfigurationOptions): Promise<RoleDtoPaginated> {
-        return this.api.apiRolesGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public roleDelete(param: RoleApiRoleDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.roleDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesIdDeleteWithHttpInfo(param: RoleApiApiRolesIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiRolesIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public roleGetAllWithHttpInfo(param: RoleApiRoleGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
+        return this.api.roleGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesIdDelete(param: RoleApiApiRolesIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiRolesIdDelete(param.id,  options).toPromise();
+    public roleGetAll(param: RoleApiRoleGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<RoleDto>> {
+        return this.api.roleGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesIdGetWithHttpInfo(param: RoleApiApiRolesIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
-        return this.api.apiRolesIdGetWithHttpInfo(param.id,  options).toPromise();
+    public roleGetByIdWithHttpInfo(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        return this.api.roleGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesIdGet(param: RoleApiApiRolesIdGetRequest, options?: ConfigurationOptions): Promise<RoleDto> {
-        return this.api.apiRolesIdGet(param.id,  options).toPromise();
+    public roleGetById(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<RoleDto> {
+        return this.api.roleGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesIdPutWithHttpInfo(param: RoleApiApiRolesIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
-        return this.api.apiRolesIdPutWithHttpInfo(param.id, param.roleCreateUpdateRequest,  options).toPromise();
+    public roleSearchWithHttpInfo(param: RoleApiRoleSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDtoPaginated>> {
+        return this.api.roleSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesIdPut(param: RoleApiApiRolesIdPutRequest, options?: ConfigurationOptions): Promise<RoleDto> {
-        return this.api.apiRolesIdPut(param.id, param.roleCreateUpdateRequest,  options).toPromise();
+    public roleSearch(param: RoleApiRoleSearchRequest, options?: ConfigurationOptions): Promise<RoleDtoPaginated> {
+        return this.api.roleSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesPostWithHttpInfo(param: RoleApiApiRolesPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
-        return this.api.apiRolesPostWithHttpInfo(param.roleCreateUpdateRequest,  options).toPromise();
+    public roleUpdateWithHttpInfo(param: RoleApiRoleUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+        return this.api.roleUpdateWithHttpInfo(param.id, param.roleCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiRolesPost(param: RoleApiApiRolesPostRequest = {}, options?: ConfigurationOptions): Promise<RoleDto> {
-        return this.api.apiRolesPost(param.roleCreateUpdateRequest,  options).toPromise();
+    public roleUpdate(param: RoleApiRoleUpdateRequest, options?: ConfigurationOptions): Promise<RoleDto> {
+        return this.api.roleUpdate(param.id, param.roleCreateUpdateRequest,  options).toPromise();
     }
 
 }
@@ -1135,24 +1135,53 @@ export class ObjectRoleApi {
 import { ObservableTeamApi } from "./ObservableAPI";
 import { TeamApiRequestFactory, TeamApiResponseProcessor} from "../apis/TeamApi";
 
-export interface TeamApiApiTeamsAllGetRequest {
+export interface TeamApiTeamCreateRequest {
+    /**
+     * 
+     * @type CreateTeamCommand
+     * @memberof TeamApiteamCreate
+     */
+    createTeamCommand?: CreateTeamCommand
+}
+
+export interface TeamApiTeamDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TeamApiteamDelete
+     */
+    id: number
+}
+
+export interface TeamApiTeamGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;number&gt;
-     * @memberof TeamApiapiTeamsAllGet
+     * @memberof TeamApiteamGetAll
      */
     ids?: Array<number>
 }
 
-export interface TeamApiApiTeamsGetRequest {
+export interface TeamApiTeamGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TeamApiteamGetById
+     */
+    id: number
+}
+
+export interface TeamApiTeamSearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof TeamApiapiTeamsGet
+     * @memberof TeamApiteamSearch
      */
     pageNumber: number
     /**
@@ -1161,66 +1190,37 @@ export interface TeamApiApiTeamsGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof TeamApiapiTeamsGet
+     * @memberof TeamApiteamSearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof TeamApiapiTeamsGet
+     * @memberof TeamApiteamSearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof TeamApiapiTeamsGet
+     * @memberof TeamApiteamSearch
      */
     orderBy?: Array<string>
 }
 
-export interface TeamApiApiTeamsIdDeleteRequest {
+export interface TeamApiTeamUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof TeamApiapiTeamsIdDelete
-     */
-    id: number
-}
-
-export interface TeamApiApiTeamsIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof TeamApiapiTeamsIdGet
-     */
-    id: number
-}
-
-export interface TeamApiApiTeamsIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof TeamApiapiTeamsIdPut
+     * @memberof TeamApiteamUpdate
      */
     id: number
     /**
      * 
      * @type CreateTeamCommand
-     * @memberof TeamApiapiTeamsIdPut
-     */
-    createTeamCommand?: CreateTeamCommand
-}
-
-export interface TeamApiApiTeamsPostRequest {
-    /**
-     * 
-     * @type CreateTeamCommand
-     * @memberof TeamApiapiTeamsPost
+     * @memberof TeamApiteamUpdate
      */
     createTeamCommand?: CreateTeamCommand
 }
@@ -1235,85 +1235,85 @@ export class ObjectTeamApi {
     /**
      * @param param the request object
      */
-    public apiTeamsAllGetWithHttpInfo(param: TeamApiApiTeamsAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TeamDto>>> {
-        return this.api.apiTeamsAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public teamCreateWithHttpInfo(param: TeamApiTeamCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+        return this.api.teamCreateWithHttpInfo(param.createTeamCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsAllGet(param: TeamApiApiTeamsAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<TeamDto>> {
-        return this.api.apiTeamsAllGet(param.ids,  options).toPromise();
+    public teamCreate(param: TeamApiTeamCreateRequest = {}, options?: ConfigurationOptions): Promise<TeamDto> {
+        return this.api.teamCreate(param.createTeamCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsGetWithHttpInfo(param: TeamApiApiTeamsGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamDtoPaginated>> {
-        return this.api.apiTeamsGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public teamDeleteWithHttpInfo(param: TeamApiTeamDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.teamDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsGet(param: TeamApiApiTeamsGetRequest, options?: ConfigurationOptions): Promise<TeamDtoPaginated> {
-        return this.api.apiTeamsGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public teamDelete(param: TeamApiTeamDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.teamDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsIdDeleteWithHttpInfo(param: TeamApiApiTeamsIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiTeamsIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public teamGetAllWithHttpInfo(param: TeamApiTeamGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TeamDto>>> {
+        return this.api.teamGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsIdDelete(param: TeamApiApiTeamsIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiTeamsIdDelete(param.id,  options).toPromise();
+    public teamGetAll(param: TeamApiTeamGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<TeamDto>> {
+        return this.api.teamGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsIdGetWithHttpInfo(param: TeamApiApiTeamsIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamFullDto>> {
-        return this.api.apiTeamsIdGetWithHttpInfo(param.id,  options).toPromise();
+    public teamGetByIdWithHttpInfo(param: TeamApiTeamGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamFullDto>> {
+        return this.api.teamGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsIdGet(param: TeamApiApiTeamsIdGetRequest, options?: ConfigurationOptions): Promise<TeamFullDto> {
-        return this.api.apiTeamsIdGet(param.id,  options).toPromise();
+    public teamGetById(param: TeamApiTeamGetByIdRequest, options?: ConfigurationOptions): Promise<TeamFullDto> {
+        return this.api.teamGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsIdPutWithHttpInfo(param: TeamApiApiTeamsIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
-        return this.api.apiTeamsIdPutWithHttpInfo(param.id, param.createTeamCommand,  options).toPromise();
+    public teamSearchWithHttpInfo(param: TeamApiTeamSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamDtoPaginated>> {
+        return this.api.teamSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsIdPut(param: TeamApiApiTeamsIdPutRequest, options?: ConfigurationOptions): Promise<TeamDto> {
-        return this.api.apiTeamsIdPut(param.id, param.createTeamCommand,  options).toPromise();
+    public teamSearch(param: TeamApiTeamSearchRequest, options?: ConfigurationOptions): Promise<TeamDtoPaginated> {
+        return this.api.teamSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsPostWithHttpInfo(param: TeamApiApiTeamsPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
-        return this.api.apiTeamsPostWithHttpInfo(param.createTeamCommand,  options).toPromise();
+    public teamUpdateWithHttpInfo(param: TeamApiTeamUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<TeamDto>> {
+        return this.api.teamUpdateWithHttpInfo(param.id, param.createTeamCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTeamsPost(param: TeamApiApiTeamsPostRequest = {}, options?: ConfigurationOptions): Promise<TeamDto> {
-        return this.api.apiTeamsPost(param.createTeamCommand,  options).toPromise();
+    public teamUpdate(param: TeamApiTeamUpdateRequest, options?: ConfigurationOptions): Promise<TeamDto> {
+        return this.api.teamUpdate(param.id, param.createTeamCommand,  options).toPromise();
     }
 
 }
@@ -1321,47 +1321,47 @@ export class ObjectTeamApi {
 import { ObservableTimesheetApi } from "./ObservableAPI";
 import { TimesheetApiRequestFactory, TimesheetApiResponseProcessor} from "../apis/TimesheetApi";
 
-export interface TimesheetApiApiTimesheetsCheckinPostRequest {
+export interface TimesheetApiTimesheetCheckInRequest {
 }
 
-export interface TimesheetApiApiTimesheetsCheckoutPostRequest {
+export interface TimesheetApiTimesheetCheckOutRequest {
 }
 
-export interface TimesheetApiApiTimesheetsMonthlyAllGetRequest {
+export interface TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof TimesheetApiapiTimesheetsMonthlyAllGet
+     * @memberof TimesheetApitimesheetGetCurrentUserMonthlyTimesheets
      */
     month?: number
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof TimesheetApiapiTimesheetsMonthlyAllGet
+     * @memberof TimesheetApitimesheetGetCurrentUserMonthlyTimesheets
      */
     year?: number
 }
 
-export interface TimesheetApiApiTimesheetsMonthlyGetRequest {
+export interface TimesheetApiTimesheetGetMonthlyTimesheetsRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof TimesheetApiapiTimesheetsMonthlyGet
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
      */
     month?: number
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof TimesheetApiapiTimesheetsMonthlyGet
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
      */
     year?: number
 }
 
-export interface TimesheetApiApiTimesheetsTodayGetRequest {
+export interface TimesheetApiTimesheetGetTodayTimesheetRequest {
 }
 
 export class ObjectTimesheetApi {
@@ -1374,71 +1374,71 @@ export class ObjectTimesheetApi {
     /**
      * @param param the request object
      */
-    public apiTimesheetsCheckinPostWithHttpInfo(param: TimesheetApiApiTimesheetsCheckinPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
-        return this.api.apiTimesheetsCheckinPostWithHttpInfo( options).toPromise();
+    public timesheetCheckInWithHttpInfo(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
+        return this.api.timesheetCheckInWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsCheckinPost(param: TimesheetApiApiTimesheetsCheckinPostRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
-        return this.api.apiTimesheetsCheckinPost( options).toPromise();
+    public timesheetCheckIn(param: TimesheetApiTimesheetCheckInRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
+        return this.api.timesheetCheckIn( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsCheckoutPostWithHttpInfo(param: TimesheetApiApiTimesheetsCheckoutPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
-        return this.api.apiTimesheetsCheckoutPostWithHttpInfo( options).toPromise();
+    public timesheetCheckOutWithHttpInfo(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
+        return this.api.timesheetCheckOutWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsCheckoutPost(param: TimesheetApiApiTimesheetsCheckoutPostRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
-        return this.api.apiTimesheetsCheckoutPost( options).toPromise();
+    public timesheetCheckOut(param: TimesheetApiTimesheetCheckOutRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
+        return this.api.timesheetCheckOut( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsMonthlyAllGetWithHttpInfo(param: TimesheetApiApiTimesheetsMonthlyAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetFullDto>>> {
-        return this.api.apiTimesheetsMonthlyAllGetWithHttpInfo(param.month, param.year,  options).toPromise();
+    public timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
+        return this.api.timesheetGetCurrentUserMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsMonthlyAllGet(param: TimesheetApiApiTimesheetsMonthlyAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetFullDto>> {
-        return this.api.apiTimesheetsMonthlyAllGet(param.month, param.year,  options).toPromise();
+    public timesheetGetCurrentUserMonthlyTimesheets(param: TimesheetApiTimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetDto>> {
+        return this.api.timesheetGetCurrentUserMonthlyTimesheets(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsMonthlyGetWithHttpInfo(param: TimesheetApiApiTimesheetsMonthlyGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetDto>>> {
-        return this.api.apiTimesheetsMonthlyGetWithHttpInfo(param.month, param.year,  options).toPromise();
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetFullDto>>> {
+        return this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsMonthlyGet(param: TimesheetApiApiTimesheetsMonthlyGetRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetDto>> {
-        return this.api.apiTimesheetsMonthlyGet(param.month, param.year,  options).toPromise();
+    public timesheetGetMonthlyTimesheets(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetFullDto>> {
+        return this.api.timesheetGetMonthlyTimesheets(param.month, param.year,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsTodayGetWithHttpInfo(param: TimesheetApiApiTimesheetsTodayGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
-        return this.api.apiTimesheetsTodayGetWithHttpInfo( options).toPromise();
+    public timesheetGetTodayTimesheetWithHttpInfo(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetDtoTimesheetResponse>> {
+        return this.api.timesheetGetTodayTimesheetWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiTimesheetsTodayGet(param: TimesheetApiApiTimesheetsTodayGetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
-        return this.api.apiTimesheetsTodayGet( options).toPromise();
+    public timesheetGetTodayTimesheet(param: TimesheetApiTimesheetGetTodayTimesheetRequest = {}, options?: ConfigurationOptions): Promise<TimesheetDtoTimesheetResponse> {
+        return this.api.timesheetGetTodayTimesheet( options).toPromise();
     }
 
 }
@@ -1446,24 +1446,53 @@ export class ObjectTimesheetApi {
 import { ObservableUserApi } from "./ObservableAPI";
 import { UserApiRequestFactory, UserApiResponseProcessor} from "../apis/UserApi";
 
-export interface UserApiApiUsersAllGetRequest {
+export interface UserApiUserCreateRequest {
+    /**
+     * 
+     * @type UserCreateUpdateRequest
+     * @memberof UserApiuserCreate
+     */
+    userCreateUpdateRequest?: UserCreateUpdateRequest
+}
+
+export interface UserApiUserDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof UserApiuserDelete
+     */
+    id: string
+}
+
+export interface UserApiUserGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof UserApiapiUsersAllGet
+     * @memberof UserApiuserGetAll
      */
     ids?: Array<string>
 }
 
-export interface UserApiApiUsersGetRequest {
+export interface UserApiUserGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof UserApiuserGetById
+     */
+    id: string
+}
+
+export interface UserApiUserSearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserSearch
      */
     pageNumber: number
     /**
@@ -1472,66 +1501,37 @@ export interface UserApiApiUsersGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserSearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserSearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof UserApiapiUsersGet
+     * @memberof UserApiuserSearch
      */
     orderBy?: Array<string>
 }
 
-export interface UserApiApiUsersIdDeleteRequest {
+export interface UserApiUserUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof UserApiapiUsersIdDelete
-     */
-    id: string
-}
-
-export interface UserApiApiUsersIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type string
-     * @memberof UserApiapiUsersIdGet
-     */
-    id: string
-}
-
-export interface UserApiApiUsersIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type string
-     * @memberof UserApiapiUsersIdPut
+     * @memberof UserApiuserUpdate
      */
     id: string
     /**
      * 
      * @type UserCreateUpdateRequest
-     * @memberof UserApiapiUsersIdPut
-     */
-    userCreateUpdateRequest?: UserCreateUpdateRequest
-}
-
-export interface UserApiApiUsersPostRequest {
-    /**
-     * 
-     * @type UserCreateUpdateRequest
-     * @memberof UserApiapiUsersPost
+     * @memberof UserApiuserUpdate
      */
     userCreateUpdateRequest?: UserCreateUpdateRequest
 }
@@ -1546,85 +1546,85 @@ export class ObjectUserApi {
     /**
      * @param param the request object
      */
-    public apiUsersAllGetWithHttpInfo(param: UserApiApiUsersAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<UserDto>>> {
-        return this.api.apiUsersAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public userCreateWithHttpInfo(param: UserApiUserCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
+        return this.api.userCreateWithHttpInfo(param.userCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersAllGet(param: UserApiApiUsersAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<UserDto>> {
-        return this.api.apiUsersAllGet(param.ids,  options).toPromise();
+    public userCreate(param: UserApiUserCreateRequest = {}, options?: ConfigurationOptions): Promise<UserDto> {
+        return this.api.userCreate(param.userCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersGetWithHttpInfo(param: UserApiApiUsersGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserDtoPaginated>> {
-        return this.api.apiUsersGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public userDeleteWithHttpInfo(param: UserApiUserDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.userDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersGet(param: UserApiApiUsersGetRequest, options?: ConfigurationOptions): Promise<UserDtoPaginated> {
-        return this.api.apiUsersGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public userDelete(param: UserApiUserDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.userDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdDeleteWithHttpInfo(param: UserApiApiUsersIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiUsersIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public userGetAllWithHttpInfo(param: UserApiUserGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<UserDto>>> {
+        return this.api.userGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdDelete(param: UserApiApiUsersIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiUsersIdDelete(param.id,  options).toPromise();
+    public userGetAll(param: UserApiUserGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<UserDto>> {
+        return this.api.userGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdGetWithHttpInfo(param: UserApiApiUsersIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserFullDto>> {
-        return this.api.apiUsersIdGetWithHttpInfo(param.id,  options).toPromise();
+    public userGetByIdWithHttpInfo(param: UserApiUserGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserFullDto>> {
+        return this.api.userGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdGet(param: UserApiApiUsersIdGetRequest, options?: ConfigurationOptions): Promise<UserFullDto> {
-        return this.api.apiUsersIdGet(param.id,  options).toPromise();
+    public userGetById(param: UserApiUserGetByIdRequest, options?: ConfigurationOptions): Promise<UserFullDto> {
+        return this.api.userGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdPutWithHttpInfo(param: UserApiApiUsersIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
-        return this.api.apiUsersIdPutWithHttpInfo(param.id, param.userCreateUpdateRequest,  options).toPromise();
+    public userSearchWithHttpInfo(param: UserApiUserSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserDtoPaginated>> {
+        return this.api.userSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersIdPut(param: UserApiApiUsersIdPutRequest, options?: ConfigurationOptions): Promise<UserDto> {
-        return this.api.apiUsersIdPut(param.id, param.userCreateUpdateRequest,  options).toPromise();
+    public userSearch(param: UserApiUserSearchRequest, options?: ConfigurationOptions): Promise<UserDtoPaginated> {
+        return this.api.userSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersPostWithHttpInfo(param: UserApiApiUsersPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
-        return this.api.apiUsersPostWithHttpInfo(param.userCreateUpdateRequest,  options).toPromise();
+    public userUpdateWithHttpInfo(param: UserApiUserUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
+        return this.api.userUpdateWithHttpInfo(param.id, param.userCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiUsersPost(param: UserApiApiUsersPostRequest = {}, options?: ConfigurationOptions): Promise<UserDto> {
-        return this.api.apiUsersPost(param.userCreateUpdateRequest,  options).toPromise();
+    public userUpdate(param: UserApiUserUpdateRequest, options?: ConfigurationOptions): Promise<UserDto> {
+        return this.api.userUpdate(param.id, param.userCreateUpdateRequest,  options).toPromise();
     }
 
 }
@@ -1632,24 +1632,53 @@ export class ObjectUserApi {
 import { ObservableWorkTimeApi } from "./ObservableAPI";
 import { WorkTimeApiRequestFactory, WorkTimeApiResponseProcessor} from "../apis/WorkTimeApi";
 
-export interface WorkTimeApiApiWorkTimesAllGetRequest {
+export interface WorkTimeApiWorkTimeCreateRequest {
+    /**
+     * 
+     * @type CreateWorkTimeCommand
+     * @memberof WorkTimeApiworkTimeCreate
+     */
+    createWorkTimeCommand?: CreateWorkTimeCommand
+}
+
+export interface WorkTimeApiWorkTimeDeleteRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof WorkTimeApiworkTimeDelete
+     */
+    id: number
+}
+
+export interface WorkTimeApiWorkTimeGetAllRequest {
     /**
      * 
      * Defaults to: undefined
      * @type Array&lt;number&gt;
-     * @memberof WorkTimeApiapiWorkTimesAllGet
+     * @memberof WorkTimeApiworkTimeGetAll
      */
     ids?: Array<number>
 }
 
-export interface WorkTimeApiApiWorkTimesGetRequest {
+export interface WorkTimeApiWorkTimeGetByIdRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof WorkTimeApiworkTimeGetById
+     */
+    id: number
+}
+
+export interface WorkTimeApiWorkTimeSearchRequest {
     /**
      * 
      * Minimum: 1
      * Maximum: 2147483647
      * Defaults to: 1
      * @type number
-     * @memberof WorkTimeApiapiWorkTimesGet
+     * @memberof WorkTimeApiworkTimeSearch
      */
     pageNumber: number
     /**
@@ -1658,66 +1687,37 @@ export interface WorkTimeApiApiWorkTimesGetRequest {
      * Maximum: 100
      * Defaults to: 10
      * @type number
-     * @memberof WorkTimeApiapiWorkTimesGet
+     * @memberof WorkTimeApiworkTimeSearch
      */
     pageSize: number
     /**
      * 
      * Defaults to: undefined
      * @type string
-     * @memberof WorkTimeApiapiWorkTimesGet
+     * @memberof WorkTimeApiworkTimeSearch
      */
     searchString?: string
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * Defaults to: undefined
      * @type Array&lt;string&gt;
-     * @memberof WorkTimeApiapiWorkTimesGet
+     * @memberof WorkTimeApiworkTimeSearch
      */
     orderBy?: Array<string>
 }
 
-export interface WorkTimeApiApiWorkTimesIdDeleteRequest {
+export interface WorkTimeApiWorkTimeUpdateRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof WorkTimeApiapiWorkTimesIdDelete
-     */
-    id: number
-}
-
-export interface WorkTimeApiApiWorkTimesIdGetRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof WorkTimeApiapiWorkTimesIdGet
-     */
-    id: number
-}
-
-export interface WorkTimeApiApiWorkTimesIdPutRequest {
-    /**
-     * 
-     * Defaults to: undefined
-     * @type number
-     * @memberof WorkTimeApiapiWorkTimesIdPut
+     * @memberof WorkTimeApiworkTimeUpdate
      */
     id: number
     /**
      * 
      * @type CreateWorkTimeCommand
-     * @memberof WorkTimeApiapiWorkTimesIdPut
-     */
-    createWorkTimeCommand?: CreateWorkTimeCommand
-}
-
-export interface WorkTimeApiApiWorkTimesPostRequest {
-    /**
-     * 
-     * @type CreateWorkTimeCommand
-     * @memberof WorkTimeApiapiWorkTimesPost
+     * @memberof WorkTimeApiworkTimeUpdate
      */
     createWorkTimeCommand?: CreateWorkTimeCommand
 }
@@ -1732,85 +1732,85 @@ export class ObjectWorkTimeApi {
     /**
      * @param param the request object
      */
-    public apiWorkTimesAllGetWithHttpInfo(param: WorkTimeApiApiWorkTimesAllGetRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<WorkTimeDto>>> {
-        return this.api.apiWorkTimesAllGetWithHttpInfo(param.ids,  options).toPromise();
+    public workTimeCreateWithHttpInfo(param: WorkTimeApiWorkTimeCreateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+        return this.api.workTimeCreateWithHttpInfo(param.createWorkTimeCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesAllGet(param: WorkTimeApiApiWorkTimesAllGetRequest = {}, options?: ConfigurationOptions): Promise<Array<WorkTimeDto>> {
-        return this.api.apiWorkTimesAllGet(param.ids,  options).toPromise();
+    public workTimeCreate(param: WorkTimeApiWorkTimeCreateRequest = {}, options?: ConfigurationOptions): Promise<WorkTimeDto> {
+        return this.api.workTimeCreate(param.createWorkTimeCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesGetWithHttpInfo(param: WorkTimeApiApiWorkTimesGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDtoPaginated>> {
-        return this.api.apiWorkTimesGetWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public workTimeDeleteWithHttpInfo(param: WorkTimeApiWorkTimeDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+        return this.api.workTimeDeleteWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesGet(param: WorkTimeApiApiWorkTimesGetRequest, options?: ConfigurationOptions): Promise<WorkTimeDtoPaginated> {
-        return this.api.apiWorkTimesGet(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
+    public workTimeDelete(param: WorkTimeApiWorkTimeDeleteRequest, options?: ConfigurationOptions): Promise<void> {
+        return this.api.workTimeDelete(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesIdDeleteWithHttpInfo(param: WorkTimeApiApiWorkTimesIdDeleteRequest, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
-        return this.api.apiWorkTimesIdDeleteWithHttpInfo(param.id,  options).toPromise();
+    public workTimeGetAllWithHttpInfo(param: WorkTimeApiWorkTimeGetAllRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<WorkTimeDto>>> {
+        return this.api.workTimeGetAllWithHttpInfo(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesIdDelete(param: WorkTimeApiApiWorkTimesIdDeleteRequest, options?: ConfigurationOptions): Promise<void> {
-        return this.api.apiWorkTimesIdDelete(param.id,  options).toPromise();
+    public workTimeGetAll(param: WorkTimeApiWorkTimeGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<WorkTimeDto>> {
+        return this.api.workTimeGetAll(param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesIdGetWithHttpInfo(param: WorkTimeApiApiWorkTimesIdGetRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
-        return this.api.apiWorkTimesIdGetWithHttpInfo(param.id,  options).toPromise();
+    public workTimeGetByIdWithHttpInfo(param: WorkTimeApiWorkTimeGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+        return this.api.workTimeGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesIdGet(param: WorkTimeApiApiWorkTimesIdGetRequest, options?: ConfigurationOptions): Promise<WorkTimeDto> {
-        return this.api.apiWorkTimesIdGet(param.id,  options).toPromise();
+    public workTimeGetById(param: WorkTimeApiWorkTimeGetByIdRequest, options?: ConfigurationOptions): Promise<WorkTimeDto> {
+        return this.api.workTimeGetById(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesIdPutWithHttpInfo(param: WorkTimeApiApiWorkTimesIdPutRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
-        return this.api.apiWorkTimesIdPutWithHttpInfo(param.id, param.createWorkTimeCommand,  options).toPromise();
+    public workTimeSearchWithHttpInfo(param: WorkTimeApiWorkTimeSearchRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDtoPaginated>> {
+        return this.api.workTimeSearchWithHttpInfo(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesIdPut(param: WorkTimeApiApiWorkTimesIdPutRequest, options?: ConfigurationOptions): Promise<WorkTimeDto> {
-        return this.api.apiWorkTimesIdPut(param.id, param.createWorkTimeCommand,  options).toPromise();
+    public workTimeSearch(param: WorkTimeApiWorkTimeSearchRequest, options?: ConfigurationOptions): Promise<WorkTimeDtoPaginated> {
+        return this.api.workTimeSearch(param.pageNumber, param.pageSize, param.searchString, param.orderBy,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesPostWithHttpInfo(param: WorkTimeApiApiWorkTimesPostRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
-        return this.api.apiWorkTimesPostWithHttpInfo(param.createWorkTimeCommand,  options).toPromise();
+    public workTimeUpdateWithHttpInfo(param: WorkTimeApiWorkTimeUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<WorkTimeDto>> {
+        return this.api.workTimeUpdateWithHttpInfo(param.id, param.createWorkTimeCommand,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public apiWorkTimesPost(param: WorkTimeApiApiWorkTimesPostRequest = {}, options?: ConfigurationOptions): Promise<WorkTimeDto> {
-        return this.api.apiWorkTimesPost(param.createWorkTimeCommand,  options).toPromise();
+    public workTimeUpdate(param: WorkTimeApiWorkTimeUpdateRequest, options?: ConfigurationOptions): Promise<WorkTimeDto> {
+        return this.api.workTimeUpdate(param.id, param.createWorkTimeCommand,  options).toPromise();
     }
 
 }

@@ -98,9 +98,20 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			var tomorrow = today.AddDays(1);
 
 			return await _context.Timesheets.AsNoTracking()
-					.Where(t => t.UserId == new Guid(userId) && t.StartTime >= today && t.StartTime < tomorrow)
-					.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
-					.FirstOrDefaultAsync();
+				.Where(t => t.UserId == new Guid(userId) && t.StartTime >= today && t.StartTime < tomorrow)
+				.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync();
+		}
+
+		public async Task<TimesheetDto?> GetTimesheetByDate(string userId, DateTime date)
+		{
+			var startOfDay = date.Date;
+			var endOfDay = startOfDay.AddDays(1);
+
+			return await _context.Timesheets.AsNoTracking()
+				.Where(t => t.UserId == new Guid(userId) && t.StartTime >= startOfDay && t.StartTime < endOfDay)
+				.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
+				.FirstOrDefaultAsync();
 		}
 	}
 }

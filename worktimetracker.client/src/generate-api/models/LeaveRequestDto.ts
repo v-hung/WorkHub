@@ -18,6 +18,7 @@ import { HttpFile } from '../http/http';
 
 export class LeaveRequestDto {
     'id': number;
+    'date': Date;
     'requestType': RequestType;
     'reason': string;
     'status': RequestStatus;
@@ -38,6 +39,12 @@ export class LeaveRequestDto {
             "baseName": "id",
             "type": "number",
             "format": "int32"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date",
+            "format": "date-time"
         },
         {
             "name": "requestType",

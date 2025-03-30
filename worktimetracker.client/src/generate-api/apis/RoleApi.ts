@@ -20,9 +20,90 @@ import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 export class RoleApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
+     * @param roleCreateUpdateRequest 
+     */
+    public async roleCreate(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+
+        // Path Params
+        const localVarPath = '/api/roles';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        // Body Params
+        const contentType = ObjectSerializer.getPreferredMediaType([
+            "application/json",
+        
+            "text/json",
+        
+            "application/*+json"
+        ]);
+        requestContext.setHeaderParam("Content-Type", contentType);
+        const serializedBody = ObjectSerializer.stringify(
+            ObjectSerializer.serialize(roleCreateUpdateRequest, "RoleCreateUpdateRequest", ""),
+            contentType
+        );
+        requestContext.setBody(serializedBody);
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * @param id 
+     */
+    public async roleDelete(id: string, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new RequiredError("RoleApi", "roleDelete", "id");
+        }
+
+
+        // Path Params
+        const localVarPath = '/api/roles/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.DELETE);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
      * @param ids 
      */
-    public async apiRolesAllGet(ids?: Array<string>, _options?: Configuration): Promise<RequestContext> {
+    public async roleGetAll(ids?: Array<string>, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -58,23 +139,59 @@ export class RoleApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * @param id 
+     */
+    public async roleGetById(id: string, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new RequiredError("RoleApi", "roleGetById", "id");
+        }
+
+
+        // Path Params
+        const localVarPath = '/api/roles/{id}'
+            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["Bearer"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        
+        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
      * @param pageNumber 
      * @param pageSize 
      * @param searchString 
      * @param orderBy of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      */
-    public async apiRolesGet(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
+    public async roleSearch(pageNumber: number, pageSize: number, searchString?: string, orderBy?: Array<string>, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'pageNumber' is not null or undefined
         if (pageNumber === null || pageNumber === undefined) {
-            throw new RequiredError("RoleApi", "apiRolesGet", "pageNumber");
+            throw new RequiredError("RoleApi", "roleSearch", "pageNumber");
         }
 
 
         // verify required parameter 'pageSize' is not null or undefined
         if (pageSize === null || pageSize === undefined) {
-            throw new RequiredError("RoleApi", "apiRolesGet", "pageSize");
+            throw new RequiredError("RoleApi", "roleSearch", "pageSize");
         }
 
 
@@ -128,86 +245,14 @@ export class RoleApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
      * @param id 
-     */
-    public async apiRolesIdDelete(id: string, _options?: Configuration): Promise<RequestContext> {
-        let _config = _options || this.configuration;
-
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new RequiredError("RoleApi", "apiRolesIdDelete", "id");
-        }
-
-
-        // Path Params
-        const localVarPath = '/api/roles/{id}'
-            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
-
-        // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.DELETE);
-        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
-
-
-        let authMethod: SecurityAuthentication | undefined;
-        // Apply auth methods
-        authMethod = _config.authMethods["Bearer"]
-        if (authMethod?.applySecurityAuthentication) {
-            await authMethod?.applySecurityAuthentication(requestContext);
-        }
-        
-        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
-        if (defaultAuth?.applySecurityAuthentication) {
-            await defaultAuth?.applySecurityAuthentication(requestContext);
-        }
-
-        return requestContext;
-    }
-
-    /**
-     * @param id 
-     */
-    public async apiRolesIdGet(id: string, _options?: Configuration): Promise<RequestContext> {
-        let _config = _options || this.configuration;
-
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new RequiredError("RoleApi", "apiRolesIdGet", "id");
-        }
-
-
-        // Path Params
-        const localVarPath = '/api/roles/{id}'
-            .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
-
-        // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
-        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
-
-
-        let authMethod: SecurityAuthentication | undefined;
-        // Apply auth methods
-        authMethod = _config.authMethods["Bearer"]
-        if (authMethod?.applySecurityAuthentication) {
-            await authMethod?.applySecurityAuthentication(requestContext);
-        }
-        
-        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
-        if (defaultAuth?.applySecurityAuthentication) {
-            await defaultAuth?.applySecurityAuthentication(requestContext);
-        }
-
-        return requestContext;
-    }
-
-    /**
-     * @param id 
      * @param roleCreateUpdateRequest 
      */
-    public async apiRolesIdPut(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
+    public async roleUpdate(id: string, roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("RoleApi", "apiRolesIdPut", "id");
+            throw new RequiredError("RoleApi", "roleUpdate", "id");
         }
 
 
@@ -251,51 +296,6 @@ export class RoleApiRequestFactory extends BaseAPIRequestFactory {
         return requestContext;
     }
 
-    /**
-     * @param roleCreateUpdateRequest 
-     */
-    public async apiRolesPost(roleCreateUpdateRequest?: RoleCreateUpdateRequest, _options?: Configuration): Promise<RequestContext> {
-        let _config = _options || this.configuration;
-
-
-        // Path Params
-        const localVarPath = '/api/roles';
-
-        // Make Request Context
-        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
-        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
-
-
-        // Body Params
-        const contentType = ObjectSerializer.getPreferredMediaType([
-            "application/json",
-        
-            "text/json",
-        
-            "application/*+json"
-        ]);
-        requestContext.setHeaderParam("Content-Type", contentType);
-        const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(roleCreateUpdateRequest, "RoleCreateUpdateRequest", ""),
-            contentType
-        );
-        requestContext.setBody(serializedBody);
-
-        let authMethod: SecurityAuthentication | undefined;
-        // Apply auth methods
-        authMethod = _config.authMethods["Bearer"]
-        if (authMethod?.applySecurityAuthentication) {
-            await authMethod?.applySecurityAuthentication(requestContext);
-        }
-        
-        const defaultAuth: SecurityAuthentication | undefined = _config?.authMethods?.default
-        if (defaultAuth?.applySecurityAuthentication) {
-            await defaultAuth?.applySecurityAuthentication(requestContext);
-        }
-
-        return requestContext;
-    }
-
 }
 
 export class RoleApiResponseProcessor {
@@ -304,16 +304,16 @@ export class RoleApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiRolesAllGet
+     * @params response Response returned by the server for a request to roleCreate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiRolesAllGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<RoleDto> >> {
+     public async roleCreateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: Array<RoleDto> = ObjectSerializer.deserialize(
+            const body: RoleDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<RoleDto>", ""
-            ) as Array<RoleDto>;
+                "RoleDto", ""
+            ) as RoleDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -333,10 +333,10 @@ export class RoleApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: Array<RoleDto> = ObjectSerializer.deserialize(
+            const body: RoleDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<RoleDto>", ""
-            ) as Array<RoleDto>;
+                "RoleDto", ""
+            ) as RoleDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -347,53 +347,10 @@ export class RoleApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiRolesGet
+     * @params response Response returned by the server for a request to roleDelete
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiRolesGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDtoPaginated >> {
-        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
-        if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: RoleDtoPaginated = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "RoleDtoPaginated", ""
-            ) as RoleDtoPaginated;
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
-        }
-        if (isCodeInRange("500", response.httpStatusCode)) {
-            const body: ErrorResponse = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "ErrorResponse", ""
-            ) as ErrorResponse;
-            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
-        }
-        if (isCodeInRange("400", response.httpStatusCode)) {
-            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "ErrorValidateResponse", ""
-            ) as ErrorValidateResponse;
-            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
-        }
-
-        // Work around for missing responses in specification, e.g. for petstore.yaml
-        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: RoleDtoPaginated = ObjectSerializer.deserialize(
-                ObjectSerializer.parse(await response.body.text(), contentType),
-                "RoleDtoPaginated", ""
-            ) as RoleDtoPaginated;
-            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
-        }
-
-        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
-    }
-
-    /**
-     * Unwraps the actual response sent by the server from the response context and deserializes the response content
-     * to the expected objects
-     *
-     * @params response Response returned by the server for a request to apiRolesIdDelete
-     * @throws ApiException if the response code was not in [200, 299]
-     */
-     public async apiRolesIdDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
+     public async roleDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<void >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
@@ -429,10 +386,53 @@ export class RoleApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiRolesIdGet
+     * @params response Response returned by the server for a request to roleGetAll
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiRolesIdGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
+     public async roleGetAllWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<RoleDto> >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: Array<RoleDto> = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "Array<RoleDto>", ""
+            ) as Array<RoleDto>;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("500", response.httpStatusCode)) {
+            const body: ErrorResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorResponse", ""
+            ) as ErrorResponse;
+            throw new ApiException<ErrorResponse>(response.httpStatusCode, "Internal Server Error", body, response.headers);
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            const body: ErrorValidateResponse = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ErrorValidateResponse", ""
+            ) as ErrorValidateResponse;
+            throw new ApiException<ErrorValidateResponse>(response.httpStatusCode, "", body, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: Array<RoleDto> = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "Array<RoleDto>", ""
+            ) as Array<RoleDto>;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to roleGetById
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async roleGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: RoleDto = ObjectSerializer.deserialize(
@@ -472,16 +472,16 @@ export class RoleApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiRolesIdPut
+     * @params response Response returned by the server for a request to roleSearch
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiRolesIdPutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
+     public async roleSearchWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDtoPaginated >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: RoleDto = ObjectSerializer.deserialize(
+            const body: RoleDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "RoleDto", ""
-            ) as RoleDto;
+                "RoleDtoPaginated", ""
+            ) as RoleDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -501,10 +501,10 @@ export class RoleApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: RoleDto = ObjectSerializer.deserialize(
+            const body: RoleDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "RoleDto", ""
-            ) as RoleDto;
+                "RoleDtoPaginated", ""
+            ) as RoleDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -515,10 +515,10 @@ export class RoleApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to apiRolesPost
+     * @params response Response returned by the server for a request to roleUpdate
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async apiRolesPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
+     public async roleUpdateWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: RoleDto = ObjectSerializer.deserialize(

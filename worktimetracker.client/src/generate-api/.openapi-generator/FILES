@@ -1,6 +1,5 @@
 .gitattributes
 .gitignore
-.openapi-generator-ignore
 AccountApi.md
 DeviceApi.md
 DeviceCategoryApi.md

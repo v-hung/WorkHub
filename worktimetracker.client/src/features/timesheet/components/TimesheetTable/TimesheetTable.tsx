@@ -51,7 +51,7 @@ const TimesheetTable = () => {
                 }),
                 { zero: true }
               )
-            : "N/A"}
+            : "0"}
         </div>
         <Button
           icon={<IIonChevronBack />}
@@ -74,7 +74,7 @@ const TimesheetTable = () => {
         ></Button>
       </Flex>
 
-      <div style={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1, minHeight: 0 }}>
         <MainTable
           className="timesheet-table"
           columns={userTimesheetColumns}

@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiDeviceCategoriesAllGet**](DeviceCategoryApi.md#apiDeviceCategoriesAllGet) | **GET** /api/device-categories/all | 
-[**apiDeviceCategoriesGet**](DeviceCategoryApi.md#apiDeviceCategoriesGet) | **GET** /api/device-categories | 
-[**apiDeviceCategoriesIdDelete**](DeviceCategoryApi.md#apiDeviceCategoriesIdDelete) | **DELETE** /api/device-categories/{id} | 
-[**apiDeviceCategoriesIdGet**](DeviceCategoryApi.md#apiDeviceCategoriesIdGet) | **GET** /api/device-categories/{id} | 
-[**apiDeviceCategoriesIdPut**](DeviceCategoryApi.md#apiDeviceCategoriesIdPut) | **PUT** /api/device-categories/{id} | 
-[**apiDeviceCategoriesPost**](DeviceCategoryApi.md#apiDeviceCategoriesPost) | **POST** /api/device-categories | 
+[**deviceCategoryCreate**](DeviceCategoryApi.md#deviceCategoryCreate) | **POST** /api/device-categories | 
+[**deviceCategoryDelete**](DeviceCategoryApi.md#deviceCategoryDelete) | **DELETE** /api/device-categories/{id} | 
+[**deviceCategoryGetAll**](DeviceCategoryApi.md#deviceCategoryGetAll) | **GET** /api/device-categories/all | 
+[**deviceCategoryGetById**](DeviceCategoryApi.md#deviceCategoryGetById) | **GET** /api/device-categories/{id} | 
+[**deviceCategorySearch**](DeviceCategoryApi.md#deviceCategorySearch) | **GET** /api/device-categories | 
+[**deviceCategoryUpdate**](DeviceCategoryApi.md#deviceCategoryUpdate) | **PUT** /api/device-categories/{id} | 
 
 
-# **apiDeviceCategoriesAllGet**
-> Array<DeviceCategoryDto> apiDeviceCategoriesAllGet()
+# **deviceCategoryCreate**
+> DeviceCategoryDto deviceCategoryCreate()
 
 
 ### Example
@@ -21,19 +21,133 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, DeviceCategoryApi } from '';
-import type { DeviceCategoryApiApiDeviceCategoriesAllGetRequest } from '';
+import type { DeviceCategoryApiDeviceCategoryCreateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new DeviceCategoryApi(configuration);
 
-const request: DeviceCategoryApiApiDeviceCategoriesAllGetRequest = {
+const request: DeviceCategoryApiDeviceCategoryCreateRequest = {
+  
+  createDeviceCategoryCommand: {
+    name: "name_example",
+    description: "description_example",
+    deviceIds: [
+      1,
+    ],
+  },
+};
+
+const data = await apiInstance.deviceCategoryCreate(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createDeviceCategoryCommand** | **CreateDeviceCategoryCommand**|  |
+
+
+### Return type
+
+**DeviceCategoryDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **deviceCategoryDelete**
+> void deviceCategoryDelete()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, DeviceCategoryApi } from '';
+import type { DeviceCategoryApiDeviceCategoryDeleteRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new DeviceCategoryApi(configuration);
+
+const request: DeviceCategoryApiDeviceCategoryDeleteRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.deviceCategoryDelete(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **deviceCategoryGetAll**
+> Array<DeviceCategoryDto> deviceCategoryGetAll()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, DeviceCategoryApi } from '';
+import type { DeviceCategoryApiDeviceCategoryGetAllRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new DeviceCategoryApi(configuration);
+
+const request: DeviceCategoryApiDeviceCategoryGetAllRequest = {
   
   ids: [
     1,
   ],
 };
 
-const data = await apiInstance.apiDeviceCategoriesAllGet(request);
+const data = await apiInstance.deviceCategoryGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,8 +182,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiDeviceCategoriesGet**
-> DeviceCategoryDtoPaginated apiDeviceCategoriesGet()
+# **deviceCategoryGetById**
+> DeviceCategoryDto deviceCategoryGetById()
 
 
 ### Example
@@ -77,12 +191,66 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, DeviceCategoryApi } from '';
-import type { DeviceCategoryApiApiDeviceCategoriesGetRequest } from '';
+import type { DeviceCategoryApiDeviceCategoryGetByIdRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new DeviceCategoryApi(configuration);
 
-const request: DeviceCategoryApiApiDeviceCategoriesGetRequest = {
+const request: DeviceCategoryApiDeviceCategoryGetByIdRequest = {
+  
+  id: 1,
+};
+
+const data = await apiInstance.deviceCategoryGetById(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**number**] |  | defaults to undefined
+
+
+### Return type
+
+**DeviceCategoryDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **deviceCategorySearch**
+> DeviceCategoryDtoPaginated deviceCategorySearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, DeviceCategoryApi } from '';
+import type { DeviceCategoryApiDeviceCategorySearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new DeviceCategoryApi(configuration);
+
+const request: DeviceCategoryApiDeviceCategorySearchRequest = {
   
   pageNumber: 1,
   
@@ -95,7 +263,7 @@ const request: DeviceCategoryApiApiDeviceCategoriesGetRequest = {
   ],
 };
 
-const data = await apiInstance.apiDeviceCategoriesGet(request);
+const data = await apiInstance.deviceCategorySearch(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -133,8 +301,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiDeviceCategoriesIdDelete**
-> void apiDeviceCategoriesIdDelete()
+# **deviceCategoryUpdate**
+> DeviceCategoryDto deviceCategoryUpdate()
 
 
 ### Example
@@ -142,120 +310,12 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, DeviceCategoryApi } from '';
-import type { DeviceCategoryApiApiDeviceCategoriesIdDeleteRequest } from '';
+import type { DeviceCategoryApiDeviceCategoryUpdateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new DeviceCategoryApi(configuration);
 
-const request: DeviceCategoryApiApiDeviceCategoriesIdDeleteRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiDeviceCategoriesIdDelete(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiDeviceCategoriesIdGet**
-> DeviceCategoryDto apiDeviceCategoriesIdGet()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, DeviceCategoryApi } from '';
-import type { DeviceCategoryApiApiDeviceCategoriesIdGetRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new DeviceCategoryApi(configuration);
-
-const request: DeviceCategoryApiApiDeviceCategoriesIdGetRequest = {
-  
-  id: 1,
-};
-
-const data = await apiInstance.apiDeviceCategoriesIdGet(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**DeviceCategoryDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiDeviceCategoriesIdPut**
-> DeviceCategoryDto apiDeviceCategoriesIdPut()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, DeviceCategoryApi } from '';
-import type { DeviceCategoryApiApiDeviceCategoriesIdPutRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new DeviceCategoryApi(configuration);
-
-const request: DeviceCategoryApiApiDeviceCategoriesIdPutRequest = {
+const request: DeviceCategoryApiDeviceCategoryUpdateRequest = {
   
   id: 1,
   
@@ -268,7 +328,7 @@ const request: DeviceCategoryApiApiDeviceCategoriesIdPutRequest = {
   },
 };
 
-const data = await apiInstance.apiDeviceCategoriesIdPut(request);
+const data = await apiInstance.deviceCategoryUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -279,66 +339,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **createDeviceCategoryCommand** | **CreateDeviceCategoryCommand**|  |
  **id** | [**number**] |  | defaults to undefined
-
-
-### Return type
-
-**DeviceCategoryDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiDeviceCategoriesPost**
-> DeviceCategoryDto apiDeviceCategoriesPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, DeviceCategoryApi } from '';
-import type { DeviceCategoryApiApiDeviceCategoriesPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new DeviceCategoryApi(configuration);
-
-const request: DeviceCategoryApiApiDeviceCategoriesPostRequest = {
-  
-  createDeviceCategoryCommand: {
-    name: "name_example",
-    description: "description_example",
-    deviceIds: [
-      1,
-    ],
-  },
-};
-
-const data = await apiInstance.apiDeviceCategoriesPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **createDeviceCategoryCommand** | **CreateDeviceCategoryCommand**|  |
 
 
 ### Return type

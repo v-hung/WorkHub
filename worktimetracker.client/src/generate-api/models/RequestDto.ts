@@ -18,6 +18,7 @@ import { HttpFile } from '../http/http';
 
 export class RequestDto {
     'id': number;
+    'date': Date;
     'requestType': RequestType;
     'reason': string;
     'status': RequestStatus;
@@ -36,6 +37,12 @@ export class RequestDto {
             "baseName": "id",
             "type": "number",
             "format": "int32"
+        },
+        {
+            "name": "date",
+            "baseName": "date",
+            "type": "Date",
+            "format": "date-time"
         },
         {
             "name": "requestType",

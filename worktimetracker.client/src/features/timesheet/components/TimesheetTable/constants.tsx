@@ -1,6 +1,8 @@
-import { TimesheetDtoRequestsInner } from "@/generate-api";
+import { useRequestContext } from "@/features/request/contexts/RequestContext";
+import { RequestType, TimesheetDtoRequestsInner } from "@/generate-api";
 import { Button, Space, TableProps } from "antd";
 import { isBefore, isWeekend } from "date-fns";
+import { FC } from "react";
 
 export type DataTimesheetTableType = {
   id: string;
@@ -38,26 +40,44 @@ export const userTimesheetColumns: TableProps<DataTimesheetTableType>["columns"]
       title: "Action",
       key: "action",
       width: "10rem",
-      render: (_, record) => {
-        let isShowAction = false;
-
-        if (
-          (!isWeekend(record.date) && isBefore(record.date, Date.now())) ||
-          record.startTime
-        ) {
-          isShowAction = true;
-        }
-
-        return isShowAction ? (
-          <Space size="small">
-            <Button size="small" color="primary" variant="outlined">
-              Edit
-            </Button>
-            <Button size="small" color="cyan" variant="outlined">
-              Leave
-            </Button>
-          </Space>
-        ) : null;
-      },
+      render: (_, record) => (
+        <TimesheetTableActionRender
+          date={record.date}
+          startTime={record.startTime}
+        />
+      ),
     },
   ];
+
+const TimesheetTableActionRender: FC<{
+  date: Date;
+  startTime: string | undefined;
+}> = ({ date, startTime }) => {
+  const { openRequest } = useRequestContext();
+  let isShowAction = false;
+
+  if ((!isWeekend(date) && isBefore(date, Date.now())) || startTime) {
+    isShowAction = true;
+  }
+
+  return isShowAction ? (
+    <Space size="small">
+      <Button
+        size="small"
+        color="primary"
+        variant="outlined"
+        onClick={() => openRequest(RequestType.TimesheetAdjustment, date)}
+      >
+        Edit
+      </Button>
+      <Button
+        size="small"
+        color="cyan"
+        variant="outlined"
+        onClick={() => openRequest(RequestType.LeaveRequest, date)}
+      >
+        Leave
+      </Button>
+    </Space>
+  ) : null;
+};

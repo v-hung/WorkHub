@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**apiRolesAllGet**](RoleApi.md#apiRolesAllGet) | **GET** /api/roles/all | 
-[**apiRolesGet**](RoleApi.md#apiRolesGet) | **GET** /api/roles | 
-[**apiRolesIdDelete**](RoleApi.md#apiRolesIdDelete) | **DELETE** /api/roles/{id} | 
-[**apiRolesIdGet**](RoleApi.md#apiRolesIdGet) | **GET** /api/roles/{id} | 
-[**apiRolesIdPut**](RoleApi.md#apiRolesIdPut) | **PUT** /api/roles/{id} | 
-[**apiRolesPost**](RoleApi.md#apiRolesPost) | **POST** /api/roles | 
+[**roleCreate**](RoleApi.md#roleCreate) | **POST** /api/roles | 
+[**roleDelete**](RoleApi.md#roleDelete) | **DELETE** /api/roles/{id} | 
+[**roleGetAll**](RoleApi.md#roleGetAll) | **GET** /api/roles/all | 
+[**roleGetById**](RoleApi.md#roleGetById) | **GET** /api/roles/{id} | 
+[**roleSearch**](RoleApi.md#roleSearch) | **GET** /api/roles | 
+[**roleUpdate**](RoleApi.md#roleUpdate) | **PUT** /api/roles/{id} | 
 
 
-# **apiRolesAllGet**
-> Array<RoleDto> apiRolesAllGet()
+# **roleCreate**
+> RoleDto roleCreate()
 
 
 ### Example
@@ -21,19 +21,131 @@ Method | HTTP request | Description
 
 ```typescript
 import { createConfiguration, RoleApi } from '';
-import type { RoleApiApiRolesAllGetRequest } from '';
+import type { RoleApiRoleCreateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RoleApi(configuration);
 
-const request: RoleApiApiRolesAllGetRequest = {
+const request: RoleApiRoleCreateRequest = {
+  
+  roleCreateUpdateRequest: {
+    name: "name_example",
+    description: "description_example",
+    isAdmin: true,
+  },
+};
+
+const data = await apiInstance.roleCreate(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **roleCreateUpdateRequest** | **RoleCreateUpdateRequest**|  |
+
+
+### Return type
+
+**RoleDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **roleDelete**
+> void roleDelete()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleDeleteRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RoleApi(configuration);
+
+const request: RoleApiRoleDeleteRequest = {
+  
+  id: "id_example",
+};
+
+const data = await apiInstance.roleDelete(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**void**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **roleGetAll**
+> Array<RoleDto> roleGetAll()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleGetAllRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RoleApi(configuration);
+
+const request: RoleApiRoleGetAllRequest = {
   
   ids: [
     "ids_example",
   ],
 };
 
-const data = await apiInstance.apiRolesAllGet(request);
+const data = await apiInstance.roleGetAll(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -68,8 +180,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiRolesGet**
-> RoleDtoPaginated apiRolesGet()
+# **roleGetById**
+> RoleDto roleGetById()
 
 
 ### Example
@@ -77,12 +189,66 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RoleApi } from '';
-import type { RoleApiApiRolesGetRequest } from '';
+import type { RoleApiRoleGetByIdRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RoleApi(configuration);
 
-const request: RoleApiApiRolesGetRequest = {
+const request: RoleApiRoleGetByIdRequest = {
+  
+  id: "id_example",
+};
+
+const data = await apiInstance.roleGetById(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | [**string**] |  | defaults to undefined
+
+
+### Return type
+
+**RoleDto**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **roleSearch**
+> RoleDtoPaginated roleSearch()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, RoleApi } from '';
+import type { RoleApiRoleSearchRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new RoleApi(configuration);
+
+const request: RoleApiRoleSearchRequest = {
   
   pageNumber: 1,
   
@@ -95,7 +261,7 @@ const request: RoleApiApiRolesGetRequest = {
   ],
 };
 
-const data = await apiInstance.apiRolesGet(request);
+const data = await apiInstance.roleSearch(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -133,8 +299,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **apiRolesIdDelete**
-> void apiRolesIdDelete()
+# **roleUpdate**
+> RoleDto roleUpdate()
 
 
 ### Example
@@ -142,120 +308,12 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RoleApi } from '';
-import type { RoleApiApiRolesIdDeleteRequest } from '';
+import type { RoleApiRoleUpdateRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RoleApi(configuration);
 
-const request: RoleApiApiRolesIdDeleteRequest = {
-  
-  id: "id_example",
-};
-
-const data = await apiInstance.apiRolesIdDelete(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**void**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRolesIdGet**
-> RoleDto apiRolesIdGet()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RoleApi } from '';
-import type { RoleApiApiRolesIdGetRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RoleApi(configuration);
-
-const request: RoleApiApiRolesIdGetRequest = {
-  
-  id: "id_example",
-};
-
-const data = await apiInstance.apiRolesIdGet(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**RoleDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRolesIdPut**
-> RoleDto apiRolesIdPut()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RoleApi } from '';
-import type { RoleApiApiRolesIdPutRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RoleApi(configuration);
-
-const request: RoleApiApiRolesIdPutRequest = {
+const request: RoleApiRoleUpdateRequest = {
   
   id: "id_example",
   
@@ -266,7 +324,7 @@ const request: RoleApiApiRolesIdPutRequest = {
   },
 };
 
-const data = await apiInstance.apiRolesIdPut(request);
+const data = await apiInstance.roleUpdate(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -277,64 +335,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **roleCreateUpdateRequest** | **RoleCreateUpdateRequest**|  |
  **id** | [**string**] |  | defaults to undefined
-
-
-### Return type
-
-**RoleDto**
-
-### Authorization
-
-[Bearer](README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK |  -  |
-**500** | Internal Server Error |  -  |
-**400** |  |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **apiRolesPost**
-> RoleDto apiRolesPost()
-
-
-### Example
-
-
-```typescript
-import { createConfiguration, RoleApi } from '';
-import type { RoleApiApiRolesPostRequest } from '';
-
-const configuration = createConfiguration();
-const apiInstance = new RoleApi(configuration);
-
-const request: RoleApiApiRolesPostRequest = {
-  
-  roleCreateUpdateRequest: {
-    name: "name_example",
-    description: "description_example",
-    isAdmin: true,
-  },
-};
-
-const data = await apiInstance.apiRolesPost(request);
-console.log('API called successfully. Returned data:', data);
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **roleCreateUpdateRequest** | **RoleCreateUpdateRequest**|  |
 
 
 ### Return type

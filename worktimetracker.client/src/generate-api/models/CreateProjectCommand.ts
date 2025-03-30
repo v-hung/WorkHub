@@ -20,7 +20,7 @@ export class CreateProjectCommand {
     'endDate'?: Date | null;
     'status'?: ProjectStatus;
     'teamId'?: number | null;
-    'managerId': string;
+    'managerId'?: string | null;
     'memberIds'?: Array<string> | null;
 
     static readonly discriminator: string | undefined = undefined;
