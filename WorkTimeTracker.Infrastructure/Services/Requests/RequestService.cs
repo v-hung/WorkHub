@@ -10,14 +10,14 @@ using WorkTimeTracker.Infrastructure.Data;
 
 namespace WorkTimeTracker.Infrastructure.Services.Requests
 {
-	public abstract class RequestService<TRequest> : IRequestService<TRequest> where TRequest : CreateRequestDto
+	public abstract class RequestService<TCreateRequest> : IRequestService<TCreateRequest> where TCreateRequest : CreateRequestDto
 	{
 		protected readonly ApplicationDbContext _context;
 		protected readonly IMapper _mapper;
-		protected readonly IStringLocalizer<RequestService<TRequest>> _localizer;
+		protected readonly IStringLocalizer<RequestService<TCreateRequest>> _localizer;
 		protected readonly ICurrentUserService _currentUserService;
 
-		public RequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RequestService<TRequest>> localizer, ICurrentUserService currentUserService)
+		public RequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RequestService<TCreateRequest>> localizer, ICurrentUserService currentUserService)
 		{
 			_context = context;
 			_mapper = mapper;
@@ -41,6 +41,6 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 			return _mapper.Map<D>(request);
 		}
 
-		public abstract Task<D> CreateRequestAsync<D>(TRequest request) where D : class;
+		public abstract Task<D> CreateRequestAsync<D>(TCreateRequest request) where D : class;
 	}
 }

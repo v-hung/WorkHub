@@ -5,7 +5,7 @@ using WorkTimeTracker.Domain.Entities.Requests;
 
 namespace WorkTimeTracker.Application.Features.Approvals.Commands
 {
-	public class ApproveRequestCommand<D, TRequest> : IRequest<D> where TRequest : Request
+	public class ApproveRequestCommand<D, TRequest> : IRequest<D> where D : class where TRequest : Request
 	{
 		public required int RequestId { get; set; }
 	}

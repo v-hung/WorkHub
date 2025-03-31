@@ -115,8 +115,6 @@ static class ServiceCollectionExtensions
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-		// services.AddSingleton<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
-		// services.AddSingleton(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
 		services.AddScoped<IUserService, UserService>();

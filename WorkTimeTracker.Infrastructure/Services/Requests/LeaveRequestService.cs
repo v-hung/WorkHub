@@ -26,7 +26,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 		public override async Task<D> CreateRequestAsync<D>(CreateLeaveRequestDto request)
 		{
 			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date)
-				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet is not found for this day"]); ;
+				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet is not found for this day"]);
 
 			if (!await _approvalService.CanApproveRequestAsync(_currentUserService.UserId!, request.ApprovedId.ToString()))
 			{
@@ -36,6 +36,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 			LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(request);
 
 			leaveRequest.TimesheetId = timesheet.Id;
+			leaveRequest.UserId = Guid.Parse(_currentUserService.UserId!);
 
 			await _context.LeaveRequests.AddAsync(leaveRequest);
 			await _context.SaveChangesAsync();

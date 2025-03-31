@@ -5,25 +5,25 @@ using WorkTimeTracker.Application.Interfaces.Services;
 
 namespace WorkTimeTracker.Application.Features.Requests.Commands
 {
-	public class CreateRequestCommand<D, TRequest> : IRequest<D> where D : class where TRequest : CreateRequestDto
+	public class CreateRequestCommand<D, TCreateRequest> : IRequest<D> where D : class where TCreateRequest : CreateRequestDto
 	{
-		public required TRequest Request { get; set; }
+		public required TCreateRequest Request { get; set; }
 	}
 
-	public class CreateRequestHandler<D, TRequest> : IRequestHandler<CreateRequestCommand<D, TRequest>, D>
+	public class CreateRequestCommandHandler<D, TCreateRequest> : IRequestHandler<CreateRequestCommand<D, TCreateRequest>, D>
 		where D : class
-		where TRequest : CreateRequestDto
+		where TCreateRequest : CreateRequestDto
 	{
-		private readonly IRequestService<TRequest> _requestService;
-		private readonly IRequestValidator<TRequest> _validator;
+		private readonly IRequestService<TCreateRequest> _requestService;
+		private readonly IRequestValidator<TCreateRequest> _validator;
 
-		public CreateRequestHandler(IRequestService<TRequest> requestService, IRequestValidator<TRequest> validator)
+		public CreateRequestCommandHandler(IRequestService<TCreateRequest> requestService, IRequestValidator<TCreateRequest> validator)
 		{
 			_requestService = requestService;
 			_validator = validator;
 		}
 
-		public async Task<D> Handle(CreateRequestCommand<D, TRequest> command, CancellationToken cancellationToken)
+		public async Task<D> Handle(CreateRequestCommand<D, TCreateRequest> command, CancellationToken cancellationToken)
 		{
 			var request = command.Request;
 

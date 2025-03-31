@@ -9,7 +9,11 @@ export const getMessageError = (e: any): string => {
   try {
     if (!(e instanceof ApiException)) throw e;
 
-    let error = e.body as Partial<ErrorResponse & ErrorValidateResponse>;
+    console.log({ e });
+
+    let error = JSON.parse(e.body) as Partial<
+      ErrorResponse & ErrorValidateResponse
+    >;
 
     console.log({ error });
 

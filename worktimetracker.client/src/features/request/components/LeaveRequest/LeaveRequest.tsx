@@ -52,9 +52,9 @@ const LeaveRequest: FC<State> = (props) => {
   useEffect(() => {
     if (form && isOpen(RequestType.LeaveRequest)) {
       form.resetFields();
-      form.setFieldsValue({ date: date });
+      form.setFieldsValue(formDefault(date));
     }
-  }, [date, form]);
+  }, [date, form, isOpen(RequestType.LeaveRequest)]);
 
   return (
     <Modal
@@ -69,7 +69,7 @@ const LeaveRequest: FC<State> = (props) => {
       <Form
         form={form}
         initialValues={formState}
-        validateTrigger="onBlur"
+        validateTrigger="onSubmit"
         name="leaveRequest"
         autoComplete="off"
         layout="horizontal"
@@ -112,12 +112,7 @@ const LeaveRequest: FC<State> = (props) => {
           label="Break Time"
           name="breakTime"
           required
-          rules={[
-            {
-              validator: requestValidateTime(workTime),
-              message: "Please input your break time!",
-            },
-          ]}
+          rules={[{ validator: requestValidateTime(workTime) }]}
         >
           <MyRangeTimePicker
             disabledTime={() => requestDisabledTime(workTime)}

@@ -6,14 +6,14 @@ namespace WorkTimeTracker.Server.Controllers.Requests
 {
 	[Route("api/requests")]
 	[ApiExplorerSettings(GroupName = "Requests")]
-	public abstract class BaseRequestController<TRequest, TCreateRequest> : BaseApiController<BaseRequestController<TRequest, TCreateRequest>> where TRequest : RequestDto where TCreateRequest : CreateRequestDto
+	public abstract class BaseRequestController<D, TCreateRequest> : BaseApiController<BaseRequestController<D, TCreateRequest>> where D : RequestDto where TCreateRequest : CreateRequestDto
 	{
-		public abstract Task<ActionResult<TRequest>> CreateRequest(TCreateRequest request);
+		public abstract Task<ActionResult<D>> CreateRequest(TCreateRequest request);
 
-		public abstract Task<ActionResult<TRequest>> CancelRequest(int id);
+		public abstract Task<ActionResult<D>> CancelRequest(int id);
 
-		public abstract Task<ActionResult<TRequest>> ApprovalRequest(int id);
+		public abstract Task<ActionResult<D>> ApprovalRequest(int id);
 
-		public abstract Task<ActionResult<TRequest>> RejectRequest(int id);
+		public abstract Task<ActionResult<D>> RejectRequest(int id);
 	}
 }

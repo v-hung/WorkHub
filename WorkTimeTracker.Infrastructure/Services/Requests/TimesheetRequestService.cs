@@ -35,6 +35,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 			TimesheetRequest timesheetRequest = _mapper.Map<TimesheetRequest>(request);
 
 			timesheetRequest.TimesheetId = timesheet.Id;
+			timesheetRequest.UserId = Guid.Parse(_currentUserService.UserId!);
 
 			await _context.TimesheetRequests.AddAsync(timesheetRequest);
 			await _context.SaveChangesAsync();
