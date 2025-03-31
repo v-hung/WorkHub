@@ -25,9 +25,9 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 		public override async Task<D> CreateRequestAsync<D>(CreateTimesheetRequestDto request)
 		{
 			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date)
-				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet is not found"]); ;
+				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet is not found for this day"]); ;
 
-			if (!await _approvalService.CanApproveRequestAsync(_currentUserService.UserId!, request.ApprovedById.ToString()))
+			if (!await _approvalService.CanApproveRequestAsync(_currentUserService.UserId!, request.ApprovedId.ToString()))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["The specified approver is not authorized to approve this request."]);
 			}

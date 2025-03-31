@@ -24,7 +24,7 @@ export class TimesheetRequestDto {
     'status': RequestStatus;
     'createdAt': Date;
     'user': UserMinimalDto;
-    'approvedBy': UserMinimalDto;
+    'approved': UserMinimalDto;
     'timesheet': TimesheetMinimalDto;
     'checkIn': Date;
     'checkOut': Date;
@@ -79,8 +79,8 @@ export class TimesheetRequestDto {
             "format": ""
         },
         {
-            "name": "approvedBy",
-            "baseName": "approvedBy",
+            "name": "approved",
+            "baseName": "approved",
             "type": "UserMinimalDto",
             "format": ""
         },

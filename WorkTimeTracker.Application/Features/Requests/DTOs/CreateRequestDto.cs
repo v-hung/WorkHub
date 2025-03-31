@@ -17,6 +17,6 @@ namespace WorkTimeTracker.Application.Features.Requests.DTOs
 
 		// Navigation properties
 
-		public Guid ApprovedById { get; set; }
+		public Guid ApprovedId { get; set; }
 	}
 }

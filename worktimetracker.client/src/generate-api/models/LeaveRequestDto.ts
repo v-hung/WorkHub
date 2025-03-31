@@ -24,7 +24,7 @@ export class LeaveRequestDto {
     'status': RequestStatus;
     'createdAt': Date;
     'user': UserMinimalDto;
-    'approvedBy': UserMinimalDto;
+    'approved': UserMinimalDto;
     'timesheet': TimesheetMinimalDto;
     'breakStartDate': Date;
     'breakEndDate': Date;
@@ -77,8 +77,8 @@ export class LeaveRequestDto {
             "format": ""
         },
         {
-            "name": "approvedBy",
-            "baseName": "approvedBy",
+            "name": "approved",
+            "baseName": "approved",
             "type": "UserMinimalDto",
             "format": ""
         },

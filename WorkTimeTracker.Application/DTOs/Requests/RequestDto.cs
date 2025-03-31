@@ -15,7 +15,7 @@ namespace WorkTimeTracker.Application.DTOs.Requests
 
 		[Required]
 		[InverseProperty("ApprovedRequests")]
-		public required UserMinimalDto ApprovedBy { get; set; }
+		public required UserMinimalDto Approved { get; set; }
 
 		[Required]
 		public required TimesheetMinimalDto Timesheet { get; set; }

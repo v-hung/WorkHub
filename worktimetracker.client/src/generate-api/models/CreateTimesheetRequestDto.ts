@@ -17,7 +17,7 @@ export class CreateTimesheetRequestDto {
     'date': Date;
     'requestType': RequestType;
     'reason': string;
-    'approvedById'?: string;
+    'approvedId'?: string;
     'checkIn': Date;
     'checkOut': Date;
     'breakStartDate': Date;
@@ -47,8 +47,8 @@ export class CreateTimesheetRequestDto {
             "format": ""
         },
         {
-            "name": "approvedById",
-            "baseName": "approvedById",
+            "name": "approvedId",
+            "baseName": "approvedId",
             "type": "string",
             "format": "uuid"
         },

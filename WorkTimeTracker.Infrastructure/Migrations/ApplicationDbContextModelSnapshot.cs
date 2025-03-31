@@ -489,7 +489,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("ApprovedById")
+                    b.Property<Guid?>("ApprovedId")
                         .IsRequired()
                         .HasColumnType("char(36)");
 
@@ -520,7 +520,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApprovedById");
+                    b.HasIndex("ApprovedId");
 
                     b.HasIndex("TimesheetId");
 
@@ -843,9 +843,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Requests.Request", b =>
                 {
-                    b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "ApprovedBy")
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "Approved")
                         .WithMany("ApprovedRequests")
-                        .HasForeignKey("ApprovedById")
+                        .HasForeignKey("ApprovedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -861,7 +861,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApprovedBy");
+                    b.Navigation("Approved");
 
                     b.Navigation("Timesheet");
 

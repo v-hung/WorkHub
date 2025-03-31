@@ -12,8 +12,8 @@ using WorkTimeTracker.Infrastructure.Data;
 namespace WorkTimeTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250316081942_Init6")]
-    partial class Init6
+    [Migration("20250331074140_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("DeviceDeviceCategory", b =>
+                {
+                    b.Property<int>("DeviceCategoriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DevicesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeviceCategoriesId", "DevicesId");
+
+                    b.HasIndex("DevicesId");
+
+                    b.ToTable("DeviceDeviceCategory");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
@@ -143,6 +158,69 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.ToTable("ProjectUser");
                 });
 
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.Device", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid?>("AssignedUserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedUserId");
+
+                    b.ToTable("Device");
+                });
+
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.DeviceCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceCategories");
+                });
+
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Identity.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
@@ -254,9 +332,6 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("LeaveHours")
-                        .HasColumnType("int");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -279,6 +354,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("RemainingLeaveMinutes")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
@@ -377,7 +455,16 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Property<int>("CompletedProjects")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("longtext");
 
                     b.Property<Guid?>("ManagerId")
@@ -387,8 +474,8 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("TotalMembers")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -405,11 +492,14 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("ApprovedById")
+                    b.Property<Guid?>("ApprovedId")
                         .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Reason")
@@ -433,7 +523,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApprovedById");
+                    b.HasIndex("ApprovedId");
 
                     b.HasIndex("TimesheetId");
 
@@ -451,6 +541,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime(6)");
@@ -483,11 +576,20 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Property<int>("AllowedLateMinutes")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
                     b.Property<TimeSpan>("EndTimeAfternoon")
                         .HasColumnType("time(6)");
 
                     b.Property<TimeSpan>("EndTimeMorning")
                         .HasColumnType("time(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
 
                     b.Property<TimeSpan>("StartTimeAfternoon")
                         .HasColumnType("time(6)");
@@ -498,6 +600,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -512,11 +617,20 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
 
                     b.Property<Guid?>("ManagerId")
                         .IsRequired()
@@ -526,7 +640,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Status")
@@ -534,6 +648,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -583,6 +700,21 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         });
 
                     b.HasDiscriminator().HasValue(0);
+                });
+
+            modelBuilder.Entity("DeviceDeviceCategory", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Equipment.DeviceCategory", null)
+                        .WithMany()
+                        .HasForeignKey("DeviceCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Equipment.Device", null)
+                        .WithMany()
+                        .HasForeignKey("DevicesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -651,6 +783,15 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Equipment.Device", b =>
+                {
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "AssignedUser")
+                        .WithMany()
+                        .HasForeignKey("AssignedUserId");
+
+                    b.Navigation("AssignedUser");
+                });
+
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Identity.RefreshToken", b =>
                 {
                     b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "User")
@@ -671,7 +812,8 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
                     b.HasOne("WorkTimeTracker.Domain.Entities.Organization.Team", "Team")
                         .WithMany("Members")
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("WorkTimeTracker.Domain.Entities.Time.WorkTime", "WorkTime")
                         .WithMany("Users")
@@ -704,9 +846,9 @@ namespace WorkTimeTracker.Infrastructure.Migrations
 
             modelBuilder.Entity("WorkTimeTracker.Domain.Entities.Requests.Request", b =>
                 {
-                    b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "ApprovedBy")
+                    b.HasOne("WorkTimeTracker.Domain.Entities.Identity.User", "Approved")
                         .WithMany("ApprovedRequests")
-                        .HasForeignKey("ApprovedById")
+                        .HasForeignKey("ApprovedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -722,7 +864,7 @@ namespace WorkTimeTracker.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApprovedBy");
+                    b.Navigation("Approved");
 
                     b.Navigation("Timesheet");
 

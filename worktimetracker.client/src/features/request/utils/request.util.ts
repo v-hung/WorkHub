@@ -1,5 +1,7 @@
 import { localTimeToDate } from "@/common/utils/date.util";
+import { isEmpty } from "@/common/utils/validate.utils";
 import { WorkTimeDto } from "@/generate-api";
+import { isAfter } from "date-fns";
 
 export const requestDisabledTime = (workTime: WorkTimeDto) => {
   const parseTime = (timeStr: string) => {
@@ -7,62 +9,57 @@ export const requestDisabledTime = (workTime: WorkTimeDto) => {
     return { hours, minutes };
   };
 
-  const { hours: startMorningHour, minutes: startMorningMinute } = parseTime(
-    workTime.startTimeMorning
-  );
-  const { hours: endMorningHour, minutes: endMorningMinute } = parseTime(
-    workTime.endTimeMorning
-  );
-  const { hours: startAfternoonHour, minutes: startAfternoonMinute } =
-    parseTime(workTime.startTimeAfternoon);
-  const { hours: endAfternoonHour, minutes: endAfternoonMinute } = parseTime(
-    workTime.endTimeAfternoon
-  );
+  const morningStart = parseTime(workTime.startTimeMorning);
+  const morningEnd = parseTime(workTime.endTimeMorning);
+  const afternoonStart = parseTime(workTime.startTimeAfternoon);
+  const afternoonEnd = parseTime(workTime.endTimeAfternoon);
 
   return {
     disabledHours: () => {
-      const allHours = Array.from({ length: 24 }, (_, i) => i);
-      return allHours.filter(
+      const hours = Array.from({ length: 24 }, (_, i) => i);
+      return hours.filter(
         (hour) =>
-          (hour < startMorningHour || hour > endMorningHour) &&
-          (hour < startAfternoonHour || hour > endAfternoonHour)
+          (hour < morningStart.hours || hour > morningEnd.hours) &&
+          (hour < afternoonStart.hours || hour > afternoonEnd.hours)
       );
     },
+
     disabledMinutes: (selectedHour: number) => {
-      if (
-        (selectedHour === startMorningHour &&
-          selectedHour === endMorningHour) ||
-        (selectedHour === startAfternoonHour &&
-          selectedHour === endAfternoonHour)
-      ) {
-        return Array.from({ length: 60 }, (_, i) => i).filter(
-          (minute) =>
-            (selectedHour === startMorningHour &&
-              minute < startMorningMinute) ||
-            (selectedHour === endMorningHour && minute > endMorningMinute) ||
-            (selectedHour === startAfternoonHour &&
-              minute < startAfternoonMinute) ||
-            (selectedHour === endAfternoonHour && minute > endAfternoonMinute)
-        );
+      const minutes = Array.from({ length: 60 }, (_, i) => i);
+      if (selectedHour === morningStart.hours) {
+        return minutes.filter((minute) => minute < morningStart.minutes);
+      }
+      if (selectedHour === morningEnd.hours) {
+        return minutes.filter((minute) => minute > morningEnd.minutes);
+      }
+      if (selectedHour === afternoonStart.hours) {
+        return minutes.filter((minute) => minute < afternoonStart.minutes);
+      }
+      if (selectedHour === afternoonEnd.hours) {
+        return minutes.filter((minute) => minute > afternoonEnd.minutes);
       }
       return [];
     },
-    disabledSeconds: () => Array.from({ length: 59 }, (_, i) => i + 1),
+
+    disabledSeconds: () => [],
   };
 };
 
-// export const RequestValidateTime = () => (_: any, value: string) => {
-//   if (!value) {
-//     return Promise.reject(new Error("Please choose time!"));
-//   }
+export const requestValidateTime =
+  (workTime: WorkTimeDto) => (_: any, value: string) => {
+    if (isEmpty(value)) {
+      return Promise.reject(new Error("Please choose time!"));
+    }
 
-//   const time = localTimeToDate(value);
+    const time = localTimeToDate(value);
 
-//   const validMinutes = allowedMinutes.includes(time.getMinutes());
+    const validMinutes =
+      isAfter(time, localTimeToDate(workTime.startTimeMorning)) &&
+      isAfter(localTimeToDate(workTime.endTimeAfternoon), time);
 
-//   if (validMinutes) {
-//     return Promise.resolve();
-//   }
+    if (validMinutes) {
+      return Promise.resolve();
+    }
 
-//   return Promise.reject(new Error("Invalid time."));
-// };
+    return Promise.reject(new Error("Invalid time."));
+  };

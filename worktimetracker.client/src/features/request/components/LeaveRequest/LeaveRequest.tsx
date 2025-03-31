@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Select } from "antd";
+import { Form, Input, Modal } from "antd";
 import { memo, useEffect, useState, type ComponentProps, type FC } from "react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRequestContext } from "../../contexts/RequestContext";
@@ -10,14 +10,17 @@ import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import TextArea from "antd/es/input/TextArea";
 import MyRangeTimePicker from "@/ui/form/MyRangeTimePicker";
-import { requestDisabledTime } from "../../utils/request.util";
+import {
+  requestDisabledTime,
+  requestValidateTime,
+} from "../../utils/request.util";
 
 type State = ComponentProps<typeof Modal>;
 
 const LeaveRequest: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
-  const { open, closeRequest, date, requestType } = useRequestContext();
+  const { isOpen, closeRequest, date } = useRequestContext();
   const { loading, create, formDefault } = useLeaveRequestAction();
 
   const workTime = useAuthStore((state) => state.user!.workTime);
@@ -47,15 +50,15 @@ const LeaveRequest: FC<State> = (props) => {
   };
 
   useEffect(() => {
-    if (form && open && requestType == RequestType.LeaveRequest) {
-      console.log({ form });
+    if (form && isOpen(RequestType.LeaveRequest)) {
+      form.resetFields();
       form.setFieldsValue({ date: date });
     }
   }, [date, form]);
 
   return (
     <Modal
-      open={open && requestType == RequestType.LeaveRequest}
+      open={isOpen(RequestType.LeaveRequest)}
       {...rest}
       className={`${className}`}
       title="Leave Request"
@@ -75,11 +78,26 @@ const LeaveRequest: FC<State> = (props) => {
         wrapperCol={{ span: 18 }}
       >
         <Form.Item
-          label="Approved User"
-          name="approvedById"
+          name="approvedId"
           rules={[{ required: true, message: "Please input your Approved!" }]}
+          hidden
         >
           <Input disabled />
+        </Form.Item>
+
+        <Form.Item shouldUpdate noStyle>
+          {({ getFieldError }) => (
+            <Form.Item
+              label="Approved User"
+              name="approvedName"
+              validateStatus={
+                getFieldError("approvedId")?.length ? "error" : ""
+              }
+              help={getFieldError("approvedId")?.[0]}
+            >
+              <Input disabled />
+            </Form.Item>
+          )}
         </Form.Item>
 
         <Form.Item
@@ -91,24 +109,15 @@ const LeaveRequest: FC<State> = (props) => {
         </Form.Item>
 
         <Form.Item
-          label="Request Type"
-          name="requestType"
-          rules={[
-            { required: true, message: "Please input your request type!" },
-          ]}
-        >
-          <Select
-            options={Object.entries(RequestType).map(([key, value]) => ({
-              value,
-              label: key,
-            }))}
-          />
-        </Form.Item>
-
-        <Form.Item
           label="Break Time"
           name="breakTime"
-          rules={[{ required: true, message: "Please input your break time!" }]}
+          required
+          rules={[
+            {
+              validator: requestValidateTime(workTime),
+              message: "Please input your break time!",
+            },
+          ]}
         >
           <MyRangeTimePicker
             disabledTime={() => requestDisabledTime(workTime)}

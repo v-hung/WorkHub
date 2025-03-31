@@ -11,7 +11,7 @@ type State = ComponentProps<typeof Modal>;
 const TimesheetRequest: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
-  const { open, requestType, closeRequest } = useRequestContext();
+  const { isOpen, closeRequest } = useRequestContext();
   const { loading, create } = useTimesheetRequestAction();
 
   const supervisor = useAuthStore((state) => state.user!.supervisor);
@@ -35,7 +35,7 @@ const TimesheetRequest: FC<State> = (props) => {
 
   return (
     <Modal
-      open={open && requestType == RequestType.TimesheetAdjustment}
+      open={isOpen(RequestType.TimesheetAdjustment)}
       {...rest}
       className={`${className}`}
       title="Timesheet Request"

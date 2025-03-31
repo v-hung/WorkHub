@@ -17,7 +17,7 @@ export class CreateRequestDto {
     'date': Date;
     'requestType': RequestType;
     'reason': string;
-    'approvedById'?: string;
+    'approvedId'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -43,8 +43,8 @@ export class CreateRequestDto {
             "format": ""
         },
         {
-            "name": "approvedById",
-            "baseName": "approvedById",
+            "name": "approvedId",
+            "baseName": "approvedId",
             "type": "string",
             "format": "uuid"
         }    ];

@@ -33,12 +33,12 @@ namespace WorkTimeTracker.Domain.Entities.Requests
 		[InverseProperty("Requests")]
 		public User? User { get; set; }
 
-		[ForeignKey("ApprovedBy")]
-		public Guid? ApprovedById { get; set; }
+		[ForeignKey("Approved")]
+		public Guid? ApprovedId { get; set; }
 
 		[Required]
 		[InverseProperty("ApprovedRequests")]
-		public User? ApprovedBy { get; set; }
+		public User? Approved { get; set; }
 
 		[ForeignKey("Timesheet")]
 		public Guid? TimesheetId { get; set; }

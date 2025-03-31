@@ -1,12 +1,13 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
-import { CreateLeaveRequestDto } from "@/generate-api";
+import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
 import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
 
 export type CreateLeaveRequestDtoCustomType = CreateLeaveRequestDto & {
   breakTime: [Date | null, Date | null];
+  approvedName: string;
 };
 
 export const useLeaveRequestAction = () => {
@@ -20,6 +21,9 @@ export const useLeaveRequestAction = () => {
     const form = new CreateLeaveRequestDto();
     return {
       ...form,
+      approvedId: supervisor?.id,
+      approvedName: supervisor?.fullName || "No supervisor",
+      requestType: RequestType.LeaveRequest,
       date: date || new Date(),
       breakTime: [null, null],
     };

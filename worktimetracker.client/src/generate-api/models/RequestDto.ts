@@ -24,7 +24,7 @@ export class RequestDto {
     'status': RequestStatus;
     'createdAt': Date;
     'user': UserMinimalDto;
-    'approvedBy': UserMinimalDto;
+    'approved': UserMinimalDto;
     'timesheet': TimesheetMinimalDto;
 
     static readonly discriminator: string | undefined = undefined;
@@ -75,8 +75,8 @@ export class RequestDto {
             "format": ""
         },
         {
-            "name": "approvedBy",
-            "baseName": "approvedBy",
+            "name": "approved",
+            "baseName": "approved",
             "type": "UserMinimalDto",
             "format": ""
         },

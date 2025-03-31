@@ -33,7 +33,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Approvals
 		{
 			TRequest request = await _context.Set<TRequest>().FindAsync(requestId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
-			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedById.ToString()!))
+			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedId.ToString()!))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["You are not allowed to approve this request."]);
 			}
@@ -49,7 +49,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Approvals
 		{
 			TRequest request = _context.Set<TRequest>().Find(requestId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
-			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedById.ToString()!))
+			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedId.ToString()!))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["You are not allowed to approve this request."]);
 			}

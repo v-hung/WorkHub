@@ -17,7 +17,7 @@ export class CreateLeaveRequestDto {
     'date': Date;
     'requestType': RequestType;
     'reason': string;
-    'approvedById'?: string;
+    'approvedId'?: string;
     'breakStartDate': Date;
     'breakEndDate': Date;
 
@@ -45,8 +45,8 @@ export class CreateLeaveRequestDto {
             "format": ""
         },
         {
-            "name": "approvedById",
-            "baseName": "approvedById",
+            "name": "approvedId",
+            "baseName": "approvedId",
             "type": "string",
             "format": "uuid"
         },

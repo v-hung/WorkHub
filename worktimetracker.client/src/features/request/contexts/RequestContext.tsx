@@ -3,12 +3,13 @@ import {
   createContext,
   FC,
   PropsWithChildren,
+  useCallback,
   useContext,
   useState,
 } from "react";
 
 type RequestContextType = {
-  open: boolean;
+  isOpen: (type: RequestType) => boolean;
   requestType: RequestType;
   date: Date | undefined;
   openRequest: (type: RequestType, date?: Date | undefined) => void;
@@ -33,9 +34,14 @@ export const RequestProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const closeRequest = () => setOpen(false);
 
+  const isOpen = useCallback(
+    (type: RequestType) => open && requestType === type,
+    [open, requestType]
+  );
+
   return (
     <RequestContext.Provider
-      value={{ open, requestType, openRequest, closeRequest, date }}
+      value={{ isOpen, requestType, openRequest, closeRequest, date }}
     >
       {children}
     </RequestContext.Provider>
