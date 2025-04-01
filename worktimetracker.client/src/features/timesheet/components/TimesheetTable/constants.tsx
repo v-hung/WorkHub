@@ -1,5 +1,5 @@
 import { useRequestContext } from "@/features/request/contexts/RequestContext";
-import { RequestType, TimesheetDtoRequestsInner } from "@/generate-api";
+import { RequestType, RequestCombinedMinimalDto } from "@/generate-api";
 import { Button, Space, TableProps } from "antd";
 import { isBefore, isWeekend } from "date-fns";
 import { FC } from "react";
@@ -11,7 +11,7 @@ export type DataTimesheetTableType = {
   startTime?: string;
   endTime?: string;
   workMinutes?: number | null;
-  requests?: Array<TimesheetDtoRequestsInner> | null;
+  requests?: Array<RequestCombinedMinimalDto> | null;
 };
 
 export const userTimesheetColumns: TableProps<DataTimesheetTableType>["columns"] =
@@ -35,7 +35,7 @@ export const userTimesheetColumns: TableProps<DataTimesheetTableType>["columns"]
       dataIndex: "workMinutes",
       width: "16%",
     },
-    { title: "Requests", key: "requests", dataIndex: "requests" },
+    { title: "Requests", key: "requests" },
     {
       title: "Action",
       key: "action",
@@ -66,7 +66,9 @@ const TimesheetTableActionRender: FC<{
         size="small"
         color="primary"
         variant="outlined"
-        onClick={() => openRequest(RequestType.TimesheetAdjustment, date)}
+        onClick={() =>
+          openRequest(RequestType.TimesheetAdjustmentRequest, date)
+        }
       >
         Edit
       </Button>

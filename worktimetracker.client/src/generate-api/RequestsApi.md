@@ -8,14 +8,14 @@ Method | HTTP request | Description
 [**leaveRequestCancelRequest**](RequestsApi.md#leaveRequestCancelRequest) | **POST** /api/requests/{id}/leave-cancel | 
 [**leaveRequestCreateRequest**](RequestsApi.md#leaveRequestCreateRequest) | **POST** /api/requests/leave | 
 [**leaveRequestRejectRequest**](RequestsApi.md#leaveRequestRejectRequest) | **POST** /api/requests/{id}/leave-reject | 
-[**timesheetRequestApprovalRequest**](RequestsApi.md#timesheetRequestApprovalRequest) | **POST** /api/requests/{id}/timesheet-approval | 
-[**timesheetRequestCancelRequest**](RequestsApi.md#timesheetRequestCancelRequest) | **POST** /api/requests/{id}/timesheet-cancel | 
-[**timesheetRequestCreateRequest**](RequestsApi.md#timesheetRequestCreateRequest) | **POST** /api/requests/timesheet | 
-[**timesheetRequestRejectRequest**](RequestsApi.md#timesheetRequestRejectRequest) | **POST** /api/requests/{id}/timesheet-reject | 
+[**timesheetAdjustmentRequestApprovalRequest**](RequestsApi.md#timesheetAdjustmentRequestApprovalRequest) | **POST** /api/requests/{id}/timesheet-approval | 
+[**timesheetAdjustmentRequestCancelRequest**](RequestsApi.md#timesheetAdjustmentRequestCancelRequest) | **POST** /api/requests/{id}/timesheet-cancel | 
+[**timesheetAdjustmentRequestCreateRequest**](RequestsApi.md#timesheetAdjustmentRequestCreateRequest) | **POST** /api/requests/timesheet | 
+[**timesheetAdjustmentRequestRejectRequest**](RequestsApi.md#timesheetAdjustmentRequestRejectRequest) | **POST** /api/requests/{id}/timesheet-reject | 
 
 
 # **leaveRequestApprovalRequest**
-> LeaveRequestDto leaveRequestApprovalRequest()
+> RequestCombinedDto leaveRequestApprovalRequest()
 
 
 ### Example
@@ -47,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**LeaveRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -69,7 +69,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **leaveRequestCancelRequest**
-> LeaveRequestDto leaveRequestCancelRequest()
+> RequestCombinedDto leaveRequestCancelRequest()
 
 
 ### Example
@@ -101,7 +101,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**LeaveRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -123,7 +123,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **leaveRequestCreateRequest**
-> LeaveRequestDto leaveRequestCreateRequest()
+> RequestCombinedDto leaveRequestCreateRequest()
 
 
 ### Example
@@ -155,7 +155,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**LeaveRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **leaveRequestRejectRequest**
-> LeaveRequestDto leaveRequestRejectRequest()
+> RequestCombinedDto leaveRequestRejectRequest()
 
 
 ### Example
@@ -209,7 +209,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**LeaveRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -230,8 +230,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **timesheetRequestApprovalRequest**
-> TimesheetRequestDto timesheetRequestApprovalRequest()
+# **timesheetAdjustmentRequestApprovalRequest**
+> RequestCombinedDto timesheetAdjustmentRequestApprovalRequest()
 
 
 ### Example
@@ -239,17 +239,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiTimesheetRequestApprovalRequestRequest } from '';
+import type { RequestsApiTimesheetAdjustmentRequestApprovalRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiTimesheetRequestApprovalRequestRequest = {
+const request: RequestsApiTimesheetAdjustmentRequestApprovalRequestRequest = {
   
   id: 1,
 };
 
-const data = await apiInstance.timesheetRequestApprovalRequest(request);
+const data = await apiInstance.timesheetAdjustmentRequestApprovalRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**TimesheetRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -284,8 +284,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **timesheetRequestCancelRequest**
-> TimesheetRequestDto timesheetRequestCancelRequest()
+# **timesheetAdjustmentRequestCancelRequest**
+> RequestCombinedDto timesheetAdjustmentRequestCancelRequest()
 
 
 ### Example
@@ -293,17 +293,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiTimesheetRequestCancelRequestRequest } from '';
+import type { RequestsApiTimesheetAdjustmentRequestCancelRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiTimesheetRequestCancelRequestRequest = {
+const request: RequestsApiTimesheetAdjustmentRequestCancelRequestRequest = {
   
   id: 1,
 };
 
-const data = await apiInstance.timesheetRequestCancelRequest(request);
+const data = await apiInstance.timesheetAdjustmentRequestCancelRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**TimesheetRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -338,8 +338,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **timesheetRequestCreateRequest**
-> TimesheetRequestDto timesheetRequestCreateRequest()
+# **timesheetAdjustmentRequestCreateRequest**
+> RequestCombinedDto timesheetAdjustmentRequestCreateRequest()
 
 
 ### Example
@@ -347,17 +347,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiTimesheetRequestCreateRequestRequest } from '';
+import type { RequestsApiTimesheetAdjustmentRequestCreateRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiTimesheetRequestCreateRequestRequest = {
+const request: RequestsApiTimesheetAdjustmentRequestCreateRequestRequest = {
   
-  createTimesheetRequestDto: null,
+  createTimesheetAdjustmentRequestDto: null,
 };
 
-const data = await apiInstance.timesheetRequestCreateRequest(request);
+const data = await apiInstance.timesheetAdjustmentRequestCreateRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -366,12 +366,12 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createTimesheetRequestDto** | **CreateTimesheetRequestDto**|  |
+ **createTimesheetAdjustmentRequestDto** | **CreateTimesheetAdjustmentRequestDto**|  |
 
 
 ### Return type
 
-**TimesheetRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 
@@ -392,8 +392,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **timesheetRequestRejectRequest**
-> TimesheetRequestDto timesheetRequestRejectRequest()
+# **timesheetAdjustmentRequestRejectRequest**
+> RequestCombinedDto timesheetAdjustmentRequestRejectRequest()
 
 
 ### Example
@@ -401,17 +401,17 @@ Name | Type | Description  | Notes
 
 ```typescript
 import { createConfiguration, RequestsApi } from '';
-import type { RequestsApiTimesheetRequestRejectRequestRequest } from '';
+import type { RequestsApiTimesheetAdjustmentRequestRejectRequestRequest } from '';
 
 const configuration = createConfiguration();
 const apiInstance = new RequestsApi(configuration);
 
-const request: RequestsApiTimesheetRequestRejectRequestRequest = {
+const request: RequestsApiTimesheetAdjustmentRequestRejectRequestRequest = {
   
   id: 1,
 };
 
-const data = await apiInstance.timesheetRequestRejectRequest(request);
+const data = await apiInstance.timesheetAdjustmentRequestRejectRequest(request);
 console.log('API called successfully. Returned data:', data);
 ```
 
@@ -425,7 +425,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**TimesheetRequestDto**
+**RequestCombinedDto**
 
 ### Authorization
 

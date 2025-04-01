@@ -10,17 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { HttpFile } from '../http/http';
 
-export class TimesheetRequestMinimalDto {
-    'id': number;
+export class CreateTimesheetAdjustmentRequestDto {
     'date': Date;
     'requestType': RequestType;
     'reason': string;
-    'status': RequestStatus;
-    'createdAt': Date;
+    'approvedId'?: string;
     'checkIn': Date;
     'checkOut': Date;
     'breakStartDate': Date;
@@ -31,12 +28,6 @@ export class TimesheetRequestMinimalDto {
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "number",
-            "format": "int32"
-        },
         {
             "name": "date",
             "baseName": "date",
@@ -56,16 +47,10 @@ export class TimesheetRequestMinimalDto {
             "format": ""
         },
         {
-            "name": "status",
-            "baseName": "status",
-            "type": "RequestStatus",
-            "format": ""
-        },
-        {
-            "name": "createdAt",
-            "baseName": "createdAt",
-            "type": "Date",
-            "format": "date-time"
+            "name": "approvedId",
+            "baseName": "approvedId",
+            "type": "string",
+            "format": "uuid"
         },
         {
             "name": "checkIn",
@@ -93,7 +78,7 @@ export class TimesheetRequestMinimalDto {
         }    ];
 
     static getAttributeTypeMap() {
-        return TimesheetRequestMinimalDto.attributeTypeMap;
+        return CreateTimesheetAdjustmentRequestDto.attributeTypeMap;
     }
 
     public constructor() {

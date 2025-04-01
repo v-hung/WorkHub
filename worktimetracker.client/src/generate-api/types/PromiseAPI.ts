@@ -9,7 +9,7 @@ import { CreateLeaveRequestDto } from '../models/CreateLeaveRequestDto';
 import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateRequestDto } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
-import { CreateTimesheetRequestDto } from '../models/CreateTimesheetRequestDto';
+import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
@@ -20,8 +20,6 @@ import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
-import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -30,8 +28,8 @@ import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { RequestDto } from '../models/RequestDto';
-import { RequestMinimalDto } from '../models/RequestMinimalDto';
+import { RequestCombinedDto } from '../models/RequestCombinedDto';
+import { RequestCombinedMinimalDto } from '../models/RequestCombinedMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -42,12 +40,9 @@ import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
-import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
-import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -1128,7 +1123,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestApprovalRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestApprovalRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1148,7 +1143,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestApprovalRequest(id: number, _options?: PromiseConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestApprovalRequest(id: number, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1168,7 +1163,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestCancelRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestCancelRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1188,7 +1183,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestCancelRequest(id: number, _options?: PromiseConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestCancelRequest(id: number, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1208,7 +1203,7 @@ export class PromiseRequestsApi {
     /**
      * @param [createLeaveRequestDto]
      */
-    public leaveRequestCreateRequestWithHttpInfo(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: PromiseConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestCreateRequestWithHttpInfo(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1228,7 +1223,7 @@ export class PromiseRequestsApi {
     /**
      * @param [createLeaveRequestDto]
      */
-    public leaveRequestCreateRequest(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: PromiseConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestCreateRequest(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1248,7 +1243,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestRejectRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestRejectRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1268,7 +1263,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestRejectRequest(id: number, _options?: PromiseConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestRejectRequest(id: number, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1288,7 +1283,7 @@ export class PromiseRequestsApi {
     /**
      * @param id
      */
-    public timesheetRequestApprovalRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestApprovalRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1301,14 +1296,14 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestApprovalRequestWithHttpInfo(id, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestApprovalRequestWithHttpInfo(id, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public timesheetRequestApprovalRequest(id: number, _options?: PromiseConfigurationOptions): Promise<TimesheetRequestDto> {
+    public timesheetAdjustmentRequestApprovalRequest(id: number, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1321,14 +1316,14 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestApprovalRequest(id, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestApprovalRequest(id, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public timesheetRequestCancelRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestCancelRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1341,14 +1336,14 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestCancelRequestWithHttpInfo(id, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestCancelRequestWithHttpInfo(id, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public timesheetRequestCancelRequest(id: number, _options?: PromiseConfigurationOptions): Promise<TimesheetRequestDto> {
+    public timesheetAdjustmentRequestCancelRequest(id: number, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1361,14 +1356,14 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestCancelRequest(id, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestCancelRequest(id, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param [createTimesheetRequestDto]
+     * @param [createTimesheetAdjustmentRequestDto]
      */
-    public timesheetRequestCreateRequestWithHttpInfo(createTimesheetRequestDto?: CreateTimesheetRequestDto, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestCreateRequestWithHttpInfo(createTimesheetAdjustmentRequestDto?: CreateTimesheetAdjustmentRequestDto, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1381,14 +1376,14 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestCreateRequestWithHttpInfo(createTimesheetRequestDto, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestCreateRequestWithHttpInfo(createTimesheetAdjustmentRequestDto, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param [createTimesheetRequestDto]
+     * @param [createTimesheetAdjustmentRequestDto]
      */
-    public timesheetRequestCreateRequest(createTimesheetRequestDto?: CreateTimesheetRequestDto, _options?: PromiseConfigurationOptions): Promise<TimesheetRequestDto> {
+    public timesheetAdjustmentRequestCreateRequest(createTimesheetAdjustmentRequestDto?: CreateTimesheetAdjustmentRequestDto, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1401,34 +1396,14 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestCreateRequest(createTimesheetRequestDto, observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     * @param id
-     */
-    public timesheetRequestRejectRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        let observableOptions: undefined | ConfigurationOptions
-        if (_options){
-	    observableOptions = {
-                baseServer: _options.baseServer,
-                httpApi: _options.httpApi,
-                middleware: _options.middleware?.map(
-                    m => new PromiseMiddlewareWrapper(m)
-		),
-		middlewareMergeStrategy: _options.middlewareMergeStrategy,
-                authMethods: _options.authMethods
-	    }
-	}
-        const result = this.api.timesheetRequestRejectRequestWithHttpInfo(id, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestCreateRequest(createTimesheetAdjustmentRequestDto, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param id
      */
-    public timesheetRequestRejectRequest(id: number, _options?: PromiseConfigurationOptions): Promise<TimesheetRequestDto> {
+    public timesheetAdjustmentRequestRejectRequestWithHttpInfo(id: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1441,7 +1416,27 @@ export class PromiseRequestsApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetRequestRejectRequest(id, observableOptions);
+        const result = this.api.timesheetAdjustmentRequestRejectRequestWithHttpInfo(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param id
+     */
+    public timesheetAdjustmentRequestRejectRequest(id: number, _options?: PromiseConfigurationOptions): Promise<RequestCombinedDto> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.timesheetAdjustmentRequestRejectRequest(id, observableOptions);
         return result.toPromise();
     }
 

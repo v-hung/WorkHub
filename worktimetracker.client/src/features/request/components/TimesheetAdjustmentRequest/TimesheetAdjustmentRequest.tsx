@@ -3,21 +3,24 @@ import { memo, useState, type ComponentProps, type FC } from "react";
 import { useAuthStore } from "@/stores/auth.store";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import { useRequestContext } from "../../contexts/RequestContext";
-import { CreateTimesheetRequestDto, RequestType } from "@/generate-api";
-import { useTimesheetRequestAction } from "../../hooks/useTimesheetRequestAction";
+import {
+  CreateTimesheetAdjustmentRequestDto,
+  RequestType,
+} from "@/generate-api";
+import { useTimesheetAdjustmentRequestAction } from "../../hooks/useTimesheetAdjustmentRequestAction";
 
 type State = ComponentProps<typeof Modal>;
 
-const TimesheetRequest: FC<State> = (props) => {
+const TimesheetAdjustmentRequest: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
   const { isOpen, closeRequest } = useRequestContext();
-  const { loading, create } = useTimesheetRequestAction();
+  const { loading, create } = useTimesheetAdjustmentRequestAction();
 
   const supervisor = useAuthStore((state) => state.user!.supervisor);
 
   const [form] = Form.useForm();
-  const [formState] = useState<CreateTimesheetRequestDto>();
+  const [formState] = useState<CreateTimesheetAdjustmentRequestDto>();
 
   const handleOk = () => {
     form.validateFields().then(async () => {
@@ -35,7 +38,7 @@ const TimesheetRequest: FC<State> = (props) => {
 
   return (
     <Modal
-      open={isOpen(RequestType.TimesheetAdjustment)}
+      open={isOpen(RequestType.TimesheetAdjustmentRequest)}
       {...rest}
       className={`${className}`}
       title="Timesheet Request"
@@ -78,6 +81,6 @@ const TimesheetRequest: FC<State> = (props) => {
   );
 };
 
-export default TimesheetRequest;
+export default TimesheetAdjustmentRequest;
 
-export const TimesheetRequestMemo = memo(TimesheetRequest);
+export const TimesheetRequestMemo = memo(TimesheetAdjustmentRequest);

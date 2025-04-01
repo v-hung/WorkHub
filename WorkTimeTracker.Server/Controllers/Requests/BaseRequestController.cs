@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using WorkTimeTracker.Application.DTOs.Requests;
 using WorkTimeTracker.Application.Features.Requests.DTOs;
 
 namespace WorkTimeTracker.Server.Controllers.Requests
 {
 	[Route("api/requests")]
 	[ApiExplorerSettings(GroupName = "Requests")]
-	public abstract class BaseRequestController<D, TCreateRequest> : BaseApiController<BaseRequestController<D, TCreateRequest>> where D : RequestDto where TCreateRequest : CreateRequestDto
+	public abstract class BaseRequestController<D, TCreateRequest> : BaseApiController<BaseRequestController<D, TCreateRequest>> where D : class where TCreateRequest : CreateRequestDto
 	{
 		public abstract Task<ActionResult<D>> CreateRequest(TCreateRequest request);
 

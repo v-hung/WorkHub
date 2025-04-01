@@ -16,7 +16,7 @@ namespace WorkTimeTracker.Application.Features.Devices.Commands
 
 		public string? Location { get; set; }
 
-		public DeviceStatus Status { get; set; } = DeviceStatus.New;
+		public DeviceStatus Status { get; set; } = DeviceStatus.NEW;
 
 		// Navigation property
 

@@ -16,18 +16,20 @@ import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
-export class LeaveRequestDto {
+export class RequestCombinedDto {
     'id': number;
     'date': Date;
     'requestType': RequestType;
     'reason': string;
     'status': RequestStatus;
     'createdAt': Date;
+    'breakStartDate': Date;
+    'breakEndDate': Date;
+    'checkIn': Date;
+    'checkOut': Date;
     'user': UserMinimalDto;
     'approved': UserMinimalDto;
     'timesheet': TimesheetMinimalDto;
-    'breakStartDate': Date;
-    'breakEndDate': Date;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -71,6 +73,30 @@ export class LeaveRequestDto {
             "format": "date-time"
         },
         {
+            "name": "breakStartDate",
+            "baseName": "breakStartDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "breakEndDate",
+            "baseName": "breakEndDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "checkIn",
+            "baseName": "checkIn",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "checkOut",
+            "baseName": "checkOut",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
             "name": "user",
             "baseName": "user",
             "type": "UserMinimalDto",
@@ -87,22 +113,10 @@ export class LeaveRequestDto {
             "baseName": "timesheet",
             "type": "TimesheetMinimalDto",
             "format": ""
-        },
-        {
-            "name": "breakStartDate",
-            "baseName": "breakStartDate",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "breakEndDate",
-            "baseName": "breakEndDate",
-            "type": "Date",
-            "format": "date-time"
         }    ];
 
     static getAttributeTypeMap() {
-        return LeaveRequestDto.attributeTypeMap;
+        return RequestCombinedDto.attributeTypeMap;
     }
 
     public constructor() {

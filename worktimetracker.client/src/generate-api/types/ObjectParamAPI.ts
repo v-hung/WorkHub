@@ -9,7 +9,7 @@ import { CreateLeaveRequestDto } from '../models/CreateLeaveRequestDto';
 import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateRequestDto } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
-import { CreateTimesheetRequestDto } from '../models/CreateTimesheetRequestDto';
+import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
@@ -20,8 +20,6 @@ import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
-import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -30,8 +28,8 @@ import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { RequestDto } from '../models/RequestDto';
-import { RequestMinimalDto } from '../models/RequestMinimalDto';
+import { RequestCombinedDto } from '../models/RequestCombinedDto';
+import { RequestCombinedMinimalDto } from '../models/RequestCombinedMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -42,12 +40,9 @@ import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
-import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
-import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -786,41 +781,41 @@ export interface RequestsApiLeaveRequestRejectRequestRequest {
     id: number
 }
 
-export interface RequestsApiTimesheetRequestApprovalRequestRequest {
+export interface RequestsApiTimesheetAdjustmentRequestApprovalRequestRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof RequestsApitimesheetRequestApprovalRequest
+     * @memberof RequestsApitimesheetAdjustmentRequestApprovalRequest
      */
     id: number
 }
 
-export interface RequestsApiTimesheetRequestCancelRequestRequest {
+export interface RequestsApiTimesheetAdjustmentRequestCancelRequestRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof RequestsApitimesheetRequestCancelRequest
+     * @memberof RequestsApitimesheetAdjustmentRequestCancelRequest
      */
     id: number
 }
 
-export interface RequestsApiTimesheetRequestCreateRequestRequest {
+export interface RequestsApiTimesheetAdjustmentRequestCreateRequestRequest {
     /**
      * 
-     * @type CreateTimesheetRequestDto
-     * @memberof RequestsApitimesheetRequestCreateRequest
+     * @type CreateTimesheetAdjustmentRequestDto
+     * @memberof RequestsApitimesheetAdjustmentRequestCreateRequest
      */
-    createTimesheetRequestDto?: CreateTimesheetRequestDto
+    createTimesheetAdjustmentRequestDto?: CreateTimesheetAdjustmentRequestDto
 }
 
-export interface RequestsApiTimesheetRequestRejectRequestRequest {
+export interface RequestsApiTimesheetAdjustmentRequestRejectRequestRequest {
     /**
      * 
      * Defaults to: undefined
      * @type number
-     * @memberof RequestsApitimesheetRequestRejectRequest
+     * @memberof RequestsApitimesheetAdjustmentRequestRejectRequest
      */
     id: number
 }
@@ -835,113 +830,113 @@ export class ObjectRequestsApi {
     /**
      * @param param the request object
      */
-    public leaveRequestApprovalRequestWithHttpInfo(param: RequestsApiLeaveRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestApprovalRequestWithHttpInfo(param: RequestsApiLeaveRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         return this.api.leaveRequestApprovalRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestApprovalRequest(param: RequestsApiLeaveRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestApprovalRequest(param: RequestsApiLeaveRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
         return this.api.leaveRequestApprovalRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestCancelRequestWithHttpInfo(param: RequestsApiLeaveRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestCancelRequestWithHttpInfo(param: RequestsApiLeaveRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         return this.api.leaveRequestCancelRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestCancelRequest(param: RequestsApiLeaveRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestCancelRequest(param: RequestsApiLeaveRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
         return this.api.leaveRequestCancelRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestCreateRequestWithHttpInfo(param: RequestsApiLeaveRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestCreateRequestWithHttpInfo(param: RequestsApiLeaveRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         return this.api.leaveRequestCreateRequestWithHttpInfo(param.createLeaveRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestCreateRequest(param: RequestsApiLeaveRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestCreateRequest(param: RequestsApiLeaveRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
         return this.api.leaveRequestCreateRequest(param.createLeaveRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestRejectRequestWithHttpInfo(param: RequestsApiLeaveRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestRejectRequestWithHttpInfo(param: RequestsApiLeaveRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
         return this.api.leaveRequestRejectRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public leaveRequestRejectRequest(param: RequestsApiLeaveRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<LeaveRequestDto> {
+    public leaveRequestRejectRequest(param: RequestsApiLeaveRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
         return this.api.leaveRequestRejectRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestApprovalRequestWithHttpInfo(param: RequestsApiTimesheetRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.timesheetRequestApprovalRequestWithHttpInfo(param.id,  options).toPromise();
+    public timesheetAdjustmentRequestApprovalRequestWithHttpInfo(param: RequestsApiTimesheetAdjustmentRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
+        return this.api.timesheetAdjustmentRequestApprovalRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestApprovalRequest(param: RequestsApiTimesheetRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.timesheetRequestApprovalRequest(param.id,  options).toPromise();
+    public timesheetAdjustmentRequestApprovalRequest(param: RequestsApiTimesheetAdjustmentRequestApprovalRequestRequest, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
+        return this.api.timesheetAdjustmentRequestApprovalRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestCancelRequestWithHttpInfo(param: RequestsApiTimesheetRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.timesheetRequestCancelRequestWithHttpInfo(param.id,  options).toPromise();
+    public timesheetAdjustmentRequestCancelRequestWithHttpInfo(param: RequestsApiTimesheetAdjustmentRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
+        return this.api.timesheetAdjustmentRequestCancelRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestCancelRequest(param: RequestsApiTimesheetRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.timesheetRequestCancelRequest(param.id,  options).toPromise();
+    public timesheetAdjustmentRequestCancelRequest(param: RequestsApiTimesheetAdjustmentRequestCancelRequestRequest, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
+        return this.api.timesheetAdjustmentRequestCancelRequest(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestCreateRequestWithHttpInfo(param: RequestsApiTimesheetRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.timesheetRequestCreateRequestWithHttpInfo(param.createTimesheetRequestDto,  options).toPromise();
+    public timesheetAdjustmentRequestCreateRequestWithHttpInfo(param: RequestsApiTimesheetAdjustmentRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
+        return this.api.timesheetAdjustmentRequestCreateRequestWithHttpInfo(param.createTimesheetAdjustmentRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestCreateRequest(param: RequestsApiTimesheetRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.timesheetRequestCreateRequest(param.createTimesheetRequestDto,  options).toPromise();
+    public timesheetAdjustmentRequestCreateRequest(param: RequestsApiTimesheetAdjustmentRequestCreateRequestRequest = {}, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
+        return this.api.timesheetAdjustmentRequestCreateRequest(param.createTimesheetAdjustmentRequestDto,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestRejectRequestWithHttpInfo(param: RequestsApiTimesheetRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetRequestDto>> {
-        return this.api.timesheetRequestRejectRequestWithHttpInfo(param.id,  options).toPromise();
+    public timesheetAdjustmentRequestRejectRequestWithHttpInfo(param: RequestsApiTimesheetAdjustmentRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<HttpInfo<RequestCombinedDto>> {
+        return this.api.timesheetAdjustmentRequestRejectRequestWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetRequestRejectRequest(param: RequestsApiTimesheetRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<TimesheetRequestDto> {
-        return this.api.timesheetRequestRejectRequest(param.id,  options).toPromise();
+    public timesheetAdjustmentRequestRejectRequest(param: RequestsApiTimesheetAdjustmentRequestRejectRequestRequest, options?: ConfigurationOptions): Promise<RequestCombinedDto> {
+        return this.api.timesheetAdjustmentRequestRejectRequest(param.id,  options).toPromise();
     }
 
 }

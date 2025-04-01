@@ -2,6 +2,6 @@ namespace WorkTimeTracker.Domain.Enums
 {
 	public enum DeviceStatus
 	{
-		New, InUse, Maintenance, Damaged, Disposed
+		NEW, IN_USE, MAINTENANCE, DAMAGED, DISPOSED
 	}
 }

@@ -13,9 +13,9 @@
 import { HttpFile } from '../http/http';
 
 export enum DeviceStatus {
-    New = 'New',
-    InUse = 'InUse',
-    Maintenance = 'Maintenance',
-    Damaged = 'Damaged',
-    Disposed = 'Disposed'
+    New = 'NEW',
+    InUse = 'IN_USE',
+    Maintenance = 'MAINTENANCE',
+    Damaged = 'DAMAGED',
+    Disposed = 'DISPOSED'
 }

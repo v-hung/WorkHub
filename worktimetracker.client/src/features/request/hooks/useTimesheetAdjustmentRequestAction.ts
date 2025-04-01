@@ -1,19 +1,19 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
-import { CreateTimesheetRequestDto } from "@/generate-api";
+import { CreateTimesheetAdjustmentRequestDto } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
 import { useState } from "react";
 
-export const useTimesheetRequestAction = () => {
+export const useTimesheetAdjustmentRequestAction = () => {
   const [loading, setLoading] = useState(false);
 
   // Create
   // =============
 
-  const create = async (request: CreateTimesheetRequestDto) => {
+  const create = async (request: CreateTimesheetAdjustmentRequestDto) => {
     setLoading(true);
     try {
-      await requestApi.timesheetRequestCreateRequest(request);
+      await requestApi.timesheetAdjustmentRequestCreateRequest(request);
       getNotification().success({
         message: "Successfully completed",
       });

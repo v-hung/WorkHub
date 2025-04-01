@@ -34,7 +34,9 @@ const TImesheetHeader = () => {
           ) : (
             <>
               <Button
-                onClick={() => openRequest(RequestType.TimesheetAdjustment)}
+                onClick={() =>
+                  openRequest(RequestType.TimesheetAdjustmentRequest)
+                }
               >
                 Edit
               </Button>

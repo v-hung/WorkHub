@@ -13,8 +13,8 @@
 import { HttpFile } from '../http/http';
 
 export enum RequestType {
-    TimesheetAdjustment = 'TIMESHEET_ADJUSTMENT',
+    TimesheetAdjustmentRequest = 'TIMESHEET_ADJUSTMENT_REQUEST',
     LeaveRequest = 'LEAVE_REQUEST',
     OvertimeRequest = 'OVERTIME_REQUEST',
-    WorkFromHome = 'WORK_FROM_HOME'
+    WorkFromHomeRequest = 'WORK_FROM_HOME_REQUEST'
 }

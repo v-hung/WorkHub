@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WorkTimeTracker.Application.DTOs.Requests
+namespace WorkTimeTracker.Domain.Entities.Requests
 {
-	public class TimesheetRequestDto : RequestDto
+	public class TimesheetAdjustmentRequest : Request
 	{
 		[Required]
 		public DateTime CheckIn { get; set; }

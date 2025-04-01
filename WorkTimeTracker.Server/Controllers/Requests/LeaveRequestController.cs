@@ -7,36 +7,36 @@ using WorkTimeTracker.Domain.Entities.Requests;
 
 namespace WorkTimeTracker.Server.Controllers.Requests
 {
-	public class LeaveRequestController : BaseRequestController<LeaveRequestDto, CreateLeaveRequestDto>
+	public class LeaveRequestController : BaseRequestController<RequestCombinedDto, CreateLeaveRequestDto>
 	{
 		[HttpPost("leave")]
-		public override async Task<ActionResult<LeaveRequestDto>> CreateRequest(CreateLeaveRequestDto request)
+		public override async Task<ActionResult<RequestCombinedDto>> CreateRequest(CreateLeaveRequestDto request)
 		{
-			var data = await _mediator.Send(new CreateRequestCommand<LeaveRequestDto, CreateLeaveRequestDto> { Request = request });
+			var data = await _mediator.Send(new CreateRequestCommand<RequestCombinedDto, CreateLeaveRequestDto> { Request = request });
 
 			return Ok(data);
 		}
 
 		[HttpPost("{id}/leave-cancel")]
-		public override async Task<ActionResult<LeaveRequestDto>> CancelRequest(int id)
+		public override async Task<ActionResult<RequestCombinedDto>> CancelRequest(int id)
 		{
-			var data = await _mediator.Send(new CancelRequestCommand<LeaveRequestDto, CreateLeaveRequestDto> { Id = id });
+			var data = await _mediator.Send(new CancelRequestCommand<RequestCombinedDto, CreateLeaveRequestDto> { Id = id });
 
 			return Ok(data);
 		}
 
 		[HttpPost("{id}/leave-approval")]
-		public override async Task<ActionResult<LeaveRequestDto>> ApprovalRequest(int id)
+		public override async Task<ActionResult<RequestCombinedDto>> ApprovalRequest(int id)
 		{
-			var data = await _mediator.Send(new ApproveRequestCommand<LeaveRequestDto, LeaveRequest> { RequestId = id });
+			var data = await _mediator.Send(new ApproveRequestCommand<RequestCombinedDto, LeaveRequest> { RequestId = id });
 
 			return Ok(data);
 		}
 
 		[HttpPost("{id}/leave-reject")]
-		public override async Task<ActionResult<LeaveRequestDto>> RejectRequest(int id)
+		public override async Task<ActionResult<RequestCombinedDto>> RejectRequest(int id)
 		{
-			var data = await _mediator.Send(new RejectRequestCommand<LeaveRequestDto, LeaveRequest> { RequestId = id });
+			var data = await _mediator.Send(new RejectRequestCommand<RequestCombinedDto, LeaveRequest> { RequestId = id });
 
 			return Ok(data);
 		}

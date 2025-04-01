@@ -5,7 +5,7 @@ using WorkTimeTracker.Application.DTOs.Time;
 
 namespace WorkTimeTracker.Application.DTOs.Requests
 {
-	public class RequestDto : RequestMinimalDto
+	public class RequestCombinedDto : RequestCombinedMinimalDto
 	{
 		// Navigation properties
 

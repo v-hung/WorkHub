@@ -14,13 +14,17 @@ import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { HttpFile } from '../http/http';
 
-export class RequestMinimalDto {
+export class RequestCombinedMinimalDto {
     'id': number;
     'date': Date;
     'requestType': RequestType;
     'reason': string;
     'status': RequestStatus;
     'createdAt': Date;
+    'breakStartDate': Date;
+    'breakEndDate': Date;
+    'checkIn': Date;
+    'checkOut': Date;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -62,10 +66,34 @@ export class RequestMinimalDto {
             "baseName": "createdAt",
             "type": "Date",
             "format": "date-time"
+        },
+        {
+            "name": "breakStartDate",
+            "baseName": "breakStartDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "breakEndDate",
+            "baseName": "breakEndDate",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "checkIn",
+            "baseName": "checkIn",
+            "type": "Date",
+            "format": "date-time"
+        },
+        {
+            "name": "checkOut",
+            "baseName": "checkOut",
+            "type": "Date",
+            "format": "date-time"
         }    ];
 
     static getAttributeTypeMap() {
-        return RequestMinimalDto.attributeTypeMap;
+        return RequestCombinedMinimalDto.attributeTypeMap;
     }
 
     public constructor() {

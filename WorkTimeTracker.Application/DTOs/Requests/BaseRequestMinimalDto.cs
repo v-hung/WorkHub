@@ -4,7 +4,7 @@ using WorkTimeTracker.Domain.Enums;
 
 namespace WorkTimeTracker.Application.DTOs.Requests
 {
-	public abstract class RequestMinimalDto : IEntity<int>
+	public class BaseRequestMinimalDto : IEntity<int>
 	{
 		[Required]
 		public required int Id { get; set; }

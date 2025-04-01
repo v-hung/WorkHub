@@ -19,15 +19,19 @@ public static class ServiceCollectionExtensions
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-		services.AddTransient<IRequestHandler<CreateRequestCommand<LeaveRequestDto, CreateLeaveRequestDto>, LeaveRequestDto>, CreateRequestCommandHandler<LeaveRequestDto, CreateLeaveRequestDto>>();
+		// Leave Request
+		services.AddTransient<IRequestHandler<CreateRequestCommand<RequestCombinedDto, CreateLeaveRequestDto>, RequestCombinedDto>, CreateRequestCommandHandler<RequestCombinedDto, CreateLeaveRequestDto>>();
+		services.AddTransient<IRequestHandler<CancelRequestCommand<RequestCombinedDto, CreateLeaveRequestDto>, RequestCombinedDto>, CancelRequestCommandHandler<RequestCombinedDto, CreateLeaveRequestDto>>();
+		services.AddTransient<IRequestHandler<ApproveRequestCommand<RequestCombinedDto, LeaveRequest>, RequestCombinedDto>, ApproveRequestCommandHandler<RequestCombinedDto, LeaveRequest>>();
+		services.AddTransient<IRequestHandler<RejectRequestCommand<RequestCombinedDto, LeaveRequest>, RequestCombinedDto>, RejectRequestCommandHandler<RequestCombinedDto, LeaveRequest>>();
 
-		services.AddTransient<IRequestHandler<CancelRequestCommand<LeaveRequestDto, CreateLeaveRequestDto>, LeaveRequestDto>, CancelRequestCommandHandler<LeaveRequestDto, CreateLeaveRequestDto>>();
-
-		services.AddTransient<IRequestHandler<ApproveRequestCommand<LeaveRequestDto, LeaveRequest>, LeaveRequestDto>, ApproveRequestCommandHandler<LeaveRequestDto, LeaveRequest>>();
-
-		services.AddTransient<IRequestHandler<RejectRequestCommand<LeaveRequestDto, LeaveRequest>, LeaveRequestDto>, RejectRequestCommandHandler<LeaveRequestDto, LeaveRequest>>();
+		// Timesheet Adjustment request
+		services.AddTransient<IRequestHandler<CreateRequestCommand<RequestCombinedDto, CreateTimesheetAdjustmentRequestDto>, RequestCombinedDto>, CreateRequestCommandHandler<RequestCombinedDto, CreateTimesheetAdjustmentRequestDto>>();
+		services.AddTransient<IRequestHandler<CancelRequestCommand<RequestCombinedDto, CreateTimesheetAdjustmentRequestDto>, RequestCombinedDto>, CancelRequestCommandHandler<RequestCombinedDto, CreateTimesheetAdjustmentRequestDto>>();
+		services.AddTransient<IRequestHandler<ApproveRequestCommand<RequestCombinedDto, TimesheetAdjustmentRequest>, RequestCombinedDto>, ApproveRequestCommandHandler<RequestCombinedDto, TimesheetAdjustmentRequest>>();
+		services.AddTransient<IRequestHandler<RejectRequestCommand<RequestCombinedDto, TimesheetAdjustmentRequest>, RequestCombinedDto>, RejectRequestCommandHandler<RequestCombinedDto, TimesheetAdjustmentRequest>>();
 
 		services.AddScoped<IRequestValidator<CreateLeaveRequestDto>, LeaveRequestValidator>();
-		services.AddScoped<IRequestValidator<CreateTimesheetRequestDto>, TimesheetRequestValidator>();
+		services.AddScoped<IRequestValidator<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestValidator>();
 	}
 }

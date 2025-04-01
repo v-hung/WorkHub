@@ -13,6 +13,6 @@
 import { HttpFile } from '../http/http';
 
 export enum Nationality {
-    Japanese = 'Japanese',
-    Vietnamese = 'Vietnamese'
+    Japanese = 'JAPANESE',
+    Vietnamese = 'VIETNAMESE'
 }

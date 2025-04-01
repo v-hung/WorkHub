@@ -10,19 +10,19 @@ using WorkTimeTracker.Infrastructure.Data;
 
 namespace WorkTimeTracker.Infrastructure.Services.Requests
 {
-	public class TimesheetRequestService : RequestService<CreateTimesheetRequestDto>
+	public class TimesheetAdjustmentRequestService : RequestService<CreateTimesheetAdjustmentRequestDto>
 	{
-		private readonly IRequestApprovalService<TimesheetRequest> _approvalService;
+		private readonly IRequestApprovalService<TimesheetAdjustmentRequest> _approvalService;
 		private readonly ITimesheetRepository _timesheetRepository;
 
-		public TimesheetRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<TimesheetRequest> approvalService, ITimesheetRepository timesheetRepository)
+		public TimesheetAdjustmentRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetAdjustmentRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<TimesheetAdjustmentRequest> approvalService, ITimesheetRepository timesheetRepository)
 			: base(context, mapper, localizer, currentUserService)
 		{
 			_approvalService = approvalService;
 			_timesheetRepository = timesheetRepository;
 		}
 
-		public override async Task<D> CreateRequestAsync<D>(CreateTimesheetRequestDto request)
+		public override async Task<D> CreateRequestAsync<D>(CreateTimesheetAdjustmentRequestDto request)
 		{
 			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet is not found for this day"]); ;
@@ -32,12 +32,12 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["The specified approver is not authorized to approve this request."]);
 			}
 
-			TimesheetRequest timesheetRequest = _mapper.Map<TimesheetRequest>(request);
+			TimesheetAdjustmentRequest timesheetRequest = _mapper.Map<TimesheetAdjustmentRequest>(request);
 
 			timesheetRequest.TimesheetId = timesheet.Id;
 			timesheetRequest.UserId = Guid.Parse(_currentUserService.UserId!);
 
-			await _context.TimesheetRequests.AddAsync(timesheetRequest);
+			await _context.TimesheetAdjustmentRequests.AddAsync(timesheetRequest);
 			await _context.SaveChangesAsync();
 
 			return _mapper.Map<D>(timesheetRequest);

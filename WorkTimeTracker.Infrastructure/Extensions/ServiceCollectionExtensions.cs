@@ -23,9 +23,11 @@ public static class ServiceCollectionExtensions
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
 		services.AddScoped<ITimesheetService, TimesheetService>();
+
 		services.AddScoped<IRequestService<CreateLeaveRequestDto>, LeaveRequestService>();
-		services.AddScoped<IRequestService<CreateTimesheetRequestDto>, TimesheetRequestService>();
+		services.AddScoped<IRequestService<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestService>();
+
 		services.AddScoped<IRequestApprovalService<LeaveRequest>, LeaveRequestApprovalService>();
-		services.AddScoped<IRequestApprovalService<TimesheetRequest>, TimesheetRequestApprovalService>();
+		services.AddScoped<IRequestApprovalService<TimesheetAdjustmentRequest>, TimesheetAdjustmentRequestApprovalService>();
 	}
 }

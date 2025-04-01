@@ -18,7 +18,7 @@ namespace WorkTimeTracker.Application.DTOs.Identity
 		public int YearsOfWork { get; set; } = 0;
 
 		[Required]
-		public required Nationality Nationality { get; set; } = Nationality.Vietnamese;
+		public required Nationality Nationality { get; set; } = Nationality.VIETNAMESE;
 
 	}
 }

@@ -5,7 +5,7 @@ export * from '../models/CreateLeaveRequestDto';
 export * from '../models/CreateProjectCommand';
 export * from '../models/CreateRequestDto';
 export * from '../models/CreateTeamCommand';
-export * from '../models/CreateTimesheetRequestDto';
+export * from '../models/CreateTimesheetAdjustmentRequestDto';
 export * from '../models/CreateWorkTimeCommand';
 export * from '../models/DeviceCategoryDto';
 export * from '../models/DeviceCategoryDtoPaginated';
@@ -16,8 +16,6 @@ export * from '../models/DeviceMinimalDto';
 export * from '../models/DeviceStatus';
 export * from '../models/ErrorResponse';
 export * from '../models/ErrorValidateResponse';
-export * from '../models/LeaveRequestDto';
-export * from '../models/LeaveRequestMinimalDto';
 export * from '../models/LoginRequest';
 export * from '../models/Nationality';
 export * from '../models/Permission';
@@ -26,8 +24,8 @@ export * from '../models/ProjectDtoPaginated';
 export * from '../models/ProjectMinimalDto';
 export * from '../models/ProjectStatus';
 export * from '../models/RefreshTokenResponse';
-export * from '../models/RequestDto';
-export * from '../models/RequestMinimalDto';
+export * from '../models/RequestCombinedDto';
+export * from '../models/RequestCombinedMinimalDto';
 export * from '../models/RequestStatus';
 export * from '../models/RequestType';
 export * from '../models/RoleCreateUpdateRequest';
@@ -38,12 +36,9 @@ export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamFullDto';
 export * from '../models/TeamMinimalDto';
 export * from '../models/TimesheetDto';
-export * from '../models/TimesheetDtoRequestsInner';
 export * from '../models/TimesheetDtoTimesheetResponse';
 export * from '../models/TimesheetFullDto';
 export * from '../models/TimesheetMinimalDto';
-export * from '../models/TimesheetRequestDto';
-export * from '../models/TimesheetRequestMinimalDto';
 export * from '../models/UserCreateUpdateRequest';
 export * from '../models/UserDetailDto';
 export * from '../models/UserDto';
@@ -63,7 +58,7 @@ import { CreateLeaveRequestDto       } from '../models/CreateLeaveRequestDto';
 import { CreateProjectCommand         } from '../models/CreateProjectCommand';
 import { CreateRequestDto     } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
-import { CreateTimesheetRequestDto         } from '../models/CreateTimesheetRequestDto';
+import { CreateTimesheetAdjustmentRequestDto         } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
@@ -74,8 +69,6 @@ import { DeviceMinimalDto      } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto            } from '../models/LeaveRequestDto';
-import { LeaveRequestMinimalDto         } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -84,8 +77,8 @@ import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectMinimalDto       } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { RequestDto          } from '../models/RequestDto';
-import { RequestMinimalDto       } from '../models/RequestMinimalDto';
+import { RequestCombinedDto              } from '../models/RequestCombinedDto';
+import { RequestCombinedMinimalDto           } from '../models/RequestCombinedMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -96,12 +89,9 @@ import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
-import { TimesheetDtoRequestsInnerClass } from '../models/TimesheetDtoRequestsInner';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetRequestDto              } from '../models/TimesheetRequestDto';
-import { TimesheetRequestMinimalDto           } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto       } from '../models/UserDetailDto';
 import { UserDto                  } from '../models/UserDto';
@@ -145,7 +135,7 @@ let typeMap: {[index: string]: any} = {
     "CreateProjectCommand": CreateProjectCommand,
     "CreateRequestDto": CreateRequestDto,
     "CreateTeamCommand": CreateTeamCommand,
-    "CreateTimesheetRequestDto": CreateTimesheetRequestDto,
+    "CreateTimesheetAdjustmentRequestDto": CreateTimesheetAdjustmentRequestDto,
     "CreateWorkTimeCommand": CreateWorkTimeCommand,
     "DeviceCategoryDto": DeviceCategoryDto,
     "DeviceCategoryDtoPaginated": DeviceCategoryDtoPaginated,
@@ -155,15 +145,13 @@ let typeMap: {[index: string]: any} = {
     "DeviceMinimalDto": DeviceMinimalDto,
     "ErrorResponse": ErrorResponse,
     "ErrorValidateResponse": ErrorValidateResponse,
-    "LeaveRequestDto": LeaveRequestDto,
-    "LeaveRequestMinimalDto": LeaveRequestMinimalDto,
     "LoginRequest": LoginRequest,
     "ProjectDto": ProjectDto,
     "ProjectDtoPaginated": ProjectDtoPaginated,
     "ProjectMinimalDto": ProjectMinimalDto,
     "RefreshTokenResponse": RefreshTokenResponse,
-    "RequestDto": RequestDto,
-    "RequestMinimalDto": RequestMinimalDto,
+    "RequestCombinedDto": RequestCombinedDto,
+    "RequestCombinedMinimalDto": RequestCombinedMinimalDto,
     "RoleCreateUpdateRequest": RoleCreateUpdateRequest,
     "RoleDto": RoleDto,
     "RoleDtoPaginated": RoleDtoPaginated,
@@ -172,12 +160,9 @@ let typeMap: {[index: string]: any} = {
     "TeamFullDto": TeamFullDto,
     "TeamMinimalDto": TeamMinimalDto,
     "TimesheetDto": TimesheetDto,
-    "TimesheetDtoRequestsInner": TimesheetDtoRequestsInnerClass,
     "TimesheetDtoTimesheetResponse": TimesheetDtoTimesheetResponse,
     "TimesheetFullDto": TimesheetFullDto,
     "TimesheetMinimalDto": TimesheetMinimalDto,
-    "TimesheetRequestDto": TimesheetRequestDto,
-    "TimesheetRequestMinimalDto": TimesheetRequestMinimalDto,
     "UserCreateUpdateRequest": UserCreateUpdateRequest,
     "UserDetailDto": UserDetailDto,
     "UserDto": UserDto,

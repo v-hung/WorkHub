@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
+import { RequestCombinedMinimalDto } from '../models/RequestCombinedMinimalDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { HttpFile } from '../http/http';
 
@@ -20,7 +20,7 @@ export class TimesheetFullDto {
     'startTime'?: Date | null;
     'endTime'?: Date | null;
     'workMinutes'?: number | null;
-    'requests'?: Array<TimesheetDtoRequestsInner> | null;
+    'requests'?: Array<RequestCombinedMinimalDto> | null;
     'user'?: UserMinimalDto;
 
     static readonly discriminator: string | undefined = undefined;
@@ -61,7 +61,7 @@ export class TimesheetFullDto {
         {
             "name": "requests",
             "baseName": "requests",
-            "type": "Array<TimesheetDtoRequestsInner>",
+            "type": "Array<RequestCombinedMinimalDto>",
             "format": ""
         },
         {

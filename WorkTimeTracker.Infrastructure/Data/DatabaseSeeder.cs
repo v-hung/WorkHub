@@ -92,7 +92,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 				LockoutEnabled = true,
 				SecurityStamp = Guid.NewGuid().ToString(),
 				EmailConfirmed = true,
-				UserPosition = UserPosition.Administrator
+				UserPosition = UserPosition.ADMINISTRATOR
 			};
 
 			var result = await _userManager.CreateAsync(user, UserConst.AdministratorPassword);

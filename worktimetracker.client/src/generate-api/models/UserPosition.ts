@@ -13,7 +13,7 @@
 import { HttpFile } from '../http/http';
 
 export enum UserPosition {
-    Administrator = 'Administrator',
+    Administrator = 'ADMINISTRATOR',
     Developer = 'DEVELOPER',
     ProjectManager = 'PROJECT_MANAGER',
     HrManager = 'HR_MANAGER',

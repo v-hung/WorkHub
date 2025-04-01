@@ -32,7 +32,7 @@ const request: DeviceApiDeviceCreateRequest = {
     name: "name_example",
     description: "description_example",
     location: "location_example",
-    status: "New",
+    status: "NEW",
     assignedUserId: "assignedUserId_example",
     deviceCategoryIds: [
       1,
@@ -326,7 +326,7 @@ const request: DeviceApiDeviceUpdateRequest = {
     name: "name_example",
     description: "description_example",
     location: "location_example",
-    status: "New",
+    status: "NEW",
     assignedUserId: "assignedUserId_example",
     deviceCategoryIds: [
       1,

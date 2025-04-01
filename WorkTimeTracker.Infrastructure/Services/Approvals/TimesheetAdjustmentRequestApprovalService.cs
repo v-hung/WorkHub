@@ -11,18 +11,18 @@ using WorkTimeTracker.Infrastructure.Data;
 
 namespace WorkTimeTracker.Infrastructure.Services.Approvals
 {
-	public class TimesheetRequestApprovalService : RequestApprovalService<TimesheetRequest>
+	public class TimesheetAdjustmentRequestApprovalService : RequestApprovalService<TimesheetAdjustmentRequest>
 	{
 		private readonly IUserService _userService;
 
-		public TimesheetRequestApprovalService(ApplicationDbContext context, IStringLocalizer<TimesheetRequestApprovalService> localizer, IMapper mapper, IUserService userService) : base(context, localizer, mapper)
+		public TimesheetAdjustmentRequestApprovalService(ApplicationDbContext context, IStringLocalizer<TimesheetAdjustmentRequestApprovalService> localizer, IMapper mapper, IUserService userService) : base(context, localizer, mapper)
 		{
 			_userService = userService;
 		}
 
 		public override async Task<D> ApproveRequestAsync<D>(int requestId) where D : class
 		{
-			TimesheetRequest request = await base.ApproveRequestAsync<TimesheetRequest>(requestId);
+			TimesheetAdjustmentRequest request = await base.ApproveRequestAsync<TimesheetAdjustmentRequest>(requestId);
 
 			Timesheet timesheet = await _context.Timesheets.FindAsync(request.TimesheetId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet not found."]);
 

@@ -15,7 +15,7 @@ namespace WorkTimeTracker.Domain.Entities.Equipment
 
 		public string? Location { get; set; }
 
-		public DeviceStatus Status { get; set; } = DeviceStatus.New;
+		public DeviceStatus Status { get; set; } = DeviceStatus.NEW;
 
 		// Navigation property
 

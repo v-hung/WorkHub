@@ -25,7 +25,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 	public DbSet<RefreshToken> RefreshTokens { get; set; }
 	public DbSet<Request> Requests { get; set; }
 	public DbSet<LeaveRequest> LeaveRequests { get; set; }
-	public DbSet<TimesheetRequest> TimesheetRequests { get; set; }
+	public DbSet<TimesheetAdjustmentRequest> TimesheetAdjustmentRequests { get; set; }
 	public DbSet<Device> Device { get; set; }
 	public DbSet<DeviceCategory> DeviceCategories { get; set; }
 
@@ -71,7 +71,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 		builder.Entity<Request>()
 			.HasDiscriminator<RequestType>("RequestType")
 			.HasValue<LeaveRequest>(RequestType.LEAVE_REQUEST)
-			.HasValue<TimesheetRequest>(RequestType.TIMESHEET_ADJUSTMENT);
+			.HasValue<TimesheetAdjustmentRequest>(RequestType.TIMESHEET_ADJUSTMENT_REQUEST);
 
 		foreach (var entityType in builder.Model.GetEntityTypes())
 		{

@@ -10,7 +10,7 @@ import { CreateLeaveRequestDto } from '../models/CreateLeaveRequestDto';
 import { CreateProjectCommand } from '../models/CreateProjectCommand';
 import { CreateRequestDto } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
-import { CreateTimesheetRequestDto } from '../models/CreateTimesheetRequestDto';
+import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
@@ -21,8 +21,6 @@ import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
-import { LeaveRequestMinimalDto } from '../models/LeaveRequestMinimalDto';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { Permission } from '../models/Permission';
@@ -31,8 +29,8 @@ import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
 import { ProjectMinimalDto } from '../models/ProjectMinimalDto';
 import { ProjectStatus } from '../models/ProjectStatus';
 import { RefreshTokenResponse } from '../models/RefreshTokenResponse';
-import { RequestDto } from '../models/RequestDto';
-import { RequestMinimalDto } from '../models/RequestMinimalDto';
+import { RequestCombinedDto } from '../models/RequestCombinedDto';
+import { RequestCombinedMinimalDto } from '../models/RequestCombinedMinimalDto';
 import { RequestStatus } from '../models/RequestStatus';
 import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
@@ -43,12 +41,9 @@ import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
 import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
-import { TimesheetDtoRequestsInner } from '../models/TimesheetDtoRequestsInner';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
-import { TimesheetRequestMinimalDto } from '../models/TimesheetRequestMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
 import { UserDto } from '../models/UserDto';
@@ -1560,7 +1555,7 @@ export class ObservableRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestApprovalRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestApprovalRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1611,14 +1606,14 @@ export class ObservableRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestApprovalRequest(id: number, _options?: ConfigurationOptions): Observable<LeaveRequestDto> {
-        return this.leaveRequestApprovalRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<LeaveRequestDto>) => apiResponse.data));
+    public leaveRequestApprovalRequest(id: number, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.leaveRequestApprovalRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
      * @param id
      */
-    public leaveRequestCancelRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestCancelRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1669,14 +1664,14 @@ export class ObservableRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestCancelRequest(id: number, _options?: ConfigurationOptions): Observable<LeaveRequestDto> {
-        return this.leaveRequestCancelRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<LeaveRequestDto>) => apiResponse.data));
+    public leaveRequestCancelRequest(id: number, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.leaveRequestCancelRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
      * @param [createLeaveRequestDto]
      */
-    public leaveRequestCreateRequestWithHttpInfo(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: ConfigurationOptions): Observable<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestCreateRequestWithHttpInfo(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1727,14 +1722,14 @@ export class ObservableRequestsApi {
     /**
      * @param [createLeaveRequestDto]
      */
-    public leaveRequestCreateRequest(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: ConfigurationOptions): Observable<LeaveRequestDto> {
-        return this.leaveRequestCreateRequestWithHttpInfo(createLeaveRequestDto, _options).pipe(map((apiResponse: HttpInfo<LeaveRequestDto>) => apiResponse.data));
+    public leaveRequestCreateRequest(createLeaveRequestDto?: CreateLeaveRequestDto, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.leaveRequestCreateRequestWithHttpInfo(createLeaveRequestDto, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
      * @param id
      */
-    public leaveRequestRejectRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<LeaveRequestDto>> {
+    public leaveRequestRejectRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1785,14 +1780,14 @@ export class ObservableRequestsApi {
     /**
      * @param id
      */
-    public leaveRequestRejectRequest(id: number, _options?: ConfigurationOptions): Observable<LeaveRequestDto> {
-        return this.leaveRequestRejectRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<LeaveRequestDto>) => apiResponse.data));
+    public leaveRequestRejectRequest(id: number, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.leaveRequestRejectRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
      * @param id
      */
-    public timesheetRequestApprovalRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestApprovalRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1823,7 +1818,7 @@ export class ObservableRequestsApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.timesheetRequestApprovalRequest(id, _config);
+        const requestContextPromise = this.requestFactory.timesheetAdjustmentRequestApprovalRequest(id, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1836,21 +1831,21 @@ export class ObservableRequestsApi {
                 for (const middleware of allMiddleware.reverse()) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetRequestApprovalRequestWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetAdjustmentRequestApprovalRequestWithHttpInfo(rsp)));
             }));
     }
 
     /**
      * @param id
      */
-    public timesheetRequestApprovalRequest(id: number, _options?: ConfigurationOptions): Observable<TimesheetRequestDto> {
-        return this.timesheetRequestApprovalRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<TimesheetRequestDto>) => apiResponse.data));
+    public timesheetAdjustmentRequestApprovalRequest(id: number, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.timesheetAdjustmentRequestApprovalRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
      * @param id
      */
-    public timesheetRequestCancelRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestCancelRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1881,7 +1876,7 @@ export class ObservableRequestsApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.timesheetRequestCancelRequest(id, _config);
+        const requestContextPromise = this.requestFactory.timesheetAdjustmentRequestCancelRequest(id, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1894,21 +1889,21 @@ export class ObservableRequestsApi {
                 for (const middleware of allMiddleware.reverse()) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetRequestCancelRequestWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetAdjustmentRequestCancelRequestWithHttpInfo(rsp)));
             }));
     }
 
     /**
      * @param id
      */
-    public timesheetRequestCancelRequest(id: number, _options?: ConfigurationOptions): Observable<TimesheetRequestDto> {
-        return this.timesheetRequestCancelRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<TimesheetRequestDto>) => apiResponse.data));
+    public timesheetAdjustmentRequestCancelRequest(id: number, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.timesheetAdjustmentRequestCancelRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
-     * @param [createTimesheetRequestDto]
+     * @param [createTimesheetAdjustmentRequestDto]
      */
-    public timesheetRequestCreateRequestWithHttpInfo(createTimesheetRequestDto?: CreateTimesheetRequestDto, _options?: ConfigurationOptions): Observable<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestCreateRequestWithHttpInfo(createTimesheetAdjustmentRequestDto?: CreateTimesheetAdjustmentRequestDto, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1939,7 +1934,7 @@ export class ObservableRequestsApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.timesheetRequestCreateRequest(createTimesheetRequestDto, _config);
+        const requestContextPromise = this.requestFactory.timesheetAdjustmentRequestCreateRequest(createTimesheetAdjustmentRequestDto, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1952,21 +1947,21 @@ export class ObservableRequestsApi {
                 for (const middleware of allMiddleware.reverse()) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetRequestCreateRequestWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetAdjustmentRequestCreateRequestWithHttpInfo(rsp)));
             }));
     }
 
     /**
-     * @param [createTimesheetRequestDto]
+     * @param [createTimesheetAdjustmentRequestDto]
      */
-    public timesheetRequestCreateRequest(createTimesheetRequestDto?: CreateTimesheetRequestDto, _options?: ConfigurationOptions): Observable<TimesheetRequestDto> {
-        return this.timesheetRequestCreateRequestWithHttpInfo(createTimesheetRequestDto, _options).pipe(map((apiResponse: HttpInfo<TimesheetRequestDto>) => apiResponse.data));
+    public timesheetAdjustmentRequestCreateRequest(createTimesheetAdjustmentRequestDto?: CreateTimesheetAdjustmentRequestDto, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.timesheetAdjustmentRequestCreateRequestWithHttpInfo(createTimesheetAdjustmentRequestDto, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
     /**
      * @param id
      */
-    public timesheetRequestRejectRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<TimesheetRequestDto>> {
+    public timesheetAdjustmentRequestRejectRequestWithHttpInfo(id: number, _options?: ConfigurationOptions): Observable<HttpInfo<RequestCombinedDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1997,7 +1992,7 @@ export class ObservableRequestsApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.timesheetRequestRejectRequest(id, _config);
+        const requestContextPromise = this.requestFactory.timesheetAdjustmentRequestRejectRequest(id, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -2010,15 +2005,15 @@ export class ObservableRequestsApi {
                 for (const middleware of allMiddleware.reverse()) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetRequestRejectRequestWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.timesheetAdjustmentRequestRejectRequestWithHttpInfo(rsp)));
             }));
     }
 
     /**
      * @param id
      */
-    public timesheetRequestRejectRequest(id: number, _options?: ConfigurationOptions): Observable<TimesheetRequestDto> {
-        return this.timesheetRequestRejectRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<TimesheetRequestDto>) => apiResponse.data));
+    public timesheetAdjustmentRequestRejectRequest(id: number, _options?: ConfigurationOptions): Observable<RequestCombinedDto> {
+        return this.timesheetAdjustmentRequestRejectRequestWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RequestCombinedDto>) => apiResponse.data));
     }
 
 }

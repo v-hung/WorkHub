@@ -9,11 +9,10 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { CreateLeaveRequestDto } from '../models/CreateLeaveRequestDto';
-import { CreateTimesheetRequestDto } from '../models/CreateTimesheetRequestDto';
+import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
-import { LeaveRequestDto } from '../models/LeaveRequestDto';
-import { TimesheetRequestDto } from '../models/TimesheetRequestDto';
+import { RequestCombinedDto } from '../models/RequestCombinedDto';
 
 /**
  * no description
@@ -176,12 +175,12 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async timesheetRequestApprovalRequest(id: number, _options?: Configuration): Promise<RequestContext> {
+    public async timesheetAdjustmentRequestApprovalRequest(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("RequestsApi", "timesheetRequestApprovalRequest", "id");
+            throw new RequiredError("RequestsApi", "timesheetAdjustmentRequestApprovalRequest", "id");
         }
 
 
@@ -212,12 +211,12 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async timesheetRequestCancelRequest(id: number, _options?: Configuration): Promise<RequestContext> {
+    public async timesheetAdjustmentRequestCancelRequest(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("RequestsApi", "timesheetRequestCancelRequest", "id");
+            throw new RequiredError("RequestsApi", "timesheetAdjustmentRequestCancelRequest", "id");
         }
 
 
@@ -246,9 +245,9 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
-     * @param createTimesheetRequestDto 
+     * @param createTimesheetAdjustmentRequestDto 
      */
-    public async timesheetRequestCreateRequest(createTimesheetRequestDto?: CreateTimesheetRequestDto, _options?: Configuration): Promise<RequestContext> {
+    public async timesheetAdjustmentRequestCreateRequest(createTimesheetAdjustmentRequestDto?: CreateTimesheetAdjustmentRequestDto, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -270,7 +269,7 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(createTimesheetRequestDto, "CreateTimesheetRequestDto", ""),
+            ObjectSerializer.serialize(createTimesheetAdjustmentRequestDto, "CreateTimesheetAdjustmentRequestDto", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -293,12 +292,12 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param id 
      */
-    public async timesheetRequestRejectRequest(id: number, _options?: Configuration): Promise<RequestContext> {
+    public async timesheetAdjustmentRequestRejectRequest(id: number, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new RequiredError("RequestsApi", "timesheetRequestRejectRequest", "id");
+            throw new RequiredError("RequestsApi", "timesheetAdjustmentRequestRejectRequest", "id");
         }
 
 
@@ -337,13 +336,13 @@ export class RequestsApiResponseProcessor {
      * @params response Response returned by the server for a request to leaveRequestApprovalRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async leaveRequestApprovalRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<LeaveRequestDto >> {
+     public async leaveRequestApprovalRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -363,10 +362,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -380,13 +379,13 @@ export class RequestsApiResponseProcessor {
      * @params response Response returned by the server for a request to leaveRequestCancelRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async leaveRequestCancelRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<LeaveRequestDto >> {
+     public async leaveRequestCancelRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -406,10 +405,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -423,13 +422,13 @@ export class RequestsApiResponseProcessor {
      * @params response Response returned by the server for a request to leaveRequestCreateRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async leaveRequestCreateRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<LeaveRequestDto >> {
+     public async leaveRequestCreateRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -449,10 +448,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -466,13 +465,13 @@ export class RequestsApiResponseProcessor {
      * @params response Response returned by the server for a request to leaveRequestRejectRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async leaveRequestRejectRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<LeaveRequestDto >> {
+     public async leaveRequestRejectRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -492,10 +491,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: LeaveRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "LeaveRequestDto", ""
-            ) as LeaveRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -506,16 +505,16 @@ export class RequestsApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to timesheetRequestApprovalRequest
+     * @params response Response returned by the server for a request to timesheetAdjustmentRequestApprovalRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetRequestApprovalRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetRequestDto >> {
+     public async timesheetAdjustmentRequestApprovalRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -535,10 +534,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -549,16 +548,16 @@ export class RequestsApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to timesheetRequestCancelRequest
+     * @params response Response returned by the server for a request to timesheetAdjustmentRequestCancelRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetRequestCancelRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetRequestDto >> {
+     public async timesheetAdjustmentRequestCancelRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -578,10 +577,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -592,16 +591,16 @@ export class RequestsApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to timesheetRequestCreateRequest
+     * @params response Response returned by the server for a request to timesheetAdjustmentRequestCreateRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetRequestCreateRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetRequestDto >> {
+     public async timesheetAdjustmentRequestCreateRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -621,10 +620,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 
@@ -635,16 +634,16 @@ export class RequestsApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to timesheetRequestRejectRequest
+     * @params response Response returned by the server for a request to timesheetAdjustmentRequestRejectRequest
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetRequestRejectRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetRequestDto >> {
+     public async timesheetAdjustmentRequestRejectRequestWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RequestCombinedDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -664,10 +663,10 @@ export class RequestsApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: TimesheetRequestDto = ObjectSerializer.deserialize(
+            const body: RequestCombinedDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "TimesheetRequestDto", ""
-            ) as TimesheetRequestDto;
+                "RequestCombinedDto", ""
+            ) as RequestCombinedDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

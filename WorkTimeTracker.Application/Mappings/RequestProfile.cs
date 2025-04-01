@@ -2,7 +2,6 @@ using AutoMapper;
 using WorkTimeTracker.Application.DTOs.Requests;
 using WorkTimeTracker.Application.Features.Requests.DTOs;
 using WorkTimeTracker.Domain.Entities.Requests;
-using WorkTimeTracker.Domain.Enums;
 
 namespace WorkTimeTracker.Application.Mappings
 {
@@ -10,40 +9,30 @@ namespace WorkTimeTracker.Application.Mappings
 	{
 		public RequestProfile()
 		{
-			// Minimal get api dto
-			// CreateMap<Request, RequestMinimalDto>()
-			// 	.Include<LeaveRequest, LeaveRequestMinimalDto>()
-			// 	.Include<TimesheetRequest, TimesheetRequestMinimalDto>();
-			CreateMap<Request, RequestMinimalDto>()
-			.IncludeAllDerived();
-			// .ConvertUsing((src, dest, context) =>
-			// {
-			// 	return src.RequestType switch
-			// 	{
-			// 		RequestType.LEAVE_REQUEST => context.Mapper.Map<LeaveRequestMinimalDto>(src),
-			// 		RequestType.TIMESHEET_ADJUSTMENT => context.Mapper.Map<TimesheetRequestMinimalDto>(src),
-			// 		_ => context.Mapper.Map<RequestMinimalDto>(src)
-			// 	};
-			// });
+			// Base mapping
+			CreateMap<Request, RequestCombinedMinimalDto>()
+				.Include<LeaveRequest, RequestCombinedMinimalDto>()
+				.Include<TimesheetAdjustmentRequest, RequestCombinedMinimalDto>();
 
-			CreateMap<LeaveRequest, LeaveRequestMinimalDto>().ReverseMap();
-			CreateMap<TimesheetRequest, TimesheetRequestMinimalDto>().ReverseMap();
+			// Derived type mappings
+			CreateMap<LeaveRequest, RequestCombinedMinimalDto>();
+			CreateMap<TimesheetAdjustmentRequest, RequestCombinedMinimalDto>();
 
-			// Get api dto
-			CreateMap<Request, RequestDto>()
-				.Include<LeaveRequest, LeaveRequestDto>()
-				.Include<TimesheetRequest, TimesheetRequestDto>();
+			// Same for the detailed DTO
+			CreateMap<Request, RequestCombinedDto>()
+				.Include<LeaveRequest, RequestCombinedDto>()
+				.Include<TimesheetAdjustmentRequest, RequestCombinedDto>();
 
-			CreateMap<LeaveRequest, LeaveRequestDto>().ReverseMap();
-			CreateMap<TimesheetRequest, TimesheetRequestDto>().ReverseMap();
+			CreateMap<LeaveRequest, RequestCombinedDto>();
+			CreateMap<TimesheetAdjustmentRequest, RequestCombinedDto>();
 
-			// Create api dto
-			CreateMap<Request, CreateRequestDto>()
-				.Include<LeaveRequest, CreateLeaveRequestDto>()
-				.Include<TimesheetRequest, CreateTimesheetRequestDto>();
+			// Create API DTOs
+			CreateMap<CreateRequestDto, Request>()
+				.Include<CreateLeaveRequestDto, LeaveRequest>()
+				.Include<CreateTimesheetAdjustmentRequestDto, TimesheetAdjustmentRequest>();
 
-			CreateMap<LeaveRequest, CreateLeaveRequestDto>().ReverseMap();
-			CreateMap<TimesheetRequest, CreateTimesheetRequestDto>().ReverseMap();
+			CreateMap<CreateLeaveRequestDto, LeaveRequest>().ReverseMap();
+			CreateMap<CreateTimesheetAdjustmentRequestDto, TimesheetAdjustmentRequest>().ReverseMap();
 		}
 	}
 }

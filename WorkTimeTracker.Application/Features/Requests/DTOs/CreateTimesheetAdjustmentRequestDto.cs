@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WorkTimeTracker.Application.Features.Requests.DTOs
 {
-	public class CreateTimesheetRequestDto : CreateRequestDto
+	public class CreateTimesheetAdjustmentRequestDto : CreateRequestDto
 	{
 		[Required]
 		public DateTime CheckIn { get; set; }

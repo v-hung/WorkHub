@@ -4,6 +4,6 @@ namespace WorkTimeTracker.Application.DTOs.Time
 {
 	public class TimesheetDto : TimesheetMinimalDto
 	{
-		public List<RequestMinimalDto> Requests { get; set; } = [];
+		public List<RequestCombinedMinimalDto> Requests { get; set; } = [];
 	}
 }

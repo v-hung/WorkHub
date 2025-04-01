@@ -8,9 +8,11 @@ import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext
 import { lazy, Suspense } from "react";
 import { RequestProvider } from "@/features/request/contexts/RequestContext";
 
-const TimesheetRequestLazy = lazy(
+const TimesheetAdjustmentRequestLazy = lazy(
   () =>
-    import("@/features/request/components/TimesheetRequest/TimesheetRequest")
+    import(
+      "@/features/request/components/TimesheetAdjustmentRequest/TimesheetAdjustmentRequest"
+    )
 );
 const LeaveRequestLazy = lazy(
   () => import("@/features/request/components/LeaveRequest/LeaveRequest")
@@ -36,7 +38,7 @@ export function Component() {
 
           <Suspense fallback={null}>
             <LeaveRequestLazy />
-            <TimesheetRequestLazy />
+            <TimesheetAdjustmentRequestLazy />
           </Suspense>
         </Layout>
       </RequestProvider>

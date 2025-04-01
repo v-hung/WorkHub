@@ -1,5 +1,6 @@
 .gitattributes
 .gitignore
+.openapi-generator-ignore
 AccountApi.md
 DeviceApi.md
 DeviceCategoryApi.md
@@ -37,7 +38,7 @@ models/CreateLeaveRequestDto.ts
 models/CreateProjectCommand.ts
 models/CreateRequestDto.ts
 models/CreateTeamCommand.ts
-models/CreateTimesheetRequestDto.ts
+models/CreateTimesheetAdjustmentRequestDto.ts
 models/CreateWorkTimeCommand.ts
 models/DeviceCategoryDto.ts
 models/DeviceCategoryDtoPaginated.ts
@@ -48,8 +49,6 @@ models/DeviceMinimalDto.ts
 models/DeviceStatus.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
-models/LeaveRequestDto.ts
-models/LeaveRequestMinimalDto.ts
 models/LoginRequest.ts
 models/Nationality.ts
 models/ObjectSerializer.ts
@@ -59,8 +58,8 @@ models/ProjectDtoPaginated.ts
 models/ProjectMinimalDto.ts
 models/ProjectStatus.ts
 models/RefreshTokenResponse.ts
-models/RequestDto.ts
-models/RequestMinimalDto.ts
+models/RequestCombinedDto.ts
+models/RequestCombinedMinimalDto.ts
 models/RequestStatus.ts
 models/RequestType.ts
 models/RoleCreateUpdateRequest.ts
@@ -71,12 +70,9 @@ models/TeamDtoPaginated.ts
 models/TeamFullDto.ts
 models/TeamMinimalDto.ts
 models/TimesheetDto.ts
-models/TimesheetDtoRequestsInner.ts
 models/TimesheetDtoTimesheetResponse.ts
 models/TimesheetFullDto.ts
 models/TimesheetMinimalDto.ts
-models/TimesheetRequestDto.ts
-models/TimesheetRequestMinimalDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts
 models/UserDto.ts
