@@ -10,3 +10,13 @@ export const authBootstrap = createSuspender(
     return await useAuthStore.getState().load();
   })()
 );
+
+export const authBootstrapLogout = async (callback?: () => void) => {
+  await useAuthStore.getState().logout(() => {
+    authBootstrap.setResult(undefined);
+
+    if (callback) {
+      callback();
+    }
+  });
+};

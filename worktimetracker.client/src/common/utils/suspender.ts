@@ -38,5 +38,8 @@ export function createSuspender<T>(
       if (status === "error") throw result;
       return result;
     },
+    setResult(newResult: T) {
+      result = newResult;
+    },
   };
 }

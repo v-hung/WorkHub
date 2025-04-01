@@ -15,7 +15,7 @@ type AuthStoreState = {
   user: UserDto | null;
   permissions: Permission[];
   login: (credentials: LoginRequest) => Promise<void>;
-  logout: () => Promise<void>;
+  logout: (callback?: () => void) => Promise<void>;
   load: () => Promise<UserDto | undefined>;
 };
 
@@ -34,9 +34,12 @@ export const useAuthStore = create<AuthStoreState>()(
       set({ user: response.user });
     },
 
-    logout: async () => {
+    logout: async (callback) => {
       await wrapPromise(() =>
-        accountApi.accountLogout().then(() => {
+        accountApi.accountLogout().then(async () => {
+          if (callback) {
+            callback();
+          }
           set({ user: null });
         })
       );

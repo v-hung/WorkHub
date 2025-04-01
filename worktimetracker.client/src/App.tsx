@@ -7,6 +7,9 @@ import router from "./router";
 
 export const AppProvider = () => {
   authBootstrap.read();
+  // if (!false) {
+  //   throw new Promise(() => {});
+  // }
 
   return (
     <ConfigProvider

@@ -12,6 +12,7 @@ import { MenuInfo } from "rc-menu/lib/interface";
 import { getOpenKeys, getSelectedKeys } from "@/common/utils/menu";
 import { useMenu } from "../hooks/useMenu";
 import { useLayout } from "../contexts/LayoutContext";
+import { authBootstrapLogout } from "@/common/bootstrap/auth.bootstrap";
 
 const { Sider } = Layout;
 
@@ -83,6 +84,14 @@ const MainMenu: FC<State> = (props) => {
 export default MainMenu;
 
 const getMenuLogoItems = (t: TFunction, i18n: i18n): MenuProps["items"] => {
+  const navigate = useNavigate();
+
+  const handelLogout = async () => {
+    await authBootstrapLogout(() => {
+      navigate("/auth/login");
+    });
+  };
+
   return [
     {
       key: "/profile",
@@ -124,6 +133,7 @@ const getMenuLogoItems = (t: TFunction, i18n: i18n): MenuProps["items"] => {
       key: "logout",
       label: "Logout",
       danger: true,
+      onClick: handelLogout,
     },
   ];
 };

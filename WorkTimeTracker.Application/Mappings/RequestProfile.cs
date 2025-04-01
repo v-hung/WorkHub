@@ -2,6 +2,7 @@ using AutoMapper;
 using WorkTimeTracker.Application.DTOs.Requests;
 using WorkTimeTracker.Application.Features.Requests.DTOs;
 using WorkTimeTracker.Domain.Entities.Requests;
+using WorkTimeTracker.Domain.Enums;
 
 namespace WorkTimeTracker.Application.Mappings
 {
@@ -10,9 +11,20 @@ namespace WorkTimeTracker.Application.Mappings
 		public RequestProfile()
 		{
 			// Minimal get api dto
+			// CreateMap<Request, RequestMinimalDto>()
+			// 	.Include<LeaveRequest, LeaveRequestMinimalDto>()
+			// 	.Include<TimesheetRequest, TimesheetRequestMinimalDto>();
 			CreateMap<Request, RequestMinimalDto>()
-				.Include<LeaveRequest, LeaveRequestMinimalDto>()
-				.Include<TimesheetRequest, TimesheetRequestMinimalDto>();
+			.IncludeAllDerived();
+			// .ConvertUsing((src, dest, context) =>
+			// {
+			// 	return src.RequestType switch
+			// 	{
+			// 		RequestType.LEAVE_REQUEST => context.Mapper.Map<LeaveRequestMinimalDto>(src),
+			// 		RequestType.TIMESHEET_ADJUSTMENT => context.Mapper.Map<TimesheetRequestMinimalDto>(src),
+			// 		_ => context.Mapper.Map<RequestMinimalDto>(src)
+			// 	};
+			// });
 
 			CreateMap<LeaveRequest, LeaveRequestMinimalDto>().ReverseMap();
 			CreateMap<TimesheetRequest, TimesheetRequestMinimalDto>().ReverseMap();
