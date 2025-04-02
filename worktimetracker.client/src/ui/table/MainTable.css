@@ -15,9 +15,9 @@
 
 .main-table .ant-spin-container .ant-table {
   overflow-y: auto;
-  border-end-start-radius: 8px;
+  /* border-end-start-radius: 8px;
   border-end-end-radius: 8px;
-  overflow-y: hidden;
+  overflow-y: hidden; */
 }
 
 .main-table .ant-spin-container .ant-table .ant-table-container {
