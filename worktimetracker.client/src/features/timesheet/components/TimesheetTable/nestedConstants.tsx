@@ -14,39 +14,40 @@ export type DataTimesheetTableType = {
   requests?: Array<RequestCombinedMinimalDto> | null;
 };
 
-export const timesheetColumns: TableProps<DataTimesheetTableType>["columns"] = [
-  {
-    title: "Date",
-    dataIndex: "dateString",
-    key: "dateString",
-    width: "12%",
-  },
-  {
-    title: "Start Time",
-    dataIndex: "startTime",
-    key: "startTime",
-    width: "16%",
-  },
-  { title: "End Time", key: "endTime", dataIndex: "endTime", width: "16%" },
-  {
-    title: "Total Work",
-    key: "workMinutes",
-    dataIndex: "workMinutes",
-    width: "16%",
-  },
-  { title: "Requests", key: "requests" },
-  {
-    title: "Action",
-    key: "action",
-    width: "10rem",
-    render: (_, record) => (
-      <TimesheetTableActionRender
-        date={record.date}
-        startTime={record.startTime}
-      />
-    ),
-  },
-];
+export const requestTimesheetColumns: TableProps<DataTimesheetTableType>["columns"] =
+  [
+    {
+      title: "Date",
+      dataIndex: "dateString",
+      key: "dateString",
+      width: "12%",
+    },
+    {
+      title: "Start Time",
+      dataIndex: "startTime",
+      key: "startTime",
+      width: "16%",
+    },
+    { title: "End Time", key: "endTime", dataIndex: "endTime", width: "16%" },
+    {
+      title: "Total Work",
+      key: "workMinutes",
+      dataIndex: "workMinutes",
+      width: "16%",
+    },
+    { title: "Requests", key: "requests" },
+    {
+      title: "Action",
+      key: "action",
+      width: "10rem",
+      render: (_, record) => (
+        <TimesheetTableActionRender
+          date={record.date}
+          startTime={record.startTime}
+        />
+      ),
+    },
+  ];
 
 const TimesheetTableActionRender: FC<{
   date: Date;

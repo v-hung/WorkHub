@@ -1,5 +1,5 @@
 import MainTable from "@/ui/table/MainTable";
-import { DataTimesheetTableType, userTimesheetColumns } from "./constants";
+import { DataTimesheetTableType, timesheetColumns } from "./constants";
 import { useMemo } from "react";
 import { format, formatDuration } from "@/common/utils/date.util";
 import "./TimesheetTable.css";
@@ -77,7 +77,7 @@ const TimesheetTable = () => {
       <div style={{ flexGrow: 1, minHeight: 0 }}>
         <MainTable
           className="timesheet-table"
-          columns={userTimesheetColumns}
+          columns={timesheetColumns}
           dataSource={data}
           loading={loading}
           pagination={false}

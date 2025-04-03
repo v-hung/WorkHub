@@ -15,11 +15,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WorkTimeTracker.Infrastructure.Services;
 
-public class IdentityService(SignInManager<User> signInManager, UserManager<User> userManager, IJwtTokenService jwtTokenService, IMapper mapper, ILogger<IdentityService> logger, IHttpContextAccessor httpContextAccessor, ApplicationDbContext context) : IIdentityService
+public class IdentityService(SignInManager<User> signInManager, UserManager<User> userManager, RoleManager<Role> roleManager, IJwtTokenService jwtTokenService, IMapper mapper, ILogger<IdentityService> logger, IHttpContextAccessor httpContextAccessor, ApplicationDbContext context) : IIdentityService
 {
 	private readonly UserManager<User> _userManager = userManager;
 
-	// private readonly RoleManager<Role> _roleManager;
+	private readonly RoleManager<Role> _roleManager = roleManager;
 
 	private readonly ApplicationDbContext _context = context;
 
@@ -160,5 +160,27 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		data.Roles = await GetRolesAsync(user);
 
 		return data;
+	}
+
+	public async Task<List<string>> GetAllPermissionsAsync(ClaimsPrincipal claimsPrincipal)
+	{
+		var user = await _userManager.GetUserAsync(claimsPrincipal)
+			?? throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
+
+		var roles = await _userManager.GetRolesAsync(user);
+
+		var roleClaims = new List<Claim>();
+
+		foreach (var roleName in roles)
+		{
+			var role = await _roleManager.FindByNameAsync(roleName);
+			if (role != null)
+			{
+				var claims = await _roleManager.GetClaimsAsync(role);
+				roleClaims.AddRange(claims);
+			}
+		}
+
+		return [.. roleClaims.Select(claim => claim.Value)];
 	}
 }

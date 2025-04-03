@@ -65,6 +65,7 @@ const LeaveRequest: FC<State> = (props) => {
       onOk={handleOk}
       confirmLoading={loading}
       onCancel={handleCancel}
+      maskClosable={false}
     >
       <Form
         form={form}

@@ -61,11 +61,11 @@ public class AccountController : BaseApiController<AccountController>
 	}
 
 	[HttpGet("permissions")]
-	public async Task<IActionResult> GetPermissions()
+	public async Task<ActionResult<List<string>>> GetPermissions()
 	{
-		await Task.Delay(10000);
+		var data = await _identityService.GetAllPermissionsAsync(User);
 
-		return Ok();
+		return Ok(data);
 	}
 
 }
