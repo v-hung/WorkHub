@@ -1,85 +1,80 @@
-import { useRequestContext } from "@/features/request/contexts/RequestContext";
-import { RequestType, RequestCombinedMinimalDto } from "@/generate-api";
-import { Button, Space, TableProps } from "antd";
-import { isBefore, isWeekend } from "date-fns";
-import { FC } from "react";
+import { format } from "@/common/utils/date.util";
+import {
+  RequestCombinedMinimalDto,
+  RequestStatus,
+  RequestType,
+} from "@/generate-api";
+import { Badge, Button, Popconfirm, Space, TableProps, Tag } from "antd";
+import { useState } from "react";
 
-export type DataTimesheetTableType = {
-  id: string;
-  date: Date;
-  dateString: string;
-  startTime?: string;
-  endTime?: string;
-  workMinutes?: number | null;
-  requests?: Array<RequestCombinedMinimalDto> | null;
-};
-
-export const requestTimesheetColumns: TableProps<DataTimesheetTableType>["columns"] =
+export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["columns"] =
   [
     {
       title: "Date",
-      dataIndex: "dateString",
-      key: "dateString",
-      width: "12%",
+      render: (_, record) => format(record.date, "dd/MM/yyyy"),
+      key: "date",
     },
     {
-      title: "Start Time",
-      dataIndex: "startTime",
-      key: "startTime",
-      width: "16%",
+      title: "Request Type",
+      key: "requestType",
+      render: (_, record) => {
+        const { requestType } = record;
+        return <Tag color="blue">{record.requestType}</Tag>;
+      },
     },
-    { title: "End Time", key: "endTime", dataIndex: "endTime", width: "16%" },
     {
-      title: "Total Work",
-      key: "workMinutes",
-      dataIndex: "workMinutes",
-      width: "16%",
+      title: "Time",
+      key: "endTime",
+      render: (_, record) =>
+        `${format(record.checkIn)} - ${format(record.checkOut)}`,
     },
-    { title: "Requests", key: "requests" },
+    {
+      title: "Reason",
+      key: "reason",
+      dataIndex: "reason",
+    },
+    {
+      title: "Status",
+      key: "status",
+      render: (_, record) => <StatusCell status={record.status} />,
+    },
     {
       title: "Action",
       key: "action",
       width: "10rem",
-      render: (_, record) => (
-        <TimesheetTableActionRender
-          date={record.date}
-          startTime={record.startTime}
-        />
-      ),
     },
   ];
 
-const TimesheetTableActionRender: FC<{
-  date: Date;
-  startTime: string | undefined;
-}> = ({ date, startTime }) => {
-  const { openRequest } = useRequestContext();
-  let isShowAction = false;
+const StatusCell = ({ status }: { status: RequestStatus }) => {
+  const [hovered, setHovered] = useState(false);
 
-  if ((!isWeekend(date) && isBefore(date, Date.now())) || startTime) {
-    isShowAction = true;
-  }
+  const onCancel = () => {
+    console.log("Cancel request");
+  };
 
-  return isShowAction ? (
-    <Space size="small">
-      <Button
-        size="small"
-        color="primary"
-        variant="outlined"
-        onClick={() =>
-          openRequest(RequestType.TimesheetAdjustmentRequest, date)
-        }
-      >
-        Edit
-      </Button>
-      <Button
-        size="small"
-        color="cyan"
-        variant="outlined"
-        onClick={() => openRequest(RequestType.LeaveRequest, date)}
-      >
-        Leave
-      </Button>
+  return (
+    <Space
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <Badge status="success" text={status} />
+      {hovered && (
+        <Popconfirm
+          title="Bạn có chắc muốn hủy?"
+          okText="Đồng ý"
+          cancelText="Không"
+          onConfirm={() => onCancel()}
+        >
+          <Button
+            type="primary"
+            danger
+            size="small"
+            // icon={<StopOutlined />}
+          >
+            Hủy
+          </Button>
+        </Popconfirm>
+      )}
     </Space>
-  ) : null;
+  );
 };

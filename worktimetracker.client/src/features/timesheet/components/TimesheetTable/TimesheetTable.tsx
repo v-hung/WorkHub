@@ -4,11 +4,12 @@ import { useMemo } from "react";
 import { format, formatDuration } from "@/common/utils/date.util";
 import "./TimesheetTable.css";
 import { addMonths, intervalToDuration, isWeekend } from "date-fns";
-import { Button, Flex } from "antd";
+import { Button, Flex, Table } from "antd";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import { blue } from "@ant-design/colors";
 import { useAuthStore } from "@/stores/auth.store";
 import { useTimesheetContext } from "../../context/TimesheetContext";
+import { requestTimesheetColumns } from "./nestedConstants";
 
 const TimesheetTable = () => {
   const { timesheets, loading, selectedDate, setSelectedDate, isCurrentMonth } =
@@ -83,6 +84,17 @@ const TimesheetTable = () => {
           pagination={false}
           rowClassName={(record) => {
             return isWeekend(record.date) ? "weekend-row" : "";
+          }}
+          expandable={{
+            expandedRowRender: (record) =>
+              (record.requests ?? []).length > 0 ? (
+                <Table
+                  dataSource={record.requests ?? undefined}
+                  pagination={false}
+                  columns={requestTimesheetColumns}
+                />
+              ) : null,
+            rowExpandable: (record) => (record.requests ?? []).length > 0,
           }}
         />
       </div>
