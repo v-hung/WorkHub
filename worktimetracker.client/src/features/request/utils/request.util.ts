@@ -48,9 +48,13 @@ export const requestDisabledTime = (workTime: WorkTimeDto) => {
 };
 
 export const requestValidateTime =
-  (workTime: WorkTimeDto) => (_: any, value: [Date, Date]) => {
+  (workTime: WorkTimeDto, required: boolean | undefined = false) =>
+  (_: any, value: [Date, Date]) => {
     if (isEmpty(value)) {
-      return Promise.reject(new Error("Please input your break time!"));
+      if (required) {
+        return Promise.reject(new Error("Please input your working time!"));
+      }
+      return Promise.resolve();
     }
 
     const afternoonEnd = add(localTimeToDate(workTime.endTimeAfternoon), {

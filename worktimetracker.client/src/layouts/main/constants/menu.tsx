@@ -1,4 +1,3 @@
-import { MenuProps } from "antd";
 import { TFunction } from "i18next";
 import IonHomeOutline from "~icons/ion/home-outline";
 import IonMailNotificationOutline from "~icons/ion/mail-notification-outline";
@@ -12,11 +11,13 @@ import IonCogOutline from "~icons/ion/cog-outline";
 import IonSendOutline from "~icons/ion/send-outline";
 import IonPieChartOutline from "~icons/ion/pie-chart-outline";
 import IonCubeOutline from "~icons/ion/cube-outline";
+import { Permission } from "@/generate-api";
+import { ItemType } from "antd/es/menu/interface";
 
 export const getMenuItems = (
   t: TFunction,
   unReadCount: number
-): MenuProps["items"] => {
+): (ItemType & { permission?: Permission })[] => {
   return [
     {
       type: "group",

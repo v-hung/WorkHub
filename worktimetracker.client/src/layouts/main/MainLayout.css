@@ -45,6 +45,10 @@
   line-height: 1;
 }
 
+.main-menu.ant-layout-sider-light {
+  background-color: transparent;
+}
+
 .main-menu .ant-menu {
   background-color: #f8fafd;
 }

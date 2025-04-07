@@ -10,10 +10,8 @@ namespace WorkTimeTracker.Application.Features.Requests.DTOs
 		[Required]
 		public DateTime CheckOut { get; set; }
 
-		[Required]
-		public DateTime BreakStartDate { get; set; }
+		public DateTime? BreakStartDate { get; set; }
 
-		[Required]
-		public DateTime BreakEndDate { get; set; }
+		public DateTime? BreakEndDate { get; set; }
 	}
 }

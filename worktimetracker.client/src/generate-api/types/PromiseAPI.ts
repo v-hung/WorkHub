@@ -148,7 +148,7 @@ export class PromiseAccountApi {
 
     /**
      */
-    public accountGetPermissionsWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<void>> {
+    public accountGetPermissionsWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<string>>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -167,7 +167,7 @@ export class PromiseAccountApi {
 
     /**
      */
-    public accountGetPermissions(_options?: PromiseConfigurationOptions): Promise<void> {
+    public accountGetPermissions(_options?: PromiseConfigurationOptions): Promise<Array<string>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {

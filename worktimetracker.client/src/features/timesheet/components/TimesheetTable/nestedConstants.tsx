@@ -5,7 +5,7 @@ import {
   RequestType,
 } from "@/generate-api";
 import { Badge, Button, Popconfirm, Space, TableProps, Tag } from "antd";
-import { useState } from "react";
+import { FC, useState } from "react";
 
 export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["columns"] =
   [
@@ -36,45 +36,24 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
     {
       title: "Status",
       key: "status",
-      render: (_, record) => <StatusCell status={record.status} />,
+      render: (_, record) => {
+        return <Badge status="success" text={record.status} />;
+      },
     },
     {
       title: "Action",
       key: "action",
       width: "10rem",
+      render: (_, record) => (
+        <RequestTableActionRender status={record.status} />
+      ),
     },
   ];
 
-const StatusCell = ({ status }: { status: RequestStatus }) => {
-  const [hovered, setHovered] = useState(false);
+const RequestTableActionRender: FC<{
+  status: RequestStatus;
+}> = ({ status }) => {
+  if (status !== RequestStatus.Pending) return null;
 
-  const onCancel = () => {
-    console.log("Cancel request");
-  };
-
-  return (
-    <Space
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <Badge status="success" text={status} />
-      {hovered && (
-        <Popconfirm
-          title="Bạn có chắc muốn hủy?"
-          okText="Đồng ý"
-          cancelText="Không"
-          onConfirm={() => onCancel()}
-        >
-          <Button
-            type="primary"
-            danger
-            size="small"
-            // icon={<StopOutlined />}
-          >
-            Hủy
-          </Button>
-        </Popconfirm>
-      )}
-    </Space>
-  );
+  return <a>Cancel</a>;
 };

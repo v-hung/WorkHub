@@ -8,10 +8,10 @@ Method | HTTP request | Description
 [**leaveRequestCancelRequest**](RequestsApi.md#leaveRequestCancelRequest) | **POST** /api/requests/{id}/leave-cancel | 
 [**leaveRequestCreateRequest**](RequestsApi.md#leaveRequestCreateRequest) | **POST** /api/requests/leave | 
 [**leaveRequestRejectRequest**](RequestsApi.md#leaveRequestRejectRequest) | **POST** /api/requests/{id}/leave-reject | 
-[**timesheetAdjustmentRequestApprovalRequest**](RequestsApi.md#timesheetAdjustmentRequestApprovalRequest) | **POST** /api/requests/{id}/timesheet-approval | 
-[**timesheetAdjustmentRequestCancelRequest**](RequestsApi.md#timesheetAdjustmentRequestCancelRequest) | **POST** /api/requests/{id}/timesheet-cancel | 
-[**timesheetAdjustmentRequestCreateRequest**](RequestsApi.md#timesheetAdjustmentRequestCreateRequest) | **POST** /api/requests/timesheet | 
-[**timesheetAdjustmentRequestRejectRequest**](RequestsApi.md#timesheetAdjustmentRequestRejectRequest) | **POST** /api/requests/{id}/timesheet-reject | 
+[**timesheetAdjustmentRequestApprovalRequest**](RequestsApi.md#timesheetAdjustmentRequestApprovalRequest) | **POST** /api/requests/{id}/timesheet-adjustment-approval | 
+[**timesheetAdjustmentRequestCancelRequest**](RequestsApi.md#timesheetAdjustmentRequestCancelRequest) | **POST** /api/requests/{id}/timesheet-adjustment-cancel | 
+[**timesheetAdjustmentRequestCreateRequest**](RequestsApi.md#timesheetAdjustmentRequestCreateRequest) | **POST** /api/requests/timesheet-adjustment | 
+[**timesheetAdjustmentRequestRejectRequest**](RequestsApi.md#timesheetAdjustmentRequestRejectRequest) | **POST** /api/requests/{id}/timesheet-adjustment-reject | 
 
 
 # **leaveRequestApprovalRequest**

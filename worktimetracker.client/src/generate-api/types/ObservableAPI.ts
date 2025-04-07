@@ -188,7 +188,7 @@ export class ObservableAccountApi {
 
     /**
      */
-    public accountGetPermissionsWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<void>> {
+    public accountGetPermissionsWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<Array<string>>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -238,8 +238,8 @@ export class ObservableAccountApi {
 
     /**
      */
-    public accountGetPermissions(_options?: ConfigurationOptions): Observable<void> {
-        return this.accountGetPermissionsWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    public accountGetPermissions(_options?: ConfigurationOptions): Observable<Array<string>> {
+        return this.accountGetPermissionsWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<string>>) => apiResponse.data));
     }
 
     /**

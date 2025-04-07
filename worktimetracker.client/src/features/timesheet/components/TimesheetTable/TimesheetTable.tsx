@@ -55,7 +55,7 @@ const TimesheetTable = () => {
             : "0"}
         </div>
         <Button
-          icon={<IIonChevronBack />}
+          icon={<IIonChevronBack style={{ width: 20 }} />}
           onClick={() => setSelectedDate((state) => addMonths(state, -1))}
         ></Button>
         <MyDatePicker
@@ -65,11 +65,11 @@ const TimesheetTable = () => {
           showNow
         />
         <Button
-          icon={<IIonChevronForward />}
+          icon={<IIonChevronForward style={{ width: 20 }} />}
           onClick={() => setSelectedDate((state) => addMonths(state, 1))}
         ></Button>
         <Button
-          icon={<IBxCalendarCheck />}
+          icon={<IBxCalendarCheck style={{ width: 20 }} />}
           style={{ color: isCurrentMonth ? blue.primary : "inherit" }}
           onClick={() => setSelectedDate(new Date())}
         ></Button>
@@ -89,6 +89,7 @@ const TimesheetTable = () => {
             expandedRowRender: (record) =>
               (record.requests ?? []).length > 0 ? (
                 <Table
+                  rowKey="id"
                   dataSource={record.requests ?? undefined}
                   pagination={false}
                   columns={requestTimesheetColumns}

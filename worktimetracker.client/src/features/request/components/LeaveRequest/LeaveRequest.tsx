@@ -14,6 +14,7 @@ import {
   requestDisabledTime,
   requestValidateTime,
 } from "../../utils/request.util";
+import { useTimesheetContext } from "@/features/timesheet/context/TimesheetContext";
 
 type State = ComponentProps<typeof Modal>;
 
@@ -21,17 +22,17 @@ const LeaveRequest: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
   const { isOpen, closeRequest, date } = useRequestContext();
+  const { getTimesheets, isCurrentMonth } = useTimesheetContext();
   const { loading, create, formDefault } = useLeaveRequestAction();
 
   const workTime = useAuthStore((state) => state.user!.workTime);
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<CreateLeaveRequestDtoCustomType>();
   const [formState] = useState<CreateLeaveRequestDtoCustomType>(formDefault());
 
   const handleOk = () => {
     form.validateFields().then(async () => {
-      const formValues =
-        form.getFieldsValue() as CreateLeaveRequestDtoCustomType;
+      const formValues = form.getFieldsValue();
 
       const body: CreateLeaveRequestDto = {
         ...formValues,
@@ -42,6 +43,10 @@ const LeaveRequest: FC<State> = (props) => {
       await create(body).then(() => {
         closeRequest();
       });
+
+      if (isCurrentMonth) {
+        await getTimesheets();
+      }
     });
   };
 
@@ -78,6 +83,10 @@ const LeaveRequest: FC<State> = (props) => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
       >
+        <Form.Item name="requestType" hidden>
+          <Input disabled />
+        </Form.Item>
+
         <Form.Item
           name="approvedId"
           rules={[{ required: true, message: "Please input your Approved!" }]}
@@ -113,7 +122,7 @@ const LeaveRequest: FC<State> = (props) => {
           label="Break Time"
           name="breakTime"
           required
-          rules={[{ validator: requestValidateTime(workTime) }]}
+          rules={[{ validator: requestValidateTime(workTime, true) }]}
         >
           <MyRangeTimePicker
             disabledTime={() => requestDisabledTime(workTime)}

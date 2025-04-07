@@ -117,7 +117,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **accountGetPermissions**
-> void accountGetPermissions()
+> Array<string> accountGetPermissions()
 
 
 ### Example
@@ -142,7 +142,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**void**
+**Array<string>**
 
 ### Authorization
 
@@ -151,7 +151,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details

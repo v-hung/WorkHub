@@ -185,7 +185,7 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
 
 
         // Path Params
-        const localVarPath = '/api/requests/{id}/timesheet-approval'
+        const localVarPath = '/api/requests/{id}/timesheet-adjustment-approval'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -221,7 +221,7 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
 
 
         // Path Params
-        const localVarPath = '/api/requests/{id}/timesheet-cancel'
+        const localVarPath = '/api/requests/{id}/timesheet-adjustment-cancel'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context
@@ -252,7 +252,7 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
 
 
         // Path Params
-        const localVarPath = '/api/requests/timesheet';
+        const localVarPath = '/api/requests/timesheet-adjustment';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -302,7 +302,7 @@ export class RequestsApiRequestFactory extends BaseAPIRequestFactory {
 
 
         // Path Params
-        const localVarPath = '/api/requests/{id}/timesheet-reject'
+        const localVarPath = '/api/requests/{id}/timesheet-adjustment-reject'
             .replace('{' + 'id' + '}', encodeURIComponent(String(id)));
 
         // Make Request Context

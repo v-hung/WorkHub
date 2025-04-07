@@ -126,14 +126,14 @@ export class ObjectAccountApi {
     /**
      * @param param the request object
      */
-    public accountGetPermissionsWithHttpInfo(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<void>> {
+    public accountGetPermissionsWithHttpInfo(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<string>>> {
         return this.api.accountGetPermissionsWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public accountGetPermissions(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<void> {
+    public accountGetPermissions(param: AccountApiAccountGetPermissionsRequest = {}, options?: ConfigurationOptions): Promise<Array<string>> {
         return this.api.accountGetPermissions( options).toPromise();
     }
 
