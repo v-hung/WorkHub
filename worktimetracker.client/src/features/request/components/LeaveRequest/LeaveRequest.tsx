@@ -4,8 +4,8 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useRequestContext } from "../../contexts/RequestContext";
 import {
   CreateLeaveRequestDtoCustomType,
-  useLeaveRequestAction,
-} from "../../hooks/useLeaveRequestAction";
+  useCreateLeaveRequest,
+} from "../../hooks/useCreateLeaveRequest";
 import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import TextArea from "antd/es/input/TextArea";
@@ -23,7 +23,7 @@ const LeaveRequest: FC<State> = (props) => {
 
   const { isOpen, closeRequest, date } = useRequestContext();
   const { getTimesheets, isCurrentMonth } = useTimesheetContext();
-  const { loading, create, formDefault } = useLeaveRequestAction();
+  const { loading, create, formDefault } = useCreateLeaveRequest();
 
   const workTime = useAuthStore((state) => state.user!.workTime);
 

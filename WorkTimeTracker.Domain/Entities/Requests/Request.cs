@@ -43,7 +43,6 @@ namespace WorkTimeTracker.Domain.Entities.Requests
 		[ForeignKey("Timesheet")]
 		public Guid? TimesheetId { get; set; }
 
-		[Required]
 		public Timesheet? Timesheet { get; set; }
 
 	}

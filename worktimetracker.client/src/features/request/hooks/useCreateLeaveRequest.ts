@@ -1,50 +1,41 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
-import {
-  CreateTimesheetAdjustmentRequestDto,
-  RequestType,
-} from "@/generate-api";
+import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
 import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
 
-export type CreateTimesheetAdjustmentRequestDtoCustomType =
-  CreateTimesheetAdjustmentRequestDto & {
-    breakTime: [Date | null, Date | null];
-    workingTime: [Date | null, Date | null];
-    approvedName: string;
-  };
+export type CreateLeaveRequestDtoCustomType = CreateLeaveRequestDto & {
+  breakTime: [Date | null, Date | null];
+  approvedName: string;
+};
 
-export const useTimesheetAdjustmentRequestAction = () => {
+export const useCreateLeaveRequest = () => {
   const [loading, setLoading] = useState(false);
   const supervisor = useAuthStore((state) => state.user!.supervisor);
 
   // Default data
   // =============
 
-  const formDefault = (
-    date?: Date
-  ): CreateTimesheetAdjustmentRequestDtoCustomType => {
-    const form = new CreateTimesheetAdjustmentRequestDto();
+  const formDefault = (date?: Date): CreateLeaveRequestDtoCustomType => {
+    const form = new CreateLeaveRequestDto();
     return {
       ...form,
       approvedId: supervisor?.id,
       approvedName: supervisor?.fullName || "No supervisor",
-      requestType: RequestType.TimesheetAdjustmentRequest,
+      requestType: RequestType.LeaveRequest,
       date: date || new Date(),
       breakTime: [null, null],
-      workingTime: [null, null],
     };
   };
 
   // Create
   // =============
 
-  const create = async (request: CreateTimesheetAdjustmentRequestDto) => {
+  const create = async (request: CreateLeaveRequestDto) => {
     setLoading(true);
     try {
-      console.log({ request });
-      await requestApi.timesheetAdjustmentRequestCreateRequest(request);
+      await requestApi.leaveRequestCreateRequest(request);
       getNotification().success({
         message: "Successfully completed",
       });

@@ -31,7 +31,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Approvals
 
 				int workMinutes = (int)TimesheetUtils.CalculateWorkTime(timesheet.StartTime, timesheet.EndTime!.Value, workTime).TotalMinutes;
 
-				timesheet.WorkMinutes = workMinutes > breakMinutes ? workMinutes - breakMinutes : 0;
+				timesheet.WorkedMinutes = workMinutes > breakMinutes ? workMinutes - breakMinutes : 0;
 
 				_context.Timesheets.Update(timesheet);
 				await _context.SaveChangesAsync();

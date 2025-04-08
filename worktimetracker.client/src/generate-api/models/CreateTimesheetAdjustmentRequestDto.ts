@@ -20,8 +20,8 @@ export class CreateTimesheetAdjustmentRequestDto {
     'approvedId'?: string;
     'checkIn': Date;
     'checkOut': Date;
-    'breakStartDate': Date;
-    'breakEndDate': Date;
+    'breakStartDate'?: Date | null;
+    'breakEndDate'?: Date | null;
 
     static readonly discriminator: string | undefined = undefined;
 

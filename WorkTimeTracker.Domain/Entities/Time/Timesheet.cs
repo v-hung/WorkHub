@@ -16,7 +16,7 @@ namespace WorkTimeTracker.Domain.Entities.Time
 
 		public DateTime? EndTime { get; set; }
 
-		public int WorkMinutes { get; set; } = 0;
+		public int WorkedMinutes { get; set; } = 0;
 
 		// Navigation
 

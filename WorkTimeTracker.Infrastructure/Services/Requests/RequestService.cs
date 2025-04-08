@@ -33,8 +33,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["You are not allowed to cancel this request."]);
 			}
 
-			request.Status = RequestStatus.CANCELLED;
-			_context.Requests.Update(request);
+			_context.Requests.Remove(request);
 
 			await _context.SaveChangesAsync();
 

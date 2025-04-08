@@ -15,6 +15,5 @@ import { HttpFile } from '../http/http';
 export enum RequestStatus {
     Pending = 'PENDING',
     Approved = 'APPROVED',
-    Rejected = 'REJECTED',
-    Cancelled = 'CANCELLED'
+    Rejected = 'REJECTED'
 }

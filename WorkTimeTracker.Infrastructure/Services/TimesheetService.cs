@@ -1,9 +1,11 @@
 using System.Net;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Interfaces.Services;
+using WorkTimeTracker.Application.Utils;
 using WorkTimeTracker.Domain.Entities.Time;
 using WorkTimeTracker.Infrastructure.Data;
 
@@ -24,7 +26,7 @@ namespace WorkTimeTracker.Infrastructure.Services
 
 		public async Task<TimesheetDto> PerformCheckIn(string userId)
 		{
-			Timesheet? timesheetDb = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today);
+			Timesheet? timesheetDb = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date.Date == DateTime.Today);
 
 			if (timesheetDb != null)
 			{
@@ -47,7 +49,7 @@ namespace WorkTimeTracker.Infrastructure.Services
 
 		public async Task<TimesheetDto> PerformCheckOut(string userId)
 		{
-			Timesheet timesheet = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.StartTime.Date == DateTime.Today) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
+			Timesheet timesheet = _context.Timesheets.Include(t => t.User).FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date.Date == DateTime.Today) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
 
 			if (timesheet.EndTime != null)
 			{
@@ -55,12 +57,23 @@ namespace WorkTimeTracker.Infrastructure.Services
 			}
 
 			timesheet.EndTime = DateTime.Now;
+			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime, timesheet.EndTime.Value);
+
 			_context.Timesheets.Update(timesheet);
 
 			await _context.SaveChangesAsync();
 
 			return _mapper.Map<TimesheetDto>(timesheet);
 
+		}
+
+		public int CalculateWorked(string userId, DateTime startTime, DateTime endTime)
+		{
+			WorkTime workTime = _context.WorkTimes.FirstOrDefault(w => w.Users.Any(u => u.Id == new Guid(userId))) ?? new WorkTime();
+
+			TimeSpan workedHours = TimesheetUtils.CalculateWorkTime(startTime, endTime);
+
+			return workedHours.Minutes;
 		}
 	}
 }

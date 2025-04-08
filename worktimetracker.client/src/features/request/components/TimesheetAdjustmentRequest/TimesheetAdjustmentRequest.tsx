@@ -4,8 +4,8 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useRequestContext } from "../../contexts/RequestContext";
 import {
   CreateTimesheetAdjustmentRequestDtoCustomType,
-  useTimesheetAdjustmentRequestAction,
-} from "../../hooks/useTimesheetAdjustmentRequestAction";
+  useCreateTimesheetAdjustmentRequest,
+} from "../../hooks/useCreateTimesheetAdjustmentRequest";
 import {
   CreateTimesheetAdjustmentRequestDto,
   RequestType,
@@ -17,6 +17,7 @@ import {
   requestDisabledTime,
   requestValidateTime,
 } from "../../utils/request.util";
+import { useTimesheetContext } from "@/features/timesheet/context/TimesheetContext";
 
 type State = ComponentProps<typeof Modal>;
 
@@ -24,8 +25,9 @@ const TimesheetAdjustmentRequest: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
   const { isOpen, closeRequest, date } = useRequestContext();
+  const { getTimesheets, isCurrentMonth } = useTimesheetContext();
   const { loading, create, formDefault } =
-    useTimesheetAdjustmentRequestAction();
+    useCreateTimesheetAdjustmentRequest();
 
   const workTime = useAuthStore((state) => state.user!.workTime);
 
@@ -50,6 +52,10 @@ const TimesheetAdjustmentRequest: FC<State> = (props) => {
       await create(body).then(() => {
         closeRequest();
       });
+
+      if (isCurrentMonth) {
+        await getTimesheets();
+      }
     });
   };
 
