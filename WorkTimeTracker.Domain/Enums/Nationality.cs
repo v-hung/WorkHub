@@ -2,6 +2,6 @@ namespace WorkTimeTracker.Domain.Enums
 {
 	public enum Nationality
 	{
-		JAPANESE, VIETNAMESE
+		ja_JP, vi_VN
 	}
 }

@@ -10,6 +10,7 @@ using WorkTimeTracker.Domain.Entities.Requests;
 using WorkTimeTracker.Domain.Entities.Time;
 using WorkTimeTracker.Domain.Entities.Work;
 using WorkTimeTracker.Domain.Entities.Equipment;
+using WorkTimeTracker.Domain.Entities.Misc;
 
 namespace WorkTimeTracker.Infrastructure.Data;
 
@@ -28,6 +29,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 	public DbSet<TimesheetAdjustmentRequest> TimesheetAdjustmentRequests { get; set; }
 	public DbSet<Device> Device { get; set; }
 	public DbSet<DeviceCategory> DeviceCategories { get; set; }
+	public DbSet<Notification> Notifications { get; set; }
 
 	public ApplicationDbContext(DbContextOptions options, ICurrentUserService currentUserService) : base(options)
 	{

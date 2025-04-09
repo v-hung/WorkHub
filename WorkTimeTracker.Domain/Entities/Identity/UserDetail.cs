@@ -19,7 +19,7 @@ namespace WorkTimeTracker.Domain.Entities.Identity
 		public int YearsOfWork { get; set; } = 0;
 
 		[Required]
-		public required Nationality Nationality { get; set; } = Nationality.VIETNAMESE;
+		public required Nationality Nationality { get; set; } = Nationality.vi_VN;
 
 		// Navigation
 

@@ -12,7 +12,7 @@ namespace WorkTimeTracker.Domain.Entities.Misc
 
 		public string Message { get; set; } = string.Empty;
 
-		public NotificationType Type { get; set; }
+		public required NotificationType Type { get; set; }
 
 		public bool IsRead { get; set; } = false;
 

@@ -19,6 +19,7 @@ using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Authorization;
 using WorkTimeTracker.Infrastructure.Data;
 using WorkTimeTracker.Infrastructure.Services;
+using WorkTimeTracker.Infrastructure.Services.Templates;
 using WorkTimeTracker.Server.Swagger;
 
 namespace WorkTimeTracker.Server.Extensions;
@@ -43,6 +44,12 @@ static class ServiceCollectionExtensions
 		});
 	}
 
+	public static void AddConfigs(this IServiceCollection services, IConfiguration configuration)
+	{
+		services.Configure<JwtConfig>(configuration.GetSection("Jwt"));
+		services.Configure<EmailConfig>(configuration.GetSection("Email"));
+	}
+
 	public static void AddIdentityConfiguration(this IServiceCollection services)
 	{
 		services.AddIdentity<User, Role>(options =>
@@ -60,11 +67,9 @@ static class ServiceCollectionExtensions
 
 	public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
 	{
-		var jwtSettings = configuration.GetSection("Jwt");
+		var jwtConfig = configuration.GetSection("Jwt");
 
-		services.Configure<JwtSettings>(jwtSettings);
-
-		var key = Encoding.ASCII.GetBytes(jwtSettings.Get<JwtSettings>()!.Secret);
+		var key = Encoding.ASCII.GetBytes(jwtConfig.Get<JwtConfig>()!.Secret);
 
 		services.AddAuthentication(options =>
 		{
@@ -123,6 +128,8 @@ static class ServiceCollectionExtensions
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+		services.AddScoped<IEmailService, EmailService>();
+		services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 

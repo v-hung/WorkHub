@@ -29,7 +29,9 @@ namespace WorkTimeTracker.Application.Features.Requests.Commands
 
 			_validator.Validate(request);
 
-			return await _requestService.CreateRequestAsync<D>(request);
+			var data = await _requestService.CreateRequestAsync<D>(request);
+
+			return data;
 		}
 	}
 

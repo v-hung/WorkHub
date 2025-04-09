@@ -19,7 +19,7 @@ const { Sider } = Layout;
 type State = ComponentProps<typeof Sider>;
 
 const MainMenu: FC<State> = (props) => {
-  const { className, ...rest } = props;
+  const { className = "", ...rest } = props;
 
   const navigate = useNavigate();
   const location = useLocation();

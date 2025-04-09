@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Yêu cầu mới</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f9f9f9;
+			padding: 20px;
+			color: #333;
+		}
+
+		.email-container {
+			background-color: #fff;
+			border-radius: 8px;
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 30px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		}
+
+		h2 {
+			color: #0d6efd;
+		}
+
+		.button {
+			display: inline-block;
+			background-color: #0d6efd;
+			color: #fff !important;
+			padding: 12px 24px;
+			text-decoration: none;
+			border-radius: 6px;
+			margin-top: 20px;
+		}
+
+		.footer {
+			margin-top: 40px;
+			font-size: 12px;
+			color: #777;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="email-container">
+		<h2>Yêu cầu mới cần phê duyệt</h2>
+		<p>Xin chào <strong>{{ApproverName}}</strong>,</p>
+		<p>Một yêu cầu mới từ <strong>{{RequesterName}}</strong> đã được gửi và đang chờ bạn xem xét.</p>
+
+		<p><strong>Mã yêu cầu:</strong> {{RequestId}}</p>
+		<p><strong>Loại yêu cầu:</strong> {{RequestType}}</p>
+		<p><strong>Ngày gửi:</strong> {{SubmittedDate}}</p>
+
+		<a href="{{RequestLink}}" class="button">Xem chi tiết</a>
+
+		<div class="footer">
+			Đây là email tự động, vui lòng không trả lời.
+		</div>
+	</div>
+</body>
+
+</html>

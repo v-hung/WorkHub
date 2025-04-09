@@ -18,6 +18,7 @@ builder.Services.AddCustomControllers();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityConfiguration();
+builder.Services.AddConfigs(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer();

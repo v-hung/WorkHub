@@ -2,7 +2,7 @@
 	"menus": {
 		"menu": "Menu",
 		"home": "Home",
-		"inbox": "Inbox",
+		"notification": "Notification",
 		"timesheet": "Timesheet",
 		"meeting": "Meeting",
 		"manager": "Manager",

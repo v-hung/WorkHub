@@ -17,10 +17,10 @@ namespace WorkTimeTracker.Infrastructure.Services;
 
 public class JwtTokenService : IJwtTokenService
 {
-	private readonly JwtSettings _jwtSettings;
+	private readonly JwtConfig _jwtSettings;
 	private readonly ApplicationDbContext _context;
 
-	public JwtTokenService(IOptions<JwtSettings> jwtOptions, ApplicationDbContext context)
+	public JwtTokenService(IOptions<JwtConfig> jwtOptions, ApplicationDbContext context)
 	{
 		_jwtSettings = jwtOptions.Value;
 		_context = context;

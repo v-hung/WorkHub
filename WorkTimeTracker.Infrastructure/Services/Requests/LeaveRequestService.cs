@@ -1,5 +1,6 @@
 using System.Net;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Features.Requests.DTOs;
@@ -16,8 +17,8 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 		private readonly IRequestApprovalService<LeaveRequest> _approvalService;
 		private readonly ITimesheetRepository _timesheetRepository;
 
-		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<LeaveRequest> approvalService, ITimesheetRepository timesheetRepository)
-			: base(context, mapper, localizer, currentUserService)
+		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<LeaveRequest> approvalService, ITimesheetRepository timesheetRepository, IEmailService emailService, IHttpContextAccessor httpContextAccessor)
+			: base(context, mapper, localizer, currentUserService, emailService, httpContextAccessor)
 		{
 			_approvalService = approvalService;
 			_timesheetRepository = timesheetRepository;
@@ -25,8 +26,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 
 		public override async Task<D> CreateRequestAsync<D>(CreateLeaveRequestDto request)
 		{
-			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date)
-				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet is not found for this day"]);
+			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date);
 
 			if (!await _approvalService.CanApproveRequestAsync(_currentUserService.UserId!, request.ApprovedId.ToString()))
 			{
@@ -35,11 +35,13 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 
 			LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(request);
 
-			leaveRequest.TimesheetId = timesheet.Id;
+			leaveRequest.TimesheetId = timesheet?.Id;
 			leaveRequest.UserId = Guid.Parse(_currentUserService.UserId!);
 
 			await _context.LeaveRequests.AddAsync(leaveRequest);
 			await _context.SaveChangesAsync();
+
+			await base.CreateRequestNotification(leaveRequest);
 
 			return _mapper.Map<D>(leaveRequest);
 		}

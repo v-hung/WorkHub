@@ -73,7 +73,7 @@
   /* color: var(--color-text); */
 }
 
-.menu-item-inbox {
+.menu-item-notification {
   display: flex;
   justify-content: space-between;
   align-items: center;

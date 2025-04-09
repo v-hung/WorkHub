@@ -2,7 +2,7 @@
 	"menus": {
 		"menu": "Danh mục",
 		"home": "Trang chủ",
-		"inbox": "Thông báo",
+		"notification": "Thông báo",
 		"timesheet": "Chấm công",
 		"meeting": "Cuộc họp",
 		"manager": "Quản trị",
