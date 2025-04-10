@@ -51,13 +51,18 @@ namespace WorkTimeTracker.Infrastructure.Services
 		{
 			Timesheet timesheet = _context.Timesheets.Include(t => t.User).FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date.Date == DateTime.Today) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
 
+			if (timesheet.StartTime == null)
+			{
+				throw new BusinessException(HttpStatusCode.Conflict, _localizer["CheckInNotPerformed"]);
+			}
+
 			if (timesheet.EndTime != null)
 			{
 				throw new BusinessException(HttpStatusCode.Conflict, _localizer["Checked out"]);
 			}
 
 			timesheet.EndTime = DateTime.Now;
-			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime, timesheet.EndTime.Value);
+			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime!.Value, timesheet.EndTime.Value);
 
 			_context.Timesheets.Update(timesheet);
 

@@ -101,6 +101,64 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			return new Paginated<D>(pagedData, totalRecords, request.PageNumber, request.PageSize);
 		}
 
+		public async Task<CursorPaginated<D>> CursorSearchAsync<D>(CursorPagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<int>
+		{
+			IQueryable<T> query = _context.Set<T>().AsQueryable();
+
+			// Apply Filtering
+			if (filter != null)
+			{
+				query = query.Where(filter);
+			}
+
+			var projectedQuery = query.ProjectTo<D>(_mapper.ConfigurationProvider);
+
+			// Search
+			if (!string.IsNullOrWhiteSpace(request.SearchString))
+			{
+				var parameter = Expression.Parameter(typeof(D), "x");
+				var searchExpression = (Expression?)null;
+
+				foreach (var property in typeof(D).GetProperties().Where(p => p.PropertyType == typeof(string)))
+				{
+					var propertyAccess = Expression.Property(parameter, property);
+					var containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
+
+					if (containsMethod != null)
+					{
+						var searchTerm = Expression.Constant(request.SearchString, typeof(string));
+						var containsCall = Expression.Call(propertyAccess, containsMethod, searchTerm);
+						searchExpression = searchExpression == null ? containsCall : Expression.OrElse(searchExpression, containsCall);
+					}
+				}
+
+				if (searchExpression != null)
+				{
+					var lambda = Expression.Lambda<Func<D, bool>>(searchExpression, parameter);
+					projectedQuery = projectedQuery.Where(lambda);
+				}
+			}
+
+			if (request.LastId != null && request.LastId > 0)
+			{
+				projectedQuery = projectedQuery.Where(v => v.Id < request.LastId);
+			}
+
+			var totalRecords = await projectedQuery.CountAsync();
+
+			// Apply Pagination
+			var data = await projectedQuery
+				.OrderByDescending(i => i.Id)
+				.Take(request.Limit + 1)
+				.ToListAsync();
+
+			bool hasMore = totalRecords > request.Limit;
+
+			var items = hasMore ? data.Take(data.Count - 1).ToList() : data;
+
+			return new CursorPaginated<D>(items, data.Any() ? data.Last().Id : null, request.Limit, totalRecords, hasMore);
+		}
+
 		public async Task<D> GetAsync<D>(Expression<Func<T, bool>> filter, bool asNoTracking = true) where D : class
 		{
 			var query = asNoTracking

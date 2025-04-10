@@ -23,13 +23,13 @@ namespace WorkTimeTracker.Infrastructure.Services.Approvals
 
 			Timesheet timesheet = await _context.Timesheets.FindAsync(request.TimesheetId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet not found."]);
 
-			if (timesheet.EndTime != null)
+			if (timesheet.StartTime != null && timesheet.EndTime != null)
 			{
 				var workTime = (await _context.Users.Select(u => new { Id = u.Id, WorkTime = u.WorkTime }).FirstOrDefaultAsync(u => u.Id == timesheet.UserId))?.WorkTime ?? new WorkTime();
 
 				int breakMinutes = (int)TimesheetUtils.CalculateWorkTime(request.BreakStartDate, request.BreakEndDate, workTime).TotalMinutes;
 
-				int workMinutes = (int)TimesheetUtils.CalculateWorkTime(timesheet.StartTime, timesheet.EndTime!.Value, workTime).TotalMinutes;
+				int workMinutes = (int)TimesheetUtils.CalculateWorkTime(timesheet.StartTime.Value, timesheet.EndTime.Value, workTime).TotalMinutes;
 
 				timesheet.WorkedMinutes = workMinutes > breakMinutes ? workMinutes - breakMinutes : 0;
 

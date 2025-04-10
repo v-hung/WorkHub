@@ -22,6 +22,9 @@ import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
+import { NotificationDto } from '../models/NotificationDto';
+import { NotificationDtoCursorPaginated } from '../models/NotificationDtoCursorPaginated';
+import { NotificationType } from '../models/NotificationType';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
@@ -831,6 +834,67 @@ export class PromiseDeviceCategoryApi {
 	    }
 	}
         const result = this.api.deviceCategoryUpdate(id, createDeviceCategoryCommand, observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableNotificationApi } from './ObservableAPI';
+
+import { NotificationApiRequestFactory, NotificationApiResponseProcessor} from "../apis/NotificationApi";
+export class PromiseNotificationApi {
+    private api: ObservableNotificationApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: NotificationApiRequestFactory,
+        responseProcessor?: NotificationApiResponseProcessor
+    ) {
+        this.api = new ObservableNotificationApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param [lastId]
+     * @param [searchString]
+     */
+    public notificationSearchWithHttpInfo(lastId?: number, searchString?: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<NotificationDtoCursorPaginated>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.notificationSearchWithHttpInfo(lastId, searchString, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [lastId]
+     * @param [searchString]
+     */
+    public notificationSearch(lastId?: number, searchString?: string, _options?: PromiseConfigurationOptions): Promise<NotificationDtoCursorPaginated> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.notificationSearch(lastId, searchString, observableOptions);
         return result.toPromise();
     }
 

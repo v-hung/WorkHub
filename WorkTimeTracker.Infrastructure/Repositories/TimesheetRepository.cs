@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.DTOs.Time;
 using WorkTimeTracker.Application.Interfaces.Repositories;
+using WorkTimeTracker.Domain.Entities.Time;
 using WorkTimeTracker.Infrastructure.Data;
 
 namespace WorkTimeTracker.Infrastructure.Repositories
@@ -38,7 +39,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 				.ToList();
 
 			var timesheets = await _context.Timesheets.AsNoTracking()
-				.Where(t => t.UserId == guidUserId && t.StartTime >= startDate && t.StartTime < endDate)
+				.Where(t => t.UserId == guidUserId && t.Date >= startDate && t.Date < endDate)
 				.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
 
@@ -70,7 +71,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 				.ToList();
 
 			var timesheets = await _context.Timesheets.AsNoTracking()
-				.Where(t => t.StartTime >= startDate && t.StartTime < endDate)
+				.Where(t => t.Date >= startDate && t.Date < endDate)
 				.ProjectTo<TimesheetFullDto>(_mapper.ConfigurationProvider)
 				.ToListAsync();
 
@@ -98,7 +99,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			var tomorrow = today.AddDays(1);
 
 			return await _context.Timesheets.AsNoTracking()
-				.Where(t => t.UserId == new Guid(userId) && t.StartTime >= today && t.StartTime < tomorrow)
+				.Where(t => t.UserId == new Guid(userId) && t.Date >= today && t.Date < tomorrow)
 				.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync();
 		}
@@ -109,9 +110,17 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			var endOfDay = startOfDay.AddDays(1);
 
 			return await _context.Timesheets.AsNoTracking()
-				.Where(t => t.UserId == new Guid(userId) && t.StartTime >= startOfDay && t.StartTime < endOfDay)
+				.Where(t => t.UserId == new Guid(userId) && t.Date >= startOfDay && t.Date < endOfDay)
 				.ProjectTo<TimesheetDto>(_mapper.ConfigurationProvider)
 				.FirstOrDefaultAsync();
+		}
+
+		public async Task<D> CreateTimesheetAsync<D>(Timesheet timesheet) where D : class
+		{
+			await _context.Timesheets.AddAsync(timesheet);
+			await _context.SaveChangesAsync();
+
+			return _mapper.Map<D>(timesheet);
 		}
 	}
 }

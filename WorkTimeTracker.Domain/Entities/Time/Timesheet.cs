@@ -11,8 +11,7 @@ namespace WorkTimeTracker.Domain.Entities.Time
 		[Required]
 		public required DateTime Date { get; set; }
 
-		[Required]
-		public required DateTime StartTime { get; set; }
+		public DateTime? StartTime { get; set; }
 
 		public DateTime? EndTime { get; set; }
 

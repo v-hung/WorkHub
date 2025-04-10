@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkTimeTracker.Application.Exceptions;
 using WorkTimeTracker.Application.Features.Requests.DTOs;
+using WorkTimeTracker.Application.Interfaces.Messaging;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Application.Utils;
 using WorkTimeTracker.Domain.Entities.Misc;
@@ -24,8 +25,9 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 		protected readonly ICurrentUserService _currentUserService;
 		protected readonly IEmailService _emailService;
 		protected readonly IHttpContextAccessor _httpContextAccessor;
+		protected readonly IEmailBackgroundQueue _emailQueue;
 
-		public RequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RequestService<TCreateRequest>> localizer, ICurrentUserService currentUserService, IEmailService emailService, IHttpContextAccessor httpContextAccessor)
+		public RequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RequestService<TCreateRequest>> localizer, ICurrentUserService currentUserService, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IEmailBackgroundQueue emailQueue)
 		{
 			_context = context;
 			_mapper = mapper;
@@ -33,6 +35,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 			_currentUserService = currentUserService;
 			_emailService = emailService;
 			_httpContextAccessor = httpContextAccessor;
+			_emailQueue = emailQueue;
 		}
 
 		public async Task<D> CancelRequestAsync<D>(int requestId) where D : class
@@ -93,12 +96,17 @@ namespace WorkTimeTracker.Infrastructure.Services.Requests
 					RequestLink = $"{baseUrl}/requests/{request.Id}"
 				};
 
-				await _emailService.SendEmailWithTemplateAsync(
-					user.Email!,
-					_localizer["New Request Submitted"].Value,
-					"RequestSubmittedToApprover",
-					templateModel,
-					user.LanguageCode);
+				_emailQueue.QueueEmail(async token =>
+				{
+					await _emailService.SendEmailWithTemplateAsync(
+						user.Email!,
+						_localizer["New Request Submitted"].Value,
+						"RequestSubmittedToApprover",
+						templateModel,
+						user.LanguageCode);
+				});
+
+
 			}
 			finally
 			{

@@ -8,7 +8,7 @@ namespace WorkTimeTracker.Infrastructure.Services.Templates
 	{
 		public async Task<string> GetEmailTemplateAsync<T>(string templateName, T model, Nationality language)
 		{
-			var templatePath = Path.Combine("Templates", "Email", $"{templateName}.{language.ToString().ReplaceUnderscoreToDash()}.html");
+			var templatePath = Path.Combine("Templates", "Email", templateName, $"{templateName}.{language.ToString().ReplaceUnderscoreToDash()}.html");
 			var templateContent = await File.ReadAllTextAsync(templatePath);
 			string body = ReplacePlaceholders(templateContent, typeof(T).GetProperties()
 				.ToDictionary(prop => prop.Name, prop => prop.GetValue(model)?.ToString() ?? string.Empty));

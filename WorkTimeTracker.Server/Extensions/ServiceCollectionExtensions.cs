@@ -13,11 +13,13 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using WorkTimeTracker.Application.Configs;
 using WorkTimeTracker.Application.Interfaces.Data;
+using WorkTimeTracker.Application.Interfaces.Messaging;
 using WorkTimeTracker.Application.Interfaces.Services;
 using WorkTimeTracker.Domain.Constants.Permission;
 using WorkTimeTracker.Domain.Entities.Identity;
 using WorkTimeTracker.Infrastructure.Authorization;
 using WorkTimeTracker.Infrastructure.Data;
+using WorkTimeTracker.Infrastructure.Messaging;
 using WorkTimeTracker.Infrastructure.Services;
 using WorkTimeTracker.Infrastructure.Services.Templates;
 using WorkTimeTracker.Server.Swagger;
@@ -130,6 +132,8 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 		services.AddScoped<IEmailService, EmailService>();
 		services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+		services.AddSingleton<IEmailBackgroundQueue, EmailBackgroundQueue>();
+		services.AddHostedService<EmailSenderHostedService>();
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 

@@ -7,8 +7,7 @@ namespace WorkTimeTracker.Application.Wrapper
 		[Required]
 		public List<T> Data { get; set; }
 
-		[Required]
-		public int LastId { get; set; }
+		public int? LastId { get; set; }
 
 		[Required]
 		public int Limit { get; set; }
@@ -19,7 +18,7 @@ namespace WorkTimeTracker.Application.Wrapper
 		[Required]
 		public bool HasMore { get; set; }
 
-		public CursorPaginated(List<T> data, int lastId, int limit, int totalCount, bool hasMore)
+		public CursorPaginated(List<T> data, int? lastId, int limit, int totalCount, bool hasMore)
 		{
 			Data = data;
 			LastId = lastId;

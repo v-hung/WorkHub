@@ -18,6 +18,9 @@ export * from '../models/ErrorResponse';
 export * from '../models/ErrorValidateResponse';
 export * from '../models/LoginRequest';
 export * from '../models/Nationality';
+export * from '../models/NotificationDto';
+export * from '../models/NotificationDtoCursorPaginated';
+export * from '../models/NotificationType';
 export * from '../models/Permission';
 export * from '../models/ProjectDto';
 export * from '../models/ProjectDtoPaginated';
@@ -71,6 +74,9 @@ import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
+import { NotificationDto      } from '../models/NotificationDto';
+import { NotificationDtoCursorPaginated } from '../models/NotificationDtoCursorPaginated';
+import { NotificationType } from '../models/NotificationType';
 import { Permission } from '../models/Permission';
 import { ProjectDto          } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
@@ -119,6 +125,7 @@ let primitives = [
 let enumsMap: Set<string> = new Set<string>([
     "DeviceStatus",
     "Nationality",
+    "NotificationType",
     "Permission",
     "ProjectStatus",
     "RequestStatus",
@@ -146,6 +153,8 @@ let typeMap: {[index: string]: any} = {
     "ErrorResponse": ErrorResponse,
     "ErrorValidateResponse": ErrorValidateResponse,
     "LoginRequest": LoginRequest,
+    "NotificationDto": NotificationDto,
+    "NotificationDtoCursorPaginated": NotificationDtoCursorPaginated,
     "ProjectDto": ProjectDto,
     "ProjectDtoPaginated": ProjectDtoPaginated,
     "ProjectMinimalDto": ProjectMinimalDto,

@@ -22,6 +22,9 @@ import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
+import { NotificationDto } from '../models/NotificationDto';
+import { NotificationDtoCursorPaginated } from '../models/NotificationDtoCursorPaginated';
+import { NotificationType } from '../models/NotificationType';
 import { Permission } from '../models/Permission';
 import { ProjectDto } from '../models/ProjectDto';
 import { ProjectDtoPaginated } from '../models/ProjectDtoPaginated';
@@ -549,6 +552,49 @@ export class ObjectDeviceCategoryApi {
      */
     public deviceCategoryUpdate(param: DeviceCategoryApiDeviceCategoryUpdateRequest, options?: ConfigurationOptions): Promise<DeviceCategoryDto> {
         return this.api.deviceCategoryUpdate(param.id, param.createDeviceCategoryCommand,  options).toPromise();
+    }
+
+}
+
+import { ObservableNotificationApi } from "./ObservableAPI";
+import { NotificationApiRequestFactory, NotificationApiResponseProcessor} from "../apis/NotificationApi";
+
+export interface NotificationApiNotificationSearchRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof NotificationApinotificationSearch
+     */
+    lastId?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type string
+     * @memberof NotificationApinotificationSearch
+     */
+    searchString?: string
+}
+
+export class ObjectNotificationApi {
+    private api: ObservableNotificationApi
+
+    public constructor(configuration: Configuration, requestFactory?: NotificationApiRequestFactory, responseProcessor?: NotificationApiResponseProcessor) {
+        this.api = new ObservableNotificationApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public notificationSearchWithHttpInfo(param: NotificationApiNotificationSearchRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<NotificationDtoCursorPaginated>> {
+        return this.api.notificationSearchWithHttpInfo(param.lastId, param.searchString,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public notificationSearch(param: NotificationApiNotificationSearchRequest = {}, options?: ConfigurationOptions): Promise<NotificationDtoCursorPaginated> {
+        return this.api.notificationSearch(param.lastId, param.searchString,  options).toPromise();
     }
 
 }

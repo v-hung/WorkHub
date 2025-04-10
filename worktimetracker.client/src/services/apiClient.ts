@@ -2,6 +2,7 @@ import {
   AccountApi,
   DeviceApi,
   DeviceCategoryApi,
+  NotificationApi,
   ProjectApi,
   RequestsApi,
   RoleApi,
@@ -39,7 +40,7 @@ const timesheetApi = new TimesheetApi(configWithRefreshToken);
 const deviceApi = new DeviceApi(configWithRefreshToken);
 const deviceCategoryApi = new DeviceCategoryApi(configWithRefreshToken);
 const requestApi = new RequestsApi(configWithRefreshToken);
-const notificationApi = new NotificationsApi(configWithRefreshToken);
+const notificationApi = new NotificationApi(configWithRefreshToken);
 
 export {
   accountApi,
