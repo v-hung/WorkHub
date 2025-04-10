@@ -34,13 +34,6 @@ namespace WorkTimeTracker.Application.Requests
 		public PagedRequest()
 		{
 		}
-		public PagedRequest(int pageNumber, int pageSize, string searchString, string[] orderBy)
-		{
-			PageNumber = pageNumber;
-			PageSize = pageSize;
-			SearchString = searchString;
-			OrderBy = orderBy?.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-		}
 
 		public PagedRequest(int pageNumber, int pageSize, string searchString, string orderBy)
 		{
@@ -49,16 +42,11 @@ namespace WorkTimeTracker.Application.Requests
 			SearchString = searchString;
 			if (!string.IsNullOrWhiteSpace(orderBy))
 			{
-				OrderBy = orderBy.Split(',')
-								.Where(x => !string.IsNullOrWhiteSpace(x))
-								.Select(x => x.Trim())
-								.ToArray();
+				OrderBy = orderBy.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 			}
 		}
 
 		[SwaggerIgnore]
-		public string OrderByString => OrderBy != null && OrderBy.Any()
-						? string.Join(",", OrderBy)
-						: string.Empty;
+		public string OrderByString => OrderBy != null && OrderBy.Any() ? string.Join(",", OrderBy) : string.Empty;
 	}
 }

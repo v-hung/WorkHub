@@ -9,13 +9,15 @@ export const loader = wrapLoaderWithPermission();
 export function Component() {
   return (
     <Layout className="main-layout h-screen">
-      <MainHeader title="Projects Manager"></MainHeader>
+      <MainHeader title="Notifications"></MainHeader>
 
-      <MainBreadcrumb
+      {/* <MainBreadcrumb
         items={[{ title: "Home", path: "/" }, { title: "Project Manager" }]}
-      />
+      /> */}
 
-      <MainContent>ád</MainContent>
+      <MainContent>
+        <NotificationTable />
+      </MainContent>
     </Layout>
   );
 }

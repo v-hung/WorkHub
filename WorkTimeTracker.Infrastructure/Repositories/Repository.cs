@@ -83,8 +83,7 @@ namespace WorkTimeTracker.Infrastructure.Repositories
 			// Apply Sorting
 			if (request.OrderBy?.Any() == true)
 			{
-				var ordering = string.Join(",", request.OrderBy);
-				projectedQuery = projectedQuery.OrderBy(ordering);
+				projectedQuery = projectedQuery.OrderBy(request.OrderByString);
 			}
 			else
 			{

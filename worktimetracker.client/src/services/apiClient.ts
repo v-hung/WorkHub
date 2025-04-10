@@ -39,6 +39,7 @@ const timesheetApi = new TimesheetApi(configWithRefreshToken);
 const deviceApi = new DeviceApi(configWithRefreshToken);
 const deviceCategoryApi = new DeviceCategoryApi(configWithRefreshToken);
 const requestApi = new RequestsApi(configWithRefreshToken);
+const notificationApi = new NotificationsApi(configWithRefreshToken);
 
 export {
   accountApi,
@@ -52,4 +53,5 @@ export {
   deviceApi,
   deviceCategoryApi,
   requestApi,
+  notificationApi,
 };
