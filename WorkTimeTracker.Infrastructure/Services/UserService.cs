@@ -170,22 +170,6 @@ namespace WorkTimeTracker.Infrastructure.Services
 				}
 			}
 
-			if (request.ManagerProjectIds != null && request.ManagerProjectIds.Any())
-			{
-				if (userUpdateId != null)
-				{
-					await _context.Entry(user).Collection(u => u.ManagerProjects).LoadAsync();
-					user.ManagerProjects.Clear();
-				}
-
-				foreach (var teamId in request.ManagerProjectIds)
-				{
-					var item = new Project { Id = teamId, Name = "" };
-					_context.Projects.Attach(item);
-					user.ManagerProjects.Add(item);
-				}
-			}
-
 			if (request.RoleNames != null && request.RoleNames.Any())
 			{
 				var currentRoles = await _userManager.GetRolesAsync(user);

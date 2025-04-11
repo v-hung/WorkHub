@@ -7,14 +7,13 @@ namespace WorkTimeTracker.Application.Requests.Identity
 	public class UserCreateUpdateRequest
 	{
 		[Required]
-		public required string Code { get; set; }
-
-		[Required]
+		[StringLength(255)]
 		public required string FullName { get; set; }
 
 		[Required]
+		[StringLength(255)]
+		[EmailAddress]
 		public required string Email { get; set; }
-
 
 		public string? PhoneNumber { get; set; }
 
@@ -39,8 +38,6 @@ namespace WorkTimeTracker.Application.Requests.Identity
 		public int? TeamId { get; set; }
 
 		public IList<int> ManagerTeamIds { get; set; } = [];
-
-		public IList<int> ManagerProjectIds { get; set; } = [];
 
 		[Required]
 		public IList<string> RoleNames { get; set; } = [];

@@ -60,7 +60,7 @@ export const useRoles = () => {
   const fetchRoles = async (ids: string[]) => {
     setLoading(true);
     try {
-      return await roleApi.roleGetAll(ids);
+      return await roleApi.roleGetAllByNames(ids);
     } catch (e) {
       notification.error({
         message: getMessageError(e),

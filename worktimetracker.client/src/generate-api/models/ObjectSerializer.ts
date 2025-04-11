@@ -98,7 +98,7 @@ import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { UserCreateUpdateRequest                 } from '../models/UserCreateUpdateRequest';
+import { UserCreateUpdateRequest               } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto       } from '../models/UserDetailDto';
 import { UserDto                  } from '../models/UserDto';
 import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';

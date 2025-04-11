@@ -9,10 +9,13 @@ namespace WorkTimeTracker.Domain.Entities.Equipment
 	public class Device : AuditEntity<int>
 	{
 		[Required]
+		[StringLength(255)]
 		public required string Name { get; set; }
 
+		[StringLength(255)]
 		public string? Description { get; set; }
 
+		[StringLength(255)]
 		public string? Location { get; set; }
 
 		public DeviceStatus Status { get; set; } = DeviceStatus.NEW;

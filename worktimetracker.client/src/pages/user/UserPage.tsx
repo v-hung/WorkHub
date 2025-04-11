@@ -12,24 +12,24 @@ export function Component() {
   const navigate = useNavigate();
 
   return (
-    <Layout className="main-layout h-screen">
-      <MainHeader title="User Manager">
-        <Button
-          type="primary"
-          onClick={() => navigate("/users/create")}
-          icon={<IIonPersonAddOutline width={16} height={16} />}
-        >
-          Add user
-        </Button>
-      </MainHeader>
-
-      <MainBreadcrumb
-        items={[{ title: "Home", path: "/" }, { title: "Users Manager" }]}
-      />
-
-      <MainContent>
-        <UserTable />
-      </MainContent>
+    <Layout className="main-layout-wrapper h-screen">
+      <Layout className="main-layout">
+        <MainHeader title="User Manager">
+          <Button
+            type="primary"
+            onClick={() => navigate("/users/create")}
+            icon={<IIonPersonAddOutline width={16} height={16} />}
+          >
+            Add user
+          </Button>
+        </MainHeader>
+        <MainBreadcrumb
+          items={[{ title: "Home", path: "/" }, { title: "Users Manager" }]}
+        />
+        <MainContent>
+          <UserTable />
+        </MainContent>
+      </Layout>
     </Layout>
   );
 }

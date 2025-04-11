@@ -1,11 +1,29 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error";
-import { UserCreateUpdateRequest } from "@/generate-api";
+import { UserCreateUpdateRequest, UserFullDto } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { useState } from "react";
 
 export const useUserAction = () => {
   const [loading, setLoading] = useState(false);
+
+  // Default data
+  // =============
+
+  const formDefault = (data?: UserFullDto): UserCreateUpdateRequest => {
+    if (!data) {
+      return new UserCreateUpdateRequest();
+    }
+
+    return {
+      ...data,
+      workTimeId: data.workTime?.id,
+      teamId: data.team?.id,
+      supervisorId: data.supervisor?.id,
+      managerTeamIds: data.managerTeams?.map((v) => v.id),
+      roleNames: data.roles ?? [],
+    };
+  };
 
   // Create USER
   // =============
@@ -55,5 +73,5 @@ export const useUserAction = () => {
   //   }
   // };
 
-  return { loading, createUser, updateUser };
+  return { loading, createUser, updateUser, formDefault };
 };

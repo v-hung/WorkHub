@@ -13,18 +13,18 @@ export function Component() {
   const { id } = useParams();
 
   return (
-    <Layout className="main-layout">
-      <MainHeader title={id ? "Update user" : "Create user"} />
-
-      <MainBreadcrumb
-        items={[
-          { title: "Home", path: "/" },
-          { title: "Users Manager", path: "/users" },
-          { title: "User detail" },
-        ]}
-      />
-
-      <MainContent></MainContent>
+    <Layout className="main-layout-wrapper">
+      <Layout className="main-layout">
+        <MainHeader title={id ? "Update user" : "Create user"} />
+        <MainBreadcrumb
+          items={[
+            { title: "Home", path: "/" },
+            { title: "Users Manager", path: "/users" },
+            { title: "User detail" },
+          ]}
+        />
+        <MainContent></MainContent>
+      </Layout>
     </Layout>
   );
 }

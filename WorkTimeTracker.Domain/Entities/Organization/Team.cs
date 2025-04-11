@@ -9,8 +9,10 @@ namespace WorkTimeTracker.Domain.Entities.Organization
 	public class Team : AuditEntity<int>
 	{
 		[Required]
+		[StringLength(255)]
 		public required string Name { get; set; }
 
+		[StringLength(255)]
 		public string? Description { get; set; }
 
 		[Required]

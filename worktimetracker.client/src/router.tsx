@@ -5,7 +5,7 @@ const router = createBrowserRouter(
   [
     {
       lazy: () => import("./layouts/main/MainLayout"),
-      hydrateFallbackElement: <MainLoading />,
+      // hydrateFallbackElement: <MainLoading />,
       children: [
         {
           path: "/",

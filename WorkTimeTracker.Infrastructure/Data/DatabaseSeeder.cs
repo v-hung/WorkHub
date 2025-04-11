@@ -83,7 +83,6 @@ public class DatabaseSeeder : IDatabaseSeeder
 		{
 			var user = new User
 			{
-				Code = "Admin",
 				Email = UserConst.AdministratorUsername,
 				UserName = UserConst.AdministratorUsername,
 				NormalizedUserName = UserConst.AdministratorUsername.ToUpper(),
@@ -131,7 +130,6 @@ public class DatabaseSeeder : IDatabaseSeeder
 		{
 			var user = new User
 			{
-				Code = "WBC1",
 				Email = "hungnv@wbc.vn",
 				UserName = "hungnv@wbc.vn",
 				NormalizedUserName = "hungnv@wbc.vn".ToUpper(),

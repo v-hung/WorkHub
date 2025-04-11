@@ -6,24 +6,25 @@ namespace WorkTimeTracker.Domain.Entities.Identity;
 public class RefreshToken : Entity<int>
 {
 
-    [Required]
-    public required string Token { get; set; }
+	[Required]
+	[StringLength(255)]
+	public required string Token { get; set; }
 
-    [Required]
-    public required DateTime Expires { get; set; }
+	[Required]
+	public required DateTime Expires { get; set; }
 
-    [Required]
-    public required bool RememberMe { get; set; } = false;
+	[Required]
+	public required bool RememberMe { get; set; } = false;
 
-    [Required]
-    public DateTime Created { get; set; }
+	[Required]
+	public DateTime Created { get; set; }
 
-    // Navigation properties
+	// Navigation properties
 
-    [Required]
-    [ForeignKey("User")]
-    public Guid UserId { get; set; }
+	[Required]
+	[ForeignKey("User")]
+	public Guid UserId { get; set; }
 
-    public User? User { get; set; }
+	public User? User { get; set; }
 
 }

@@ -12,8 +12,10 @@ namespace WorkTimeTracker.Domain.Entities.Identity
 
 		public bool Gender { get; set; }
 
+		[StringLength(255)]
 		public string? PermanentAddress { get; set; }
 
+		[StringLength(255)]
 		public string? ContactAddress { get; set; }
 
 		public int YearsOfWork { get; set; } = 0;

@@ -10,8 +10,10 @@ namespace WorkTimeTracker.Domain.Entities.Work
 	public class Project : AuditEntity<int>
 	{
 		[Required]
+		[StringLength(255)]
 		public required string Name { get; set; }
 
+		[StringLength(255)]
 		public string? Description { get; set; }
 
 		public DateTime? StartDate { get; set; }

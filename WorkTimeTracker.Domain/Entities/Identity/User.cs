@@ -14,11 +14,10 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 {
 
 	[Required]
-	public required string Code { get; set; }
-
-	[Required]
+	[StringLength(255)]
 	public required string FullName { get; set; }
 
+	[StringLength(255)]
 	public string? Image { get; set; }
 
 	[Required]
@@ -40,8 +39,10 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 
 	public DateTime? UpdatedAt { get; set; }
 
+	[StringLength(255)]
 	public string? CreatedBy { get; set; }
 
+	[StringLength(255)]
 	public string? LastModifiedBy { get; set; }
 
 	public bool IsDeleted { get; set; } = false;

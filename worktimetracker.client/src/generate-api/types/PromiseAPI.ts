@@ -1644,6 +1644,46 @@ export class PromiseRoleApi {
     }
 
     /**
+     * @param [names]
+     */
+    public roleGetAllByNamesWithHttpInfo(names?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleGetAllByNamesWithHttpInfo(names, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [names]
+     */
+    public roleGetAllByNames(names?: Array<string>, _options?: PromiseConfigurationOptions): Promise<Array<RoleDto>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.roleGetAllByNames(names, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
      * @param id
      */
     public roleGetByIdWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleDto>> {

@@ -8,6 +8,7 @@ namespace WorkTimeTracker.Domain.Entities.Time
 	public class WorkTime : AuditEntity<int>
 	{
 		[Required]
+		[StringLength(255)]
 		public string Title { get; set; } = string.Empty;
 
 		[Required]

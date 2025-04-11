@@ -25,6 +25,11 @@
 		"vi": "Tiếng việt",
 		"en": "Tiếng anh"
 	},
+	"nationality": {
+		"vi-VN": "Việt Nam",
+		"ja-JP": "Nhật bản",
+		"en-US": "Mỹ"
+	},
 	"auth": {
 		"sessionExpired": "Phiên của bạn đã hết hạn. Vui lòng đăng nhập lại."
 	},

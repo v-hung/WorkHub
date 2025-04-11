@@ -29,7 +29,6 @@ const apiInstance = new UserApi(configuration);
 const request: UserApiUserCreateRequest = {
   
   userCreateUpdateRequest: {
-    code: "code_example",
     fullName: "fullName_example",
     email: "email_example",
     phoneNumber: "phoneNumber_example",
@@ -49,9 +48,6 @@ const request: UserApiUserCreateRequest = {
     supervisorId: "supervisorId_example",
     teamId: 1,
     managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
       1,
     ],
     roleNames: [
@@ -344,7 +340,6 @@ const request: UserApiUserUpdateRequest = {
   id: "id_example",
   
   userCreateUpdateRequest: {
-    code: "code_example",
     fullName: "fullName_example",
     email: "email_example",
     phoneNumber: "phoneNumber_example",
@@ -364,9 +359,6 @@ const request: UserApiUserUpdateRequest = {
     supervisorId: "supervisorId_example",
     teamId: 1,
     managerTeamIds: [
-      1,
-    ],
-    managerProjectIds: [
       1,
     ],
     roleNames: [

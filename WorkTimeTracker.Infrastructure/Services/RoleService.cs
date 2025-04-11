@@ -80,6 +80,19 @@ namespace WorkTimeTracker.Infrastructure.Services
 				.FirstOrDefaultAsync(u => u.Id.Equals(roleId)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Role is not found"]);
 		}
 
+		public async Task<D> GetAsync<D>(Expression<Func<Role, bool>>? filter = null) where D : class
+		{
+			var query = _context.Roles.AsQueryable();
+
+			if (filter != null)
+			{
+				query = query.Where(filter);
+			}
+
+			return await query.ProjectTo<D>(_mapper.ConfigurationProvider).FirstOrDefaultAsync()
+				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Role is not found"]);
+		}
+
 		public async Task<D> CreateAsync<D>(RoleCreateUpdateRequest request) where D : class
 		{
 			var role = _mapper.Map<Role>(request);

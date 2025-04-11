@@ -12,7 +12,9 @@ public abstract class AuditEntity<TId> : IAuditEntity<TId>
 
 	public DateTime? UpdatedAt { get; set; }
 
+	[StringLength(255)]
 	public string? CreatedBy { get; set; }
 
+	[StringLength(255)]
 	public string? LastModifiedBy { get; set; }
 }

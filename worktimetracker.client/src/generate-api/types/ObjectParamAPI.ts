@@ -1019,6 +1019,16 @@ export interface RoleApiRoleGetAllRequest {
     ids?: Array<string>
 }
 
+export interface RoleApiRoleGetAllByNamesRequest {
+    /**
+     * 
+     * Defaults to: undefined
+     * @type Array&lt;string&gt;
+     * @memberof RoleApiroleGetAllByNames
+     */
+    names?: Array<string>
+}
+
 export interface RoleApiRoleGetByIdRequest {
     /**
      * 
@@ -1127,6 +1137,20 @@ export class ObjectRoleApi {
      */
     public roleGetAll(param: RoleApiRoleGetAllRequest = {}, options?: ConfigurationOptions): Promise<Array<RoleDto>> {
         return this.api.roleGetAll(param.ids,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleGetAllByNamesWithHttpInfo(param: RoleApiRoleGetAllByNamesRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<RoleDto>>> {
+        return this.api.roleGetAllByNamesWithHttpInfo(param.names,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public roleGetAllByNames(param: RoleApiRoleGetAllByNamesRequest = {}, options?: ConfigurationOptions): Promise<Array<RoleDto>> {
+        return this.api.roleGetAllByNames(param.names,  options).toPromise();
     }
 
     /**

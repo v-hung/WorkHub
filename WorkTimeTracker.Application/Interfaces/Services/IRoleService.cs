@@ -15,6 +15,8 @@ namespace WorkTimeTracker.Application.Interfaces.Services
 
 		Task<D> GetAsync<D, DId>(DId roleId) where D : IEntity<DId> where DId : notnull;
 
+		Task<D> GetAsync<D>(Expression<Func<Role, bool>>? filter = null) where D : class;
+
 		Task<D> CreateAsync<D>(RoleCreateUpdateRequest request) where D : class;
 
 		Task<D?> UpdateAsync<D>(Guid roleId, RoleCreateUpdateRequest request) where D : class;

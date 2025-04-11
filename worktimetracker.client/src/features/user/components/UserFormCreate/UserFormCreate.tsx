@@ -22,6 +22,7 @@ import { useUserAction } from "../../hooks/useUserAction";
 import {
   Nationality,
   UserCreateUpdateRequest,
+  UserFullDto,
   UserPosition,
   UserStatus,
 } from "@/generate-api";
@@ -32,11 +33,12 @@ import { UserSelectMemo } from "../UserSelect/UserSelect";
 import { useAuthStore } from "@/stores/auth.store";
 import { RoleSelectMemo } from "@/features/role/components/RoleSelect/RoleSelect";
 import { WorkTimeSelectMemo } from "@/features/workTime/components/WorkTimeSelect/WorkTimeSelect";
+import { useTranslation } from "react-i18next";
 
 const { useBreakpoint } = Grid;
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  userId?: string;
+  record?: UserFullDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -46,12 +48,13 @@ export type UserFormCreateRefState = {
 
 const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
   (props, ref) => {
-    const { className, userId, setLoading, ...rest } = props;
+    const { className, record, setLoading, ...rest } = props;
 
     const screens = useBreakpoint();
     const currentUser = useAuthStore((state) => state.user);
+    const { t } = useTranslation();
 
-    const { loading, createUser, updateUser } = useUserAction();
+    const { loading, createUser, updateUser, formDefault } = useUserAction();
 
     useEffect(() => {
       if (setLoading) {
@@ -59,20 +62,18 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
       }
     }, [loading, setLoading]);
 
-    const [form] = Form.useForm();
-    const [formState] = useState<UserCreateUpdateRequest>(
-      new UserCreateUpdateRequest()
-    );
+    const [form] = Form.useForm<UserCreateUpdateRequest>();
+    const [formState] = useState<UserCreateUpdateRequest>(formDefault(record));
     const [isChangePass, setIsChangePass] = useState(false);
 
     useImperativeHandle(ref, () => ({
       handelUpsert() {
         form.validateFields().then(async () => {
           const formValues = form.getFieldsValue();
-          if (!userId) {
+          if (!record) {
             createUser(formValues);
           } else {
-            updateUser(userId, formState);
+            updateUser(record.id, formState);
           }
         });
       },
@@ -91,23 +92,6 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
           <Row wrap gutter={{ sm: 8, md: 16 }}>
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
-                label="Employee code"
-                name="code"
-                rules={[{ max: 36, required: true }]}
-              >
-                <Input
-                  placeholder="E.g. WBC10 "
-                  onInput={(e) =>
-                    ((e.target as HTMLInputElement).value = (
-                      e.target as HTMLInputElement
-                    ).value.toUpperCase())
-                  }
-                />
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} lg={12} xl={8}>
-              <Form.Item
                 label="FullName"
                 name="fullName"
                 rules={[{ max: 36, required: true }]}
@@ -123,6 +107,15 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 rules={[{ max: 36, required: true }]}
               >
                 <Input placeholder="email" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} lg={12} xl={8}>
+              <Form.Item label="Username" rules={[{ max: 36, required: true }]}>
+                <Input
+                  placeholder="* Automatically change based on email"
+                  disabled
+                />
               </Form.Item>
             </Col>
 
@@ -145,9 +138,9 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                 rules={[{ required: true }]}
               >
                 <Select
-                  options={Object.entries(Nationality).map(([key, value]) => ({
+                  options={Object.entries(Nationality).map(([_, value]) => ({
                     value,
-                    label: key,
+                    label: t("nationality." + value.replace(/_/g, "-")),
                   }))}
                 />
               </Form.Item>

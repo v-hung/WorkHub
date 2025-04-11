@@ -25,6 +25,11 @@
 		"vi": "Vietnamese",
 		"en": "English"
 	},
+	"nationality": {
+		"vi-VN": "Vietnamese",
+		"ja-JP": "Japanese",
+		"en-US": "American"
+	},
 	"auth": {
 		"sessionExpired": "Your session has expired. Please log in again."
 	},

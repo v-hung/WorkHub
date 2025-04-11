@@ -16,7 +16,6 @@ import { UserStatus } from '../models/UserStatus';
 import { HttpFile } from '../http/http';
 
 export class UserCreateUpdateRequest {
-    'code': string;
     'fullName': string;
     'email': string;
     'phoneNumber'?: string | null;
@@ -29,7 +28,6 @@ export class UserCreateUpdateRequest {
     'supervisorId'?: string | null;
     'teamId'?: number | null;
     'managerTeamIds'?: Array<number> | null;
-    'managerProjectIds'?: Array<number> | null;
     'roleNames': Array<string>;
     'password'?: string | null;
 
@@ -38,12 +36,6 @@ export class UserCreateUpdateRequest {
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "code",
-            "baseName": "code",
-            "type": "string",
-            "format": ""
-        },
         {
             "name": "fullName",
             "baseName": "fullName",
@@ -54,7 +46,7 @@ export class UserCreateUpdateRequest {
             "name": "email",
             "baseName": "email",
             "type": "string",
-            "format": ""
+            "format": "email"
         },
         {
             "name": "phoneNumber",
@@ -113,12 +105,6 @@ export class UserCreateUpdateRequest {
         {
             "name": "managerTeamIds",
             "baseName": "managerTeamIds",
-            "type": "Array<number>",
-            "format": "int32"
-        },
-        {
-            "name": "managerProjectIds",
-            "baseName": "managerProjectIds",
             "type": "Array<number>",
             "format": "int32"
         },

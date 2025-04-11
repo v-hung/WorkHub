@@ -8,8 +8,10 @@ namespace WorkTimeTracker.Domain.Entities.Misc
 {
 	public class Notification : AuditEntity<int>
 	{
+		[StringLength(255)]
 		public required string Title { get; set; }
 
+		[StringLength(255)]
 		public string Message { get; set; } = string.Empty;
 
 		public required NotificationType Type { get; set; }

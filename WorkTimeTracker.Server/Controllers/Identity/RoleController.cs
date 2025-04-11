@@ -26,6 +26,15 @@ namespace WorkTimeTracker.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[HttpGet("all-by-names")]
+		public async Task<ActionResult<List<RoleDto>>> GetAllByNames([FromQuery] List<string>? names = null)
+		{
+			names ??= [];
+			var data = await _roleService.GetAllAsync<RoleDto>(u => u.Name != null && names.Contains(u.Name));
+
+			return Ok(data);
+		}
+
 		[HttpGet]
 		public async Task<ActionResult<Paginated<RoleDto>>> Search([FromQuery] PagedRequest request)
 		{
@@ -37,6 +46,14 @@ namespace WorkTimeTracker.Server.Controllers.Time
 		public async Task<ActionResult<RoleDto>> GetById(Guid id)
 		{
 			var data = await _roleService.GetAsync<RoleDto, Guid>(id);
+
+			return Ok(data);
+		}
+
+		[HttpGet("{name}")]
+		public async Task<ActionResult<RoleDto>> GetByName(string name)
+		{
+			var data = await _roleService.GetAsync<RoleDto>(v => v.Name == name);
 
 			return Ok(data);
 		}
