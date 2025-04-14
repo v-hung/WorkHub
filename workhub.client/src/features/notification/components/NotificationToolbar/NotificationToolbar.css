@@ -1,0 +1,56 @@
+.notification-toolbar {
+  /* margin: 0 1.5rem; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.toolbar__left,
+.toolbar__right {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.toolbar__button {
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  border-radius: 9999px;
+  background-color: transparent;
+  padding: 0.375rem;
+  color: #4b5563;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.toolbar__button:hover {
+  background-color: #e5e7eb;
+}
+
+.toolbar__button > svg {
+  height: 100%;
+  width: 100%;
+}
+
+.toolbar__checkbox {
+  height: auto;
+  width: auto;
+  padding: 0 0.5rem;
+}
+
+.toolbar__button--danger i {
+  color: #dc2626; /* text-red-600 */
+}
+
+.toolbar__summary {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500;
+  color: #6b7280; /* text-gray-500 */
+}

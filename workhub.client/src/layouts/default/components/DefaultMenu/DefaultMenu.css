@@ -1,0 +1,114 @@
+/* Slide bar */
+.default-menu {
+  flex: 1;
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* Logo */
+.menu__logo {
+  position: sticky;
+  top: 0;
+  display: flex;
+  padding: 1rem;
+  background-color: #f8fafd;
+  z-index: 10;
+  gap: 0.5rem;
+  /* border-bottom: 1px solid #eee;
+  border-inline-end: 1px solid rgba(5, 5, 5, 0.06); */
+  max-height: 72px;
+  cursor: pointer;
+}
+
+.menu__logo .ant-avatar {
+  flex: none;
+}
+
+.menu__logo-title {
+  flex-grow: 1;
+  min-width: 0;
+  height: 2.5rem;
+}
+
+.menu__logo-title h5 {
+  font-size: 16px;
+  margin: -2px 0 0;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.menu__logo-title p {
+  font-size: 13px;
+  margin: -1px 0 0;
+  line-height: 1.5;
+  color: #6e6e6e;
+}
+
+.default-menu.ant-layout-sider-light {
+  background-color: transparent;
+}
+
+/* Menu */
+
+.default-menu .ant-menu {
+  background-color: #f8fafd;
+}
+
+.default-menu
+  :is(
+    .ant-menu-light.ant-menu-root.ant-menu-inline,
+    .ant-menu-light > .ant-menu.ant-menu-root.ant-menu-inline,
+    .ant-menu-light.ant-menu-root.ant-menu-vertical,
+    .ant-menu-light > .ant-menu.ant-menu-root.ant-menu-vertical
+  ) {
+  border-inline-end: none;
+}
+
+.default-menu .ant-menu-item,
+.default-menu .ant-menu-submenu .ant-menu-submenu-title {
+  padding: 8px 23px;
+  line-height: 1.5;
+}
+.default-menu .ant-menu-item.ant-menu-item-selected {
+  background-color: var(--color-second);
+  /* color: var(--color-text); */
+}
+
+.menu__item-notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 100%;
+  line-height: normal;
+}
+
+.menu__badge {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 0.2rem 0.5rem;
+}
+
+/* scroll indicator */
+.default-menu.scrolled .scroll-top-indicator {
+  opacity: 1;
+}
+
+.default-menu .scroll-top-indicator {
+  flex: none;
+  position: sticky;
+  top: 72px;
+  /* width: 100%; */
+  height: 8px;
+  box-shadow: 0 -3px 2px -2px #e8eaed;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  margin: 0 1.5rem;
+}

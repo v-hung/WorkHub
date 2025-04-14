@@ -1,7 +1,7 @@
 ### migrations
 
 ```
-dotnet ef migrations add Init --project ../WorkTimeTracker.Infrastructure --startup-project .
+dotnet ef migrations add Init --project ../WorkHub.Infrastructure --startup-project .
 ```
 
 ### update database

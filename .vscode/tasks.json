@@ -7,7 +7,7 @@
 			"type": "process",
 			"args": [
 				"build",
-				"${workspaceFolder}/WorkTimeTracker.Server/WorkTimeTracker.Server.csproj",
+				"${workspaceFolder}/WorkHub.Server/WorkHub.Server.csproj",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary;ForceNoAlign"
 			],
@@ -19,7 +19,7 @@
 			"type": "process",
 			"args": [
 				"publish",
-				"${workspaceFolder}/WorkTimeTracker.Server/WorkTimeTracker.Server.csproj",
+				"${workspaceFolder}/WorkHub.Server/WorkHub.Server.csproj",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary;ForceNoAlign"
 			],
@@ -33,11 +33,11 @@
 				"watch",
 				"run",
 				"--project",
-				"${workspaceFolder}/WorkTimeTracker.Server/WorkTimeTracker.Server.csproj"
+				"${workspaceFolder}/WorkHub.Server/WorkHub.Server.csproj"
 			],
 			"problemMatcher": "$msCompile",
 			"options": {
-				"cwd": "${workspaceFolder}/WorkTimeTracker.Server/"
+				"cwd": "${workspaceFolder}/WorkHub.Server/"
 			}
 		}
 	]
