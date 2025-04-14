@@ -1,4 +1,3 @@
-import MainHeader from "@/layouts/main/components/MainHeader";
 import { Button, Popconfirm, Skeleton, Tag } from "antd";
 import styles from "./TimesheetHeader.module.css";
 import { useTimesheet } from "../../hooks/useTimesheet";
@@ -8,6 +7,7 @@ import { blueDark, red } from "@ant-design/colors";
 import { useTimesheetContext } from "../../context/TimesheetContext";
 import { useRequestContext } from "@/features/request/contexts/RequestContext";
 import { RequestType } from "@/generate-api";
+import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 
 const TImesheetHeader = () => {
   const { loading, timeString } = useTimesheet();
@@ -25,7 +25,7 @@ const TImesheetHeader = () => {
   };
 
   return (
-    <MainHeader title="Timesheet">
+    <DefaultHeader title="Timesheet">
       <div className={styles.headerContainer}>
         {startTime && <Tag color="blue">{format(startTime)}</Tag>}
         <div className="action">
@@ -77,7 +77,7 @@ const TImesheetHeader = () => {
           )}
         </div>
       </div>
-    </MainHeader>
+    </DefaultHeader>
   );
 };
 

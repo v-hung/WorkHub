@@ -1,4 +1,4 @@
-import { getMessageError } from "@/common/utils/error";
+import { getMessageError } from "@/common/utils/error.utils";
 import { ProjectDtoPaginated } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { App } from "antd";

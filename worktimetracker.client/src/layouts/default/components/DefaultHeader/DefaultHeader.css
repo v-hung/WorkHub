@@ -1,0 +1,28 @@
+/* Header */
+.default-header {
+  position: sticky;
+  top: 0;
+  min-height: var(--header-height);
+  background-color: #fff;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* border-bottom: 1px solid rgba(5, 5, 5, 0.06); */
+  z-index: 50;
+}
+
+.default-header .header__title {
+  flex: none;
+  margin: 0;
+  margin-right: auto;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.default-header .header__wrap {
+  line-height: initial;
+  flex: 1;
+  display: flex;
+  justify-content: end;
+}

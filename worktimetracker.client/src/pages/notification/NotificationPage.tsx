@@ -1,23 +1,22 @@
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
-import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
-import MainContent from "@/layouts/main/components/MainContent";
-import MainHeader from "@/layouts/main/components/MainHeader";
-import { Layout } from "antd";
+import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
+import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 
 export const loader = wrapLoaderWithPermission();
 
 export function Component() {
   return (
-    <Layout className="main-layout h-screen">
-      <MainHeader title="Notifications"></MainHeader>
+    <DefaultPage pageClassName="h-screen">
+      <DefaultHeader title="Notifications"></DefaultHeader>
 
-      {/* <MainBreadcrumb
+      {/* <DefaultBreadcrumb
         items={[{ title: "Home", path: "/" }, { title: "Project Manager" }]}
       /> */}
 
-      <MainContent>
+      <DefaultContent>
         <NotificationTable />
-      </MainContent>
-    </Layout>
+      </DefaultContent>
+    </DefaultPage>
   );
 }

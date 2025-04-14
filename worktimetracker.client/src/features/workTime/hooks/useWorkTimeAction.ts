@@ -1,5 +1,5 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error";
+import { getMessageError } from "@/common/utils/error.utils";
 import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 import { workTimeApi } from "@/services/apiClient";
 import { useState } from "react";

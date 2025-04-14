@@ -1,18 +1,16 @@
-import { Layout } from "antd";
-import MainHeader from "@/layouts/main/components/MainHeader";
-import MainContent from "@/layouts/main/components/MainContent";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
+import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
+import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 
-export const loader = wrapLoaderWithPermission(async () => {
-  // requiredPermission();
-});
+export const loader = wrapLoaderWithPermission(async () => {});
 
 export function Component() {
   return (
-    <Layout>
-      <MainHeader title="Home"></MainHeader>
+    <DefaultPage>
+      <DefaultHeader title="Home"></DefaultHeader>
 
-      <MainContent>Home</MainContent>
-    </Layout>
+      <DefaultContent>Home</DefaultContent>
+    </DefaultPage>
   );
 }

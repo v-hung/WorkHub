@@ -4,6 +4,7 @@ import {
   UserDto,
   UserPosition,
   UserStatus,
+  WorkTimeDto,
 } from "@/generate-api";
 import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
@@ -50,6 +51,7 @@ export const useAuthStore = create<AuthStoreState>()(
       // set({
       //   user: USER,
       // });
+      // return USER;
 
       return await wrapPromise(() =>
         accountApiWithRefreshToken.accountGetCurrentUser().then((user) => {
@@ -61,14 +63,15 @@ export const useAuthStore = create<AuthStoreState>()(
   }))
 );
 
-const USER = {
+const USER: UserDto = {
   id: "1",
   fullName: "Nguyễn Việt Hùng",
   email: "hungnv@wbcvn.vn",
   createdAt: new Date(),
   updatedAt: new Date(),
   isFirstLogin: false,
-  leaveHours: 0,
   userPosition: UserPosition.Developer,
   userStatus: UserStatus.Active,
+  remainingLeaveMinutes: 480,
+  workTime: new WorkTimeDto(),
 };

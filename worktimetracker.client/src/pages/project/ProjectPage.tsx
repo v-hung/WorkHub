@@ -1,11 +1,12 @@
-import { Button, Layout } from "antd";
-import MainContent from "@/layouts/main/components/MainContent";
-import MainHeader from "@/layouts/main/components/MainHeader";
-import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
+import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import ProjectTable from "@/features/project/components/ProjectTable/ProjectTable";
 import { ProjectProvider } from "@/features/project/contexts/ProjectContext";
+import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
+import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
+import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
+import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 
 export const loader = wrapLoaderWithPermission();
 
@@ -13,8 +14,8 @@ export function Component() {
   const navigate = useNavigate();
 
   return (
-    <Layout className="main-layout h-screen">
-      <MainHeader title="Projects Manager">
+    <DefaultPage pageClassName="h-screen">
+      <DefaultHeader title="Projects Manager">
         <Button
           type="primary"
           onClick={() => navigate("/projects/create")}
@@ -22,17 +23,17 @@ export function Component() {
         >
           Add work time
         </Button>
-      </MainHeader>
+      </DefaultHeader>
 
-      <MainBreadcrumb
+      <DefaultBreadcrumb
         items={[{ title: "Home", path: "/" }, { title: "Project Manager" }]}
       />
 
-      <MainContent>
+      <DefaultContent>
         <ProjectProvider>
           <ProjectTable />
         </ProjectProvider>
-      </MainContent>
-    </Layout>
+      </DefaultContent>
+    </DefaultPage>
   );
 }

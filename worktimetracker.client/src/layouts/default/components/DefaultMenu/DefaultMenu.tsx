@@ -9,16 +9,17 @@ import UsIcon from "@/assets/UsIcon.svg";
 import { i18n, TFunction } from "i18next";
 import { useNavigate, useLocation } from "react-router";
 import { MenuInfo } from "rc-menu/lib/interface";
-import { getOpenKeys, getSelectedKeys } from "@/common/utils/menu";
-import { useMenu } from "../hooks/useMenu";
-import { useLayout } from "../contexts/LayoutContext";
+import { getOpenKeys, getSelectedKeys } from "@/common/utils/menu.utils";
 import { authBootstrapLogout } from "@/common/bootstrap/auth.bootstrap";
+import { useLayout } from "../../contexts/LayoutContext";
+import { useMenu } from "../../hooks/useMenu";
+import "./DefaultMenu.css";
 
 const { Sider } = Layout;
 
 type State = ComponentProps<typeof Sider>;
 
-const MainMenu: FC<State> = (props) => {
+const DefaultMenu: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const MainMenu: FC<State> = (props) => {
       collapsed={collapsed}
       {...rest}
       width={256}
-      className={`${className} main-menu`}
+      className={`${className} default-menu`}
     >
       <SimpleBar style={{ height: "100%" }}>
         <Dropdown
@@ -61,9 +62,9 @@ const MainMenu: FC<State> = (props) => {
           placement="bottomLeft"
           menu={{ items: getMenuLogoItems(t, i18n) }}
         >
-          <div className="menu-logo">
+          <div className="menu__logo">
             <Avatar shape="square" size={40} icon={<IIonPerson />}></Avatar>
-            <div className="menu-logo-title">
+            <div className="menu__logo-title">
               <h5 className="truncate">{user?.fullName}</h5>
               <p className="truncate">{user?.email}</p>
             </div>
@@ -81,7 +82,7 @@ const MainMenu: FC<State> = (props) => {
   );
 };
 
-export default MainMenu;
+export default DefaultMenu;
 
 const getMenuLogoItems = (t: TFunction, i18n: i18n): MenuProps["items"] => {
   const navigate = useNavigate();

@@ -1,11 +1,9 @@
 import { createBrowserRouter } from "react-router";
-import MainLoading from "./layouts/main/components/MainLoading";
 
 const router = createBrowserRouter(
   [
     {
-      lazy: () => import("./layouts/main/MainLayout"),
-      // hydrateFallbackElement: <MainLoading />,
+      lazy: () => import("./layouts/default/DefaultLayout"),
       children: [
         {
           path: "/",

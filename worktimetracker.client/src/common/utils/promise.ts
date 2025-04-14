@@ -1,4 +1,4 @@
-import { getMessageError } from "./error";
+import { getMessageError } from "./error.utils";
 import { getNotification } from "../contexts/FeedbackProvider";
 
 export const wrapPromise = async <T>(callback: () => Promise<T>) => {

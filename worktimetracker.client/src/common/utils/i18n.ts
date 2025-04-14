@@ -35,7 +35,7 @@ i18n
     },
 
     react: {
-      // useSuspense: false, // disable if you want self control
+      useSuspense: false, // disable if you want self control
     },
   });
 

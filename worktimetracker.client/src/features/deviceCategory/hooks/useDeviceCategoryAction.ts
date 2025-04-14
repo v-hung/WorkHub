@@ -1,5 +1,5 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error";
+import { getMessageError } from "@/common/utils/error.utils";
 import { CreateDeviceCategoryCommand, DeviceCategoryDto } from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { useState } from "react";

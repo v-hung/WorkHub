@@ -55,10 +55,10 @@ export class FetchHttpLibrary implements HttpLibrary {
               return this.send(request, true).toPromise();
             })
             .catch(() => {
-              useAuthStore.getState().logout();
-              getNotification()?.error({
-                message: i18n.t("auth.sessionExpired"),
-              });
+              // useAuthStore.getState().logout();
+              // getNotification()?.error({
+              //   message: i18n.t("auth.sessionExpired"),
+              // });
               return responseContext; // Return original 401 response
             });
         }

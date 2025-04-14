@@ -33,9 +33,9 @@ export const getMenuItems = (
       key: "/notifications",
       icon: <IonMailNotificationOutline />,
       label: (
-        <span className="menu-item-notification">
+        <span className="menu__item-notification">
           <span>{t("menus.notification")}</span>
-          <span className="menu-badge">{unReadCount}</span>
+          <span className="menu__badge">{unReadCount}</span>
         </span>
       ),
     },

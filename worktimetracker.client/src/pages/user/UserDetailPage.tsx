@@ -1,7 +1,8 @@
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
-import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
-import MainContent from "@/layouts/main/components/MainContent";
-import MainHeader from "@/layouts/main/components/MainHeader";
+import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
+import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
+import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import { Layout } from "antd";
 import { useParams } from "react-router";
 
@@ -13,18 +14,18 @@ export function Component() {
   const { id } = useParams();
 
   return (
-    <Layout className="main-layout-wrapper">
+    <DefaultPage>
       <Layout className="main-layout">
-        <MainHeader title={id ? "Update user" : "Create user"} />
-        <MainBreadcrumb
+        <DefaultHeader title={id ? "Update user" : "Create user"} />
+        <DefaultBreadcrumb
           items={[
             { title: "Home", path: "/" },
             { title: "Users Manager", path: "/users" },
             { title: "User detail" },
           ]}
         />
-        <MainContent></MainContent>
+        <DefaultContent>asd</DefaultContent>
       </Layout>
-    </Layout>
+    </DefaultPage>
   );
 }

@@ -1,4 +1,4 @@
-import { getMessageError } from "@/common/utils/error";
+import { getMessageError } from "@/common/utils/error.utils";
 import { DeviceCategoryDtoPaginated } from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { App } from "antd";

@@ -1,15 +1,5 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
-import {
-  Avatar,
-  Button,
-  Popconfirm,
-  Space,
-  TableProps,
-  Tag,
-  Tooltip,
-} from "antd";
-import { FC } from "react";
-import { useNotificationsContext } from "../../contexts/NotificationContext";
+import { Avatar, Space, TableProps, Tag, Tooltip } from "antd";
 import { NotificationDto, UserMinimalDto } from "@/generate-api";
 import { format } from "@/common/utils/date.util";
 import { getUniqueColor } from "@/common/utils/color.util";
@@ -136,29 +126,3 @@ export const notificationTableColumns: TableProps<NotificationDto>["columns"] =
       ),
     },
   ];
-
-const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useNotificationsContext();
-
-  const confirm = async () => {
-    await deleteRecord(id);
-
-    setRequest((state) => ({
-      ...state,
-      pageNumber: 1,
-    }));
-  };
-
-  return (
-    <Popconfirm
-      title="Delete the notification"
-      description="Are you sure to delete this notification?"
-      onConfirm={confirm}
-      placement="bottomRight"
-    >
-      <Button size="small" danger>
-        Delete
-      </Button>
-    </Popconfirm>
-  );
-};

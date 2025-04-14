@@ -1,5 +1,5 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error";
+import { getMessageError } from "@/common/utils/error.utils";
 import {
   CreateTimesheetAdjustmentRequestDto,
   RequestType,

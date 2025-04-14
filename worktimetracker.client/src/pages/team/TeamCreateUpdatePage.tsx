@@ -1,7 +1,4 @@
-import { Button, Layout } from "antd";
-import MainContent from "@/layouts/main/components/MainContent";
-import MainHeader from "@/layouts/main/components/MainHeader";
-import MainBreadcrumb from "@/layouts/main/components/MainBreadcrumb";
+import { Button } from "antd";
 import { redirect, useLoaderData } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
 import { useRef, useState } from "react";
@@ -11,6 +8,10 @@ import TeamFormCreate, {
 import { teamApi } from "@/services/apiClient";
 import { wrapPromise } from "@/common/utils/promise";
 import { TeamFullDto } from "@/generate-api";
+import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
+import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
+import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
+import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 
 export const loader = wrapLoaderWithPermission(async ({ params }) => {
   if (params.id) {
@@ -38,8 +39,8 @@ export function Component() {
   };
 
   return (
-    <Layout className="main-layout">
-      <MainHeader title={data ? "Update team" : "Create team"}>
+    <DefaultPage>
+      <DefaultHeader title={data ? "Update team" : "Create team"}>
         <Button
           type="primary"
           icon={<IIonSaveOutline width={16} height={16} />}
@@ -48,9 +49,9 @@ export function Component() {
         >
           Save
         </Button>
-      </MainHeader>
+      </DefaultHeader>
 
-      <MainBreadcrumb
+      <DefaultBreadcrumb
         items={[
           { title: "Home", path: "/" },
           { title: "Teams Manager", path: "/teams" },
@@ -58,9 +59,9 @@ export function Component() {
         ]}
       />
 
-      <MainContent>
+      <DefaultContent>
         <TeamFormCreate ref={formRef} setLoading={setLoading} record={data} />
-      </MainContent>
-    </Layout>
+      </DefaultContent>
+    </DefaultPage>
   );
 }
