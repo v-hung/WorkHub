@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using WorkHub.Application.DTOs.Identity;
 using WorkHub.Domain.Enums;
 
@@ -17,7 +18,7 @@ namespace WorkHub.Application.Requests.Identity
 
 		public string? PhoneNumber { get; set; }
 
-		public string? Image { get; set; }
+		public IFormFile? file { get; set; }
 
 		[Required]
 		public required UserPosition UserPosition { get; set; }

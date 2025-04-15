@@ -134,6 +134,7 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 		services.AddSingleton<IEmailBackgroundQueue, EmailBackgroundQueue>();
 		services.AddHostedService<EmailSenderHostedService>();
+		services.AddScoped<IUploadFile, UploadFile>();
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 

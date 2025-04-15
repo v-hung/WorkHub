@@ -18,6 +18,7 @@ using WorkHub.Domain.Entities.Organization;
 using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Constants.Identity;
 using System.Linq.Expressions;
+using WorkHub.Application.Utils;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -28,14 +29,16 @@ namespace WorkHub.Infrastructure.Services
 		private readonly IMapper _mapper;
 		private readonly IStringLocalizer<UserService> _localizer;
 		private readonly IIdentityService _identityService;
+		private readonly IUploadFile _uploadFile;
 
-		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer, IIdentityService identityService)
+		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer, IIdentityService identityService, IUploadFile uploadFile)
 		{
 			_context = context;
 			_mapper = mapper;
 			_userManager = userManager;
 			_localizer = localizer;
 			_identityService = identityService;
+			_uploadFile = uploadFile;
 		}
 
 		public async Task<List<D>> GetAllAsync<D>(Expression<Func<User, bool>>? filter = null)
@@ -186,6 +189,19 @@ namespace WorkHub.Infrastructure.Services
 				{
 					throw new BusinessException(HttpStatusCode.BadRequest, "Failed to add new roles.");
 				}
+			}
+
+			if (request.file != null && request.file.Length > 0)
+			{
+				var fileData = AvatarGenerator.GenerateAvatar(request.FullName);
+
+				var file = await _uploadFile.UploadSingleAsync(fileData, "users");
+
+				user.Image = file.Path;
+			}
+			else
+			{
+				// user.Image = null;
 			}
 		}
 

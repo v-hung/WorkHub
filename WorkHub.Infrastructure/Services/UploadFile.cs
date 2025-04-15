@@ -3,6 +3,7 @@ using WorkHub.Application.Models.Files;
 using WorkHub.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using SkiaSharp;
+using System.Text.RegularExpressions;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -57,13 +58,13 @@ namespace WorkHub.Infrastructure.Services
 			return filesInfo;
 		}
 
-		public async Task<FileInformation> UploadSingle(IFormFile file, string? path = null)
+		public async Task<FileInformation> UploadSingleAsync(IFormFile file, string? path = null)
 		{
 			string? extension = Path.GetExtension(file.FileName)?.ToLower().Substring(1);
 
 			if (string.IsNullOrEmpty(extension) || !IsMediaExtension(extension))
 			{
-				throw new Exception("Tệp tin không hợp lệ. Vui lòng tải lên ảnh, âm thanh hoặc video.");
+				throw new Exception("The file is invalid. Please upload photos, audio or video.");
 			}
 
 			string uploadsFolderPath = string.IsNullOrEmpty(path) ? UPLOAD_FOLDER_NAME : $"{UPLOAD_FOLDER_NAME}/{path}";
@@ -74,7 +75,6 @@ namespace WorkHub.Infrastructure.Services
 				Directory.CreateDirectory(uploadsFolder);
 			}
 
-			// Kiểm tra trùng lặp tên file và tạo tên file duy nhất
 			string fileName = GetUniqueFileName(file.FileName, uploadsFolder);
 			string filePath = Path.Combine(uploadsFolder, fileName);
 
@@ -83,7 +83,7 @@ namespace WorkHub.Infrastructure.Services
 				await file.CopyToAsync(stream);
 			}
 
-			// Nếu là ảnh, nén và thay đổi kích thước
+			// If it is a photo, compress and change the size
 			if (ImageExtensions.Contains(extension))
 			{
 				CompressImage(filePath);
@@ -101,43 +101,43 @@ namespace WorkHub.Infrastructure.Services
 			return fileInformation;
 		}
 
-		private string GetUniqueFileName(string fileName, string uploadFolder)
+		public async Task<FileInformation> UploadSingleAsync(byte[] bytes, string? path = null)
 		{
-			string extension = Path.GetExtension(fileName).ToLower();
-			string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
 
-			// Create random string instead of using count numbers
-			string uniqueName = $"{nameWithoutExtension}_{Guid.NewGuid()}";
-			string uniqueFileName = uniqueName + extension;
+			string uploadsFolderPath = string.IsNullOrEmpty(path) ? UPLOAD_FOLDER_NAME : $"{UPLOAD_FOLDER_NAME}/{path}";
+			string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, uploadsFolderPath);
 
-			// If the file has existed, we can add a guid array or create another random file name
-			while (File.Exists(Path.Combine(uploadFolder, uniqueFileName)))
+			if (!Directory.Exists(uploadsFolder))
 			{
-				uniqueFileName = $"{nameWithoutExtension}_{Guid.NewGuid()}";
+				Directory.CreateDirectory(uploadsFolder);
 			}
 
-			return uniqueFileName;
-		}
+			string fileName = GetUniqueFileName("avatar.png", uploadsFolder);
+			string filePath = Path.Combine(uploadsFolder, fileName);
 
-		private void CompressImage(string filePath, int quality = 75)
-		{
-			using (var original = SKBitmap.Decode(filePath))
+			await File.WriteAllBytesAsync(filePath, bytes);
+
+			FileInfo fileInfo = new FileInfo(filePath);
+			FileInformation fileInformation = new FileInformation()
 			{
-				var imageInfo = new SKImageInfo(original.Width, original.Height);
+				Name = fileName,
+				Path = $"/{uploadsFolderPath}/{fileName}",
+				Size = fileInfo.Length,
+				Extension = "png"
+			};
 
-				using (var image = SKImage.FromBitmap(original))
-				{
-					var encoded = image.Encode(SKEncodedImageFormat.Jpeg, quality);
+			return fileInformation;
 
-					using (var stream = File.OpenWrite(filePath))
-					{
-						encoded.SaveTo(stream);
-					}
-				}
-			}
 		}
 
-		public async Task<List<FileInformation>> UploadMultiple(List<IFormFile> files, string? path = null)
+		public async Task<List<FileInformation>> UploadMultipleAsync(List<IFormFile> files, string? path = null)
+		{
+			var uploadTasks = files.Select(file => UploadSingle(file, path)).ToList();
+			FileInformation[] results = await Task.WhenAll(uploadTasks);
+			return results.ToList();
+		}
+
+		public async Task<List<FileInformation>> UploadMultipleAsync(List<byte[]> files, string? path = null)
 		{
 			var uploadTasks = files.Select(file => UploadSingle(file, path)).ToList();
 			FileInformation[] results = await Task.WhenAll(uploadTasks);
@@ -166,6 +166,43 @@ namespace WorkHub.Infrastructure.Services
 		private bool IsMediaExtension(string extension)
 		{
 			return ImageExtensions.Contains(extension) || AudioExtensions.Contains(extension) || VideoExtensions.Contains(extension);
+		}
+
+		private string GetUniqueFileName(string fileName, string uploadFolder)
+		{
+			string extension = Path.GetExtension(fileName).ToLower();
+			string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+
+			string asciiOnly = Regex.Replace(nameWithoutExtension, @"[^\u0000-\u007F]", "");
+
+			string noSpacesOrSpecialChars = Regex.Replace(asciiOnly, @"[\s\W]", "_");
+
+			string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+			Random rand = new();
+			string randomNumber = rand.Next(1000).ToString("D3");
+
+			string safeFileName = $"{noSpacesOrSpecialChars}_{timestamp}_{randomNumber}{extension}";
+
+			return safeFileName;
+		}
+
+		private void CompressImage(string filePath, int quality = 75)
+		{
+			using (var original = SKBitmap.Decode(filePath))
+			{
+				var imageInfo = new SKImageInfo(original.Width, original.Height);
+
+				using (var image = SKImage.FromBitmap(original))
+				{
+					var encoded = image.Encode(SKEncodedImageFormat.Jpeg, quality);
+
+					using (var stream = File.OpenWrite(filePath))
+					{
+						encoded.SaveTo(stream);
+					}
+				}
+			}
 		}
 	}
 }
