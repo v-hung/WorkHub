@@ -1,7 +1,6 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using WorkHub.Application.DTOs.Identity;
 using System.Linq.Dynamic.Core;
 using System.Net;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +14,6 @@ using WorkHub.Domain.Entities.Audit;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Requests.Identity;
 using WorkHub.Domain.Entities.Organization;
-using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Constants.Identity;
 using System.Linq.Expressions;
 using WorkHub.Application.Utils;
@@ -114,15 +112,18 @@ namespace WorkHub.Infrastructure.Services
 			user.LockoutEnabled = true;
 			user.SecurityStamp = Guid.NewGuid().ToString();
 			user.EmailConfirmed = true;
-
-			await MapRequestToUser(request, user, null);
+			user.UserName = request.Email;
+			user.UserName = request.Email;
+			user.NormalizedUserName = request.Email;
+			user.NormalizedEmail = request.Email;
 
 			var result = await _userManager.CreateAsync(user, request.Password ?? UserConst.DefaultPassword);
 			if (!result.Succeeded)
 			{
+				throw new BusinessException(HttpStatusCode.BadRequest, "Failed to create user.");
 			}
 
-			await _userManager.AddToRoleAsync(user, RoleConst.BasicRole);
+			await MapRequestToUser(request, user, null);
 
 			await _context.SaveChangesAsync();
 
@@ -175,13 +176,16 @@ namespace WorkHub.Infrastructure.Services
 
 			if (request.RoleNames != null && request.RoleNames.Any())
 			{
-				var currentRoles = await _userManager.GetRolesAsync(user);
-
-				var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
-
-				if (!removeResult.Succeeded)
+				if (userUpdateId != null)
 				{
-					throw new BusinessException(HttpStatusCode.BadRequest, "Failed to remove existing roles.");
+					var currentRoles = await _userManager.GetRolesAsync(user);
+
+					var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+					if (!removeResult.Succeeded)
+					{
+						throw new BusinessException(HttpStatusCode.BadRequest, "Failed to remove existing roles.");
+					}
 				}
 
 				var addResult = await _userManager.AddToRolesAsync(user, request.RoleNames);
@@ -191,7 +195,7 @@ namespace WorkHub.Infrastructure.Services
 				}
 			}
 
-			if (request.file != null && request.file.Length > 0)
+			if (request.File != null && request.File.Length > 0)
 			{
 				var fileData = AvatarGenerator.GenerateAvatar(request.FullName);
 

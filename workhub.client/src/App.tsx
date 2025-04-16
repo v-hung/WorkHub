@@ -4,6 +4,7 @@ import { authBootstrap } from "./common/bootstrap/auth.bootstrap";
 import { FeedbackProvider } from "./common/contexts/FeedbackProvider";
 import { RouterProvider } from "react-router";
 import router from "./router";
+import viVN from "antd/locale/vi_VN";
 
 export const AppProvider = () => {
   authBootstrap.read();
@@ -20,6 +21,7 @@ export const AppProvider = () => {
           colorBgLayout: "var(--color-bg)",
         },
       }}
+      // locale={viVN}
     >
       <AppTheme
         message={{ maxCount: 1 }}

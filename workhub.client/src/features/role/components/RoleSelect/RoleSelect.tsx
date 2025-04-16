@@ -33,7 +33,7 @@ const RoleSelect: FC<State> = (props) => {
     setOptions((prev) => {
       const newOptions = rolePaginated.data.map((item) => ({
         label: item.name,
-        value: item.id,
+        value: item.name,
       }));
 
       return rolePaginated.currentPage === 1

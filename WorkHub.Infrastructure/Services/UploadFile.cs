@@ -132,14 +132,14 @@ namespace WorkHub.Infrastructure.Services
 
 		public async Task<List<FileInformation>> UploadMultipleAsync(List<IFormFile> files, string? path = null)
 		{
-			var uploadTasks = files.Select(file => UploadSingle(file, path)).ToList();
+			var uploadTasks = files.Select(file => UploadSingleAsync(file, path)).ToList();
 			FileInformation[] results = await Task.WhenAll(uploadTasks);
 			return results.ToList();
 		}
 
 		public async Task<List<FileInformation>> UploadMultipleAsync(List<byte[]> files, string? path = null)
 		{
-			var uploadTasks = files.Select(file => UploadSingle(file, path)).ToList();
+			var uploadTasks = files.Select(file => UploadSingleAsync(file, path)).ToList();
 			FileInformation[] results = await Task.WhenAll(uploadTasks);
 			return results.ToList();
 		}

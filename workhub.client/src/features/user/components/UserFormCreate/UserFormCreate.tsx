@@ -34,6 +34,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { RoleSelectMemo } from "@/features/role/components/RoleSelect/RoleSelect";
 import { WorkTimeSelectMemo } from "@/features/workTime/components/WorkTimeSelect/WorkTimeSelect";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
 
 const { useBreakpoint } = Grid;
 
@@ -53,6 +54,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
     const screens = useBreakpoint();
     const currentUser = useAuthStore((state) => state.user);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const { loading, createUser, updateUser, formDefault } = useUserAction();
 
@@ -70,10 +72,16 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
       handelUpsert() {
         form.validateFields().then(async () => {
           const formValues = form.getFieldsValue();
+
           if (!record) {
-            createUser(formValues);
+            await createUser(formValues, () => navigate("/users"));
           } else {
-            updateUser(record.id, formState);
+            await updateUser(record.id, formValues, (user) => {
+              navigate("/users");
+              if (currentUser?.id === user.id) {
+                useAuthStore.getState().load();
+              }
+            });
           }
         });
       },
@@ -89,6 +97,10 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
           labelCol={{ lg: { span: 9 }, xl: { span: 10 }, xxl: { span: 8 } }}
           // style={{ paddingTop: "1.5rem" }}
         >
+          <Form.Item hidden name={["userDetail", "id"]}>
+            <Input />
+          </Form.Item>
+
           <Row wrap gutter={{ sm: 8, md: 16 }}>
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
@@ -122,7 +134,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="BirthDate" name={["userDetail", "birthDate"]}>
-                <MyDatePicker style={{ width: "100%" }} />
+                <MyDatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
               </Form.Item>
             </Col>
 

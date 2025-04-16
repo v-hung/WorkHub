@@ -5,6 +5,7 @@ namespace WorkHub.Application.DTOs.Identity
 {
 	public class UserDetailDto
 	{
+		public int? Id { get; set; }
 
 		public DateTime BirthDate { get; set; }
 

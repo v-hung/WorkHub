@@ -18,7 +18,7 @@ namespace WorkHub.Application.Requests.Identity
 
 		public string? PhoneNumber { get; set; }
 
-		public IFormFile? file { get; set; }
+		public IFormFile? File { get; set; }
 
 		[Required]
 		public required UserPosition UserPosition { get; set; }

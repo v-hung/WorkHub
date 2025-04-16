@@ -23,6 +23,7 @@ using WorkHub.Infrastructure.Messaging;
 using WorkHub.Infrastructure.Services;
 using WorkHub.Infrastructure.Services.Templates;
 using WorkHub.Server.Swagger;
+using WorkHub.Server.Converters;
 
 namespace WorkHub.Server.Extensions;
 
@@ -43,6 +44,7 @@ static class ServiceCollectionExtensions
 		{
 			options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 			options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+			options.JsonSerializerOptions.Converters.Add(new UtcDateTimeConverter());
 		});
 	}
 

@@ -1,6 +1,6 @@
 import { getNotification } from "@/common/contexts/FeedbackProvider";
 import { getMessageError } from "@/common/utils/error.utils";
-import { UserCreateUpdateRequest, UserFullDto } from "@/generate-api";
+import { UserCreateUpdateRequest, UserDto, UserFullDto } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -28,10 +28,19 @@ export const useUserAction = () => {
   // Create USER
   // =============
 
-  const createUser = async (request: UserCreateUpdateRequest) => {
+  const createUser = async (
+    request: UserCreateUpdateRequest,
+    cb?: () => void
+  ) => {
     setLoading(true);
     try {
-      return await userApi.userCreate(request);
+      await userApi.userCreate(request);
+
+      if (cb) cb();
+
+      getNotification().success({
+        message: "Successfully completed",
+      });
     } catch (e) {
       getNotification().error({
         message: getMessageError(e),
@@ -44,10 +53,19 @@ export const useUserAction = () => {
   // Update USER
   // =============
 
-  const updateUser = async (id: string, request: UserCreateUpdateRequest) => {
+  const updateUser = async (
+    id: string,
+    request: UserCreateUpdateRequest,
+    cb?: (data: UserDto) => void
+  ) => {
     setLoading(true);
     try {
-      return await userApi.userUpdate(id, request);
+      let data = await userApi.userUpdate(id, request);
+      cb?.(data);
+
+      getNotification().success({
+        message: "Successfully completed",
+      });
     } catch (e) {
       getNotification().error({
         message: getMessageError(e),

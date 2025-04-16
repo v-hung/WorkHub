@@ -43,5 +43,5 @@ export function localTimeToDate(localTime: string) {
 
 const getCurrentDateLocale = () => {
   const storedLocale = localStorage.getItem("locale") ?? "";
-  return LOCALE_MAP[storedLocale] || enUS;
+  return LOCALE_MAP[storedLocale] || vi;
 };

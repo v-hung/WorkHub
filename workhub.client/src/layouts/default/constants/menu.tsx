@@ -79,19 +79,9 @@ export const getMenuItems = (
       ],
     },
     {
-      key: "/permissions",
+      key: "/permissions/roles",
       icon: <IonLockClosedOutline />,
       label: t("menus.permission"),
-      children: [
-        {
-          key: "/permissions/role",
-          label: t("menus.members"),
-        },
-        {
-          key: "/permissions/permissions",
-          label: t("menus.members"),
-        },
-      ],
     },
     {
       key: "/equipment",

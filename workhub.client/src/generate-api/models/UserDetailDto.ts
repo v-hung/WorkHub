@@ -20,6 +20,7 @@ export class UserDetailDto {
     'contactAddress'?: string | null;
     'yearsOfWork': number;
     'nationality': Nationality;
+    'id'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -61,6 +62,12 @@ export class UserDetailDto {
             "baseName": "nationality",
             "type": "Nationality",
             "format": ""
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string",
+            "format": "uuid"
         }    ];
 
     static getAttributeTypeMap() {
