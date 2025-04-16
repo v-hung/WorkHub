@@ -13,19 +13,19 @@ namespace WorkHub.Application.Models.Files
 		{
 			get
 			{
-				const int scale = 1024;
-				string[] orders = ["TB", "GB", "MB", "KB", "bytes"];
-				long max = (long)Math.Pow(scale, orders.Length - 1);
+				const decimal scale = 1024;
+				string[] orders = ["bytes", "KB", "MB", "GB", "TB"];
 
-				foreach (string order in orders)
+				decimal maxSize = Size;
+				int order = 0;
+
+				while (maxSize >= scale && order < orders.Length - 1)
 				{
-					if (Size > max)
-						return string.Format("{0:##.##} {1}", decimal.Divide(Size, max), order);
-
-					max /= scale;
+					maxSize /= scale;
+					order++;
 				}
 
-				return "0 bytes";
+				return $"{maxSize:0.##} {orders[order]}";
 			}
 		}
 	}
