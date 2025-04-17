@@ -14,19 +14,25 @@ import { Nationality } from '../models/Nationality';
 import { HttpFile } from '../http/http';
 
 export class UserDetailDto {
+    'id'?: number | null;
     'birthDate'?: Date;
     'gender'?: boolean | null;
     'permanentAddress'?: string | null;
     'contactAddress'?: string | null;
     'yearsOfWork': number;
     'nationality': Nationality;
-    'id'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "number",
+            "format": "int32"
+        },
         {
             "name": "birthDate",
             "baseName": "birthDate",
@@ -62,12 +68,6 @@ export class UserDetailDto {
             "baseName": "nationality",
             "type": "Nationality",
             "format": ""
-        },
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "string",
-            "format": "uuid"
         }    ];
 
     static getAttributeTypeMap() {

@@ -117,6 +117,12 @@ namespace WorkHub.Infrastructure.Services
 			user.NormalizedUserName = request.Email;
 			user.NormalizedEmail = request.Email;
 
+			var fileData = AvatarGenerator.GenerateAvatar(request.FullName);
+
+			var file = await _uploadFile.UploadSingleAsync(fileData, "users");
+
+			user.Image = file.Path;
+
 			var result = await _userManager.CreateAsync(user, request.Password ?? UserConst.DefaultPassword);
 			if (!result.Succeeded)
 			{
@@ -195,17 +201,13 @@ namespace WorkHub.Infrastructure.Services
 				}
 			}
 
-			if (request.File != null && request.File.Length > 0)
+			if (user.Image == null)
 			{
 				var fileData = AvatarGenerator.GenerateAvatar(request.FullName);
 
 				var file = await _uploadFile.UploadSingleAsync(fileData, "users");
 
 				user.Image = file.Path;
-			}
-			else
-			{
-				// user.Image = null;
 			}
 		}
 

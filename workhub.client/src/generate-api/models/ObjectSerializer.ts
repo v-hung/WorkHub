@@ -7,6 +7,7 @@ export * from '../models/CreateRequestDto';
 export * from '../models/CreateTeamCommand';
 export * from '../models/CreateTimesheetAdjustmentRequestDto';
 export * from '../models/CreateWorkTimeCommand';
+export * from '../models/CursorPagedRequestDirection';
 export * from '../models/DeviceCategoryDto';
 export * from '../models/DeviceCategoryDtoPaginated';
 export * from '../models/DeviceCategoryMinimalDto';
@@ -63,6 +64,7 @@ import { CreateRequestDto     } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateTimesheetAdjustmentRequestDto         } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { CursorPagedRequestDirection } from '../models/CursorPagedRequestDirection';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
@@ -98,7 +100,7 @@ import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { UserCreateUpdateRequest               } from '../models/UserCreateUpdateRequest';
+import { UserCreateUpdateRequest              } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto        } from '../models/UserDetailDto';
 import { UserDto                  } from '../models/UserDto';
 import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
@@ -123,6 +125,7 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "CursorPagedRequestDirection",
     "DeviceStatus",
     "Nationality",
     "NotificationType",

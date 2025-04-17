@@ -5,11 +5,11 @@ import { format } from "@/common/utils/date.util";
 export const notificationTableColumns: TableProps<NotificationDto>["columns"] =
   [
     { title: "title", dataIndex: "title", key: "title", width: "20%" },
-    { title: "Description", dataIndex: "description", key: "description" },
+    { title: "Message", dataIndex: "message", key: "description" },
     {
       title: "Date",
       key: "date",
-      width: "5rem",
+      width: "8rem",
       render: (_, record) => format(record.date, "dd/MM/yyyy"),
     },
   ];

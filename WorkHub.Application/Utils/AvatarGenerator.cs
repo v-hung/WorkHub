@@ -20,7 +20,7 @@ namespace WorkHub.Application.Utils
 			SKColors.SlateBlue,
 		];
 
-		public static byte[] GenerateAvatar(string fullName, int size = 32)
+		public static byte[] GenerateAvatar(string fullName, int size = 64)
 		{
 			var initials = GetInitials(fullName);
 			var backgroundColor = GetRandomColor();
@@ -40,7 +40,7 @@ namespace WorkHub.Application.Utils
 
 			// Font and paint for text
 			var typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.Bold);
-			var font = new SKFont(typeface, size / 2f);
+			var font = new SKFont(typeface, size / (initials.Length == 2 ? 2.3f : 2f));
 			var textPaint = new SKPaint
 			{
 				IsAntialias = true,
@@ -52,7 +52,7 @@ namespace WorkHub.Application.Utils
 
 			// Calculate the coordinates to the middle
 			var x = size / 2f;
-			var y = size / 2f - textBounds.MidY;
+			var y = (size - textBounds.Height) / 2f - textBounds.Top;
 
 			// Draw text
 			canvas.DrawText(initials, x, y, SKTextAlign.Center, font, textPaint);

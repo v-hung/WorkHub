@@ -36,8 +36,8 @@ namespace WorkHub.Infrastructure.Services
 			Timesheet timesheet = new Timesheet
 			{
 				UserId = new Guid(userId),
-				Date = DateTime.Now.Date,
-				StartTime = DateTime.Now,
+				Date = DateTime.UtcNow.Date,
+				StartTime = DateTime.UtcNow,
 			};
 
 			_context.Timesheets.Add(timesheet);
@@ -61,7 +61,7 @@ namespace WorkHub.Infrastructure.Services
 				throw new BusinessException(HttpStatusCode.Conflict, _localizer["Checked out"]);
 			}
 
-			timesheet.EndTime = DateTime.Now;
+			timesheet.EndTime = DateTime.UtcNow;
 			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime!.Value, timesheet.EndTime.Value);
 
 			_context.Timesheets.Update(timesheet);

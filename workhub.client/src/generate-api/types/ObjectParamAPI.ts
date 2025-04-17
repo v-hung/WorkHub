@@ -11,6 +11,7 @@ import { CreateRequestDto } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { CursorPagedRequestDirection } from '../models/CursorPagedRequestDirection';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
@@ -566,7 +567,21 @@ export interface NotificationApiNotificationSearchRequest {
      * @type number
      * @memberof NotificationApinotificationSearch
      */
-    lastId?: number
+    cursorId?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type CursorPagedRequestDirection
+     * @memberof NotificationApinotificationSearch
+     */
+    cursorPagedRequestDirection?: CursorPagedRequestDirection
+    /**
+     * 
+     * Defaults to: undefined
+     * @type boolean
+     * @memberof NotificationApinotificationSearch
+     */
+    newestFirst?: boolean
     /**
      * 
      * Defaults to: undefined
@@ -587,14 +602,14 @@ export class ObjectNotificationApi {
      * @param param the request object
      */
     public notificationSearchWithHttpInfo(param: NotificationApiNotificationSearchRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<NotificationDtoCursorPaginated>> {
-        return this.api.notificationSearchWithHttpInfo(param.lastId, param.searchString,  options).toPromise();
+        return this.api.notificationSearchWithHttpInfo(param.cursorId, param.cursorPagedRequestDirection, param.newestFirst, param.searchString,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public notificationSearch(param: NotificationApiNotificationSearchRequest = {}, options?: ConfigurationOptions): Promise<NotificationDtoCursorPaginated> {
-        return this.api.notificationSearch(param.lastId, param.searchString,  options).toPromise();
+        return this.api.notificationSearch(param.cursorId, param.cursorPagedRequestDirection, param.newestFirst, param.searchString,  options).toPromise();
     }
 
 }
@@ -1705,14 +1720,14 @@ export class ObjectUserApi {
     /**
      * @param param the request object
      */
-    public userUpdateWithHttpInfo(param: UserApiUserUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserDto>> {
+    public userUpdateWithHttpInfo(param: UserApiUserUpdateRequest, options?: ConfigurationOptions): Promise<HttpInfo<UserFullDto>> {
         return this.api.userUpdateWithHttpInfo(param.id, param.userCreateUpdateRequest,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public userUpdate(param: UserApiUserUpdateRequest, options?: ConfigurationOptions): Promise<UserDto> {
+    public userUpdate(param: UserApiUserUpdateRequest, options?: ConfigurationOptions): Promise<UserFullDto> {
         return this.api.userUpdate(param.id, param.userCreateUpdateRequest,  options).toPromise();
     }
 

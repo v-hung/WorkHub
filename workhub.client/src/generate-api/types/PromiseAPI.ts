@@ -11,6 +11,7 @@ import { CreateRequestDto } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { CursorPagedRequestDirection } from '../models/CursorPagedRequestDirection';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
@@ -857,10 +858,12 @@ export class PromiseNotificationApi {
     }
 
     /**
-     * @param [lastId]
+     * @param [cursorId]
+     * @param [cursorPagedRequestDirection]
+     * @param [newestFirst]
      * @param [searchString]
      */
-    public notificationSearchWithHttpInfo(lastId?: number, searchString?: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<NotificationDtoCursorPaginated>> {
+    public notificationSearchWithHttpInfo(cursorId?: number, cursorPagedRequestDirection?: CursorPagedRequestDirection, newestFirst?: boolean, searchString?: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<NotificationDtoCursorPaginated>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -873,15 +876,17 @@ export class PromiseNotificationApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.notificationSearchWithHttpInfo(lastId, searchString, observableOptions);
+        const result = this.api.notificationSearchWithHttpInfo(cursorId, cursorPagedRequestDirection, newestFirst, searchString, observableOptions);
         return result.toPromise();
     }
 
     /**
-     * @param [lastId]
+     * @param [cursorId]
+     * @param [cursorPagedRequestDirection]
+     * @param [newestFirst]
      * @param [searchString]
      */
-    public notificationSearch(lastId?: number, searchString?: string, _options?: PromiseConfigurationOptions): Promise<NotificationDtoCursorPaginated> {
+    public notificationSearch(cursorId?: number, cursorPagedRequestDirection?: CursorPagedRequestDirection, newestFirst?: boolean, searchString?: string, _options?: PromiseConfigurationOptions): Promise<NotificationDtoCursorPaginated> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -894,7 +899,7 @@ export class PromiseNotificationApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.notificationSearch(lastId, searchString, observableOptions);
+        const result = this.api.notificationSearch(cursorId, cursorPagedRequestDirection, newestFirst, searchString, observableOptions);
         return result.toPromise();
     }
 
@@ -2564,7 +2569,7 @@ export class PromiseUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserDto>> {
+    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<UserFullDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -2585,7 +2590,7 @@ export class PromiseUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<UserDto> {
+    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: PromiseConfigurationOptions): Promise<UserFullDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {

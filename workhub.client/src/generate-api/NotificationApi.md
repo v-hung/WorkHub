@@ -23,7 +23,11 @@ const apiInstance = new NotificationApi(configuration);
 
 const request: NotificationApiNotificationSearchRequest = {
   
-  lastId: 1,
+  cursorId: 1,
+  
+  cursorPagedRequestDirection: "Next",
+  
+  newestFirst: true,
   
   searchString: "SearchString_example",
 };
@@ -37,7 +41,9 @@ console.log('API called successfully. Returned data:', data);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **lastId** | [**number**] |  | (optional) defaults to undefined
+ **cursorId** | [**number**] |  | (optional) defaults to undefined
+ **cursorPagedRequestDirection** | **CursorPagedRequestDirection** |  | (optional) defaults to undefined
+ **newestFirst** | [**boolean**] |  | (optional) defaults to undefined
  **searchString** | [**string**] |  | (optional) defaults to undefined
 
 

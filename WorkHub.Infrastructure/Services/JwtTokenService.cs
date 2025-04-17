@@ -108,7 +108,7 @@ public class JwtTokenService : IJwtTokenService
 
 		var token = new JwtSecurityToken(
 			claims: claims,
-			expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtSettings.TokenExpiryMinutes)),
+			expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtSettings.TokenExpiryMinutes)),
 			signingCredentials: creds
 		);
 
@@ -143,7 +143,7 @@ public class JwtTokenService : IJwtTokenService
 	{
 		var token = _context.RefreshTokens.FirstOrDefault(rt => rt.Token == refreshToken && rt.UserId == user.Id);
 
-		if (token != null && DateTime.Now <= token.Expires)
+		if (token != null && DateTime.UtcNow <= token.Expires)
 		{
 			return true;
 		}
@@ -158,7 +158,7 @@ public class JwtTokenService : IJwtTokenService
 			throw new BusinessException(HttpStatusCode.BadRequest, "Refresh token is invalid client request");
 		}
 
-		var refreshToken = await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken && DateTime.Now <= rt.Expires && rt.RememberMe);
+		var refreshToken = await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken && DateTime.UtcNow <= rt.Expires && rt.RememberMe);
 
 		if (refreshToken == null || refreshToken.User == null)
 		{

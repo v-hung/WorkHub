@@ -94,7 +94,12 @@ const DefaultMenu: FC<State> = (props) => {
           menu={{ items: getMenuLogoItems(t, i18n) }}
         >
           <div className="menu__logo">
-            <Avatar shape="square" size={40} icon={<IIonPerson />}></Avatar>
+            <Avatar
+              shape="square"
+              size={40}
+              src={user?.image}
+              icon={<IIonPerson />}
+            ></Avatar>
             <div className="menu__logo-title">
               <h5 className="truncate">{user?.fullName}</h5>
               <p className="truncate">{user?.email}</p>

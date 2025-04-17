@@ -32,19 +32,18 @@ const request: UserApiUserCreateRequest = {
     fullName: "fullName_example",
     email: "email_example",
     phoneNumber: "phoneNumber_example",
-    file: { data: Buffer.from(fs.readFileSync('/path/to/file', 'utf-8')), name: '/path/to/file' },
     userPosition: "ADMINISTRATOR",
     leaveHours: 1,
     userStatus: "ACTIVE",
     workTimeId: 1,
     userDetail: {
+      id: 1,
       birthDate: new Date('1970-01-01T00:00:00.00Z'),
       gender: true,
       permanentAddress: "permanentAddress_example",
       contactAddress: "contactAddress_example",
       yearsOfWork: 1,
       nationality: "ja_JP",
-      id: "id_example",
     },
     supervisorId: "supervisorId_example",
     teamId: 1,
@@ -323,7 +322,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **userUpdate**
-> UserDto userUpdate()
+> UserFullDto userUpdate()
 
 
 ### Example
@@ -344,19 +343,18 @@ const request: UserApiUserUpdateRequest = {
     fullName: "fullName_example",
     email: "email_example",
     phoneNumber: "phoneNumber_example",
-    file: { data: Buffer.from(fs.readFileSync('/path/to/file', 'utf-8')), name: '/path/to/file' },
     userPosition: "ADMINISTRATOR",
     leaveHours: 1,
     userStatus: "ACTIVE",
     workTimeId: 1,
     userDetail: {
+      id: 1,
       birthDate: new Date('1970-01-01T00:00:00.00Z'),
       gender: true,
       permanentAddress: "permanentAddress_example",
       contactAddress: "contactAddress_example",
       yearsOfWork: 1,
       nationality: "ja_JP",
-      id: "id_example",
     },
     supervisorId: "supervisorId_example",
     teamId: 1,
@@ -385,7 +383,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**UserDto**
+**UserFullDto**
 
 ### Authorization
 

@@ -8,6 +8,7 @@ import {canConsumeForm, isCodeInRange} from '../util';
 import {SecurityAuthentication} from '../auth/auth';
 
 
+import { CursorPagedRequestDirection } from '../models/CursorPagedRequestDirection';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { NotificationDtoCursorPaginated } from '../models/NotificationDtoCursorPaginated';
@@ -18,11 +19,15 @@ import { NotificationDtoCursorPaginated } from '../models/NotificationDtoCursorP
 export class NotificationApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param lastId 
+     * @param cursorId 
+     * @param cursorPagedRequestDirection 
+     * @param newestFirst 
      * @param searchString 
      */
-    public async notificationSearch(lastId?: number, searchString?: string, _options?: Configuration): Promise<RequestContext> {
+    public async notificationSearch(cursorId?: number, cursorPagedRequestDirection?: CursorPagedRequestDirection, newestFirst?: boolean, searchString?: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
+
 
 
 
@@ -34,8 +39,21 @@ export class NotificationApiRequestFactory extends BaseAPIRequestFactory {
         requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
 
         // Query Params
-        if (lastId !== undefined) {
-            requestContext.setQueryParam("LastId", ObjectSerializer.serialize(lastId, "number", "int32"));
+        if (cursorId !== undefined) {
+            requestContext.setQueryParam("CursorId", ObjectSerializer.serialize(cursorId, "number", "int32"));
+        }
+
+        // Query Params
+        if (cursorPagedRequestDirection !== undefined) {
+            const serializedParams = ObjectSerializer.serialize(cursorPagedRequestDirection, "CursorPagedRequestDirection", "");
+            for (const key of Object.keys(serializedParams)) {
+                requestContext.setQueryParam(key, serializedParams[key]);
+            }
+        }
+
+        // Query Params
+        if (newestFirst !== undefined) {
+            requestContext.setQueryParam("NewestFirst", ObjectSerializer.serialize(newestFirst, "boolean", ""));
         }
 
         // Query Params

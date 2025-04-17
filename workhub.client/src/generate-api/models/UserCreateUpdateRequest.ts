@@ -19,7 +19,6 @@ export class UserCreateUpdateRequest {
     'fullName': string;
     'email': string;
     'phoneNumber'?: string | null;
-    'file'?: HttpFile | null;
     'userPosition': UserPosition;
     'leaveHours'?: number;
     'userStatus': UserStatus;
@@ -53,12 +52,6 @@ export class UserCreateUpdateRequest {
             "baseName": "phoneNumber",
             "type": "string",
             "format": ""
-        },
-        {
-            "name": "file",
-            "baseName": "file",
-            "type": "HttpFile",
-            "format": "binary"
         },
         {
             "name": "userPosition",

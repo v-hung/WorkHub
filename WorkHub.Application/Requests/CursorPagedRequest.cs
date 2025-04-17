@@ -5,7 +5,11 @@ namespace WorkHub.Application.Requests
 {
 	public class CursorPagedRequest
 	{
-		public int? LastId { get; set; }
+		public int? CursorId { get; set; }
+
+		public CursorPagedRequestDirection CursorPagedRequestDirection { get; set; } = CursorPagedRequestDirection.Next;
+
+		public bool NewestFirst { get; set; } = true;
 
 		[Range(1, 100, ErrorMessage = "Page size must be between 1 and 100")]
 		[DefaultValue(10)]
@@ -13,5 +17,11 @@ namespace WorkHub.Application.Requests
 		public int Limit = 10;
 		public string? SearchString { get; set; }
 
+	}
+
+	public enum CursorPagedRequestDirection
+	{
+		Next,
+		Previous
 	}
 }

@@ -12,6 +12,7 @@ import { CreateRequestDto } from '../models/CreateRequestDto';
 import { CreateTeamCommand } from '../models/CreateTeamCommand';
 import { CreateTimesheetAdjustmentRequestDto } from '../models/CreateTimesheetAdjustmentRequestDto';
 import { CreateWorkTimeCommand } from '../models/CreateWorkTimeCommand';
+import { CursorPagedRequestDirection } from '../models/CursorPagedRequestDirection';
 import { DeviceCategoryDto } from '../models/DeviceCategoryDto';
 import { DeviceCategoryDtoPaginated } from '../models/DeviceCategoryDtoPaginated';
 import { DeviceCategoryMinimalDto } from '../models/DeviceCategoryMinimalDto';
@@ -1182,10 +1183,12 @@ export class ObservableNotificationApi {
     }
 
     /**
-     * @param [lastId]
+     * @param [cursorId]
+     * @param [cursorPagedRequestDirection]
+     * @param [newestFirst]
      * @param [searchString]
      */
-    public notificationSearchWithHttpInfo(lastId?: number, searchString?: string, _options?: ConfigurationOptions): Observable<HttpInfo<NotificationDtoCursorPaginated>> {
+    public notificationSearchWithHttpInfo(cursorId?: number, cursorPagedRequestDirection?: CursorPagedRequestDirection, newestFirst?: boolean, searchString?: string, _options?: ConfigurationOptions): Observable<HttpInfo<NotificationDtoCursorPaginated>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -1216,7 +1219,7 @@ export class ObservableNotificationApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.notificationSearch(lastId, searchString, _config);
+        const requestContextPromise = this.requestFactory.notificationSearch(cursorId, cursorPagedRequestDirection, newestFirst, searchString, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -1234,11 +1237,13 @@ export class ObservableNotificationApi {
     }
 
     /**
-     * @param [lastId]
+     * @param [cursorId]
+     * @param [cursorPagedRequestDirection]
+     * @param [newestFirst]
      * @param [searchString]
      */
-    public notificationSearch(lastId?: number, searchString?: string, _options?: ConfigurationOptions): Observable<NotificationDtoCursorPaginated> {
-        return this.notificationSearchWithHttpInfo(lastId, searchString, _options).pipe(map((apiResponse: HttpInfo<NotificationDtoCursorPaginated>) => apiResponse.data));
+    public notificationSearch(cursorId?: number, cursorPagedRequestDirection?: CursorPagedRequestDirection, newestFirst?: boolean, searchString?: string, _options?: ConfigurationOptions): Observable<NotificationDtoCursorPaginated> {
+        return this.notificationSearchWithHttpInfo(cursorId, cursorPagedRequestDirection, newestFirst, searchString, _options).pipe(map((apiResponse: HttpInfo<NotificationDtoCursorPaginated>) => apiResponse.data));
     }
 
 }
@@ -3585,7 +3590,7 @@ export class ObservableUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: ConfigurationOptions): Observable<HttpInfo<UserDto>> {
+    public userUpdateWithHttpInfo(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: ConfigurationOptions): Observable<HttpInfo<UserFullDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -3637,8 +3642,8 @@ export class ObservableUserApi {
      * @param id
      * @param [userCreateUpdateRequest]
      */
-    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: ConfigurationOptions): Observable<UserDto> {
-        return this.userUpdateWithHttpInfo(id, userCreateUpdateRequest, _options).pipe(map((apiResponse: HttpInfo<UserDto>) => apiResponse.data));
+    public userUpdate(id: string, userCreateUpdateRequest?: UserCreateUpdateRequest, _options?: ConfigurationOptions): Observable<UserFullDto> {
+        return this.userUpdateWithHttpInfo(id, userCreateUpdateRequest, _options).pipe(map((apiResponse: HttpInfo<UserFullDto>) => apiResponse.data));
     }
 
 }

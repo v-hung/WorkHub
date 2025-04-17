@@ -41,6 +41,7 @@ models/CreateRequestDto.ts
 models/CreateTeamCommand.ts
 models/CreateTimesheetAdjustmentRequestDto.ts
 models/CreateWorkTimeCommand.ts
+models/CursorPagedRequestDirection.ts
 models/DeviceCategoryDto.ts
 models/DeviceCategoryDtoPaginated.ts
 models/DeviceCategoryMinimalDto.ts

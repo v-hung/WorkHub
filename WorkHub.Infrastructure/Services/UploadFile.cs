@@ -177,7 +177,7 @@ namespace WorkHub.Infrastructure.Services
 
 			string noSpacesOrSpecialChars = Regex.Replace(asciiOnly, @"[\s\W]", "_");
 
-			string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+			string timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
 
 			Random rand = new();
 			string randomNumber = rand.Next(1000).ToString("D3");

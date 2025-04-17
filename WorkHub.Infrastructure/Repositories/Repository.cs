@@ -139,24 +139,44 @@ namespace WorkHub.Infrastructure.Repositories
 				}
 			}
 
-			if (request.LastId != null && request.LastId > 0)
+			if (request.CursorId != null && request.CursorId > 0)
 			{
-				projectedQuery = projectedQuery.Where(v => v.Id < request.LastId);
+
+				if (request.CursorPagedRequestDirection == CursorPagedRequestDirection.Next)
+				{
+					projectedQuery = request.NewestFirst
+						? projectedQuery.Where(v => v.Id < request.CursorId).OrderByDescending(v => v.Id)
+						: projectedQuery.Where(v => v.Id > request.CursorId).OrderBy(v => v.Id);
+				}
+				else if (request.CursorPagedRequestDirection == CursorPagedRequestDirection.Previous)
+				{
+					projectedQuery = request.NewestFirst
+						? projectedQuery.Where(v => v.Id > request.CursorId).OrderBy(v => v.Id)
+						: projectedQuery.Where(v => v.Id < request.CursorId).OrderByDescending(v => v.Id);
+				}
+			}
+
+			// Apply Pagination
+			var data = await projectedQuery
+				.Take(request.Limit + 1)
+				.ToListAsync();
+
+			bool hasMore = data.Count > request.Limit;
+
+			if (hasMore)
+			{
+				data.RemoveAt(data.Count - 1);
+			}
+
+			if ((request.CursorPagedRequestDirection == CursorPagedRequestDirection.Previous && request.NewestFirst) ||
+				(request.CursorPagedRequestDirection == CursorPagedRequestDirection.Next && !request.NewestFirst))
+			{
+				data.Reverse();
 			}
 
 			var totalRecords = await projectedQuery.CountAsync();
 
-			// Apply Pagination
-			var data = await projectedQuery
-				.OrderByDescending(i => i.Id)
-				.Take(request.Limit + 1)
-				.ToListAsync();
-
-			bool hasMore = totalRecords > request.Limit;
-
-			var items = hasMore ? data.Take(data.Count - 1).ToList() : data;
-
-			return new CursorPaginated<D>(items, data.Any() ? data.Last().Id : null, request.Limit, totalRecords, hasMore);
+			return new CursorPaginated<D>(data, data.Any() ? data.Last().Id : null, request.Limit, totalRecords, hasMore);
 		}
 
 		public async Task<D> GetAsync<D>(Expression<Func<T, bool>> filter, bool asNoTracking = true) where D : class
