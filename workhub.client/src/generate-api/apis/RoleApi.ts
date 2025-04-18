@@ -13,6 +13,7 @@ import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
+import { RoleFullDto } from '../models/RoleFullDto';
 
 /**
  * no description
@@ -549,13 +550,13 @@ export class RoleApiResponseProcessor {
      * @params response Response returned by the server for a request to roleGetById
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async roleGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleDto >> {
+     public async roleGetByIdWithHttpInfo(response: ResponseContext): Promise<HttpInfo<RoleFullDto >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: RoleDto = ObjectSerializer.deserialize(
+            const body: RoleFullDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "RoleDto", ""
-            ) as RoleDto;
+                "RoleFullDto", ""
+            ) as RoleFullDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -575,10 +576,10 @@ export class RoleApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: RoleDto = ObjectSerializer.deserialize(
+            const body: RoleFullDto = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "RoleDto", ""
-            ) as RoleDto;
+                "RoleFullDto", ""
+            ) as RoleFullDto;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

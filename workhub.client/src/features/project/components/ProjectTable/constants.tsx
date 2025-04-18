@@ -11,8 +11,8 @@ import {
 import { FC } from "react";
 import { useProjectsContext } from "../../contexts/ProjectContext";
 import { ProjectDto, UserMinimalDto } from "@/generate-api";
-import { format } from "@/common/utils/date.util";
-import { getUniqueColor } from "@/common/utils/color.util";
+import { format } from "@/common/utils/date.utils";
+import { getUniqueColor } from "@/common/utils/color.utils";
 import { differenceInDays } from "date-fns";
 
 export const projectTableColumns: TableProps<ProjectDto>["columns"] = [

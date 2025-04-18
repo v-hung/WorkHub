@@ -33,7 +33,9 @@ const request: RoleApiRoleCreateRequest = {
   roleCreateUpdateRequest: {
     name: "name_example",
     description: "description_example",
-    isAdmin: true,
+    permissions: [
+      "permissions_example",
+    ],
   },
 };
 
@@ -239,7 +241,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **roleGetById**
-> RoleDto roleGetById()
+> RoleFullDto roleGetById()
 
 
 ### Example
@@ -271,7 +273,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**RoleDto**
+**RoleFullDto**
 
 ### Authorization
 
@@ -432,7 +434,9 @@ const request: RoleApiRoleUpdateRequest = {
   roleCreateUpdateRequest: {
     name: "name_example",
     description: "description_example",
-    isAdmin: true,
+    permissions: [
+      "permissions_example",
+    ],
   },
 };
 

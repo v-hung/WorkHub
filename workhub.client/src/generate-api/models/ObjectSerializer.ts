@@ -35,6 +35,7 @@ export * from '../models/RequestType';
 export * from '../models/RoleCreateUpdateRequest';
 export * from '../models/RoleDto';
 export * from '../models/RoleDtoPaginated';
+export * from '../models/RoleFullDto';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamFullDto';
@@ -92,6 +93,7 @@ import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
+import { RoleFullDto } from '../models/RoleFullDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -167,6 +169,7 @@ let typeMap: {[index: string]: any} = {
     "RoleCreateUpdateRequest": RoleCreateUpdateRequest,
     "RoleDto": RoleDto,
     "RoleDtoPaginated": RoleDtoPaginated,
+    "RoleFullDto": RoleFullDto,
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
     "TeamFullDto": TeamFullDto,

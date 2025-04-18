@@ -1,7 +1,7 @@
 import { Button, Popconfirm, Skeleton, Tag } from "antd";
 import styles from "./TimesheetHeader.module.css";
 import { useTimesheet } from "../../hooks/useTimesheet";
-import { format } from "@/common/utils/date.util";
+import { format } from "@/common/utils/date.utils";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { blueDark, red } from "@ant-design/colors";
 import { useTimesheetContext } from "../../context/TimesheetContext";

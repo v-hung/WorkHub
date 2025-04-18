@@ -3,7 +3,7 @@ import { Button, Popconfirm, Space, TableProps, Tag } from "antd";
 import { FC } from "react";
 import { useDeviceCategoriesContext } from "../../contexts/DeviceCategoryContext";
 import { DeviceCategoryDto } from "@/generate-api";
-import { getUniqueColor } from "@/common/utils/color.util";
+import { getUniqueColor } from "@/common/utils/color.utils";
 
 export const deviceCategoryTableColumns: TableProps<DeviceCategoryDto>["columns"] =
   [

@@ -43,9 +43,9 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[HttpGet("id/{id}")]
-		public async Task<ActionResult<RoleDto>> GetById(Guid id)
+		public async Task<ActionResult<RoleFullDto>> GetById(Guid id)
 		{
-			var data = await _roleService.GetAsync<RoleDto, Guid>(id);
+			var data = await _roleService.GetAsync<RoleFullDto, Guid>(id);
 
 			return Ok(data);
 		}

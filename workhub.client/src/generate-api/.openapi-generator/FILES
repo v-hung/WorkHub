@@ -70,6 +70,7 @@ models/RequestType.ts
 models/RoleCreateUpdateRequest.ts
 models/RoleDto.ts
 models/RoleDtoPaginated.ts
+models/RoleFullDto.ts
 models/TeamDto.ts
 models/TeamDtoPaginated.ts
 models/TeamFullDto.ts

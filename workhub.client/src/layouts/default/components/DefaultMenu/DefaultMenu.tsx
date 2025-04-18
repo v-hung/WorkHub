@@ -21,7 +21,7 @@ import { authBootstrapLogout } from "@/common/bootstrap/auth.bootstrap";
 import { useLayout } from "../../contexts/LayoutContext";
 import { useMenu } from "../../hooks/useMenu";
 import "./DefaultMenu.css";
-import { debounce } from "@/common/utils/common.util";
+import { debounce } from "@/common/utils/common.utils";
 
 const { Sider } = Layout;
 

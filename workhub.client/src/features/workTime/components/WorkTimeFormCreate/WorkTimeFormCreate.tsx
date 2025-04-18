@@ -12,7 +12,7 @@ import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 import { useWorkTimeAction } from "../../hooks/useWorkTimeAction";
 import MyTimePicker from "@/ui/form/MyTimePicker";
 import { workTimeDisabledTime } from "../../utils/workTime.util";
-import { format, localTimeToDate } from "@/common/utils/date.util";
+import { format, localTimeToDate } from "@/common/utils/date.utils";
 import { useNavigate } from "react-router";
 
 type State = HTMLAttributes<HTMLDivElement> & {
@@ -63,11 +63,6 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
           form={form}
           initialValues={formState}
           validateTrigger="onSubmit"
-          style={{
-            paddingRight: "0.75rem",
-            paddingTop: "1rem",
-            paddingLeft: "0.75rem",
-          }}
         >
           <Row wrap gutter={{ sm: 8, md: 16 }}>
             <Col xs={24} lg={12}>

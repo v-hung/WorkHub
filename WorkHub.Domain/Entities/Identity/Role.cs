@@ -8,7 +8,4 @@ public class Role : IdentityRole<Guid>, IEntity<Guid>
 	[Required]
 	[StringLength(255)]
 	public string Description { get; set; } = "";
-
-	[Required]
-	public bool IsAdmin { get; set; } = false;
 }

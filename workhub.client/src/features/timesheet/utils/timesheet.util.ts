@@ -1,4 +1,4 @@
-import { localTimeToDate } from "@/common/utils/date.util";
+import { localTimeToDate } from "@/common/utils/date.utils";
 import { WorkTimeDto } from "@/generate-api";
 import { isAfter, differenceInSeconds, add, isBefore } from "date-fns";
 

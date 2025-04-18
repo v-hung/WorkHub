@@ -1,11 +1,13 @@
 import { getMessageError } from "@/common/utils/error.utils";
-import { NotificationDtoCursorPaginated } from "@/generate-api";
+import {
+  CursorPagedRequestDirection,
+  NotificationDtoCursorPaginated,
+} from "@/generate-api";
 import { notificationApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useNotifications = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -18,25 +20,16 @@ export const useNotifications = () => {
       lastId: undefined,
     });
 
-  // Hướng phân trang: initial, next (trang sau), previous (trang trước)
   const fetchPaginatedNotifications = useCallback(
-    async (direction: "initial" | "next" | "previous" = "initial") => {
+    async (direction?: CursorPagedRequestDirection) => {
       setLoading(true);
       try {
-        const request = {
-          lastId:
-            direction === "initial"
-              ? undefined
-              : notificationCursorPaginated.lastId ?? undefined,
-          cursorPagedRequestDirection:
-            direction === "next"
-              ? "Next"
-              : direction === "previous"
-              ? "Previous"
-              : "Initial",
-        };
-
-        const data = await notificationApi.notificationSearch(request);
+        const data = await notificationApi.notificationSearch(
+          direction
+            ? notificationCursorPaginated.lastId ?? undefined
+            : undefined,
+          direction
+        );
         setNotificationCursorPaginated(data);
       } catch (e) {
         notification.error({
@@ -48,13 +41,6 @@ export const useNotifications = () => {
     },
     [notificationCursorPaginated]
   );
-
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      fetchPaginatedNotifications("initial");
-    }
-  }, []);
 
   return {
     notificationPaginated: notificationCursorPaginated,

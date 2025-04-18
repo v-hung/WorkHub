@@ -8,9 +8,9 @@ namespace WorkHub.Application.Requests.Identity
 		[Required]
 		public required string Name { get; set; }
 
-		public string Description { get; set; } = "";
+		public string? Description { get; set; }
 
-		public bool IsAdmin { get; set; } = false;
+		public List<string> Permissions { get; set; } = [];
 
 	}
 }

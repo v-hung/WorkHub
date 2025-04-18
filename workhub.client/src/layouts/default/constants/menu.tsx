@@ -79,7 +79,7 @@ export const getMenuItems = (
       ],
     },
     {
-      key: "/permissions/roles",
+      key: "/roles",
       icon: <IonLockClosedOutline />,
       label: t("menus.permission"),
     },

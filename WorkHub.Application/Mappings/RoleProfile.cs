@@ -9,6 +9,7 @@ namespace WorkHub.Application.Mappings
 		public RoleProfile()
 		{
 			CreateMap<Role, RoleDto>().ReverseMap();
+			CreateMap<Role, RoleFullDto>().ReverseMap();
 		}
 	}
 }

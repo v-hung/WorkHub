@@ -60,8 +60,11 @@ namespace WorkHub.Infrastructure.Services
 			// Sorting
 			if (request.OrderBy?.Any() == true)
 			{
-				var ordering = string.Join(",", request.OrderBy);
-				query.OrderBy(ordering); // require system.linq.dynamic.core
+				query = query.OrderBy(request.OrderByString);
+			}
+			else
+			{
+				query = query.OrderBy(u => u.Id);
 			}
 
 			// Pagination
@@ -73,11 +76,22 @@ namespace WorkHub.Infrastructure.Services
 			return new Paginated<D>(data, await query.CountAsync(), request.PageNumber, request.PageSize);
 		}
 
-		public async Task<D> GetAsync<D, DId>(DId roleId) where D : IEntity<DId> where DId : notnull
+		public async Task<D> GetAsync<D, DId>(DId id) where D : IEntity<DId> where DId : notnull
 		{
-			return await _context.Roles.AsNoTracking()
-				.ProjectTo<D>(_mapper.ConfigurationProvider)
-				.FirstOrDefaultAsync(u => u.Id.Equals(roleId)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Role is not found"]);
+			var entity = await _context.Roles
+			 .AsNoTracking()
+			 .FirstOrDefaultAsync(e => e.Id.Equals(id))
+			 ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Data not found"]);
+
+			var role = _mapper.Map<D>(entity);
+
+			if (role is IPermissionAudit permissionAudit)
+			{
+				var claims = await _roleManager.GetClaimsAsync(entity);
+				permissionAudit.Permissions = claims.Select(c => c.Value).ToList();
+			}
+
+			return role;
 		}
 
 		public async Task<D> GetAsync<D>(Expression<Func<Role, bool>>? filter = null) where D : class

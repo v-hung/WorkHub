@@ -62,11 +62,6 @@ const TeamFormCreate = forwardRef<TeamFormCreateRefState, State>(
           form={form}
           initialValues={formState}
           validateTrigger="onSubmit"
-          style={{
-            paddingRight: "0.75rem",
-            paddingTop: "1rem",
-            paddingLeft: "0.75rem",
-          }}
         >
           <Row wrap gutter={{ sm: 8, md: 16 }}>
             <Col xs={24} lg={12}>

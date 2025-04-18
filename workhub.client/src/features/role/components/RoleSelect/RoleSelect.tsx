@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useRoles } from "../../hooks/useRoles";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
-import { debounce } from "@/common/utils/common.util";
+import { debounce } from "@/common/utils/common.utils";
 import { isEmpty } from "@/common/utils/validate.utils";
 
 type State = ComponentProps<typeof Select>;

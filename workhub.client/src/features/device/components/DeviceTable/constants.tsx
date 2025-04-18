@@ -11,7 +11,7 @@ import {
 import { FC } from "react";
 import { useDevicesContext } from "../../contexts/DeviceContext";
 import { DeviceDto } from "@/generate-api";
-import { getUniqueColor } from "@/common/utils/color.util";
+import { getUniqueColor } from "@/common/utils/color.utils";
 
 export const deviceTableColumns: TableProps<DeviceDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },

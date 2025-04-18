@@ -39,6 +39,7 @@ import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
+import { RoleFullDto } from '../models/RoleFullDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -1691,7 +1692,7 @@ export class PromiseRoleApi {
     /**
      * @param id
      */
-    public roleGetByIdWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+    public roleGetByIdWithHttpInfo(id: string, _options?: PromiseConfigurationOptions): Promise<HttpInfo<RoleFullDto>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -1711,7 +1712,7 @@ export class PromiseRoleApi {
     /**
      * @param id
      */
-    public roleGetById(id: string, _options?: PromiseConfigurationOptions): Promise<RoleDto> {
+    public roleGetById(id: string, _options?: PromiseConfigurationOptions): Promise<RoleFullDto> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {

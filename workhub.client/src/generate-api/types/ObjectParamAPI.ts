@@ -39,6 +39,7 @@ import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
+import { RoleFullDto } from '../models/RoleFullDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -1181,14 +1182,14 @@ export class ObjectRoleApi {
     /**
      * @param param the request object
      */
-    public roleGetByIdWithHttpInfo(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleDto>> {
+    public roleGetByIdWithHttpInfo(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<HttpInfo<RoleFullDto>> {
         return this.api.roleGetByIdWithHttpInfo(param.id,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public roleGetById(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<RoleDto> {
+    public roleGetById(param: RoleApiRoleGetByIdRequest, options?: ConfigurationOptions): Promise<RoleFullDto> {
         return this.api.roleGetById(param.id,  options).toPromise();
     }
 

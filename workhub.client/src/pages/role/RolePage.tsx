@@ -1,12 +1,12 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapLoaderWithPermission } from "@/common/utils/loader";
-import TeamTable from "@/features/team/components/TeamTable/TeamTable";
-import { TeamProvider } from "@/features/team/contexts/TeamContext";
+import RoleTable from "@/features/role/components/RoleTable/RoleTable";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
-import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
+import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { RoleProvider } from "@/features/role/contexts/RoleContext";
 
 export const loader = wrapLoaderWithPermission();
 
@@ -15,24 +15,24 @@ export function Component() {
 
   return (
     <DefaultPage pageClassName="h-screen">
-      <DefaultHeader title="Teams Manager">
+      <DefaultHeader title="Roles Manager">
         <Button
           type="primary"
-          onClick={() => navigate("/teams/create")}
+          onClick={() => navigate("/roles/create")}
           icon={<IIonPlus width={16} height={16} />}
         >
-          Add team
+          Add role
         </Button>
       </DefaultHeader>
 
       <DefaultBreadcrumb
-        items={[{ title: "Home", path: "/" }, { title: "Team Manager" }]}
+        items={[{ title: "Home", path: "/" }, { title: "Role Manager" }]}
       />
 
       <DefaultContent>
-        <TeamProvider>
-          <TeamTable />
-        </TeamProvider>
+        <RoleProvider>
+          <RoleTable />
+        </RoleProvider>
       </DefaultContent>
     </DefaultPage>
   );

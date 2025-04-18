@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
-import { debounce } from "@/common/utils/common.util";
+import { debounce } from "@/common/utils/common.utils";
 import { useWorkTimes } from "../../hooks/useWorkTimes";
 import { isEmpty } from "@/common/utils/validate.utils";
 

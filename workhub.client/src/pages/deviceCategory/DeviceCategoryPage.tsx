@@ -21,7 +21,7 @@ export function Component() {
           onClick={() => navigate("/device-categories/create")}
           icon={<IIonPlus width={16} height={16} />}
         >
-          Add work time
+          Add device category
         </Button>
       </DefaultHeader>
 

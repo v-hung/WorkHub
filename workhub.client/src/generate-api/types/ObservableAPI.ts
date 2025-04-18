@@ -40,6 +40,7 @@ import { RequestType } from '../models/RequestType';
 import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
+import { RoleFullDto } from '../models/RoleFullDto';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -2355,7 +2356,7 @@ export class ObservableRoleApi {
     /**
      * @param id
      */
-    public roleGetByIdWithHttpInfo(id: string, _options?: ConfigurationOptions): Observable<HttpInfo<RoleDto>> {
+    public roleGetByIdWithHttpInfo(id: string, _options?: ConfigurationOptions): Observable<HttpInfo<RoleFullDto>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -2406,8 +2407,8 @@ export class ObservableRoleApi {
     /**
      * @param id
      */
-    public roleGetById(id: string, _options?: ConfigurationOptions): Observable<RoleDto> {
-        return this.roleGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RoleDto>) => apiResponse.data));
+    public roleGetById(id: string, _options?: ConfigurationOptions): Observable<RoleFullDto> {
+        return this.roleGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<RoleFullDto>) => apiResponse.data));
     }
 
     /**

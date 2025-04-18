@@ -21,7 +21,7 @@ export function Component() {
           onClick={() => navigate("/projects/create")}
           icon={<IIonPlus width={16} height={16} />}
         >
-          Add work time
+          Add project
         </Button>
       </DefaultHeader>
 

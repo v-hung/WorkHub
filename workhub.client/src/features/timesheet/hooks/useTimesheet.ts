@@ -1,4 +1,4 @@
-import { format } from "@/common/utils/date.util";
+import { format } from "@/common/utils/date.utils";
 import { useTimesheetStore } from "@/stores/timesheet.store";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { calculateWorkDay } from "../utils/timesheet.util";

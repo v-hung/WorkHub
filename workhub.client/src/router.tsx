@@ -39,6 +39,23 @@ const router = createBrowserRouter(
           ],
         },
         {
+          path: "/roles",
+          children: [
+            {
+              path: "",
+              lazy: () => import("./pages/role/RolePage"),
+            },
+            {
+              path: "create",
+              lazy: () => import("./pages/role/RoleCreateUpdatePage"),
+            },
+            {
+              path: ":id/edit",
+              lazy: () => import("./pages/role/RoleCreateUpdatePage"),
+            },
+          ],
+        },
+        {
           path: "/work-times",
           children: [
             {

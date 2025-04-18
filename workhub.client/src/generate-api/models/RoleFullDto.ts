@@ -12,16 +12,24 @@
 
 import { HttpFile } from '../http/http';
 
-export class RoleCreateUpdateRequest {
+export class RoleFullDto {
+    'id': string;
     'name': string;
-    'description'?: string | null;
-    'permissions'?: Array<string> | null;
+    'description': string;
+    'isAdmin': boolean;
+    'permissions': Array<string>;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly mapping: {[index: string]: string} | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string",
+            "format": "uuid"
+        },
         {
             "name": "name",
             "baseName": "name",
@@ -35,6 +43,12 @@ export class RoleCreateUpdateRequest {
             "format": ""
         },
         {
+            "name": "isAdmin",
+            "baseName": "isAdmin",
+            "type": "boolean",
+            "format": ""
+        },
+        {
             "name": "permissions",
             "baseName": "permissions",
             "type": "Array<string>",
@@ -42,7 +56,7 @@ export class RoleCreateUpdateRequest {
         }    ];
 
     static getAttributeTypeMap() {
-        return RoleCreateUpdateRequest.attributeTypeMap;
+        return RoleFullDto.attributeTypeMap;
     }
 
     public constructor() {

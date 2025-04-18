@@ -1,4 +1,4 @@
-import { localTimeToDate } from "@/common/utils/date.util";
+import { localTimeToDate } from "@/common/utils/date.utils";
 
 const allowedMinutes = [0, 10, 20, 30, 40, 50];
 
