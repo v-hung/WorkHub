@@ -50,6 +50,9 @@ export const PermissionMatrixForm: React.FC<State> = (props) => {
 
   return (
     <Row gutter={24} align="top" {...rest}>
+      <Col span={24}>
+        <Checkbox>Permissions</Checkbox>
+      </Col>
       {Object.entries(matrix).map(([group, actions]) => (
         <Col key={group}>
           <div style={{ fontWeight: "bold", marginBottom: 8 }}>
