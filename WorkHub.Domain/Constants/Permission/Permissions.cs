@@ -11,7 +11,7 @@ public static class Permissions
 		public const string Edit = "Permissions.Users.Edit";
 		public const string Delete = "Permissions.Users.Delete";
 		public const string Export = "Permissions.Users.Export";
-		public const string Search = "Permissions.Users.Search";
+		public const string Import = "Permissions.Users.Import";
 	}
 
 	public static class Roles
@@ -20,65 +20,40 @@ public static class Permissions
 		public const string Create = "Permissions.Roles.Create";
 		public const string Edit = "Permissions.Roles.Edit";
 		public const string Delete = "Permissions.Roles.Delete";
-		public const string Search = "Permissions.Roles.Search";
 	}
 
-	public static class RoleClaims
+	public static class Teams
 	{
-		public const string View = "Permissions.RoleClaims.View";
-		public const string Create = "Permissions.RoleClaims.Create";
-		public const string Edit = "Permissions.RoleClaims.Edit";
-		public const string Delete = "Permissions.RoleClaims.Delete";
-		public const string Search = "Permissions.RoleClaims.Search";
+		public const string View = "Permissions.Teams.View";
+		public const string Create = "Permissions.Teams.Create";
+		public const string Edit = "Permissions.Teams.Edit";
+		public const string Delete = "Permissions.Teams.Delete";
 	}
 
-	public static class Preferences
+	public static class WorkTimes
 	{
-		public const string ChangeLanguage = "Permissions.Preferences.ChangeLanguage";
+		public const string View = "Permissions.WorkTimes.View";
+		public const string Create = "Permissions.WorkTimes.Create";
+		public const string Edit = "Permissions.WorkTimes.Edit";
+		public const string Delete = "Permissions.WorkTimes.Delete";
 	}
 
-	public static class Dashboards
+	public static class Projects
 	{
-		public const string View = "Permissions.Dashboards.View";
+		public const string View = "Permissions.Projects.View";
+		public const string Create = "Permissions.Projects.Create";
+		public const string Edit = "Permissions.Projects.Edit";
+		public const string Delete = "Permissions.Projects.Delete";
 	}
 
-
-	public static class Holidays
-	{
-		public const string View = "Permissions.Holidays.View";
-		public const string Create = "Permissions.Holidays.Create";
-		public const string Edit = "Permissions.Holidays.Edit";
-		public const string Delete = "Permissions.Holidays.Delete";
-		public const string Export = "Permissions.Holidays.Export";
-		public const string Search = "Permissions.Holidays.Search";
-	}
-	public static class DeviceTypes
-	{
-		public const string View = "Permissions.DeviceTypes.View";
-		public const string Create = "Permissions.DeviceTypes.Create";
-		public const string Edit = "Permissions.DeviceTypes.Edit";
-		public const string Delete = "Permissions.DeviceTypes.Delete";
-		public const string Export = "Permissions.DeviceTypes.Export";
-		public const string Search = "Permissions.DeviceTypes.Search";
-	}
 	public static class Devices
 	{
 		public const string View = "Permissions.Devices.View";
 		public const string Create = "Permissions.Devices.Create";
 		public const string Edit = "Permissions.Devices.Edit";
 		public const string Delete = "Permissions.Devices.Delete";
-		public const string Export = "Permissions.Devices.Export";
-		public const string Search = "Permissions.Devices.Search";
 	}
-	public static class Positions
-	{
-		public const string View = "Permissions.Positions.View";
-		public const string Create = "Permissions.Positions.Create";
-		public const string Edit = "Permissions.Positions.Edit";
-		public const string Delete = "Permissions.Positions.Delete";
-		public const string Export = "Permissions.Positions.Export";
-		public const string Search = "Permissions.Positions.Search";
-	}
+
 	/// <summary>
 	/// Returns a list of Permissions.
 	/// </summary>
