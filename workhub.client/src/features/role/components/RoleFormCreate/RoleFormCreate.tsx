@@ -1,4 +1,4 @@
-import { Col, Collapse, Form, Input, Row, Spin } from "antd";
+import { Col, Form, Input, Row, Spin } from "antd";
 import {
   Dispatch,
   forwardRef,
@@ -6,13 +6,11 @@ import {
   SetStateAction,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useState,
 } from "react";
 import { RoleCreateUpdateRequest, RoleDto } from "@/generate-api";
 import { useRoleAction } from "../../hooks/useRoleAction";
 import { useNavigate } from "react-router";
-import { getPermissionsFormItems } from "./constans";
 import { PermissionMatrixForm } from "./PermissionMatrixForm";
 
 type State = HTMLAttributes<HTMLDivElement> & {
@@ -50,20 +48,13 @@ const RoleFormCreate = forwardRef<RoleFormCreateRefState, State>(
           };
 
           if (!record) {
-            await create(body);
+            await create(body, () => navigate("/roles"));
           } else {
-            await update(record.id, body);
+            await update(record.id, body, () => navigate("/roles"));
           }
-
-          navigate("/roles");
         });
       },
     }));
-
-    const permissionsFormItems = useMemo(
-      () => getPermissionsFormItems(form),
-      [form]
-    );
 
     return (
       <div {...rest} className={`form-container ${className}`}>

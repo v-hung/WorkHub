@@ -1,5 +1,6 @@
 using AutoMapper;
 using WorkHub.Application.DTOs.Identity;
+using WorkHub.Application.Requests.Identity;
 using WorkHub.Domain.Entities.Identity;
 
 namespace WorkHub.Application.Mappings
@@ -10,6 +11,7 @@ namespace WorkHub.Application.Mappings
 		{
 			CreateMap<Role, RoleDto>().ReverseMap();
 			CreateMap<Role, RoleFullDto>().ReverseMap();
+			CreateMap<RoleCreateUpdateRequest, Role>().ReverseMap();
 		}
 	}
 }

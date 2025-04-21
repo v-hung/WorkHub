@@ -1,12 +1,12 @@
 import { Button } from "antd";
 import { redirect, useLoaderData } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import { useRef, useState } from "react";
 import DeviceCategoryFormCreate, {
   DeviceCategoryFormCreateRefState,
 } from "@/features/deviceCategory/components/DeviceCategoryFormCreate/DeviceCategoryFormCreate";
 import { deviceCategoryApi } from "@/services/apiClient";
-import { wrapPromise } from "@/common/utils/promise";
+import { wrapPromise } from "@/utils/promise";
 import { DeviceCategoryDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";

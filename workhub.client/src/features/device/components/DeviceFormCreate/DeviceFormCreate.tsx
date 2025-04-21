@@ -45,12 +45,10 @@ const DeviceFormCreate = forwardRef<DeviceFormCreateRefState, State>(
           const formValues = form.getFieldsValue();
 
           if (!record) {
-            await create(formValues);
+            await create(formValues, () => navigate("/devices"));
           } else {
-            await update(record.id, formValues);
+            await update(record.id, formValues, () => navigate("/devices"));
           }
-
-          navigate("/devices");
         });
       },
     }));

@@ -45,12 +45,10 @@ const TeamFormCreate = forwardRef<TeamFormCreateRefState, State>(
           const formValues = form.getFieldsValue();
 
           if (!record) {
-            await create(formValues);
+            await create(formValues, () => navigate("/teams"));
           } else {
-            await update(record.id, formValues);
+            await update(record.id, formValues, () => navigate("/teams"));
           }
-
-          navigate("/teams");
         });
       },
     }));

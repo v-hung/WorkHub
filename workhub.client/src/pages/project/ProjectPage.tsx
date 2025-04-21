@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import ProjectTable from "@/features/project/components/ProjectTable/ProjectTable";
 import { ProjectProvider } from "@/features/project/contexts/ProjectContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";

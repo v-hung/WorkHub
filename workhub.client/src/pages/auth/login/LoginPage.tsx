@@ -1,5 +1,5 @@
-import { useLogin } from "@/common/hooks/auth/useLogin";
-import { wrapLoader } from "@/common/utils/loader";
+import { useLogin } from "@/hooks/auth/useLogin";
+import { wrapLoader } from "@/utils/loader";
 import { LoginRequest } from "@/generate-api";
 import { Button, Checkbox, Form, FormProps, Input } from "antd";
 import { redirect } from "react-router";

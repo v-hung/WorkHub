@@ -4,15 +4,18 @@ import ProgressIndicator from "@/ui/navigation/ProgressIndicator/ProgressIndicat
 import { LayoutProvider } from "./contexts/LayoutContext";
 import DefaultMenu from "./components/DefaultMenu/DefaultMenu";
 import "./DefaultLayout.css";
+import { NotificationHubProvider } from "@/contexts/signalR/notificationHubContext";
 
 export const Component = () => {
   return (
     <LayoutProvider>
-      <Layout className="layout layout--default">
-        <DefaultMenu />
-        <Outlet />
-      </Layout>
-      <ProgressIndicator />
+      <NotificationHubProvider>
+        <Layout className="layout layout--default">
+          <DefaultMenu />
+          <Outlet />
+        </Layout>
+        <ProgressIndicator />
+      </NotificationHubProvider>
     </LayoutProvider>
   );
 };

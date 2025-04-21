@@ -1,7 +1,7 @@
 import MainTable from "@/ui/table/MainTable";
 import { DataTimesheetTableType, timesheetColumns } from "./constants";
 import { useMemo } from "react";
-import { format, formatDuration } from "@/common/utils/date.utils";
+import { format, formatDuration } from "@/utils/date.utils";
 import "./TimesheetTable.css";
 import { addMonths, intervalToDuration, isWeekend } from "date-fns";
 import { Button, Flex, Table } from "antd";

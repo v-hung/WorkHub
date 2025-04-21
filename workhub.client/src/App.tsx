@@ -1,10 +1,11 @@
 import { ConfigProvider, App as AppTheme } from "antd";
 import { Suspense } from "react";
-import { authBootstrap } from "./common/bootstrap/auth.bootstrap";
-import { FeedbackProvider } from "./common/contexts/FeedbackProvider";
+import { authBootstrap } from "./services/auth.bootstrap";
+import { FeedbackProvider } from "./contexts/feedback/FeedbackProvider";
 import { RouterProvider } from "react-router";
 import router from "./router";
 import viVN from "antd/locale/vi_VN";
+import Loading from "./ui/navigation/Loading/Loading";
 
 export const AppProvider = () => {
   authBootstrap.read();
@@ -42,7 +43,7 @@ export const AppProvider = () => {
 
 const App = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <AppProvider />
     </Suspense>
   );

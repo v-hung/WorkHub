@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import RoleTable from "@/features/role/components/RoleTable/RoleTable";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";

@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import { CreateTeamCommand, TeamFullDto } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -26,10 +26,13 @@ export const useTeamAction = () => {
   // Create
   // =============
 
-  const create = async (request: CreateTeamCommand) => {
+  const create = async (request: CreateTeamCommand, cb?: () => void) => {
     setLoading(true);
     try {
       await teamApi.teamCreate(request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -45,10 +48,17 @@ export const useTeamAction = () => {
   // Update
   // =============
 
-  const update = async (id: number, request: CreateTeamCommand) => {
+  const update = async (
+    id: number,
+    request: CreateTeamCommand,
+    cb?: () => void
+  ) => {
     setLoading(true);
     try {
       await teamApi.teamUpdate(id, request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -57,7 +67,7 @@ export const useTeamAction = () => {
         message: getMessageError(e),
       });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 

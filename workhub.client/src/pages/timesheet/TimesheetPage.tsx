@@ -1,5 +1,5 @@
 import TimesheetHeader from "@/features/timesheet/components/TimesheetHeader/TimesheetHeader";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import TimesheetTable from "@/features/timesheet/components/TimesheetTable/TimesheetTable";
 import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext";
 import { lazy, Suspense } from "react";

@@ -1,12 +1,12 @@
 import { Button } from "antd";
 import { redirect, useLoaderData } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import { useRef, useState } from "react";
 import WorkTimeFormCreate, {
   WorkTimeFormCreateRefState,
 } from "@/features/workTime/components/WorkTimeFormCreate/WorkTimeFormCreate";
 import { workTimeApi } from "@/services/apiClient";
-import { wrapPromise } from "@/common/utils/promise";
+import { wrapPromise } from "@/utils/promise";
 import { WorkTimeDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";

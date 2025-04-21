@@ -10,6 +10,8 @@ namespace WorkHub.Application.Interfaces.Repositories
 
 		Task<List<D>> GetAllAsync<D>(Expression<Func<T, bool>>? filter = null) where D : class;
 
+		Task<int> CountAsync(Expression<Func<T, bool>>? filter = null);
+
 		Task<Paginated<D>> SearchAsync<D, DId>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<DId>;
 
 		Task<CursorPaginated<D>> CursorSearchAsync<D>(CursorPagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<int>;

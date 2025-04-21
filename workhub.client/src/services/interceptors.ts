@@ -7,8 +7,8 @@ import { from, Observable } from "@/generate-api/rxjsStub";
 // import "whatwg-fetch";
 import { accountApi } from "./apiClient";
 import { useAuthStore } from "@/stores/auth.store";
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import i18n from "@/common/utils/i18n";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import i18n from "@/utils/i18n";
 
 export class FetchHttpLibrary implements HttpLibrary {
   private enableRefreshToken: boolean;

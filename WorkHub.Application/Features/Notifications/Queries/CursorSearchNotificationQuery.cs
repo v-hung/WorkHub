@@ -1,6 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+using System.Net;
 using MediatR;
 using WorkHub.Application.DTOs.Misc;
+using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Repositories;
+using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Requests;
 using WorkHub.Application.Wrapper;
 using WorkHub.Domain.Entities.Misc;
@@ -16,14 +20,22 @@ namespace WorkHub.Application.Features.Notifications.Queries
 	{
 		private readonly IRepository<Notification, int> _repository;
 
-		public CursorSearchNotificationQueryHandler(IRepository<Notification, int> repository)
+		private readonly ICurrentUserService _currentUserService;
+
+		public CursorSearchNotificationQueryHandler(IRepository<Notification, int> repository, ICurrentUserService currentUserService)
 		{
 			_repository = repository;
+			_currentUserService = currentUserService;
 		}
 
 		public async Task<CursorPaginated<NotificationDto>> Handle(CursorSearchNotificationQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.CursorSearchAsync<NotificationDto>(query.Request);
+			if (_currentUserService.UserId == null)
+			{
+				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
+			}
+
+			return await _repository.CursorSearchAsync<NotificationDto>(query.Request, v => Guid.Parse(_currentUserService.UserId) == v.UserId);
 		}
 	}
 }

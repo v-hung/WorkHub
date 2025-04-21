@@ -8,9 +8,9 @@ import {
   useState,
 } from "react";
 import SelectAsyncScroll from "@/ui/form/SelectAsyncScroll";
-import { debounce } from "@/common/utils/common.utils";
+import { debounce } from "@/utils/common.utils";
 import { useDeviceCategories } from "../../hooks/useDeviceCategories";
-import { isEmpty } from "@/common/utils/validate.utils";
+import { isEmpty } from "@/utils/validate.utils";
 
 type State = ComponentProps<typeof Select>;
 

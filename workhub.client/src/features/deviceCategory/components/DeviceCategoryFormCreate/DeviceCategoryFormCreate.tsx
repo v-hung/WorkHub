@@ -48,12 +48,12 @@ const DeviceCategoryFormCreate = forwardRef<
         const formValues = form.getFieldsValue();
 
         if (!record) {
-          await create(formValues);
+          await create(formValues, () => navigate("/device-categories"));
         } else {
-          await update(record.id, formValues);
+          await update(record.id, formValues, () =>
+            navigate("/device-categories")
+          );
         }
-
-        navigate("/device-categories");
       });
     },
   }));

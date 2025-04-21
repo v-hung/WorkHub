@@ -14,6 +14,8 @@ using System.Linq.Expressions;
 using WorkHub.Application.Wrapper;
 using WorkHub.Application.Requests;
 using System.Linq.Dynamic.Core;
+using System.Security.Claims;
+using WorkHub.Domain.Constants.Permission;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -111,7 +113,10 @@ namespace WorkHub.Infrastructure.Services
 		{
 			var role = _mapper.Map<Role>(request);
 
-			await _context.Roles.AddAsync(role);
+			await _roleManager.CreateAsync(role);
+
+			await UpdateRoleClaimsAsync(role.Id, request.Permissions);
+
 			await _context.SaveChangesAsync();
 
 			return _mapper.Map<D>(role);
@@ -123,6 +128,8 @@ namespace WorkHub.Infrastructure.Services
 
 			_mapper.Map(request, role);
 
+			await UpdateRoleClaimsAsync(roleId, request.Permissions);
+
 			await _context.SaveChangesAsync();
 
 			return _mapper.Map<D>(role);
@@ -133,6 +140,26 @@ namespace WorkHub.Infrastructure.Services
 			var role = await _context.Roles.FindAsync(roleId) ?? throw new BusinessException(HttpStatusCode.NotFound, "");
 			_context.Roles.Remove(role);
 			await _context.SaveChangesAsync();
+		}
+
+		private async Task UpdateRoleClaimsAsync(Guid roleId, List<string> claims)
+		{
+			var identityRole = await _roleManager.FindByIdAsync(roleId.ToString())
+				?? throw new BusinessException(HttpStatusCode.NotFound, "Role not found in identity manager");
+
+			var currentClaims = await _roleManager.GetClaimsAsync(identityRole);
+
+			// Delete existing claims
+			foreach (var claim in currentClaims)
+			{
+				await _roleManager.RemoveClaimAsync(identityRole, claim);
+			}
+
+			// Add new claims
+			foreach (var claim in claims)
+			{
+				await _roleManager.AddClaimAsync(identityRole, new Claim(ApplicationClaimTypes.Permission, claim));
+			}
 		}
 	}
 }

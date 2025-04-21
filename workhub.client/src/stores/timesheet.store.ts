@@ -1,4 +1,4 @@
-import { wrapPromise } from "@/common/utils/promise";
+import { wrapPromise } from "@/utils/promise";
 import { timesheetApi } from "@/services/apiClient";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";

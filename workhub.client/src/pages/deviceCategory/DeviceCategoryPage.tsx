@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import DeviceCategoryTable from "@/features/deviceCategory/components/DeviceCategoryTable/DeviceCategoryTable";
 import { DeviceCategoryProvider } from "@/features/deviceCategory/contexts/DeviceCategoryContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";

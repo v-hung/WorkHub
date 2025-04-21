@@ -16,12 +16,12 @@ import UsIcon from "@/assets/UsIcon.svg";
 import { i18n, TFunction } from "i18next";
 import { useNavigate, useLocation } from "react-router";
 import { MenuInfo } from "rc-menu/lib/interface";
-import { getOpenKeys, getSelectedKeys } from "@/common/utils/menu.utils";
-import { authBootstrapLogout } from "@/common/bootstrap/auth.bootstrap";
+import { getOpenKeys, getSelectedKeys } from "@/utils/menu.utils";
+import { authBootstrapLogout } from "@/services/auth.bootstrap";
 import { useLayout } from "../../contexts/LayoutContext";
 import { useMenu } from "../../hooks/useMenu";
 import "./DefaultMenu.css";
-import { debounce } from "@/common/utils/common.utils";
+import { debounce } from "@/utils/common.utils";
 
 const { Sider } = Layout;
 

@@ -1,4 +1,4 @@
-import { format } from "@/common/utils/date.utils";
+import { format } from "@/utils/date.utils";
 import { useCancelRequest } from "@/features/request/hooks/useCancelRequest";
 import {
   RequestCombinedMinimalDto,

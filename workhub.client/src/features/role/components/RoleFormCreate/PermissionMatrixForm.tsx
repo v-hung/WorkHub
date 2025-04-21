@@ -2,11 +2,11 @@
 import {
   getPermissionMatrix,
   getPermissionValue,
-} from "@/common/utils/permission.utils";
+} from "@/utils/permission.utils";
 import { RoleCreateUpdateRequest } from "@/generate-api";
-import { Checkbox, Form, Row, Col } from "antd";
+import { Checkbox, Row, Col, Form } from "antd";
 import { FormInstance } from "antd/lib";
-import React, { ComponentProps, useMemo, useState } from "react";
+import React, { ComponentProps, useEffect, useMemo, useState } from "react";
 
 type State = ComponentProps<typeof Row> & {
   form: FormInstance<RoleCreateUpdateRequest>;
@@ -17,13 +17,13 @@ export const PermissionMatrixForm: React.FC<State> = (props) => {
   const matrix = useMemo(() => getPermissionMatrix(), []);
   const [value, setValue] = useState<string[]>([]);
 
-  const allPermissions = useMemo(
-    () =>
-      Object.entries(matrix).flatMap(([group, actions]) =>
-        actions.map((action) => getPermissionValue(group, action))
-      ),
-    [matrix]
-  );
+  // const allPermissions = useMemo(
+  //   () =>
+  //     Object.entries(matrix).flatMap(([group, actions]) =>
+  //       actions.map((action) => getPermissionValue(group, action))
+  //     ),
+  //   [matrix]
+  // );
 
   const handleGroupChange = (group: string, checkedValues: string[]) => {
     const updated = [
@@ -48,14 +48,39 @@ export const PermissionMatrixForm: React.FC<State> = (props) => {
     setValue(updated);
   };
 
+  useEffect(() => {
+    const defaultPermissions = form.getFieldValue("permissions") || [];
+    setValue(defaultPermissions);
+  }, [form]);
+
+  useEffect(() => {
+    form.setFieldsValue({ permissions: value });
+    console.log({ value });
+  }, [value, form]);
+
   return (
-    <Row gutter={24} align="top" {...rest}>
-      <Col span={24}>
-        <Checkbox>Permissions</Checkbox>
+    <Row align="top" {...rest} wrap gutter={[16, 16]}>
+      <Col span={24} style={{ marginBottom: "-.5rem" }}>
+        <Form.Item name="permissions" noStyle />
+        <label>Permissions</label>
       </Col>
+
       {Object.entries(matrix).map(([group, actions]) => (
-        <Col key={group}>
-          <div style={{ fontWeight: "bold", marginBottom: 8 }}>
+        <Col
+          xs={24}
+          sm={12}
+          md={8}
+          lg={6}
+          key={group}
+          style={{ paddingLeft: ".5rem" }}
+        >
+          <div
+            style={{
+              fontWeight: "bold",
+              marginBottom: 8,
+              paddingLeft: ".5rem",
+            }}
+          >
             <Checkbox
               checked={isAllChecked(group)}
               onChange={(e) => toggleGroupAll(group, e.target.checked)}
@@ -69,7 +94,7 @@ export const PermissionMatrixForm: React.FC<State> = (props) => {
               handleGroupChange(group, checked as string[])
             }
           >
-            <Row>
+            <Row style={{ paddingLeft: "1rem" }}>
               {actions.map((action) => {
                 const permValue = getPermissionValue(group, action);
                 return (

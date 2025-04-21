@@ -12,7 +12,7 @@ import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 import { useWorkTimeAction } from "../../hooks/useWorkTimeAction";
 import MyTimePicker from "@/ui/form/MyTimePicker";
 import { workTimeDisabledTime } from "../../utils/workTime.util";
-import { format, localTimeToDate } from "@/common/utils/date.utils";
+import { format, localTimeToDate } from "@/utils/date.utils";
 import { useNavigate } from "react-router";
 
 type State = HTMLAttributes<HTMLDivElement> & {
@@ -46,12 +46,10 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
           const formValues = form.getFieldsValue();
 
           if (!record) {
-            await create(formValues);
+            await create(formValues, () => navigate("/work-times"));
           } else {
-            await update(record.id, formValues);
+            await update(record.id, formValues, () => navigate("/work-times"));
           }
-
-          navigate("/work-times");
         });
       },
     }));

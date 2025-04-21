@@ -61,12 +61,10 @@ const ProjectFormCreate = forwardRef<ProjectFormCreateRefState, State>(
           };
 
           if (!record) {
-            await create(body);
+            await create(body, () => navigate("/projects"));
           } else {
-            await update(record.id, body);
+            await update(record.id, body, () => navigate("/projects"));
           }
-
-          navigate("/projects");
         });
       },
     }));

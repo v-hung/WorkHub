@@ -1,23 +1,48 @@
 import { Checkbox } from "antd";
-import type { FC, HTMLAttributes } from "react";
+import { Key, type FC, type HTMLAttributes } from "react";
 import "./NotificationToolbar.css";
+import { red } from "@ant-design/colors";
 
-type State = HTMLAttributes<HTMLDivElement>;
+type State = HTMLAttributes<HTMLDivElement> & {
+  selected: Key[];
+  onCheckAllChange: (checked: boolean) => void;
+  isCheckAll: boolean;
+};
 
 const NotificationToolbar: FC<State> = (props) => {
-  const { className = "", ...rest } = props;
+  const {
+    className = "",
+    selected,
+    onCheckAllChange,
+    isCheckAll,
+    ...rest
+  } = props;
+
   return (
     <div {...rest} className={`notification-toolbar ${className}`}>
       <div className="toolbar__left">
         <label className="toolbar__button">
-          <Checkbox id="check-all" />
+          <Checkbox
+            id="check-all"
+            checked={isCheckAll}
+            onChange={(e) => onCheckAllChange(e.target.checked)}
+          />
         </label>
         <button className="toolbar__button">
           <IIonRefresh />
         </button>
-        <button v-show="selectedKeys.length > 0" className="toolbar__button">
-          <IIonTrashOutline className="text-red-600" />
-        </button>
+
+        {selected.length > 0 && (
+          <>
+            <button className="toolbar__button">
+              <IIonTrashOutline style={{ color: red[5] }} />
+            </button>
+
+            <button className="toolbar__button">
+              <IIonMailUnreadOutline />
+            </button>
+          </>
+        )}
       </div>
 
       <div className="toolbar__right">

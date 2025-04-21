@@ -1,11 +1,11 @@
 import { Button } from "antd";
 import { redirect, useLoaderData } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import UserFormCreate, {
   UserFormCreateRefState,
 } from "@/features/user/components/UserFormCreate/UserFormCreate";
 import { useRef, useState } from "react";
-import { wrapPromise } from "@/common/utils/promise";
+import { wrapPromise } from "@/utils/promise";
 import { userApi } from "@/services/apiClient";
 import { UserFullDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";

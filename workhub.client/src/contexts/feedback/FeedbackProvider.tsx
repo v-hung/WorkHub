@@ -1,3 +1,4 @@
+import { showNotification } from "@/utils/notifications.utils";
 import { App } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
 import type { ModalStaticFunctions } from "antd/es/modal/confirm";
@@ -25,9 +26,33 @@ export const FeedbackProvider: FC<PropsWithChildren> = ({ children }) => {
     setNotification(notification, message, modal);
   }, [notification]);
 
+  useEffect(() => {
+    const bc = new BroadcastChannel("notification_channel");
+    bc.onmessage = (event) => {
+      if (event.data.type === "NOTIFICATION_CLICKED") {
+        console.log("Notification clicked");
+      }
+    };
+    return () => bc.close();
+  }, []);
+
   return children;
 };
 
 export const getNotification = () => notification;
 export const getMessage = () => message;
 export const getModal = () => modal;
+
+export const createInfoNotification = ({
+  description,
+  message,
+}: {
+  message: string;
+  description?: string;
+}) => {
+  if (document.visibilityState === "visible") {
+    getNotification().info({ message, description });
+  } else {
+    showNotification({ message, description });
+  }
+};

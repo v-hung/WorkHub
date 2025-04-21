@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import WorkTimeTable from "@/features/workTime/components/WorkTimeTable/WorkTimeTable";
 import { WorkTimeProvider } from "@/features/workTime/contexts/WorkTimeContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";

@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import { CreateDeviceCommand, DeviceDto } from "@/generate-api";
 import { deviceApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -28,10 +28,13 @@ export const useDeviceAction = () => {
   // Create
   // =============
 
-  const create = async (request: CreateDeviceCommand) => {
+  const create = async (request: CreateDeviceCommand, cb?: () => void) => {
     setLoading(true);
     try {
       await deviceApi.deviceCreate(request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -40,17 +43,24 @@ export const useDeviceAction = () => {
         message: getMessageError(e),
       });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
   // Update
   // =============
 
-  const update = async (id: number, request: CreateDeviceCommand) => {
+  const update = async (
+    id: number,
+    request: CreateDeviceCommand,
+    cb?: () => void
+  ) => {
     setLoading(true);
     try {
       await deviceApi.deviceUpdate(id, request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -59,7 +69,7 @@ export const useDeviceAction = () => {
         message: getMessageError(e),
       });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 

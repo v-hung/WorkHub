@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import { RoleCreateUpdateRequest, RoleDto } from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -26,10 +26,13 @@ export const useRoleAction = () => {
   // Create
   // =============
 
-  const create = async (request: RoleCreateUpdateRequest) => {
+  const create = async (request: RoleCreateUpdateRequest, cb?: () => void) => {
     setLoading(true);
     try {
       await roleApi.roleCreate(request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -38,17 +41,24 @@ export const useRoleAction = () => {
         message: getMessageError(e),
       });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
   // Update
   // =============
 
-  const update = async (id: string, request: RoleCreateUpdateRequest) => {
+  const update = async (
+    id: string,
+    request: RoleCreateUpdateRequest,
+    cb?: () => void
+  ) => {
     setLoading(true);
     try {
       await roleApi.roleUpdate(id, request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -57,7 +67,7 @@ export const useRoleAction = () => {
         message: getMessageError(e),
       });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 

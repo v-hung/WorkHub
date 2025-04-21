@@ -42,6 +42,20 @@ namespace WorkHub.Infrastructure.Repositories
 			return await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
+		public async Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
+		{
+
+			IQueryable<T> query = _context.Set<T>().AsQueryable();
+
+			// Apply Filtering
+			if (filter != null)
+			{
+				query = query.Where(filter);
+			}
+
+			return await query.CountAsync();
+		}
+
 		public async Task<Paginated<D>> SearchAsync<D, DId>(PagedRequest request, Expression<Func<T, bool>>? filter = null) where D : class, IEntity<DId>
 		{
 			IQueryable<T> query = _context.Set<T>().AsQueryable();

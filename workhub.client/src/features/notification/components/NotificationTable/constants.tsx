@@ -1,6 +1,6 @@
 import { TableProps } from "antd";
 import { NotificationDto } from "@/generate-api";
-import { format } from "@/common/utils/date.utils";
+import { format } from "@/utils/date.utils";
 
 export const notificationTableColumns: TableProps<NotificationDto>["columns"] =
   [

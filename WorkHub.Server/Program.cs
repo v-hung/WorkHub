@@ -39,7 +39,7 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseRequestLocalizationByCulture();
 app.UseAuthorization();
-app.MapControllers();
+app.UseEndpoints();
 app.MapFallbackToFile("/index.html");
 
 app.Initialize(builder.Configuration);

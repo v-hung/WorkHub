@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import { LoginRequest } from "@/generate-api";
 import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";

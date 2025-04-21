@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import { CreateProjectCommand, ProjectDto } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -35,10 +35,13 @@ export const useProjectAction = () => {
   // Create
   // =============
 
-  const create = async (request: CreateProjectCommand) => {
+  const create = async (request: CreateProjectCommand, cb?: () => void) => {
     setLoading(true);
     try {
       await projectApi.projectCreate(request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -54,10 +57,17 @@ export const useProjectAction = () => {
   // Update
   // =============
 
-  const update = async (id: number, request: CreateProjectCommand) => {
+  const update = async (
+    id: number,
+    request: CreateProjectCommand,
+    cb?: () => void
+  ) => {
     setLoading(true);
     try {
       await projectApi.projectUpdate(id, request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
@@ -66,7 +76,7 @@ export const useProjectAction = () => {
         message: getMessageError(e),
       });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 

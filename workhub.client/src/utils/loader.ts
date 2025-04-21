@@ -1,5 +1,5 @@
 import { LoaderFunction } from "react-router";
-import { authBootstrap } from "../bootstrap/auth.bootstrap";
+import { authBootstrap } from "../services/auth.bootstrap";
 import { Permission } from "@/generate-api";
 import { requiredPermission } from "./hasPermission";
 

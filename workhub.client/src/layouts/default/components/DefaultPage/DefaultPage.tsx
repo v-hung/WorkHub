@@ -7,7 +7,7 @@ import {
   type HTMLAttributes,
 } from "react";
 import "./DefaultPage.css";
-import { debounce } from "@/common/utils/common.utils";
+import { debounce } from "@/utils/common.utils";
 
 type State = HTMLAttributes<HTMLDivElement> & {
   pageClassName?: string;

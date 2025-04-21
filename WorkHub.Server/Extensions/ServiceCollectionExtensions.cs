@@ -24,6 +24,8 @@ using WorkHub.Infrastructure.Services;
 using WorkHub.Infrastructure.Services.Templates;
 using WorkHub.Server.Swagger;
 using WorkHub.Server.Converters;
+using WorkHub.Application.Interfaces.SignalR;
+using WorkHub.Server.SignalR;
 
 namespace WorkHub.Server.Extensions;
 
@@ -137,6 +139,14 @@ static class ServiceCollectionExtensions
 		services.AddSingleton<IEmailBackgroundQueue, EmailBackgroundQueue>();
 		services.AddHostedService<EmailSenderHostedService>();
 		services.AddScoped<IUploadFile, UploadFile>();
+		services.AddScoped<INotificationSender, NotificationSender>();
+
+		// add signalR
+		services.AddSignalR(options =>
+		{
+			options.EnableDetailedErrors = true;
+			options.MaximumReceiveMessageSize = 102400000; // 100MB
+		});
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -155,6 +165,8 @@ static class ServiceCollectionExtensions
 			c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["controller"]}_{e.ActionDescriptor.RouteValues["action"]}");
 			c.TagActionsBy(api => [api.GroupName ?? api.ActionDescriptor.RouteValues["controller"]]);
 			c.DocInclusionPredicate((groupName, api) => true);
+
+			// c.AddSignalRSwaggerGen();
 
 			c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 			{

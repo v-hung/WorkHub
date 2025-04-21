@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import {
   CreateTimesheetAdjustmentRequestDto,
   RequestType,
@@ -40,11 +40,16 @@ export const useCreateTimesheetAdjustmentRequest = () => {
   // Create
   // =============
 
-  const create = async (request: CreateTimesheetAdjustmentRequestDto) => {
+  const create = async (
+    request: CreateTimesheetAdjustmentRequestDto,
+    cb?: () => void
+  ) => {
     setLoading(true);
     try {
-      console.log({ request });
       await requestApi.timesheetAdjustmentRequestCreateRequest(request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });

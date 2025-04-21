@@ -10,7 +10,7 @@ import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
-import { wrapPromise } from "@/common/utils/promise";
+import { wrapPromise } from "@/utils/promise";
 
 type AuthStoreState = {
   user: UserDto | null;

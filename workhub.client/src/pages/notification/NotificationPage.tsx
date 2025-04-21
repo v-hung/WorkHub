@@ -1,4 +1,4 @@
-import { wrapLoaderWithPermission } from "@/common/utils/loader";
+import { wrapLoaderWithPermission } from "@/utils/loader";
 import NotificationTable from "@/features/notification/components/NotificationTable/NotificationTable";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";

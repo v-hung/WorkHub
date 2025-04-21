@@ -2,7 +2,7 @@ import MainTable from "@/ui/table/MainTable";
 import { DataUserTableType, userTableColumns } from "./constants";
 import { useUsers } from "../../hooks/useUsers";
 import { useEffect, useMemo } from "react";
-import { format } from "@/common/utils/date.utils";
+import { format } from "@/utils/date.utils";
 
 const UserTable = () => {
   const { userPaginated, setRequest, loading } = useUsers();

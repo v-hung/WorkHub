@@ -1,5 +1,5 @@
-import { getNotification } from "@/common/contexts/FeedbackProvider";
-import { getMessageError } from "@/common/utils/error.utils";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
+import { getMessageError } from "@/utils/error.utils";
 import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
 import { useAuthStore } from "@/stores/auth.store";
@@ -32,10 +32,13 @@ export const useCreateLeaveRequest = () => {
   // Create
   // =============
 
-  const create = async (request: CreateLeaveRequestDto) => {
+  const create = async (request: CreateLeaveRequestDto, cb?: () => void) => {
     setLoading(true);
     try {
       await requestApi.leaveRequestCreateRequest(request);
+
+      cb?.();
+
       getNotification().success({
         message: "Successfully completed",
       });
