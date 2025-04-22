@@ -1,6 +1,7 @@
 import { useAuthStore } from "@/stores/auth.store";
 import { createSuspender } from "../utils/suspender";
 import i18n from "../utils/i18n";
+import { LoginRequest } from "@/generate-api";
 
 export const authBootstrap = createSuspender(
   (async () => {
@@ -13,7 +14,20 @@ export const authBootstrap = createSuspender(
 
 export const authBootstrapLogout = async (callback?: () => void) => {
   await useAuthStore.getState().logout(() => {
-    authBootstrap.setResult(undefined);
+    authBootstrap.setResult({ user: undefined, permissions: [] });
+
+    if (callback) {
+      callback();
+    }
+  });
+};
+
+export const authBootstrapLogin = async (
+  credentials: LoginRequest,
+  callback?: () => void
+) => {
+  await useAuthStore.getState().login(credentials, () => {
+    authBootstrap.setResult({ user: undefined, permissions: [] });
 
     if (callback) {
       callback();

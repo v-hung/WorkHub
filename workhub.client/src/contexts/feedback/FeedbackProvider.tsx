@@ -24,7 +24,7 @@ export const FeedbackProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     setNotification(notification, message, modal);
-  }, [notification]);
+  }, [notification, message, modal]);
 
   useEffect(() => {
     const bc = new BroadcastChannel("notification_channel");

@@ -3,7 +3,7 @@ import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 
-export const loader = wrapLoaderWithPermission(async () => {});
+export const loader = wrapLoaderWithPermission();
 
 export function Component() {
   return (

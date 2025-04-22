@@ -1,6 +1,6 @@
 import { Permission } from "@/generate-api";
 import { useAuthStore } from "@/stores/auth.store";
-import { LoaderFunctionArgs, redirect } from "react-router";
+import { redirect } from "react-router";
 
 export const hasPermission = (permission?: Permission) => {
   const { user, permissions } = useAuthStore.getState();
@@ -14,19 +14,11 @@ export const hasPermission = (permission?: Permission) => {
   return true;
 };
 
-export const requiredPermission = (
-  args: LoaderFunctionArgs<any>,
-  permission?: Permission
+export const ensurePermission = (
+  permissions: Permission[],
+  requiredPermission: Permission
 ) => {
-  const { user, permissions } = useAuthStore.getState();
-  const { request } = args;
-
-  if (!user && request.url != "/auth/login") {
-    const redirectUrl = encodeURIComponent(new URL(request.url).pathname);
-    throw redirect(`/auth/login?redirectUrl=${redirectUrl}`);
-  }
-
-  if (permission && !permissions.includes(permission)) {
+  if (!permissions.includes(requiredPermission)) {
     throw redirect("/");
   }
 };

@@ -25,41 +25,41 @@ export const NotificationHubProvider: FC<PropsWithChildren> = ({
   const [connection, setConnection] = useState<HubConnection | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  useEffect(() => {
-    const newConnection = new HubConnectionBuilder()
-      .withUrl("/hubs/notification")
-      .withAutomaticReconnect()
-      .build();
+  // useEffect(() => {
+  //   const newConnection = new HubConnectionBuilder()
+  //     .withUrl("/hubs/notification")
+  //     .withAutomaticReconnect()
+  //     .build();
 
-    setConnection(newConnection);
+  //   setConnection(newConnection);
 
-    return () => {
-      newConnection?.stop();
-    };
-  }, []);
+  //   return () => {
+  //     newConnection?.stop();
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    if (!connection) return;
+  // useEffect(() => {
+  //   if (!connection) return;
 
-    connection
-      .start()
-      .then(() => {
-        setIsConnected(true);
-        console.log("Connected to NotificationHub hub");
-      })
-      .catch((err) => console.error("NotificationHub connection error: ", err));
+  //   connection
+  //     .start()
+  //     .then(() => {
+  //       setIsConnected(true);
+  //       console.log("Connected to NotificationHub hub");
+  //     })
+  //     .catch((err) => console.error("NotificationHub connection error: ", err));
 
-    connection.onclose(() => {
-      setIsConnected(false);
-      console.log("NotificationHub disconnected");
-    });
+  //   connection.onclose(() => {
+  //     setIsConnected(false);
+  //     console.log("NotificationHub disconnected");
+  //   });
 
-    connection.on("NotificationReceived", (notification) => {
-      createInfoNotification({
-        message: notification.message,
-      });
-    });
-  }, [connection]);
+  //   connection.on("NotificationReceived", (notification) => {
+  //     createInfoNotification({
+  //       message: notification.message,
+  //     });
+  //   });
+  // }, [connection]);
 
   return (
     <NotificationHubContext.Provider value={{ connection, isConnected }}>

@@ -12,12 +12,17 @@ import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
 import { wrapPromise } from "@/utils/promise";
 
+export type LoadResponse = {
+  user: UserDto | undefined;
+  permissions: Permission[];
+};
+
 type AuthStoreState = {
   user: UserDto | null;
   permissions: Permission[];
-  login: (credentials: LoginRequest) => Promise<void>;
+  login: (credentials: LoginRequest, callback?: () => void) => Promise<void>;
   logout: (callback?: () => void) => Promise<void>;
-  load: () => Promise<UserDto | undefined>;
+  load: () => Promise<LoadResponse>;
 };
 
 export const useAuthStore = create<AuthStoreState>()(
@@ -25,14 +30,20 @@ export const useAuthStore = create<AuthStoreState>()(
     user: null,
     permissions: [],
 
-    login: async (credentials) => {
+    login: async (credentials, callback) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
       // set({
       //   user: USER,
       // });
 
-      const response = await accountApi.accountLogin(credentials);
-      set({ user: response.user });
+      await wrapPromise(() =>
+        accountApi.accountLogin(credentials).then(async (response) => {
+          if (callback) {
+            callback();
+          }
+          set({ user: response.user });
+        })
+      );
     },
 
     logout: async (callback) => {
@@ -53,12 +64,22 @@ export const useAuthStore = create<AuthStoreState>()(
       // });
       // return USER;
 
-      return await wrapPromise(() =>
-        accountApiWithRefreshToken.accountGetCurrentUser().then((user) => {
-          set({ user });
-          return user;
-        })
-      );
+      try {
+        const [user, rawPermissions] = await Promise.all([
+          accountApiWithRefreshToken.accountGetCurrentUser(),
+          accountApiWithRefreshToken.accountGetPermissions(),
+        ]);
+
+        const permissions: Permission[] = rawPermissions.map(
+          (p) => p as Permission
+        );
+
+        set({ user, permissions });
+
+        return { user, permissions };
+      } catch (error) {
+        return { user: undefined, permissions: [] };
+      }
     },
   }))
 );

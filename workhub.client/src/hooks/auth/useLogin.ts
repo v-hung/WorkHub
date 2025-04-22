@@ -1,12 +1,12 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
 import { LoginRequest } from "@/generate-api";
-import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { authBootstrapLogin } from "@/services/auth.bootstrap";
 
 export const useLogin = () => {
-  const accountLogin = useAuthStore((state) => state.login);
+  // const accountLogin = useAuthStore((state) => state.login);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +16,7 @@ export const useLogin = () => {
     try {
       if (loading) return;
       setLoading(true);
-      await accountLogin(credentials);
+      await authBootstrapLogin(credentials);
 
       const params = new URLSearchParams(location.search);
       const redirectUrl = params.get("redirectUrl") || "/";

@@ -7,8 +7,12 @@ import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHea
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import { RoleProvider } from "@/features/role/contexts/RoleContext";
+import { Permission } from "@/generate-api";
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapLoaderWithPermission(
+  undefined,
+  Permission.PermissionsRolesView
+);
 
 export function Component() {
   const navigate = useNavigate();

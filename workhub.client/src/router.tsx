@@ -2,7 +2,11 @@ import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter(
   [
+    // {
+    //   errorElement: <div>error</div>,
+    // },
     {
+      errorElement: <div>error</div>,
       lazy: () => import("./layouts/default/DefaultLayout"),
       children: [
         {
