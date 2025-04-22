@@ -41,6 +41,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
+import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -1184,6 +1185,62 @@ export class ObservableNotificationApi {
     }
 
     /**
+     */
+    public notificationGetUnreadCountWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<number>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.notificationGetUnreadCount(_config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.notificationGetUnreadCountWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public notificationGetUnreadCount(_options?: ConfigurationOptions): Observable<number> {
+        return this.notificationGetUnreadCountWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<number>) => apiResponse.data));
+    }
+
+    /**
      * @param [cursorId]
      * @param [cursorPagedRequestDirection]
      * @param [newestFirst]
@@ -1245,6 +1302,64 @@ export class ObservableNotificationApi {
      */
     public notificationSearch(cursorId?: number, cursorPagedRequestDirection?: CursorPagedRequestDirection, newestFirst?: boolean, searchString?: string, _options?: ConfigurationOptions): Observable<NotificationDtoCursorPaginated> {
         return this.notificationSearchWithHttpInfo(cursorId, cursorPagedRequestDirection, newestFirst, searchString, _options).pipe(map((apiResponse: HttpInfo<NotificationDtoCursorPaginated>) => apiResponse.data));
+    }
+
+    /**
+     * @param [sendTestNotificationCommand]
+     */
+    public notificationSendTestNotificationWithHttpInfo(sendTestNotificationCommand?: SendTestNotificationCommand, _options?: ConfigurationOptions): Observable<HttpInfo<string>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.notificationSendTestNotification(sendTestNotificationCommand, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.notificationSendTestNotificationWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [sendTestNotificationCommand]
+     */
+    public notificationSendTestNotification(sendTestNotificationCommand?: SendTestNotificationCommand, _options?: ConfigurationOptions): Observable<string> {
+        return this.notificationSendTestNotificationWithHttpInfo(sendTestNotificationCommand, _options).pipe(map((apiResponse: HttpInfo<string>) => apiResponse.data));
     }
 
 }

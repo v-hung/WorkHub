@@ -40,6 +40,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
+import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -859,6 +860,44 @@ export class PromiseNotificationApi {
     }
 
     /**
+     */
+    public notificationGetUnreadCountWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<number>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.notificationGetUnreadCountWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public notificationGetUnreadCount(_options?: PromiseConfigurationOptions): Promise<number> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.notificationGetUnreadCount(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
      * @param [cursorId]
      * @param [cursorPagedRequestDirection]
      * @param [newestFirst]
@@ -901,6 +940,46 @@ export class PromiseNotificationApi {
 	    }
 	}
         const result = this.api.notificationSearch(cursorId, cursorPagedRequestDirection, newestFirst, searchString, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [sendTestNotificationCommand]
+     */
+    public notificationSendTestNotificationWithHttpInfo(sendTestNotificationCommand?: SendTestNotificationCommand, _options?: PromiseConfigurationOptions): Promise<HttpInfo<string>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.notificationSendTestNotificationWithHttpInfo(sendTestNotificationCommand, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [sendTestNotificationCommand]
+     */
+    public notificationSendTestNotification(sendTestNotificationCommand?: SendTestNotificationCommand, _options?: PromiseConfigurationOptions): Promise<string> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.notificationSendTestNotification(sendTestNotificationCommand, observableOptions);
         return result.toPromise();
     }
 

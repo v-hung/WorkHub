@@ -54,6 +54,12 @@ public static class Permissions
 		public const string Delete = "Permissions.Devices.Delete";
 	}
 
+	public static class Timesheets
+	{
+		public const string View = "Permissions.Timesheets.View";
+		public const string Export = "Permissions.Timesheets.Export";
+	}
+
 	/// <summary>
 	/// Returns a list of Permissions.
 	/// </summary>

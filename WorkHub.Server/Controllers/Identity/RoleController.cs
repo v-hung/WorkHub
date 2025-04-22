@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkHub.Application.DTOs.Identity;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Requests;
 using WorkHub.Application.Requests.Identity;
 using WorkHub.Application.Wrapper;
+using WorkHub.Domain.Constants.Permission;
 
 namespace WorkHub.Server.Controllers.Time
 {
@@ -17,6 +19,7 @@ namespace WorkHub.Server.Controllers.Time
 			_roleService = roleService;
 		}
 
+		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("all")]
 		public async Task<ActionResult<List<RoleDto>>> GetAll([FromQuery] List<Guid>? ids = null)
 		{
@@ -26,6 +29,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("all-by-names")]
 		public async Task<ActionResult<List<RoleDto>>> GetAllByNames([FromQuery] List<string>? names = null)
 		{
@@ -35,6 +39,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet]
 		public async Task<ActionResult<Paginated<RoleDto>>> Search([FromQuery] PagedRequest request)
 		{
@@ -42,6 +47,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("id/{id}")]
 		public async Task<ActionResult<RoleFullDto>> GetById(Guid id)
 		{
@@ -50,6 +56,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("name/{name}")]
 		public async Task<ActionResult<RoleDto>> GetByName(string name)
 		{
@@ -58,6 +65,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.Create)]
 		[HttpPost]
 		public async Task<ActionResult<RoleDto>> Create(RoleCreateUpdateRequest request)
 		{
@@ -66,6 +74,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.Edit)]
 		[HttpPut("{id}")]
 		public async Task<ActionResult<RoleDto>> Update(Guid id, RoleCreateUpdateRequest request)
 		{
@@ -74,6 +83,7 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
+		[Authorize(Policy = Permissions.Roles.Delete)]
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(Guid id)
 		{

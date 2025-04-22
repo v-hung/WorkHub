@@ -40,6 +40,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
+import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -561,6 +562,9 @@ export class ObjectDeviceCategoryApi {
 import { ObservableNotificationApi } from "./ObservableAPI";
 import { NotificationApiRequestFactory, NotificationApiResponseProcessor} from "../apis/NotificationApi";
 
+export interface NotificationApiNotificationGetUnreadCountRequest {
+}
+
 export interface NotificationApiNotificationSearchRequest {
     /**
      * 
@@ -592,11 +596,34 @@ export interface NotificationApiNotificationSearchRequest {
     searchString?: string
 }
 
+export interface NotificationApiNotificationSendTestNotificationRequest {
+    /**
+     * 
+     * @type SendTestNotificationCommand
+     * @memberof NotificationApinotificationSendTestNotification
+     */
+    sendTestNotificationCommand?: SendTestNotificationCommand
+}
+
 export class ObjectNotificationApi {
     private api: ObservableNotificationApi
 
     public constructor(configuration: Configuration, requestFactory?: NotificationApiRequestFactory, responseProcessor?: NotificationApiResponseProcessor) {
         this.api = new ObservableNotificationApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public notificationGetUnreadCountWithHttpInfo(param: NotificationApiNotificationGetUnreadCountRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<number>> {
+        return this.api.notificationGetUnreadCountWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public notificationGetUnreadCount(param: NotificationApiNotificationGetUnreadCountRequest = {}, options?: ConfigurationOptions): Promise<number> {
+        return this.api.notificationGetUnreadCount( options).toPromise();
     }
 
     /**
@@ -611,6 +638,20 @@ export class ObjectNotificationApi {
      */
     public notificationSearch(param: NotificationApiNotificationSearchRequest = {}, options?: ConfigurationOptions): Promise<NotificationDtoCursorPaginated> {
         return this.api.notificationSearch(param.cursorId, param.cursorPagedRequestDirection, param.newestFirst, param.searchString,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public notificationSendTestNotificationWithHttpInfo(param: NotificationApiNotificationSendTestNotificationRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<string>> {
+        return this.api.notificationSendTestNotificationWithHttpInfo(param.sendTestNotificationCommand,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public notificationSendTestNotification(param: NotificationApiNotificationSendTestNotificationRequest = {}, options?: ConfigurationOptions): Promise<string> {
+        return this.api.notificationSendTestNotification(param.sendTestNotificationCommand,  options).toPromise();
     }
 
 }

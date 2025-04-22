@@ -36,6 +36,7 @@ export * from '../models/RoleCreateUpdateRequest';
 export * from '../models/RoleDto';
 export * from '../models/RoleDtoPaginated';
 export * from '../models/RoleFullDto';
+export * from '../models/SendTestNotificationCommand';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamFullDto';
@@ -94,6 +95,7 @@ import { RoleCreateUpdateRequest } from '../models/RoleCreateUpdateRequest';
 import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
+import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -170,6 +172,7 @@ let typeMap: {[index: string]: any} = {
     "RoleDto": RoleDto,
     "RoleDtoPaginated": RoleDtoPaginated,
     "RoleFullDto": RoleFullDto,
+    "SendTestNotificationCommand": SendTestNotificationCommand,
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
     "TeamFullDto": TeamFullDto,

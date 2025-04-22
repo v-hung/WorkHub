@@ -4,8 +4,57 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**notificationGetUnreadCount**](NotificationApi.md#notificationGetUnreadCount) | **GET** /api/notifications/unread-count | 
 [**notificationSearch**](NotificationApi.md#notificationSearch) | **GET** /api/notifications | 
+[**notificationSendTestNotification**](NotificationApi.md#notificationSendTestNotification) | **POST** /api/notifications/send-test | 
 
+
+# **notificationGetUnreadCount**
+> number notificationGetUnreadCount()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, NotificationApi } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new NotificationApi(configuration);
+
+const request = {};
+
+const data = await apiInstance.notificationGetUnreadCount(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+
+### Return type
+
+**number**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **notificationSearch**
 > NotificationDtoCursorPaginated notificationSearch()
@@ -58,6 +107,64 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **notificationSendTestNotification**
+> string notificationSendTestNotification()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, NotificationApi } from '';
+import type { NotificationApiNotificationSendTestNotificationRequest } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new NotificationApi(configuration);
+
+const request: NotificationApiNotificationSendTestNotificationRequest = {
+  
+  sendTestNotificationCommand: {
+    title: "title_example",
+    body: "body_example",
+    userId: "userId_example",
+  },
+};
+
+const data = await apiInstance.notificationSendTestNotification(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sendTestNotificationCommand** | **SendTestNotificationCommand**|  |
+
+
+### Return type
+
+**string**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
  - **Accept**: text/plain, application/json, text/json
 
 

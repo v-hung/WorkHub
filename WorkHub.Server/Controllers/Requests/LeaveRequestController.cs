@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Features.Approvals.Commands;
@@ -10,6 +11,7 @@ namespace WorkHub.Server.Controllers.Requests
 	public class LeaveRequestController : BaseRequestController<RequestCombinedDto, CreateLeaveRequestDto>
 	{
 		[HttpPost("leave")]
+		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> CreateRequest(CreateLeaveRequestDto request)
 		{
 			var data = await _mediator.Send(new CreateRequestCommand<RequestCombinedDto, CreateLeaveRequestDto> { Request = request });
@@ -18,6 +20,7 @@ namespace WorkHub.Server.Controllers.Requests
 		}
 
 		[HttpPost("{id}/leave-cancel")]
+		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> CancelRequest(int id)
 		{
 			var data = await _mediator.Send(new CancelRequestCommand<RequestCombinedDto, CreateLeaveRequestDto> { Id = id });
@@ -26,6 +29,7 @@ namespace WorkHub.Server.Controllers.Requests
 		}
 
 		[HttpPost("{id}/leave-approval")]
+		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> ApprovalRequest(int id)
 		{
 			var data = await _mediator.Send(new ApproveRequestCommand<RequestCombinedDto, LeaveRequest> { RequestId = id });
@@ -34,6 +38,7 @@ namespace WorkHub.Server.Controllers.Requests
 		}
 
 		[HttpPost("{id}/leave-reject")]
+		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> RejectRequest(int id)
 		{
 			var data = await _mediator.Send(new RejectRequestCommand<RequestCombinedDto, LeaveRequest> { RequestId = id });

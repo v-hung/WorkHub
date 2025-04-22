@@ -112,18 +112,6 @@ public class DatabaseSeeder : IDatabaseSeeder
 
 	private async Task SeedBasicUsers(List<Team> teams)
 	{
-		var basicRoleExits = await _roleManager.RoleExistsAsync(RoleConst.BasicRole);
-
-		if (!basicRoleExits)
-		{
-			var role = new Role
-			{
-				NormalizedName = RoleConst.BasicRole.ToUpper(),
-				Name = RoleConst.BasicRole
-			};
-			await _roleManager.CreateAsync(role);
-		}
-
 		var basicUserExist = await _userManager.FindByEmailAsync("hungnv@wbc.vn");
 
 		if (basicUserExist == null)
@@ -163,7 +151,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 		var workTimes = new[]
 		{
 			new WorkTime{Title = "Basic"},
-			new WorkTime{Title = "Early"},
+			new WorkTime{Title = "Early", StartTimeAfternoon = new TimeSpan(13, 0, 0), EndTimeAfternoon = new TimeSpan(17, 0, 0)},
 		};
 
 		var data = workTimes.Where(item => !_context.WorkTimes.Any(t => t.Title == item.Title)).ToList();

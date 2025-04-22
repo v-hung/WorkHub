@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkHub.Application.DTOs.Identity;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Requests;
 using WorkHub.Application.Requests.Identity;
 using WorkHub.Application.Wrapper;
+using WorkHub.Domain.Constants.Permission;
 
 namespace WorkHub.Server.Controllers.Identity;
 
@@ -18,7 +20,7 @@ public class UserController : BaseApiController<UserController>
 		_userService = userService;
 	}
 
-	// [Authorize(Policy = Permissions.Users.View)]
+	[Authorize(Policy = Permissions.Users.View)]
 	[HttpGet]
 	public async Task<ActionResult<Paginated<UserDto>>> Search([FromQuery] PagedRequest request)
 	{
@@ -26,6 +28,7 @@ public class UserController : BaseApiController<UserController>
 		return Ok(users);
 	}
 
+	[Authorize(Policy = Permissions.Users.View)]
 	[HttpGet("all")]
 	public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] List<Guid>? ids = null)
 	{
@@ -34,6 +37,7 @@ public class UserController : BaseApiController<UserController>
 		return Ok(users);
 	}
 
+	[Authorize(Policy = Permissions.Users.View)]
 	[HttpGet("{id}")]
 	public async Task<ActionResult<UserFullDto>> GetById(Guid id)
 	{
@@ -41,6 +45,7 @@ public class UserController : BaseApiController<UserController>
 		return Ok(user);
 	}
 
+	[Authorize(Policy = Permissions.Users.Create)]
 	[HttpPost]
 	public async Task<ActionResult<UserDto>> Create([FromBody] UserCreateUpdateRequest request)
 	{
@@ -49,6 +54,7 @@ public class UserController : BaseApiController<UserController>
 		return Ok(users);
 	}
 
+	[Authorize(Policy = Permissions.Users.Edit)]
 	[HttpPut("{id}")]
 	public async Task<ActionResult<UserFullDto>> Update(Guid id, [FromBody] UserCreateUpdateRequest request)
 	{
@@ -57,6 +63,7 @@ public class UserController : BaseApiController<UserController>
 		return Ok(users);
 	}
 
+	[Authorize(Policy = Permissions.Users.Delete)]
 	[HttpDelete("{id}")]
 	public async Task<ActionResult> Delete(Guid id)
 	{
