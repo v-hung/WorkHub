@@ -7,8 +7,13 @@ import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { Permission } from "@/generate-api";
+import { hasPermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapLoaderWithPermission(
+  undefined,
+  Permission.PermissionsDevicesView
+);
 
 export function Component() {
   const navigate = useNavigate();
@@ -16,13 +21,15 @@ export function Component() {
   return (
     <DefaultPage pageClassName="h-screen">
       <DefaultHeader title="Device Categories Manager">
-        <Button
-          type="primary"
-          onClick={() => navigate("/device-categories/create")}
-          icon={<IIonPlus width={16} height={16} />}
-        >
-          Add device category
-        </Button>
+        {hasPermission(Permission.PermissionsDevicesCreate) ? (
+          <Button
+            type="primary"
+            onClick={() => navigate("/device-categories/create")}
+            icon={<IIonPlus width={16} height={16} />}
+          >
+            Add device category
+          </Button>
+        ) : null}
       </DefaultHeader>
 
       <DefaultBreadcrumb

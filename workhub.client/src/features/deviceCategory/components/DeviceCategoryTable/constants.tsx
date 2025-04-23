@@ -2,8 +2,9 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps, Tag } from "antd";
 import { FC } from "react";
 import { useDeviceCategoriesContext } from "../../contexts/DeviceCategoryContext";
-import { DeviceCategoryDto } from "@/generate-api";
+import { DeviceCategoryDto, Permission } from "@/generate-api";
 import { getUniqueColor } from "@/utils/color.utils";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const deviceCategoryTableColumns: TableProps<DeviceCategoryDto>["columns"] =
   [
@@ -41,15 +42,21 @@ export const deviceCategoryTableColumns: TableProps<DeviceCategoryDto>["columns"
             >
               View
             </ButtonLink>
-            <ButtonLink
-              href={`/device-categories/${record.id}/edit`}
-              size="small"
-              color="cyan"
-              variant="outlined"
-            >
-              Edit
-            </ButtonLink>
-            <ActionDeleteRender id={record.id} />
+
+            {hasPermission(Permission.PermissionsDevicesEdit) ? (
+              <ButtonLink
+                href={`/device-categories/${record.id}/edit`}
+                size="small"
+                color="cyan"
+                variant="outlined"
+              >
+                Edit
+              </ButtonLink>
+            ) : null}
+
+            {hasPermission(Permission.PermissionsDevicesDelete) ? (
+              <ActionDeleteRender id={record.id} />
+            ) : null}
           </Space>
         </div>
       ),

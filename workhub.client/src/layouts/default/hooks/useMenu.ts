@@ -12,15 +12,66 @@ export const useMenu = () => {
   const menuItems = useMemo(() => {
     const menus = getMenuItems(t, unReadCount) ?? [];
 
-    return menus.filter((menu) => {
-      if (menu.permission) {
-        if (!permissions.includes(menu.permission)) {
+    const filterByPermission = (items: typeof menus): typeof menus => {
+      return items
+        .map((menu) => {
+          if (Array.isArray(menu.children)) {
+            const filteredChildren = filterByPermission(menu.children);
+
+            if (
+              filteredChildren.length === 0 ||
+              (menu.permission && !permissions.includes(menu.permission))
+            ) {
+              return null;
+            }
+
+            return {
+              ...menu,
+              children: filteredChildren,
+            };
+          }
+
+          if (menu.permission && !permissions.includes(menu.permission)) {
+            return null;
+          }
+
+          return menu;
+        })
+        .filter((menu): menu is NonNullable<typeof menu> => menu !== null)
+        .filter((menu, index, arr) => {
+          if (
+            menu.type == "group" &&
+            (index == arr.length - 1 ||
+              (index < arr.length - 1 && arr[index + 1].type == "group"))
+          ) {
+            return false;
+          }
+          return true;
+        });
+    };
+
+    return filterByPermission(menus);
+
+    return menus
+      .filter((menu) => {
+        if (menu.permission) {
+          if (!permissions.includes(menu.permission)) {
+            return false;
+          }
+        }
+
+        return true;
+      })
+      .filter((v) => "children" in v && v.children && v.children.length > 0)
+      .filter((menu, index, arr) => {
+        if (
+          menu.type == "group" &&
+          arr.slice(index + 1).every((nextItem) => nextItem.type === "group")
+        ) {
           return false;
         }
-      }
-
-      return true;
-    });
+        return true;
+      });
   }, [t, unReadCount, permissions]);
 
   return { menuItems };

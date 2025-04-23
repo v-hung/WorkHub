@@ -7,24 +7,33 @@ import UserFormCreate, {
 import { useRef, useState } from "react";
 import { wrapPromise } from "@/utils/promise";
 import { userApi } from "@/services/apiClient";
-import { UserFullDto } from "@/generate-api";
+import { Permission, UserFullDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { ensurePermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
-  if (params.id) {
-    // await new Promise((res) => setTimeout(res, 1000));
-    const data = await wrapPromise(() => userApi.userGetById(params.id!));
+export const loader = wrapLoaderWithPermission(
+  async ({ params }, { permissions }) => {
+    const { id } = params;
+
+    if (!id) {
+      ensurePermission(permissions, Permission.PermissionsUsersCreate);
+      return null;
+    }
+
+    ensurePermission(permissions, Permission.PermissionsUsersEdit);
+
+    const data = await wrapPromise(() => userApi.userGetById(id));
 
     if (!data) {
-      throw redirect(`/users`);
+      throw redirect("/users");
     }
 
     return data;
   }
-});
+);
 
 export function Component() {
   const data = useLoaderData() as UserFullDto;

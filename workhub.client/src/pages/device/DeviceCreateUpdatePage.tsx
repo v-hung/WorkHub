@@ -7,24 +7,33 @@ import DeviceFormCreate, {
 } from "@/features/device/components/DeviceFormCreate/DeviceFormCreate";
 import { deviceApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { DeviceDto } from "@/generate-api";
+import { DeviceDto, Permission } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { ensurePermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
-  if (params.id) {
-    // await new Promise((res) => setTimeout(res, 1000));
-    const data = await wrapPromise(() => deviceApi.deviceGetById(+params.id!));
+export const loader = wrapLoaderWithPermission(
+  async ({ params }, { permissions }) => {
+    const { id } = params;
+
+    if (!id) {
+      ensurePermission(permissions, Permission.PermissionsDevicesCreate);
+      return null;
+    }
+
+    ensurePermission(permissions, Permission.PermissionsDevicesEdit);
+
+    const data = await wrapPromise(() => deviceApi.deviceGetById(+id));
 
     if (!data) {
-      throw redirect(`/devices`);
+      throw redirect("/devices");
     }
 
     return data;
   }
-});
+);
 
 export function Component() {
   const data = useLoaderData() as DeviceDto;

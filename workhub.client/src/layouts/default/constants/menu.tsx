@@ -1,23 +1,18 @@
 import { TFunction } from "i18next";
-import IonHomeOutline from "~icons/ion/home-outline";
-import IonMailNotificationOutline from "~icons/ion/mail-notification-outline";
-import IonClock from "~icons/ion/clock";
-import IonPeopleCircleOutline from "~icons/ion/people-circle-outline";
-import IonDocumentsOutline from "~icons/ion/documents-outline";
-import IonPeopleOutline from "~icons/ion/people-outline";
-import IonPersonOutline from "~icons/ion/person-outline";
-import IonLockClosedOutline from "~icons/ion/lock-closed-outline";
-import IonCogOutline from "~icons/ion/cog-outline";
-import IonSendOutline from "~icons/ion/send-outline";
-import IonPieChartOutline from "~icons/ion/pie-chart-outline";
-import IonCubeOutline from "~icons/ion/cube-outline";
 import { Permission } from "@/generate-api";
-import { ItemType } from "antd/es/menu/interface";
+import type { MenuProps } from "antd";
+
+type AntdMenuItem = Required<MenuProps>["items"][number];
+
+export type MenuItemTypeCustom = AntdMenuItem & {
+  permission?: Permission;
+  children?: MenuItemTypeCustom[];
+};
 
 export const getMenuItems = (
   t: TFunction,
   unReadCount: number
-): (ItemType & { permission?: Permission })[] => {
+): MenuItemTypeCustom[] => {
   return [
     {
       type: "group",
@@ -26,67 +21,82 @@ export const getMenuItems = (
     {
       key: "/",
       type: "item",
-      icon: <IonHomeOutline />,
+      icon: <IIonHomeOutline />,
       label: t("menus.home"),
     },
     {
       key: "/notifications",
-      icon: <IonMailNotificationOutline />,
-      label: (
-        <span className="menu__item-notification">
-          <span>{t("menus.notification")}</span>
-          <span className="menu__badge">{unReadCount}</span>
-        </span>
-      ),
+      icon: <IIonMailNotificationOutline />,
+      label:
+        unReadCount > 0 ? (
+          <span className="menu__item-notification">
+            <span>{t("menus.notification")}</span>
+            <span className="menu__badge">{unReadCount}</span>
+          </span>
+        ) : (
+          t("menus.notification")
+        ),
     },
     {
       key: "/timesheet",
-      icon: <IonClock />,
+      icon: <IIonClock />,
       label: t("menus.timesheet"),
     },
     {
-      key: "/meeting",
-      icon: <IonPeopleCircleOutline />,
-      label: t("menus.meeting"),
+      key: "/calendar",
+      icon: <IIonCalendarOutline />,
+      label: t("menus.calendar"),
     },
     {
       type: "group",
       label: t("menus.manager"),
     },
     {
+      key: "/timesheets",
+      icon: <IIonTimerOutline />,
+      label: t("menus.timesheet"),
+      permission: Permission.PermissionsTimesheetsView,
+    },
+    {
       key: "/projects",
-      icon: <IonDocumentsOutline />,
+      icon: <IIonDocumentsOutline />,
       label: t("menus.project"),
+      permission: Permission.PermissionsProjectsView,
     },
     {
       key: "/teams",
-      icon: <IonPeopleOutline />,
+      icon: <IIonPeopleOutline />,
       label: t("menus.team"),
+      permission: Permission.PermissionsTeamsView,
     },
     {
       key: "/person",
-      icon: <IonPersonOutline />,
+      icon: <IIonPersonOutline />,
       label: t("menus.person"),
       children: [
         {
           key: "/users",
           label: t("menus.employee"),
+          permission: Permission.PermissionsUsersView,
         },
         {
           key: "/work-times",
           label: t("menus.work-time"),
+          permission: Permission.PermissionsWorkTimesView,
         },
       ],
     },
     {
       key: "/roles",
-      icon: <IonLockClosedOutline />,
+      icon: <IIonLockClosedOutline />,
       label: t("menus.permission"),
+      permission: Permission.PermissionsRolesView,
     },
     {
       key: "/equipment",
-      icon: <IonCubeOutline />,
+      icon: <IIonCubeOutline />,
       label: t("menus.equipment"),
+      permission: Permission.PermissionsDevicesView,
       children: [
         {
           key: "/devices",
@@ -103,19 +113,21 @@ export const getMenuItems = (
       label: t("menus.system"),
     },
     {
-      key: "/setting",
-      icon: <IonCogOutline />,
-      label: t("menus.setting"),
-    },
-    {
       key: "/send-mail",
-      icon: <IonSendOutline />,
+      icon: <IIonSendOutline />,
       label: t("menus.send-mail"),
+      permission: Permission.PermissionsSystemSendEmail,
     },
     {
       key: "/report",
-      icon: <IonPieChartOutline />,
+      icon: <IIonPieChartOutline />,
       label: t("menus.report"),
+      permission: Permission.PermissionsSystemReport,
+    },
+    {
+      key: "/help",
+      icon: <IIonHelp />,
+      label: t("menus.help"),
     },
   ];
 };

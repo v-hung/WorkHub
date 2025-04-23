@@ -4,7 +4,7 @@
 		"home": "Home",
 		"notification": "Notification",
 		"timesheet": "Timesheet",
-		"meeting": "Meeting",
+		"calendar": "Calendar",
 		"manager": "Manager",
 		"project": "Project",
 		"team": "Team",
@@ -17,7 +17,7 @@
 		"device": "Device",
 		"deviceCategory": "Device Category",
 		"system": "System",
-		"setting": "Setting",
+		"help": "help",
 		"send-mail": "Send mail",
 		"report": "Report"
 	},

@@ -3,10 +3,10 @@ import { getMessageError } from "@/utils/error.utils";
 import { LoginRequest } from "@/generate-api";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { authBootstrapLogin } from "@/services/auth.bootstrap";
+import { useAuthStore } from "@/stores/auth.store";
 
 export const useLogin = () => {
-  // const accountLogin = useAuthStore((state) => state.login);
+  const accountLogin = useAuthStore((state) => state.login);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +16,7 @@ export const useLogin = () => {
     try {
       if (loading) return;
       setLoading(true);
-      await authBootstrapLogin(credentials);
+      await accountLogin(credentials);
 
       const params = new URLSearchParams(location.search);
       const redirectUrl = params.get("redirectUrl") || "/";

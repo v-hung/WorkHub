@@ -7,26 +7,33 @@ import ProjectFormCreate, {
 } from "@/features/project/components/ProjectFormCreate/ProjectFormCreate";
 import { projectApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { ProjectDto } from "@/generate-api";
+import { Permission, ProjectDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { ensurePermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
-  if (params.id) {
-    // await new Promise((res) => setTimeout(res, 1000));
-    const data = await wrapPromise(() =>
-      projectApi.projectGetById(+params.id!)
-    );
+export const loader = wrapLoaderWithPermission(
+  async ({ params }, { permissions }) => {
+    const { id } = params;
+
+    if (!id) {
+      ensurePermission(permissions, Permission.PermissionsProjectsCreate);
+      return null;
+    }
+
+    ensurePermission(permissions, Permission.PermissionsProjectsEdit);
+
+    const data = await wrapPromise(() => projectApi.projectGetById(+id));
 
     if (!data) {
-      throw redirect(`/projects`);
+      throw redirect("/projects");
     }
 
     return data;
   }
-});
+);
 
 export function Component() {
   const data = useLoaderData() as ProjectDto;

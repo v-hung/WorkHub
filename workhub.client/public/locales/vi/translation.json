@@ -4,7 +4,7 @@
 		"home": "Trang chủ",
 		"notification": "Thông báo",
 		"timesheet": "Chấm công",
-		"meeting": "Cuộc họp",
+		"calendar": "Lịch trình",
 		"manager": "Quản trị",
 		"project": "Dự án",
 		"team": "Nhóm",
@@ -17,7 +17,7 @@
 		"device": "Thiết bị",
 		"deviceCategory": "Danh mục thiết bị",
 		"system": "Hệ thống",
-		"setting": "Cài đặt",
+		"help": "Trợ giúp",
 		"send-mail": "Gửi mail",
 		"report": "Báo cáo"
 	},

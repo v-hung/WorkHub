@@ -2,7 +2,8 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useTeamContext } from "../../contexts/TeamContext";
-import { TeamDto } from "@/generate-api";
+import { Permission, TeamDto } from "@/generate-api";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const teamTableColumns: TableProps<TeamDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
@@ -37,15 +38,21 @@ export const teamTableColumns: TableProps<TeamDto>["columns"] = [
           >
             View
           </ButtonLink>
-          <ButtonLink
-            href={`/teams/${record.id}/edit`}
-            size="small"
-            color="cyan"
-            variant="outlined"
-          >
-            Edit
-          </ButtonLink>
-          <ActionDeleteRender id={record.id} />
+
+          {hasPermission(Permission.PermissionsTeamsEdit) ? (
+            <ButtonLink
+              href={`/teams/${record.id}/edit`}
+              size="small"
+              color="cyan"
+              variant="outlined"
+            >
+              Edit
+            </ButtonLink>
+          ) : null}
+
+          {hasPermission(Permission.PermissionsTeamsDelete) ? (
+            <ActionDeleteRender id={record.id} />
+          ) : null}
         </Space>
       </div>
     ),

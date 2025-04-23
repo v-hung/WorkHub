@@ -10,10 +10,11 @@ import {
 } from "antd";
 import { FC } from "react";
 import { useProjectsContext } from "../../contexts/ProjectContext";
-import { ProjectDto, UserMinimalDto } from "@/generate-api";
+import { Permission, ProjectDto, UserMinimalDto } from "@/generate-api";
 import { format } from "@/utils/date.utils";
 import { getUniqueColor } from "@/utils/color.utils";
 import { differenceInDays } from "date-fns";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
@@ -118,15 +119,21 @@ export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
           >
             View
           </ButtonLink>
-          <ButtonLink
-            href={`/projects/${record.id}/edit`}
-            size="small"
-            color="cyan"
-            variant="outlined"
-          >
-            Edit
-          </ButtonLink>
-          <ActionDeleteRender id={record.id} />
+
+          {hasPermission(Permission.PermissionsProjectsEdit) ? (
+            <ButtonLink
+              href={`/projects/${record.id}/edit`}
+              size="small"
+              color="cyan"
+              variant="outlined"
+            >
+              Edit
+            </ButtonLink>
+          ) : null}
+
+          {hasPermission(Permission.PermissionsProjectsDelete) ? (
+            <ActionDeleteRender id={record.id} />
+          ) : null}
         </Space>
       </div>
     ),

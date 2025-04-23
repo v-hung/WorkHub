@@ -1,4 +1,6 @@
+import { Permission } from "@/generate-api";
 import ButtonLink from "@/ui/elements/ButtonLink";
+import { hasPermission } from "@/utils/hasPermission";
 import { Space, TableProps } from "antd";
 
 export type DataUserTableType = {
@@ -33,15 +35,21 @@ export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
         >
           View
         </ButtonLink>
-        <ButtonLink
-          href={`/users/${record.id}/edit`}
-          size="small"
-          color="cyan"
-          variant="outlined"
-        >
-          Edit
-        </ButtonLink>
-        {/* <ActionDeleteRender id={record.id} /> */}
+
+        {hasPermission(Permission.PermissionsUsersEdit) ? (
+          <ButtonLink
+            href={`/users/${record.id}/edit`}
+            size="small"
+            color="cyan"
+            variant="outlined"
+          >
+            Edit
+          </ButtonLink>
+        ) : null}
+
+        {/* {hasPermission(Permission.PermissionsUsersDelete) ? (
+          <ActionDeleteRender id={record.id} />
+        ) : null} */}
       </Space>
     ),
   },

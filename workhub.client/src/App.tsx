@@ -1,50 +1,25 @@
-import { ConfigProvider, App as AppTheme } from "antd";
-import { Suspense } from "react";
-import { authBootstrap } from "./services/auth.bootstrap";
-import { FeedbackProvider } from "./contexts/feedback/FeedbackProvider";
+import { Suspense, useEffect } from "react";
 import { RouterProvider } from "react-router";
 import router from "./router";
-import viVN from "antd/locale/vi_VN";
 import Loading from "./ui/navigation/Loading/Loading";
-
-export const AppProvider = () => {
-  authBootstrap.read();
-  // if (!false) {
-  //   throw new Promise(() => {});
-  // }
-
-  return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#0284c7",
-          colorTextBase: "#222",
-          colorBgLayout: "var(--color-bg)",
-        },
-      }}
-      // locale={viVN}
-    >
-      <AppTheme
-        message={{ maxCount: 1 }}
-        notification={{
-          placement: "topRight",
-          pauseOnHover: true,
-          // showProgress: true,
-          duration: 2,
-        }}
-      >
-        <FeedbackProvider>
-          <RouterProvider router={router} />
-        </FeedbackProvider>
-      </AppTheme>
-    </ConfigProvider>
-  );
-};
-
+import { useAuthStore } from "./stores/auth.store";
 const App = () => {
+  const isFirstLoaded = useAuthStore((state) => state.isFirstLoaded);
+  const load = useAuthStore((state) => state.load);
+
+  useEffect(() => {
+    if (!isFirstLoaded) {
+      load();
+    }
+  }, [isFirstLoaded, load]);
+
+  if (!isFirstLoaded) {
+    return <Loading />;
+  }
+
   return (
     <Suspense fallback={<Loading />}>
-      <AppProvider />
+      <RouterProvider router={router} />
     </Suspense>
   );
 };

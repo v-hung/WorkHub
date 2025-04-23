@@ -8,6 +8,7 @@ import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/De
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import { RoleProvider } from "@/features/role/contexts/RoleContext";
 import { Permission } from "@/generate-api";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const loader = wrapLoaderWithPermission(
   undefined,
@@ -20,13 +21,15 @@ export function Component() {
   return (
     <DefaultPage pageClassName="h-screen">
       <DefaultHeader title="Roles Manager">
-        <Button
-          type="primary"
-          onClick={() => navigate("/roles/create")}
-          icon={<IIonPlus width={16} height={16} />}
-        >
-          Add role
-        </Button>
+        {hasPermission(Permission.PermissionsRolesCreate) ? (
+          <Button
+            type="primary"
+            onClick={() => navigate("/roles/create")}
+            icon={<IIonPlus width={16} height={16} />}
+          >
+            Add role
+          </Button>
+        ) : null}
       </DefaultHeader>
 
       <DefaultBreadcrumb

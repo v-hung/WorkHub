@@ -10,8 +10,9 @@ import {
 } from "antd";
 import { FC } from "react";
 import { useDevicesContext } from "../../contexts/DeviceContext";
-import { DeviceDto } from "@/generate-api";
+import { DeviceDto, Permission } from "@/generate-api";
 import { getUniqueColor } from "@/utils/color.utils";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const deviceTableColumns: TableProps<DeviceDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
@@ -83,15 +84,21 @@ export const deviceTableColumns: TableProps<DeviceDto>["columns"] = [
           >
             View
           </ButtonLink>
-          <ButtonLink
-            href={`/devices/${record.id}/edit`}
-            size="small"
-            color="cyan"
-            variant="outlined"
-          >
-            Edit
-          </ButtonLink>
-          <ActionDeleteRender id={record.id} />
+
+          {hasPermission(Permission.PermissionsDevicesEdit) ? (
+            <ButtonLink
+              href={`/devices/${record.id}/edit`}
+              size="small"
+              color="cyan"
+              variant="outlined"
+            >
+              Edit
+            </ButtonLink>
+          ) : null}
+
+          {hasPermission(Permission.PermissionsDevicesDelete) ? (
+            <ActionDeleteRender id={record.id} />
+          ) : null}
         </Space>
       </div>
     ),

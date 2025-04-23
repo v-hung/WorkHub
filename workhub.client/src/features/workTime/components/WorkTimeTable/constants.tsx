@@ -2,7 +2,8 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useWorkTimesContext } from "../../contexts/WorkTimeContext";
-import { WorkTimeDto } from "@/generate-api";
+import { Permission, WorkTimeDto } from "@/generate-api";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const workTimeTableColumns: TableProps<WorkTimeDto>["columns"] = [
   { title: "Title", dataIndex: "title", key: "title" },
@@ -47,15 +48,21 @@ export const workTimeTableColumns: TableProps<WorkTimeDto>["columns"] = [
           >
             View
           </ButtonLink>
-          <ButtonLink
-            href={`/work-times/${record.id}/edit`}
-            size="small"
-            color="cyan"
-            variant="outlined"
-          >
-            Edit
-          </ButtonLink>
-          <ActionDeleteRender id={record.id} />
+
+          {hasPermission(Permission.PermissionsWorkTimesEdit) ? (
+            <ButtonLink
+              href={`/work-times/${record.id}/edit`}
+              size="small"
+              color="cyan"
+              variant="outlined"
+            >
+              Edit
+            </ButtonLink>
+          ) : null}
+
+          {hasPermission(Permission.PermissionsWorkTimesDelete) ? (
+            <ActionDeleteRender id={record.id} />
+          ) : null}
         </Space>
       </div>
     ),

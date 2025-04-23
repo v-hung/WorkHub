@@ -17,7 +17,6 @@ import { i18n, TFunction } from "i18next";
 import { useNavigate, useLocation } from "react-router";
 import { MenuInfo } from "rc-menu/lib/interface";
 import { getOpenKeys, getSelectedKeys } from "@/utils/menu.utils";
-import { authBootstrapLogout } from "@/services/auth.bootstrap";
 import { useLayout } from "../../contexts/LayoutContext";
 import { useMenu } from "../../hooks/useMenu";
 import "./DefaultMenu.css";
@@ -123,11 +122,11 @@ export default DefaultMenu;
 
 const getMenuLogoItems = (t: TFunction, i18n: i18n): MenuProps["items"] => {
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
 
   const handelLogout = async () => {
-    await authBootstrapLogout(() => {
-      navigate("/auth/login");
-    });
+    await logout();
+    navigate("/auth/login");
   };
 
   return [

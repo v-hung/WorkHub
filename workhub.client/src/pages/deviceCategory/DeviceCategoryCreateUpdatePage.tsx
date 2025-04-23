@@ -7,26 +7,35 @@ import DeviceCategoryFormCreate, {
 } from "@/features/deviceCategory/components/DeviceCategoryFormCreate/DeviceCategoryFormCreate";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { DeviceCategoryDto } from "@/generate-api";
+import { DeviceCategoryDto, Permission } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { ensurePermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
-  if (params.id) {
-    // await new Promise((res) => setTimeout(res, 1000));
+export const loader = wrapLoaderWithPermission(
+  async ({ params }, { permissions }) => {
+    const { id } = params;
+
+    if (!id) {
+      ensurePermission(permissions, Permission.PermissionsDevicesCreate);
+      return null;
+    }
+
+    ensurePermission(permissions, Permission.PermissionsDevicesEdit);
+
     const data = await wrapPromise(() =>
-      deviceCategoryApi.deviceCategoryGetById(+params.id!)
+      deviceCategoryApi.deviceCategoryGetById(+id)
     );
 
     if (!data) {
-      throw redirect(`/device-categories`);
+      throw redirect("/device-categories");
     }
 
     return data;
   }
-});
+);
 
 export function Component() {
   const data = useLoaderData() as DeviceCategoryDto;

@@ -7,8 +7,13 @@ import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { hasPermission } from "@/utils/hasPermission";
+import { Permission } from "@/generate-api";
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapLoaderWithPermission(
+  undefined,
+  Permission.PermissionsWorkTimesView
+);
 
 export function Component() {
   const navigate = useNavigate();
@@ -16,13 +21,15 @@ export function Component() {
   return (
     <DefaultPage pageClassName="h-screen">
       <DefaultHeader title="Work times Manager">
-        <Button
-          type="primary"
-          onClick={() => navigate("/work-times/create")}
-          icon={<IIonPlus width={16} height={16} />}
-        >
-          Add work time
-        </Button>
+        {hasPermission(Permission.PermissionsWorkTimesCreate) ? (
+          <Button
+            type="primary"
+            onClick={() => navigate("/work-times/create")}
+            icon={<IIonPlus width={16} height={16} />}
+          >
+            Add work time
+          </Button>
+        ) : null}
       </DefaultHeader>
 
       <DefaultBreadcrumb

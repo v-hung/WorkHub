@@ -2,7 +2,8 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useRolesContext } from "../../contexts/RoleContext";
-import { RoleDto } from "@/generate-api";
+import { Permission, RoleDto } from "@/generate-api";
+import { hasPermission } from "@/utils/hasPermission";
 
 export const roleTableColumns: TableProps<RoleDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
@@ -19,15 +20,20 @@ export const roleTableColumns: TableProps<RoleDto>["columns"] = [
     render: (_, record) => (
       <div>
         <Space size="small">
-          <ButtonLink
-            href={`/roles/${record.id}/edit`}
-            size="small"
-            color="cyan"
-            variant="outlined"
-          >
-            Edit
-          </ButtonLink>
-          <ActionDeleteRender id={record.id} />
+          {hasPermission(Permission.PermissionsRolesEdit) ? (
+            <ButtonLink
+              href={`/roles/${record.id}/edit`}
+              size="small"
+              color="cyan"
+              variant="outlined"
+            >
+              Edit
+            </ButtonLink>
+          ) : null}
+
+          {hasPermission(Permission.PermissionsRolesDelete) ? (
+            <ActionDeleteRender id={record.id} />
+          ) : null}
         </Space>
       </div>
     ),

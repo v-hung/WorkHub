@@ -7,24 +7,33 @@ import TeamFormCreate, {
 } from "@/features/team/components/TeamFormCreate/TeamFormCreate";
 import { teamApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { TeamFullDto } from "@/generate-api";
+import { Permission, TeamFullDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
+import { ensurePermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
-  if (params.id) {
-    // await new Promise((res) => setTimeout(res, 1000));
-    const data = await wrapPromise(() => teamApi.teamGetById(+params.id!));
+export const loader = wrapLoaderWithPermission(
+  async ({ params }, { permissions }) => {
+    const { id } = params;
+
+    if (!id) {
+      ensurePermission(permissions, Permission.PermissionsTeamsCreate);
+      return null;
+    }
+
+    ensurePermission(permissions, Permission.PermissionsTeamsEdit);
+
+    const data = await wrapPromise(() => teamApi.teamGetById(+id));
 
     if (!data) {
-      throw redirect(`/teams`);
+      throw redirect("/teams");
     }
 
     return data;
   }
-});
+);
 
 export function Component() {
   const data = useLoaderData() as TeamFullDto;

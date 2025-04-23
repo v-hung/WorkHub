@@ -60,6 +60,12 @@ public static class Permissions
 		public const string Export = "Permissions.Timesheets.Export";
 	}
 
+	public static class System
+	{
+		public const string SendEmail = "Permissions.System.SendEmail";
+		public const string Report = "Permissions.System.Report";
+	}
+
 	/// <summary>
 	/// Returns a list of Permissions.
 	/// </summary>

@@ -5,10 +5,11 @@ import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHea
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import { Layout } from "antd";
 import { useParams } from "react-router";
+import { Permission } from "@/generate-api";
 
 export const loader = wrapLoaderWithPermission(async ({ params }) => {
   console.log({ id: params.id });
-});
+}, Permission.PermissionsUsersView);
 
 export function Component() {
   const { id } = useParams();

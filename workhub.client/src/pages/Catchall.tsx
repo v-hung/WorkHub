@@ -1,3 +1,3 @@
-export default function Component() {
+export function Component() {
   return <div>Page not found</div>;
 }

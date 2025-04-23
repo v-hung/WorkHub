@@ -38,5 +38,9 @@ export enum Permission {
     PermissionsDevicesView = 'Permissions.Devices.View',
     PermissionsDevicesCreate = 'Permissions.Devices.Create',
     PermissionsDevicesEdit = 'Permissions.Devices.Edit',
-    PermissionsDevicesDelete = 'Permissions.Devices.Delete'
+    PermissionsDevicesDelete = 'Permissions.Devices.Delete',
+    PermissionsTimesheetsView = 'Permissions.Timesheets.View',
+    PermissionsTimesheetsExport = 'Permissions.Timesheets.Export',
+    PermissionsSystemSendEmail = 'Permissions.System.SendEmail',
+    PermissionsSystemReport = 'Permissions.System.Report'
 }

@@ -11,26 +11,29 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
 import { wrapPromise } from "@/utils/promise";
+import i18n from "@/utils/i18n";
 
 export type LoadResponse = {
-  user: UserDto | undefined;
+  user: UserDto | null;
   permissions: Permission[];
 };
 
 type AuthStoreState = {
+  isFirstLoaded: boolean;
   user: UserDto | null;
   permissions: Permission[];
-  login: (credentials: LoginRequest, callback?: () => void) => Promise<void>;
-  logout: (callback?: () => void) => Promise<void>;
+  login: (credentials: LoginRequest) => Promise<void>;
+  logout: () => Promise<void>;
   load: () => Promise<LoadResponse>;
 };
 
 export const useAuthStore = create<AuthStoreState>()(
-  immer((set) => ({
+  immer((set, get) => ({
+    isFirstLoaded: false,
     user: null,
     permissions: [],
 
-    login: async (credentials, callback) => {
+    login: async (credentials) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
       // set({
       //   user: USER,
@@ -38,20 +41,14 @@ export const useAuthStore = create<AuthStoreState>()(
 
       await wrapPromise(() =>
         accountApi.accountLogin(credentials).then(async (response) => {
-          if (callback) {
-            callback();
-          }
           set({ user: response.user });
         })
       );
     },
 
-    logout: async (callback) => {
+    logout: async () => {
       await wrapPromise(() =>
         accountApi.accountLogout().then(async () => {
-          if (callback) {
-            callback();
-          }
           set({ user: null });
         })
       );
@@ -65,20 +62,28 @@ export const useAuthStore = create<AuthStoreState>()(
       // return USER;
 
       try {
-        const [user, rawPermissions] = await Promise.all([
-          accountApiWithRefreshToken.accountGetCurrentUser(),
-          accountApiWithRefreshToken.accountGetPermissions(),
-        ]);
+        if (get().isFirstLoaded) {
+          return { user: get().user, permissions: get().permissions };
+        }
+
+        if (!i18n.isInitialized) {
+          await i18n.init();
+        }
+
+        const user = await accountApiWithRefreshToken.accountGetCurrentUser();
+
+        const rawPermissions =
+          await accountApiWithRefreshToken.accountGetPermissions();
 
         const permissions: Permission[] = rawPermissions.map(
           (p) => p as Permission
         );
 
-        set({ user, permissions });
+        set({ user, permissions, isFirstLoaded: true });
 
         return { user, permissions };
       } catch (error) {
-        return { user: undefined, permissions: [] };
+        return { user: null, permissions: [] };
       }
     },
   }))
