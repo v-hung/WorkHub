@@ -14,10 +14,12 @@ namespace WorkHub.Server.Controllers.Identity;
 public class UserController : BaseApiController<UserController>
 {
 	private readonly IUserService _userService;
+	private readonly IBioStarService _bioStarService;
 
-	public UserController(IUserService userService)
+	public UserController(IUserService userService, IBioStarService bioStarService)
 	{
 		_userService = userService;
+		_bioStarService = bioStarService;
 	}
 
 	[Authorize(Policy = Permissions.Users.View)]
@@ -43,6 +45,14 @@ public class UserController : BaseApiController<UserController>
 	{
 		var user = await _userService.GetWithRolesAsync<UserFullDto, Guid>(id);
 		return Ok(user);
+	}
+
+	// [Authorize(Policy = Permissions.Users.Sync)]
+	[HttpPost("sync-from-device")]
+	public async Task<IActionResult> ImportUserFromTimekeepingDevice()
+	{
+		var users = await _bioStarService.GetAllUsersAsync();
+		return Ok(users);
 	}
 
 	[Authorize(Policy = Permissions.Users.Create)]

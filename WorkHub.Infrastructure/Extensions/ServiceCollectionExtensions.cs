@@ -20,6 +20,8 @@ public static class ServiceCollectionExtensions
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
+		services.AddScoped<IBioStarService, BioStarService>();
+
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
 		services.AddScoped<ITimesheetService, TimesheetService>();

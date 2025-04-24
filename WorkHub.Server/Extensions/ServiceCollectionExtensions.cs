@@ -54,6 +54,7 @@ static class ServiceCollectionExtensions
 	{
 		services.Configure<JwtConfig>(configuration.GetSection("Jwt"));
 		services.Configure<EmailConfig>(configuration.GetSection("Email"));
+		services.Configure<BioStarConfig>(configuration.GetSection("BioStar"));
 	}
 
 	public static void AddIdentityConfiguration(this IServiceCollection services)
@@ -125,6 +126,12 @@ static class ServiceCollectionExtensions
 	{
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		services.AddHttpClient("IgnoreSsl")
+			.ConfigurePrimaryHttpMessageHandler(() =>
+				new HttpClientHandler
+				{
+					ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+				});
 
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
