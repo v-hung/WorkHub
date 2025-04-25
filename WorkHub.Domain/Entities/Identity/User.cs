@@ -20,8 +20,7 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 	[StringLength(255)]
 	public string? Image { get; set; }
 
-	[Required]
-	public required UserPosition UserPosition { get; set; }
+	public UserPosition? UserPosition { get; set; }
 
 	[Required]
 	public bool IsFirstLogin { get; set; } = true;
@@ -89,5 +88,9 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
 
 	[Required]
 	public IList<Project> Projects { get; set; } = [];
+
+	// 3rd party
+
+	public string? BioStarUserId { get; set; }
 
 }

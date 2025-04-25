@@ -1,15 +1,19 @@
+using System.Text.Json.Serialization;
+using WorkHub.Application.JsonConverters;
 using WorkHub.Application.Models.BioStar;
 
 namespace WorkHub.Application.Responses.BioStar
 {
 	public class BioStarGetUsersResponse
 	{
+		[JsonPropertyName("UserCollection")]
 		public required BioStarGetUsersResponseData UserCollection { get; set; }
 	}
 
 	public class BioStarGetUsersResponseData
 	{
-		public required int total { get; set; }
-		public required List<BioStarUser> rows { get; set; } = [];
+		[JsonConverter(typeof(StringToIntConverter))]
+		public required int Total { get; set; }
+		public required List<BioStarUser> Rows { get; set; } = [];
 	}
 }

@@ -132,6 +132,7 @@ static class ServiceCollectionExtensions
 				{
 					ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 				});
+		services.AddMemoryCache();
 
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 

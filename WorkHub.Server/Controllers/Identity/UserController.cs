@@ -5,6 +5,7 @@ using WorkHub.Application.DTOs.Identity;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Requests;
 using WorkHub.Application.Requests.Identity;
+using WorkHub.Application.Responses.BioStar;
 using WorkHub.Application.Wrapper;
 using WorkHub.Domain.Constants.Permission;
 
@@ -49,10 +50,10 @@ public class UserController : BaseApiController<UserController>
 
 	// [Authorize(Policy = Permissions.Users.Sync)]
 	[HttpPost("sync-from-device")]
-	public async Task<IActionResult> ImportUserFromTimekeepingDevice()
+	public async Task<ActionResult<BioStarSyncAllUsersResponse>> ImportUserFromTimekeepingDevice()
 	{
-		var users = await _bioStarService.GetAllUsersAsync();
-		return Ok(users);
+		var data = await _bioStarService.SyncAllUsersAsync();
+		return Ok(data);
 	}
 
 	[Authorize(Policy = Permissions.Users.Create)]

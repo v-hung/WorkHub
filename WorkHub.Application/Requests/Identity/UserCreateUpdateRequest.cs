@@ -12,17 +12,18 @@ namespace WorkHub.Application.Requests.Identity
 
 		[Required]
 		[StringLength(255)]
+		public required string UserName { get; set; }
+
+		[StringLength(255)]
 		[EmailAddress]
-		public required string Email { get; set; }
+		public string? Email { get; set; }
 
 		public string? PhoneNumber { get; set; }
 
-		[Required]
-		public required UserPosition UserPosition { get; set; }
+		public UserPosition UserPosition { get; set; }
 
 		public int LeaveHours { get; set; } = 0;
 
-		[Required]
 		public UserStatus UserStatus { get; set; } = UserStatus.ACTIVE;
 
 		// Navigation properties

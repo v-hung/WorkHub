@@ -112,10 +112,10 @@ namespace WorkHub.Infrastructure.Services
 			user.LockoutEnabled = true;
 			user.SecurityStamp = Guid.NewGuid().ToString();
 			user.EmailConfirmed = true;
-			user.UserName = request.Email;
-			user.UserName = request.Email;
-			user.NormalizedUserName = request.Email;
-			user.NormalizedEmail = request.Email;
+			user.UserName = request.UserName;
+			user.Email = request.Email;
+			user.NormalizedUserName = request.UserName.ToUpper();
+			user.NormalizedEmail = request.Email?.ToUpper();
 
 			var fileData = AvatarGenerator.GenerateAvatar(request.FullName);
 
@@ -159,10 +159,10 @@ namespace WorkHub.Infrastructure.Services
 		private async Task MapRequestToUser(UserCreateUpdateRequest request, User user, Guid? userUpdateId)
 		{
 
-			user.UserName = request.Email;
-			user.UserName = request.Email;
-			user.NormalizedUserName = request.Email;
-			user.NormalizedEmail = request.Email;
+			user.UserName = request.UserName;
+			user.Email = request.Email;
+			user.NormalizedUserName = request.UserName.ToUpper();
+			user.NormalizedEmail = request.Email?.ToUpper();
 
 			if (request.ManagerTeamIds != null && request.ManagerTeamIds.Any())
 			{

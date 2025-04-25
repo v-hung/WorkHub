@@ -36,7 +36,6 @@ public class DatabaseSeeder : IDatabaseSeeder
 		var teams = await SeedTeams();
 		await SeedWorkTimes();
 		await SeedAdminUser();
-		await SeedBasicUsers(teams);
 	}
 
 	private async Task<List<Team>> SeedTeams()
@@ -105,42 +104,6 @@ public class DatabaseSeeder : IDatabaseSeeder
 				foreach (var error in result.Errors)
 				{
 					_logger.LogError($"❌ Error creating user {UserConst.AdministratorUsername}: {error.Description}");
-				}
-			}
-		}
-	}
-
-	private async Task SeedBasicUsers(List<Team> teams)
-	{
-		var basicUserExist = await _userManager.FindByEmailAsync("hungnv@wbc.vn");
-
-		if (basicUserExist == null)
-		{
-			var user = new User
-			{
-				Email = "hungnv@wbc.vn",
-				UserName = "hungnv@wbc.vn",
-				NormalizedUserName = "hungnv@wbc.vn".ToUpper(),
-				NormalizedEmail = "hungnv@wbc.vn".ToUpper(),
-				FullName = RoleConst.BasicRole,
-				LockoutEnabled = true,
-				SecurityStamp = Guid.NewGuid().ToString(),
-				EmailConfirmed = true,
-				UserPosition = UserPosition.DEVELOPER,
-				TeamId = teams.Where(t => t.Name == "STNet").FirstOrDefault()?.Id ?? null
-			};
-
-			var result = await _userManager.CreateAsync(user, UserConst.DefaultPassword);
-			if (result.Succeeded)
-			{
-				await _userManager.AddToRoleAsync(user, RoleConst.BasicRole);
-				_logger.LogInformation($"✅ Created user hungnv@wbc.vn with role {RoleConst.BasicRole}");
-			}
-			else
-			{
-				foreach (var error in result.Errors)
-				{
-					_logger.LogError($"❌ Error creating user hungnv@wbc.vn: {error.Description}");
 				}
 			}
 		}

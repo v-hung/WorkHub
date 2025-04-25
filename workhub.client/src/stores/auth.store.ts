@@ -83,6 +83,7 @@ export const useAuthStore = create<AuthStoreState>()(
 
         return { user, permissions };
       } catch (error) {
+        set({ isFirstLoaded: true });
         return { user: null, permissions: [] };
       }
     },

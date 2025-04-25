@@ -6,5 +6,6 @@ namespace WorkHub.Domain.Constants.BioStar
 		public const string WS_URI = "/wsapi";
 		public const string WS_EVENT_START_URI = "/api/events/start";
 		public const string GET_USERS_API_URL = "/api/users";
+		public const string GET_EVENTS_API_URL = "/api/events/search";
 	}
 }

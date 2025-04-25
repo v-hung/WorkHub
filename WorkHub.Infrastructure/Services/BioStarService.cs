@@ -1,7 +1,8 @@
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,6 +12,9 @@ using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Models.BioStar;
 using WorkHub.Application.Responses.BioStar;
 using WorkHub.Domain.Constants.BioStar;
+using WorkHub.Domain.Entities.Identity;
+using WorkHub.Domain.Enums;
+using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -20,28 +24,39 @@ namespace WorkHub.Infrastructure.Services
 		private readonly ILogger<BioStarService> _logger;
 		private readonly BioStarConfig _bioStarConfig;
 		private readonly IStringLocalizer<BioStarService> _localizer;
-		private string? _accessToken;
+		private readonly ApplicationDbContext _context;
+		private readonly IMemoryCache _memoryCache;
+		private const string AccessTokenCacheKey = "BioStarAccessToken";
+		private static readonly string[] value = new[]
+								{
+									"2019-07-30T15:00:00.000Z",
+									"2026-07-30T15:00:00.000Z"
+								};
 
-		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer)
+		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context)
 		{
 			_httpClientFactory = httpClientFactory;
 			_logger = logger;
 			_bioStarConfig = bioStarConfig.Value;
 			_localizer = localizer;
+			_memoryCache = memoryCache;
+			_context = context;
 		}
 
 		public async Task<string?> GetAccessTokenAsync()
 		{
-			if (_accessToken == null)
+			if (_memoryCache.TryGetValue(AccessTokenCacheKey, out var accessToken))
 			{
-				await LoginAsync();
+				return accessToken as string;
 			}
 
-			return _accessToken;
+			return await LoginAsync();
 		}
 
 		public async Task<string?> LoginAsync()
 		{
+			_memoryCache.Remove(AccessTokenCacheKey);
+
 			try
 			{
 				var client = _httpClientFactory.CreateClient("IgnoreSsl");
@@ -61,18 +76,18 @@ namespace WorkHub.Infrastructure.Services
 					return null;
 				}
 
-				if (response.Headers.TryGetValues("bs-session-id", out var values))
-				{
-					_accessToken = values.First();
-					_logger.LogInformation("Login successful. Session ID retrieved.");
-				}
-				else
+				if (!response.Headers.TryGetValues("bs-session-id", out var values))
 				{
 					_logger.LogWarning("Login response does not contain 'bs-session-id'.");
 					return null;
 				}
 
-				return _accessToken;
+				string accessToken = values.First();
+
+				_memoryCache.Set(AccessTokenCacheKey, accessToken, TimeSpan.FromHours(1));
+				_logger.LogInformation("Login successful. Session ID retrieved.");
+
+				return accessToken;
 			}
 			catch (Exception ex)
 			{
@@ -83,22 +98,63 @@ namespace WorkHub.Infrastructure.Services
 
 		public async Task<List<BioStarUser>> GetAllUsersAsync()
 		{
-			BioStarGetUsersResponse response = await ExecuteWithRetryAsync<BioStarGetUsersResponse>(client =>
-				client.PostAsync(_bioStarConfig.BioStarApiUrl + BioStarConst.GET_USERS_API_URL, new FormUrlEncodedContent([
-					new KeyValuePair<string, string>("group_id", "1"),
-					new KeyValuePair<string, string>("limit", ""),
-					new KeyValuePair<string, string>("offset", "1"),
-					new KeyValuePair<string, string>("order_by", "user_id:false"),
-					new KeyValuePair<string, string>("userId", ""),
-					new KeyValuePair<string, string>("last_modified", ""),
-				])));
+			string baseUrl = _bioStarConfig.BioStarApiUrl + BioStarConst.GET_USERS_API_URL;
 
-			return response.UserCollection.rows;
+			var parameters = new Dictionary<string, string?>
+			{
+				{"group_id", "1"},
+				{"limit", ""},
+				{"offset", "1"},
+				{"order_by", "user_id,false"},
+				{"userId", ""},
+				{"last_modified", ""}
+			};
+
+			string fullUrl = QueryHelpers.AddQueryString(baseUrl, parameters);
+
+			BioStarGetUsersResponse response = await ExecuteWithRetryAsync<BioStarGetUsersResponse>(client =>
+				client.GetAsync(fullUrl));
+
+			return response.UserCollection.Rows;
 		}
 
-		public Task SyncAllUsersAsync()
+		public async Task<BioStarSyncAllUsersResponse> SyncAllUsersAsync()
 		{
-			throw new NotImplementedException();
+			var bioUsers = await GetAllUsersAsync();
+
+			var existingEmails = _context.Users.Where(u => u.Email != null).Select(u => u.Email).ToHashSet();
+
+			var existingBioIds = _context.Users.Where(u => u.BioStarUserId != null).Select(u => u.BioStarUserId).ToHashSet();
+
+			var newUsers = bioUsers
+				.Where(b => !existingBioIds.Contains(b.UserId) && !existingEmails.Contains(b.Email) && b.Permission?.Name != "Administrator")
+				.ToList();
+
+			if (newUsers.Count != 0)
+			{
+				await _context.AddRangeAsync(newUsers.Select(b => new User
+				{
+					LockoutEnabled = true,
+					SecurityStamp = Guid.NewGuid().ToString(),
+					EmailConfirmed = true,
+					UserName = b.Email ?? $"bioStar_{b.UserId}",
+					Email = b.Email,
+					NormalizedUserName = b.Email?.ToUpper() ?? $"bioStar_{b.UserId}",
+					NormalizedEmail = b.Email?.ToUpper(),
+					FullName = b.Name ?? $"bioStar_{b.UserId}",
+					UserStatus = UserStatus.INACTIVE,
+					RemainingLeaveMinutes = 0,
+					BioStarUserId = b.UserId,
+				}).ToList());
+
+				await _context.SaveChangesAsync();
+			}
+
+			return new BioStarSyncAllUsersResponse
+			{
+				LoadCount = bioUsers.Count,
+				NewCount = newUsers.Count
+			};
 		}
 
 		public Task StartRealtimeEvents()
@@ -106,9 +162,35 @@ namespace WorkHub.Infrastructure.Services
 			throw new NotImplementedException();
 		}
 
-		public Task<List<object>> GetHistoricalEvents(DateTime from, DateTime to)
+		public async Task<List<object>> GetHistoricalEvents(DateTime from, DateTime to)
 		{
-			throw new NotImplementedException();
+			string baseUrl = _bioStarConfig.BioStarApiUrl + BioStarConst.GET_EVENTS_API_URL;
+
+			var response = await ExecuteWithRetryAsync<BioStarGetUsersResponse>(client =>
+				client.PostAsync(baseUrl, new StringContent(JsonSerializer.Serialize(new
+				{
+					Query = new
+					{
+						limit = 51,
+						conditions = new[]
+							{
+							new {
+								column = "datetime",
+								@operator = 3,
+								values = value
+							}
+						},
+						orders = new[]
+						{
+							new {
+								column = "datetime",
+								descending = false
+							}
+						}
+					}
+				}), Encoding.UTF8, "application/json")));
+
+			return response.UserCollection.Rows;
 		}
 
 		private async Task<D> ExecuteWithRetryAsync<D>(Func<HttpClient, Task<HttpResponseMessage>> apiCall)
@@ -121,11 +203,11 @@ namespace WorkHub.Infrastructure.Services
 				if (string.IsNullOrWhiteSpace(sessionId))
 				{
 					_logger.LogWarning("No session ID available for BioStar API.");
-					throw new UnauthorizedAccessException("No session ID available for BioStar API.");
+					throw new BusinessException(HttpStatusCode.BadRequest, "No session ID available for BioStar API.");
 				}
 
-				client.DefaultRequestHeaders.Remove("Authorization");
-				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessionId);
+				client.DefaultRequestHeaders.Remove("bs-session-id");
+				client.DefaultRequestHeaders.Add("bs-session-id", sessionId);
 
 				return await apiCall(client);
 			}
@@ -136,7 +218,6 @@ namespace WorkHub.Infrastructure.Services
 			if (response.StatusCode == HttpStatusCode.Unauthorized)
 			{
 				_logger.LogWarning("Unauthorized request — refreshing BioStar token...");
-				_accessToken = null; // Reset token
 				await LoginAsync();  // Re-login
 
 				response = await CallApiWithSessionAsync(); // Retry
@@ -153,7 +234,7 @@ namespace WorkHub.Infrastructure.Services
 
 			try
 			{
-				var result = JsonSerializer.Deserialize<D>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				var result = JsonSerializer.Deserialize<D>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower });
 				if (result == null)
 				{
 					_logger.LogError("Deserialized result is null for type {TypeName}", typeof(D).Name);

@@ -1,4 +1,5 @@
 using WorkHub.Application.Models.BioStar;
+using WorkHub.Application.Responses.BioStar;
 
 namespace WorkHub.Application.Interfaces.Services
 {
@@ -10,7 +11,7 @@ namespace WorkHub.Application.Interfaces.Services
 
 		// Sync Operations
 		Task<List<BioStarUser>> GetAllUsersAsync();
-		Task SyncAllUsersAsync();
+		Task<BioStarSyncAllUsersResponse> SyncAllUsersAsync();
 
 		// 5Event Monitoring
 		Task StartRealtimeEvents();
