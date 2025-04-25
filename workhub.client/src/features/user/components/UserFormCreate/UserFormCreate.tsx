@@ -116,19 +116,19 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[{ max: 36, required: true }]}
+                rules={[{ required: true }]}
               >
                 <Input placeholder="email" />
               </Form.Item>
             </Col>
 
             <Col xs={24} lg={12} xl={8}>
-              <Form.Item label="Username" rules={[{ max: 36, required: true }]}>
-                <Input
-                  placeholder="* Automatically change based on email"
-                  value={formState.email}
-                  disabled
-                />
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ required: true }]}
+              >
+                <Input placeholder="Username" />
               </Form.Item>
             </Col>
 

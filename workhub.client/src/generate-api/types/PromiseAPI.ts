@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration, ConfigurationOptions, PromiseConfigurationOptions } from '../configuration'
 import { PromiseMiddleware, Middleware, PromiseMiddlewareWrapper } from '../middleware';
 
+import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
@@ -2596,6 +2597,44 @@ export class PromiseUserApi {
 	    }
 	}
         const result = this.api.userGetById(id, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public userImportUserFromTimekeepingDeviceWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<BioStarSyncAllUsersResponse>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userImportUserFromTimekeepingDeviceWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public userImportUserFromTimekeepingDevice(_options?: PromiseConfigurationOptions): Promise<BioStarSyncAllUsersResponse> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.userImportUserFromTimekeepingDevice(observableOptions);
         return result.toPromise();
     }
 

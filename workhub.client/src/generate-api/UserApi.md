@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**userDelete**](UserApi.md#userDelete) | **DELETE** /api/users/{id} | 
 [**userGetAll**](UserApi.md#userGetAll) | **GET** /api/users/all | 
 [**userGetById**](UserApi.md#userGetById) | **GET** /api/users/{id} | 
+[**userImportUserFromTimekeepingDevice**](UserApi.md#userImportUserFromTimekeepingDevice) | **POST** /api/users/sync-from-device | 
 [**userSearch**](UserApi.md#userSearch) | **GET** /api/users | 
 [**userUpdate**](UserApi.md#userUpdate) | **PUT** /api/users/{id} | 
 
@@ -30,6 +31,7 @@ const request: UserApiUserCreateRequest = {
   
   userCreateUpdateRequest: {
     fullName: "fullName_example",
+    userName: "userName_example",
     email: "email_example",
     phoneNumber: "phoneNumber_example",
     userPosition: "ADMINISTRATOR",
@@ -256,6 +258,53 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
+# **userImportUserFromTimekeepingDevice**
+> BioStarSyncAllUsersResponse userImportUserFromTimekeepingDevice()
+
+
+### Example
+
+
+```typescript
+import { createConfiguration, UserApi } from '';
+
+const configuration = createConfiguration();
+const apiInstance = new UserApi(configuration);
+
+const request = {};
+
+const data = await apiInstance.userImportUserFromTimekeepingDevice(request);
+console.log('API called successfully. Returned data:', data);
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+
+### Return type
+
+**BioStarSyncAllUsersResponse**
+
+### Authorization
+
+[Bearer](README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | OK |  -  |
+**500** | Internal Server Error |  -  |
+**400** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
 # **userSearch**
 > UserDtoPaginated userSearch()
 
@@ -341,6 +390,7 @@ const request: UserApiUserUpdateRequest = {
   
   userCreateUpdateRequest: {
     fullName: "fullName_example",
+    userName: "userName_example",
     email: "email_example",
     phoneNumber: "phoneNumber_example",
     userPosition: "ADMINISTRATOR",

@@ -16,7 +16,8 @@ import { HttpFile } from '../http/http';
 
 export class UserMinimalDto {
     'id': string;
-    'email': string;
+    'userName': string;
+    'email'?: string | null;
     'fullName': string;
     'phoneNumber'?: string | null;
     'image'?: string | null;
@@ -33,6 +34,12 @@ export class UserMinimalDto {
             "baseName": "id",
             "type": "string",
             "format": "uuid"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string",
+            "format": ""
         },
         {
             "name": "email",

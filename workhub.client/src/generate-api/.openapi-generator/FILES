@@ -32,6 +32,7 @@ http/http.ts
 http/isomorphic-fetch.ts
 index.ts
 middleware.ts
+models/BioStarSyncAllUsersResponse.ts
 models/ChangePasswordRequest.ts
 models/CreateDeviceCategoryCommand.ts
 models/CreateDeviceCommand.ts

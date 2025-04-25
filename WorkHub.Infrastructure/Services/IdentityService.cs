@@ -48,7 +48,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		_jwtTokenService.RevokeExpiredRefreshTokens(user);
 
 		// Create JWT token
-		var token = _jwtTokenService.GenerateJwtToken(user);
+		var token = await _jwtTokenService.GenerateJwtToken(user);
 
 		var refreshToken = _jwtTokenService.GenerateRefreshTokenModel(request.RememberMe);
 		user.RefreshTokens.Add(refreshToken);
@@ -83,7 +83,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		var refreshToken = request.Cookies["refreshToken"];
 
 		var refreshTokenModel = await _jwtTokenService.RefreshTokenAsync(refreshToken);
-		var newToken = _jwtTokenService.GenerateJwtToken(refreshTokenModel.User!);
+		var newToken = await _jwtTokenService.GenerateJwtToken(refreshTokenModel.User!);
 
 		// Set token cookie 
 		SetTokenCookie(newToken, refreshTokenModel.Token, refreshTokenModel.RememberMe);
@@ -167,6 +167,11 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		var user = await _userManager.GetUserAsync(claimsPrincipal)
 			?? throw new BusinessException(HttpStatusCode.Unauthorized, "Unauthorized");
 
+		return await GetAllPermissionsAsync(user);
+	}
+
+	public async Task<List<string>> GetAllPermissionsAsync(User user)
+	{
 		var roles = await _userManager.GetRolesAsync(user);
 
 		var roleClaims = new List<Claim>();

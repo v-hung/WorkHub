@@ -12,6 +12,9 @@ using WorkHub.Application.Interfaces.Services;
 using WorkHub.Domain.Entities.Identity;
 using WorkHub.Infrastructure.Data;
 using WorkHub.Application.Exceptions;
+using WorkHub.Domain.Constants.Permission;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkHub.Infrastructure.Services;
 
@@ -19,11 +22,13 @@ public class JwtTokenService : IJwtTokenService
 {
 	private readonly JwtConfig _jwtSettings;
 	private readonly ApplicationDbContext _context;
+	private readonly Lazy<IIdentityService> _identityService;
 
-	public JwtTokenService(IOptions<JwtConfig> jwtOptions, ApplicationDbContext context)
+	public JwtTokenService(IOptions<JwtConfig> jwtOptions, ApplicationDbContext context, IServiceProvider serviceProvider)
 	{
 		_jwtSettings = jwtOptions.Value;
 		_context = context;
+		_identityService = new Lazy<IIdentityService>(() => serviceProvider.GetRequiredService<IIdentityService>());
 	}
 
 	public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
@@ -94,14 +99,20 @@ public class JwtTokenService : IJwtTokenService
 
 	}
 
-	public string GenerateJwtToken(User user)
+	public async Task<string> GenerateJwtToken(User user)
 	{
-		var claims = new[]
+		var claims = new List<Claim>
+	{
+		new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+		new Claim(ClaimTypes.Name, user.UserName ?? ""),
+		new Claim(ClaimTypes.Email, user.Email ?? "")
+	};
+
+		var permissions = await _identityService.Value.GetAllPermissionsAsync(user);
+		foreach (var permission in permissions)
 		{
-			new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-			new Claim(ClaimTypes.Name, user.UserName ?? ""),
-			new Claim(ClaimTypes.Email, user.Email ?? "")
-		};
+			claims.Add(new Claim(ApplicationClaimTypes.Permission, permission, ClaimValueTypes.String, ApplicationClaimTypes.Issuer));
+		}
 
 		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
 		var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -114,6 +125,7 @@ public class JwtTokenService : IJwtTokenService
 
 		return new JwtSecurityTokenHandler().WriteToken(token);
 	}
+
 
 	public void RevokeRefreshToken(User user, string refreshToken)
 	{

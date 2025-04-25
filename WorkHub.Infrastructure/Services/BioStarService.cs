@@ -27,11 +27,6 @@ namespace WorkHub.Infrastructure.Services
 		private readonly ApplicationDbContext _context;
 		private readonly IMemoryCache _memoryCache;
 		private const string AccessTokenCacheKey = "BioStarAccessToken";
-		private static readonly string[] value = new[]
-								{
-									"2019-07-30T15:00:00.000Z",
-									"2026-07-30T15:00:00.000Z"
-								};
 
 		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context)
 		{
@@ -162,11 +157,11 @@ namespace WorkHub.Infrastructure.Services
 			throw new NotImplementedException();
 		}
 
-		public async Task<List<object>> GetHistoricalEvents(DateTime from, DateTime to)
+		public async Task<List<BioStarEvent>> GetHistoricalEvents(DateTime from, DateTime to)
 		{
 			string baseUrl = _bioStarConfig.BioStarApiUrl + BioStarConst.GET_EVENTS_API_URL;
 
-			var response = await ExecuteWithRetryAsync<BioStarGetUsersResponse>(client =>
+			var response = await ExecuteWithRetryAsync<BioStarGetEventsResponse>(client =>
 				client.PostAsync(baseUrl, new StringContent(JsonSerializer.Serialize(new
 				{
 					Query = new
@@ -177,7 +172,7 @@ namespace WorkHub.Infrastructure.Services
 							new {
 								column = "datetime",
 								@operator = 3,
-								values = value
+								values = new object[] { from, to }
 							}
 						},
 						orders = new[]
@@ -190,7 +185,7 @@ namespace WorkHub.Infrastructure.Services
 					}
 				}), Encoding.UTF8, "application/json")));
 
-			return response.UserCollection.Rows;
+			return response.EventCollection.Rows;
 		}
 
 		private async Task<D> ExecuteWithRetryAsync<D>(Func<HttpClient, Task<HttpResponseMessage>> apiCall)

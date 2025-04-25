@@ -17,11 +17,12 @@ import { HttpFile } from '../http/http';
 
 export class UserCreateUpdateRequest {
     'fullName': string;
-    'email': string;
+    'userName': string;
+    'email'?: string | null;
     'phoneNumber'?: string | null;
-    'userPosition': UserPosition;
+    'userPosition'?: UserPosition;
     'leaveHours'?: number;
-    'userStatus': UserStatus;
+    'userStatus'?: UserStatus;
     'workTimeId'?: number | null;
     'userDetail'?: UserDetailDto;
     'supervisorId'?: string | null;
@@ -38,6 +39,12 @@ export class UserCreateUpdateRequest {
         {
             "name": "fullName",
             "baseName": "fullName",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
             "type": "string",
             "format": ""
         },

@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration, ConfigurationOptions } from '../configuration'
 import type { Middleware } from '../middleware';
 
+import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
@@ -1631,6 +1632,9 @@ export interface UserApiUserGetByIdRequest {
     id: string
 }
 
+export interface UserApiUserImportUserFromTimekeepingDeviceRequest {
+}
+
 export interface UserApiUserSearchRequest {
     /**
      * 
@@ -1743,6 +1747,20 @@ export class ObjectUserApi {
      */
     public userGetById(param: UserApiUserGetByIdRequest, options?: ConfigurationOptions): Promise<UserFullDto> {
         return this.api.userGetById(param.id,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public userImportUserFromTimekeepingDeviceWithHttpInfo(param: UserApiUserImportUserFromTimekeepingDeviceRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<BioStarSyncAllUsersResponse>> {
+        return this.api.userImportUserFromTimekeepingDeviceWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public userImportUserFromTimekeepingDevice(param: UserApiUserImportUserFromTimekeepingDeviceRequest = {}, options?: ConfigurationOptions): Promise<BioStarSyncAllUsersResponse> {
+        return this.api.userImportUserFromTimekeepingDevice( options).toPromise();
     }
 
     /**

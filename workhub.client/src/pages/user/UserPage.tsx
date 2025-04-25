@@ -1,4 +1,4 @@
-import { Button, Popconfirm } from "antd";
+import { Button } from "antd";
 import { useNavigate } from "react-router";
 import UserTable from "@/features/user/components/UserTable/UserTable";
 import { wrapLoaderWithPermission } from "@/utils/loader";
@@ -9,6 +9,7 @@ import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultC
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 import { UserProvider } from "@/features/user/contexts/UserContext";
+import UserSyncDataButton from "@/features/user/components/UserSyncDataButton/UserSyncDataButton";
 
 export const loader = wrapLoaderWithPermission(
   undefined,
@@ -22,25 +23,16 @@ export function Component() {
     <DefaultPage pageClassName="h-screen">
       <UserProvider>
         <DefaultHeader title="User Manager">
-          <Popconfirm
-            title="Delete the team"
-            description="Are you sure to delete this team?"
-            onConfirm={confirm}
-            placement="bottomRight"
-          >
-            <Button
-              color="cyan"
-              variant="outlined"
-              icon={<IIonPersonAddOutline width={16} height={16} />}
-            >
-              Load user form timekeeping machine
-            </Button>
-          </Popconfirm>
+          {hasPermission(Permission.PermissionsUsersSync) ? (
+            <UserSyncDataButton />
+          ) : null}
+
           {hasPermission(Permission.PermissionsUsersCreate) ? (
             <Button
               type="primary"
               onClick={() => navigate("/users/create")}
               icon={<IIonPersonAddOutline width={16} height={16} />}
+              style={{ marginLeft: 8 }}
             >
               Add user
             </Button>

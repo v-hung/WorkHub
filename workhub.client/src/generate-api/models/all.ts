@@ -1,3 +1,4 @@
+export * from '../models/BioStarSyncAllUsersResponse'
 export * from '../models/ChangePasswordRequest'
 export * from '../models/CreateDeviceCategoryCommand'
 export * from '../models/CreateDeviceCommand'

@@ -139,8 +139,8 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<IRoleService, RoleService>();
 		services.AddScoped<IJwtTokenService, JwtTokenService>();
-		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IIdentityService, IdentityService>();
+		services.AddScoped<ICurrentUserService, CurrentUserService>();
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 		services.AddScoped<IEmailService, EmailService>();
 		services.AddScoped<IEmailTemplateService, EmailTemplateService>();

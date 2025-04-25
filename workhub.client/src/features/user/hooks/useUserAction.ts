@@ -78,6 +78,22 @@ export const useUserAction = () => {
   // Delete USER
   // =============
 
+  const syncUsers = async () => {
+    setLoading(true);
+    try {
+      return await userApi.userImportUserFromTimekeepingDevice();
+    } catch (e) {
+      getNotification().error({
+        message: getMessageError(e),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Delete USER
+  // =============
+
   // const deleteUser = async (id: string, request: UserCreateUpdateRequest) => {
   //   setLoading(true);
   //   try {
@@ -91,5 +107,5 @@ export const useUserAction = () => {
   //   }
   // };
 
-  return { loading, createUser, updateUser, formDefault };
+  return { loading, createUser, updateUser, formDefault, syncUsers };
 };

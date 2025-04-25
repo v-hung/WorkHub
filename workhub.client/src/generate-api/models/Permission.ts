@@ -14,6 +14,7 @@ import { HttpFile } from '../http/http';
 
 export enum Permission {
     PermissionsUsersView = 'Permissions.Users.View',
+    PermissionsUsersSync = 'Permissions.Users.Sync',
     PermissionsUsersCreate = 'Permissions.Users.Create',
     PermissionsUsersEdit = 'Permissions.Users.Edit',
     PermissionsUsersDelete = 'Permissions.Users.Delete',

@@ -38,6 +38,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseRequestLocalizationByCulture();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints();
 app.MapFallbackToFile("/index.html");

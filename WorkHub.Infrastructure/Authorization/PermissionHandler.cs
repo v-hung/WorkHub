@@ -19,8 +19,8 @@ public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
 		}
 
 		var permissions = authContext.User.Claims.Where(x => x.Type == ApplicationClaimTypes.Permission &&
-						x.Value == requirement.Permission &&
-						x.Issuer == "LOCAL AUTHORITY");
+			x.Value == requirement.Permission &&
+			x.Issuer == "LOCAL AUTHORITY");
 
 		if (permissions.Any())
 		{

@@ -15,7 +15,7 @@ public interface IJwtTokenService
 	CookieOptions GenerateTokenCookieOptions();
 	CookieOptions GenerateRefreshTokenCookieOptions(bool rememberMe = false);
 
-	string GenerateJwtToken(User user);
+	Task<string> GenerateJwtToken(User user);
 
 	void RevokeRefreshToken(User user, string refreshToken);
 

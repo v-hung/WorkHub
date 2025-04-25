@@ -1,3 +1,4 @@
+export * from '../models/BioStarSyncAllUsersResponse';
 export * from '../models/ChangePasswordRequest';
 export * from '../models/CreateDeviceCategoryCommand';
 export * from '../models/CreateDeviceCommand';
@@ -57,6 +58,7 @@ export * from '../models/UserStatus';
 export * from '../models/WorkTimeDto';
 export * from '../models/WorkTimeDtoPaginated';
 
+import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand       } from '../models/CreateDeviceCommand';
@@ -104,13 +106,13 @@ import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
-import { UserCreateUpdateRequest              } from '../models/UserCreateUpdateRequest';
+import { UserCreateUpdateRequest               } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto        } from '../models/UserDetailDto';
-import { UserDto                  } from '../models/UserDto';
+import { UserDto                   } from '../models/UserDto';
 import { UserDtoLoginResponse } from '../models/UserDtoLoginResponse';
 import { UserDtoPaginated } from '../models/UserDtoPaginated';
-import { UserFullDto                    } from '../models/UserFullDto';
-import { UserMinimalDto        } from '../models/UserMinimalDto';
+import { UserFullDto                     } from '../models/UserFullDto';
+import { UserMinimalDto         } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
 import { WorkTimeDto } from '../models/WorkTimeDto';
@@ -142,6 +144,7 @@ let enumsMap: Set<string> = new Set<string>([
 ]);
 
 let typeMap: {[index: string]: any} = {
+    "BioStarSyncAllUsersResponse": BioStarSyncAllUsersResponse,
     "ChangePasswordRequest": ChangePasswordRequest,
     "CreateDeviceCategoryCommand": CreateDeviceCategoryCommand,
     "CreateDeviceCommand": CreateDeviceCommand,

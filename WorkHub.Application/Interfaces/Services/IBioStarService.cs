@@ -15,6 +15,6 @@ namespace WorkHub.Application.Interfaces.Services
 
 		// 5Event Monitoring
 		Task StartRealtimeEvents();
-		Task<List<object>> GetHistoricalEvents(DateTime from, DateTime to);
+		Task<List<BioStarEvent>> GetHistoricalEvents(DateTime from, DateTime to);
 	}
 }
