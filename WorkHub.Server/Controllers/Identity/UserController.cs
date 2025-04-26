@@ -1,11 +1,9 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkHub.Application.DTOs.Identity;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Requests;
 using WorkHub.Application.Requests.Identity;
-using WorkHub.Application.Responses.BioStar;
 using WorkHub.Application.Wrapper;
 using WorkHub.Domain.Constants.Permission;
 
@@ -15,12 +13,10 @@ namespace WorkHub.Server.Controllers.Identity;
 public class UserController : BaseApiController<UserController>
 {
 	private readonly IUserService _userService;
-	private readonly IBioStarService _bioStarService;
 
-	public UserController(IUserService userService, IBioStarService bioStarService)
+	public UserController(IUserService userService)
 	{
 		_userService = userService;
-		_bioStarService = bioStarService;
 	}
 
 	[Authorize(Policy = Permissions.Users.View)]
@@ -46,14 +42,6 @@ public class UserController : BaseApiController<UserController>
 	{
 		var user = await _userService.GetWithRolesAsync<UserFullDto, Guid>(id);
 		return Ok(user);
-	}
-
-	// [Authorize(Policy = Permissions.Users.Sync)]
-	[HttpPost("sync-from-device")]
-	public async Task<ActionResult<BioStarSyncAllUsersResponse>> ImportUserFromTimekeepingDevice()
-	{
-		var data = await _bioStarService.SyncAllUsersAsync();
-		return Ok(data);
 	}
 
 	[Authorize(Policy = Permissions.Users.Create)]

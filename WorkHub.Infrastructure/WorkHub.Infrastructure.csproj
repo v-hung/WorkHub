@@ -7,6 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="8.1.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.12" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
 		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.1" />
@@ -18,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Libraries\" />
+		<!-- <Folder Include="Libraries\" /> -->
 	</ItemGroup>
 
 </Project>

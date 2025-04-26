@@ -1,22 +1,26 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using LinqKit;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WorkHub.Application.Configs;
 using WorkHub.Application.Exceptions;
-using WorkHub.Application.Interfaces.Services;
+using WorkHub.Application.Interfaces.BioStar.Services;
 using WorkHub.Application.Models.BioStar;
+using WorkHub.Application.Requests.BioStar;
 using WorkHub.Application.Responses.BioStar;
 using WorkHub.Domain.Constants.BioStar;
 using WorkHub.Domain.Entities.Identity;
+using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
 
-namespace WorkHub.Infrastructure.Services
+namespace WorkHub.Infrastructure.BioStar.Services
 {
 	public class BioStarService : IBioStarService
 	{
@@ -157,7 +161,7 @@ namespace WorkHub.Infrastructure.Services
 			throw new NotImplementedException();
 		}
 
-		public async Task<List<BioStarEvent>> GetHistoricalEvents(DateTime from, DateTime to)
+		public async Task<List<BioStarEvent>> GetHistoricalEvents(GetHistoricalEventsRequest request)
 		{
 			string baseUrl = _bioStarConfig.BioStarApiUrl + BioStarConst.GET_EVENTS_API_URL;
 
@@ -166,14 +170,19 @@ namespace WorkHub.Infrastructure.Services
 				{
 					Query = new
 					{
-						limit = 51,
+						limit = 9999,
 						conditions = new[]
-							{
+						{
 							new {
 								column = "datetime",
 								@operator = 3,
-								values = new object[] { from, to }
-							}
+								values = new object[] { request.From, request.To }
+							},
+							new {
+								column = "event_type_id.code",
+								@operator = 0,
+								values = new object[] { BioStarEventTypeEnum.IDENTIFY_SUCCESS_FINGERPRINT }
+							},
 						},
 						orders = new[]
 						{
@@ -185,10 +194,111 @@ namespace WorkHub.Infrastructure.Services
 					}
 				}), Encoding.UTF8, "application/json")));
 
-			return response.EventCollection.Rows;
+			return response.EventCollection.Rows ?? [];
 		}
 
-		private async Task<D> ExecuteWithRetryAsync<D>(Func<HttpClient, Task<HttpResponseMessage>> apiCall)
+		public async Task<BioStarSyncHistoricalEventsResponse> SyncHistoricalEvents(GetHistoricalEventsRequest request)
+		{
+			// list events
+			var bioStarEvents = await GetHistoricalEvents(request);
+
+			List<string> uniqueBioStarIds = bioStarEvents.Where(e => e.UserId?.UserId != null).Select(e => e.UserId!.UserId!).Distinct().ToList();
+
+			// UserIds map
+			var userIdMap = await GetUserIdByBioStarId(uniqueBioStarIds);
+
+			// list timesheet find in timekeeping machine
+			List<Timesheet> timesheets = bioStarEvents.Where(e => e.UserId?.UserId != null)
+				.GroupBy(e => new { UserId = e.UserId!.UserId!, Date = e.Datetime.Date })
+				.Select(b =>
+				{
+					if (!userIdMap.TryGetValue(b.Key.UserId, out var userId))
+						return null;
+
+					var eventSort = b.OrderBy(e => e.Datetime);
+
+					return new Timesheet
+					{
+						Date = b.Key.Date,
+						StartTime = eventSort.First().Datetime,
+						EndTime = eventSort.Count() > 1 ? eventSort.Last().Datetime : null,
+						UserId = userId
+
+					};
+				}).Where(t => t != null).Cast<Timesheet>().ToList();
+
+			// find existing timesheets
+			var keys = timesheets.Select(t => new { t.UserId, Date = t.Date.Date }).ToList();
+			var predicate = PredicateBuilder.New<Timesheet>(false);
+
+			foreach (var key in keys)
+			{
+				var tempKey = key;
+				predicate = predicate.Or(t => t.UserId == tempKey.UserId && t.Date.Date == tempKey.Date);
+			}
+
+			var existingTimesheets = await _context.Timesheets
+					.AsExpandable()
+					.Where(predicate)
+					.ToListAsync();
+
+			// map existing timesheets
+			var timesheetExistingMap = existingTimesheets.ToDictionary(t => (t.UserId, t.Date));
+
+			var toUpdate = new List<Timesheet>();
+			var toAdd = new List<Timesheet>();
+
+			// update or add timesheets
+			foreach (var timesheet in timesheets)
+			{
+				var key = (timesheet.UserId, timesheet.Date);
+				if (timesheetExistingMap.TryGetValue(key, out var existing))
+				{
+					// update timesheet
+					if (existing.StartTime != timesheet.StartTime || existing.EndTime != timesheet.EndTime)
+					{
+						existing.StartTime = timesheet.StartTime;
+						existing.EndTime = timesheet.EndTime;
+						toUpdate.Add(existing);
+					}
+				}
+				else
+				{
+					toAdd.Add(timesheet);
+				}
+			}
+
+			if (toAdd.Count != 0) await _context.Timesheets.AddRangeAsync(toAdd);
+			if (toUpdate.Count != 0) _context.Timesheets.UpdateRange(toUpdate);
+
+			await _context.SaveChangesAsync();
+
+			return new BioStarSyncHistoricalEventsResponse
+			{
+				LoadCount = bioStarEvents.Count,
+				NewCount = toAdd.Count,
+				UpdateCount = toUpdate.Count,
+			};
+		}
+
+		public async Task<Guid?> GetUserIdByBioStarId(string bioStarId)
+		{
+			var user = await _context.Users.FirstOrDefaultAsync(u => u.BioStarUserId == bioStarId);
+			return user?.Id;
+		}
+
+		public async Task<Dictionary<string, Guid>> GetUserIdByBioStarId(List<string> bioStarId)
+		{
+			var userIdMap = new Dictionary<string, Guid?>();
+
+			var users = await _context.Users
+				.Where(u => u.BioStarUserId != null && bioStarId.Contains(u.BioStarUserId))
+				.ToListAsync();
+
+			return users.Where(u => u.BioStarUserId != null).ToDictionary(u => u.BioStarUserId!, u => u.Id);
+		}
+
+		public async Task<D> ExecuteWithRetryAsync<D>(Func<HttpClient, Task<HttpResponseMessage>> apiCall)
 		{
 			var client = _httpClientFactory.CreateClient("IgnoreSsl");
 

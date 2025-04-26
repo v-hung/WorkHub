@@ -19,7 +19,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 		private readonly IRequestApprovalService<TimesheetAdjustmentRequest> _approvalService;
 		private readonly ITimesheetRepository _timesheetRepository;
 
-		public TimesheetAdjustmentRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetAdjustmentRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<TimesheetAdjustmentRequest> approvalService, ITimesheetRepository timesheetRepository, IHttpContextAccessor httpContextAccessor, IEmailService emailService, IEmailBackgroundQueue emailQueue)
+		public TimesheetAdjustmentRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetAdjustmentRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<TimesheetAdjustmentRequest> approvalService, ITimesheetRepository timesheetRepository, IHttpContextAccessor httpContextAccessor, IEmailService emailService, IEmailSenderQueue emailQueue)
 			: base(context, mapper, localizer, currentUserService, emailService, httpContextAccessor, emailQueue)
 		{
 			_approvalService = approvalService;

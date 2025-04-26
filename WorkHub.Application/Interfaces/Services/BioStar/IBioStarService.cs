@@ -1,7 +1,8 @@
 using WorkHub.Application.Models.BioStar;
+using WorkHub.Application.Requests.BioStar;
 using WorkHub.Application.Responses.BioStar;
 
-namespace WorkHub.Application.Interfaces.Services
+namespace WorkHub.Application.Interfaces.BioStar.Services
 {
 	public interface IBioStarService
 	{
@@ -15,6 +16,8 @@ namespace WorkHub.Application.Interfaces.Services
 
 		// 5Event Monitoring
 		Task StartRealtimeEvents();
-		Task<List<BioStarEvent>> GetHistoricalEvents(DateTime from, DateTime to);
+		Task<List<BioStarEvent>> GetHistoricalEvents(GetHistoricalEventsRequest request);
+		Task<BioStarSyncHistoricalEventsResponse> SyncHistoricalEvents(GetHistoricalEventsRequest request);
+		Task<D> ExecuteWithRetryAsync<D>(Func<HttpClient, Task<HttpResponseMessage>> apiCall);
 	}
 }

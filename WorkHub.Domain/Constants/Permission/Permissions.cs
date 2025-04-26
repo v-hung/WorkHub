@@ -7,7 +7,6 @@ public static class Permissions
 	public static class Users
 	{
 		public const string View = "Permissions.Users.View";
-		public const string Sync = "Permissions.Users.Sync";
 		public const string Create = "Permissions.Users.Create";
 		public const string Edit = "Permissions.Users.Edit";
 		public const string Delete = "Permissions.Users.Delete";
@@ -65,6 +64,12 @@ public static class Permissions
 	{
 		public const string SendEmail = "Permissions.System.SendEmail";
 		public const string Report = "Permissions.System.Report";
+	}
+
+	public static class BioStar
+	{
+		public const string SyncUsers = "Permissions.BioStar.SyncUsers";
+		public const string SyncTimesheets = "Permissions.BioStar.SyncTimesheets";
 	}
 
 	/// <summary>

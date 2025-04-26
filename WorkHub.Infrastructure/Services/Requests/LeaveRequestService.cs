@@ -19,7 +19,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 		private readonly IRequestApprovalService<LeaveRequest> _approvalService;
 		private readonly ITimesheetRepository _timesheetRepository;
 
-		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<LeaveRequest> approvalService, ITimesheetRepository timesheetRepository, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IEmailBackgroundQueue emailQueue)
+		public LeaveRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<LeaveRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<LeaveRequest> approvalService, ITimesheetRepository timesheetRepository, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IEmailSenderQueue emailQueue)
 			: base(context, mapper, localizer, currentUserService, emailService, httpContextAccessor, emailQueue)
 		{
 			_approvalService = approvalService;

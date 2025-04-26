@@ -25,9 +25,9 @@ namespace WorkHub.Infrastructure.Services.Requests
 		protected readonly ICurrentUserService _currentUserService;
 		protected readonly IEmailService _emailService;
 		protected readonly IHttpContextAccessor _httpContextAccessor;
-		protected readonly IEmailBackgroundQueue _emailQueue;
+		protected readonly IEmailSenderQueue _emailQueue;
 
-		public RequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RequestService<TCreateRequest>> localizer, ICurrentUserService currentUserService, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IEmailBackgroundQueue emailQueue)
+		public RequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<RequestService<TCreateRequest>> localizer, ICurrentUserService currentUserService, IEmailService emailService, IHttpContextAccessor httpContextAccessor, IEmailSenderQueue emailQueue)
 		{
 			_context = context;
 			_mapper = mapper;
@@ -105,8 +105,6 @@ namespace WorkHub.Infrastructure.Services.Requests
 						templateModel,
 						user.LanguageCode);
 				});
-
-
 			}
 			finally
 			{

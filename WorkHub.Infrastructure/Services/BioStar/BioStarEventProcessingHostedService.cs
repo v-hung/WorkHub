@@ -2,14 +2,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WorkHub.Application.Interfaces.Messaging;
 
-namespace WorkHub.Infrastructure.Services
+namespace WorkHub.Infrastructure.Services.BioStar
 {
-	public class EmailSenderHostedService : BackgroundService
+	public class BioStarEventProcessingHostedService : BackgroundService
 	{
-		private readonly ILogger<EmailSenderHostedService> _logger;
-		private readonly IEmailSenderQueue _queue;
+		private readonly ILogger<BioStarEventProcessingHostedService> _logger;
+		private readonly IBioStarEventProcessingQueue _queue;
 
-		public EmailSenderHostedService(IEmailSenderQueue queue, ILogger<EmailSenderHostedService> logger)
+		public BioStarEventProcessingHostedService(IBioStarEventProcessingQueue queue, ILogger<BioStarEventProcessingHostedService> logger)
 		{
 			_queue = queue;
 			_logger = logger;
@@ -31,5 +31,6 @@ namespace WorkHub.Infrastructure.Services
 				}
 			}
 		}
+
 	}
 }

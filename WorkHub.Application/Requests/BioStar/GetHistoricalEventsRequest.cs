@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace WorkHub.Application.Requests.BioStar
 {
-    public class GetHistoricalEventsRequest
-    {
-        
-    }
+	public class GetHistoricalEventsRequest
+	{
+		public required DateTime From { get; set; }
+		public required DateTime To { get; set; }
+	}
 }

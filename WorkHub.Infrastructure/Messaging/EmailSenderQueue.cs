@@ -3,11 +3,11 @@ using WorkHub.Application.Interfaces.Messaging;
 
 namespace WorkHub.Infrastructure.Messaging
 {
-	public class EmailBackgroundQueue : IEmailBackgroundQueue
+	public class EmailSenderQueue : IEmailSenderQueue
 	{
 		private readonly Channel<Func<CancellationToken, Task>> _queue;
 
-		public EmailBackgroundQueue()
+		public EmailSenderQueue()
 		{
 			_queue = Channel.CreateUnbounded<Func<CancellationToken, Task>>();
 		}

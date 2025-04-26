@@ -135,6 +135,7 @@ static class ServiceCollectionExtensions
 		services.AddMemoryCache();
 
 		services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+		services.AddSingleton<IEmailSenderQueue, EmailSenderQueue>();
 
 		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<IRoleService, RoleService>();
@@ -144,10 +145,10 @@ static class ServiceCollectionExtensions
 		services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 		services.AddScoped<IEmailService, EmailService>();
 		services.AddScoped<IEmailTemplateService, EmailTemplateService>();
-		services.AddSingleton<IEmailBackgroundQueue, EmailBackgroundQueue>();
-		services.AddHostedService<EmailSenderHostedService>();
 		services.AddScoped<IUploadFile, UploadFile>();
 		services.AddScoped<INotificationSender, NotificationSender>();
+
+		services.AddHostedService<EmailSenderHostedService>();
 
 		// add signalR
 		services.AddSignalR(options =>

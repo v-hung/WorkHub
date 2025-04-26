@@ -4,6 +4,8 @@ using WorkHub.Application.Wrapper;
 using WorkHub.Application.DTOs.Equipment;
 using WorkHub.Application.Features.Devices.Queries;
 using WorkHub.Application.Features.Devices.Commands;
+using Microsoft.AspNetCore.Authorization;
+using WorkHub.Domain.Constants.Permission;
 
 namespace WorkHub.Server.Controllers.Time
 {
@@ -11,6 +13,7 @@ namespace WorkHub.Server.Controllers.Time
 	public class DeviceController : BaseApiController<DeviceController>
 	{
 		[HttpGet("all")]
+		[Authorize(Policy = Permissions.Devices.View)]
 		public async Task<ActionResult<List<DeviceDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var data = await _mediator.Send(new GetAllDeviceQuery { Ids = ids });
@@ -19,6 +22,7 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[HttpGet]
+		[Authorize(Policy = Permissions.Devices.View)]
 		public async Task<ActionResult<Paginated<DeviceDto>>> Search([FromQuery] PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchDeviceQuery { Request = request });
@@ -27,6 +31,7 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[HttpGet("{id}")]
+		[Authorize(Policy = Permissions.Devices.View)]
 		public async Task<ActionResult<DeviceDto>> GetById(int id)
 		{
 			var data = await _mediator.Send(new GetDeviceByIdQuery(id));
@@ -35,6 +40,7 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[HttpPost]
+		[Authorize(Policy = Permissions.Devices.Create)]
 		public async Task<ActionResult<DeviceDto>> Create(CreateDeviceCommand request)
 		{
 			var data = await _mediator.Send(request);
@@ -43,6 +49,7 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[HttpPut("{id}")]
+		[Authorize(Policy = Permissions.Devices.Edit)]
 		public async Task<ActionResult<DeviceDto>> Update(int id, CreateDeviceCommand request)
 		{
 			var data = await _mediator.Send(new UpdateDeviceCommand { Id = id, Request = request });
@@ -51,6 +58,7 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[HttpDelete("{id}")]
+		[Authorize(Policy = Permissions.Devices.Delete)]
 		public async Task<IActionResult> Delete(int id)
 		{
 			await _mediator.Send(new DeleteDeviceCommand { Id = id });

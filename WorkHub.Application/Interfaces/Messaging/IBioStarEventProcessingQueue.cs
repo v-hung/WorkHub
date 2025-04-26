@@ -1,8 +1,8 @@
 namespace WorkHub.Application.Interfaces.Messaging
 {
-	public interface IEmailBackgroundQueue
+	public interface IBioStarEventProcessingQueue
 	{
-		void QueueEmail(Func<CancellationToken, Task> emailTask);
+		void Queue(Func<CancellationToken, Task> emailTask);
 
 		Task<Func<CancellationToken, Task>> DequeueAsync(CancellationToken cancellationToken);
 	}
