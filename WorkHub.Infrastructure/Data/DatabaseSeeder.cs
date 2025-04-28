@@ -8,6 +8,7 @@ using WorkHub.Domain.Entities.Identity;
 using WorkHub.Domain.Entities.Organization;
 using Microsoft.Extensions.Logging;
 using WorkHub.Domain.Entities.Time;
+using WorkHub.Application.Interfaces.Services;
 
 namespace WorkHub.Infrastructure.Data;
 
@@ -17,18 +18,15 @@ public class DatabaseSeeder : IDatabaseSeeder
 	private readonly ApplicationDbContext _context;
 	private readonly UserManager<User> _userManager;
 	private readonly RoleManager<Role> _roleManager;
+	private readonly IUserService _userService;
 
-	public DatabaseSeeder(
-		ApplicationDbContext context,
-		ILogger<DatabaseSeeder> logger,
-		UserManager<User> userManager,
-		RoleManager<Role> roleManager
-	)
+	public DatabaseSeeder(ApplicationDbContext context, ILogger<DatabaseSeeder> logger, UserManager<User> userManager, RoleManager<Role> roleManager, IUserService userService)
 	{
 		_context = context;
 		_logger = logger;
 		_userManager = userManager;
 		_roleManager = roleManager;
+		_userService = userService;
 	}
 
 	public async Task Initialize()
@@ -90,8 +88,10 @@ public class DatabaseSeeder : IDatabaseSeeder
 				LockoutEnabled = true,
 				SecurityStamp = Guid.NewGuid().ToString(),
 				EmailConfirmed = true,
-				UserPosition = UserPosition.ADMINISTRATOR
+				UserPosition = UserPosition.ADMINISTRATOR,
 			};
+
+			await _userService.GenerateAvatarForUser(user);
 
 			var result = await _userManager.CreateAsync(user, UserConst.AdministratorPassword);
 			if (result.Succeeded)

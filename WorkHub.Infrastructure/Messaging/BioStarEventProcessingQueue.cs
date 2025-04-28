@@ -12,7 +12,7 @@ namespace WorkHub.Infrastructure.Messaging
 			_queue = Channel.CreateUnbounded<Func<CancellationToken, Task>>();
 		}
 
-		public void Queue(Func<CancellationToken, Task> task)
+		public void Enqueue(Func<CancellationToken, Task> task)
 		{
 			if (task == null) throw new ArgumentNullException(nameof(task));
 			_queue.Writer.TryWrite(task);

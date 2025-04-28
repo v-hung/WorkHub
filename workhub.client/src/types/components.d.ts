@@ -6,8 +6,11 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const IBxCalendarCheck: typeof import('~icons/bx/calendar-check.jsx')['default']
   const IIonCalendarOutline: typeof import('~icons/ion/calendar-outline.jsx')['default']
   const IIonCheckmark: typeof import('~icons/ion/checkmark.jsx')['default']
+  const IIonChevronBack: typeof import('~icons/ion/chevron-back.jsx')['default']
+  const IIonChevronForward: typeof import('~icons/ion/chevron-forward.jsx')['default']
   const IIonClock: typeof import('~icons/ion/clock.jsx')['default']
   const IIonCubeOutline: typeof import('~icons/ion/cube-outline.jsx')['default']
   const IIonDocumentsOutline: typeof import('~icons/ion/documents-outline.jsx')['default']
@@ -15,12 +18,16 @@ declare global {
   const IIonHomeOutline: typeof import('~icons/ion/home-outline.jsx')['default']
   const IIonLockClosedOutline: typeof import('~icons/ion/lock-closed-outline.jsx')['default']
   const IIonMailNotificationOutline: typeof import('~icons/ion/mail-notification-outline.jsx')['default']
+  const IIonPause: typeof import('~icons/ion/pause.jsx')['default']
+  const IIonPeopleCircleOutline: typeof import('~icons/ion/people-circle-outline.jsx')['default']
   const IIonPeopleOutline: typeof import('~icons/ion/people-outline.jsx')['default']
   const IIonPerson: typeof import('~icons/ion/person.jsx')['default']
   const IIonPersonAddOutline: typeof import('~icons/ion/person-add-outline.jsx')['default']
   const IIonPersonOutline: typeof import('~icons/ion/person-outline.jsx')['default']
   const IIonPieChartOutline: typeof import('~icons/ion/pie-chart-outline.jsx')['default']
+  const IIonPlay: typeof import('~icons/ion/play.jsx')['default']
   const IIonSendOutline: typeof import('~icons/ion/send-outline.jsx')['default']
+  const IIonSync: typeof import('~icons/ion/sync.jsx')['default']
   const IIonTimerOutline: typeof import('~icons/ion/timer-outline.jsx')['default']
   const IMdiMenu: typeof import('~icons/mdi/menu.jsx')['default']
   const IMdiMenuOpen: typeof import('~icons/mdi/menu-open.jsx')['default']

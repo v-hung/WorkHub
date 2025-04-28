@@ -17,5 +17,8 @@ namespace WorkHub.Application.DTOs.Time
 		public DateTime? EndTime { get; set; }
 
 		public int? WorkMinutes { get; set; } = 0;
+
+		[Required]
+		public bool IsActive { get; set; } = true;
 	}
 }

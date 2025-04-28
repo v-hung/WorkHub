@@ -11,7 +11,11 @@ using Microsoft.Extensions.Options;
 using WorkHub.Application.Configs;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.BioStar.Services;
+using WorkHub.Application.Interfaces.Services;
+using WorkHub.Application.Interfaces.SignalR;
 using WorkHub.Application.Models.BioStar;
+using WorkHub.Application.Models.SignalR.Notification;
+using WorkHub.Application.Models.SignalR.Notification.DTOs;
 using WorkHub.Application.Requests.BioStar;
 using WorkHub.Application.Responses.BioStar;
 using WorkHub.Domain.Constants.BioStar;
@@ -29,17 +33,21 @@ namespace WorkHub.Infrastructure.BioStar.Services
 		private readonly BioStarConfig _bioStarConfig;
 		private readonly IStringLocalizer<BioStarService> _localizer;
 		private readonly ApplicationDbContext _context;
+		private readonly IUserService _userService;
+		private readonly INotificationSender _notificationSender;
 		private readonly IMemoryCache _memoryCache;
 		private const string AccessTokenCacheKey = "BioStarAccessToken";
 
-		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context)
+		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context, INotificationSender notificationSender, IUserService userService)
 		{
 			_httpClientFactory = httpClientFactory;
 			_logger = logger;
 			_bioStarConfig = bioStarConfig.Value;
 			_localizer = localizer;
+			_notificationSender = notificationSender;
 			_memoryCache = memoryCache;
 			_context = context;
+			_userService = userService;
 		}
 
 		public async Task<string?> GetAccessTokenAsync()
@@ -131,7 +139,7 @@ namespace WorkHub.Infrastructure.BioStar.Services
 
 			if (newUsers.Count != 0)
 			{
-				await _context.AddRangeAsync(newUsers.Select(b => new User
+				var userCreate = newUsers.Select(b => new User
 				{
 					LockoutEnabled = true,
 					SecurityStamp = Guid.NewGuid().ToString(),
@@ -144,7 +152,14 @@ namespace WorkHub.Infrastructure.BioStar.Services
 					UserStatus = UserStatus.INACTIVE,
 					RemainingLeaveMinutes = 0,
 					BioStarUserId = b.UserId,
-				}).ToList());
+				}).ToList();
+
+				foreach (var user in userCreate)
+				{
+					await _userService.GenerateAvatarForUser(user);
+				}
+
+				await _context.AddRangeAsync(userCreate);
 
 				await _context.SaveChangesAsync();
 			}
@@ -279,6 +294,69 @@ namespace WorkHub.Infrastructure.BioStar.Services
 				NewCount = toAdd.Count,
 				UpdateCount = toUpdate.Count,
 			};
+		}
+
+		public async Task SyncMessageEvent(string message)
+		{
+			try
+			{
+				var result = JsonSerializer.Deserialize<BioStarMessageEventResponse>(message, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower });
+
+				if (result?.Event?.EventTypeId?.Code != ((int)BioStarEventTypeEnum.IDENTIFY_SUCCESS_FINGERPRINT).ToString() || result.Event.UserId?.UserId == null) return;
+
+				var userId = await GetUserIdByBioStarId(result.Event.UserId.UserId);
+
+				if (userId == null)
+				{
+					_logger.LogWarning("User ID not found for BioStar ID: {BioStarId}", result.Event.UserId.UserId);
+					return;
+				}
+
+				Timesheet? exitingTimesheet = await _context.Timesheets
+					.FirstOrDefaultAsync(t => t.UserId == userId && t.Date.Date == result.Event.Datetime.Date);
+
+				if (exitingTimesheet != null)
+				{
+					if (exitingTimesheet.StartTime != null)
+					{
+						exitingTimesheet.StartTime = result.Event.Datetime;
+					}
+					else
+					{
+						exitingTimesheet.EndTime = result.Event.Datetime;
+					}
+				}
+				else
+				{
+					exitingTimesheet = new Timesheet
+					{
+						UserId = userId,
+						Date = result.Event.Datetime.Date,
+						StartTime = result.Event.Datetime,
+						EndTime = null
+					};
+					await _context.Timesheets.AddAsync(exitingTimesheet);
+				}
+
+				await _context.SaveChangesAsync();
+
+				// Only send data when there is a checkin event
+				if (exitingTimesheet.EndTime == null)
+				{
+					await _notificationSender.SendToUserAsync(userId.Value.ToString(), new BaseNotificationHubMessage
+					{
+						Data = new CheckInEventMessageDto
+						{
+							UserId = userId.Value.ToString(),
+							CheckInTime = exitingTimesheet.StartTime ?? DateTime.UtcNow
+						}
+					});
+				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Failed to deserialize response to type {TypeName}", typeof(BioStarMessageEventResponse).Name);
+			}
 		}
 
 		public async Task<Guid?> GetUserIdByBioStarId(string bioStarId)

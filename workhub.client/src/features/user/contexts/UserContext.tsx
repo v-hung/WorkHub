@@ -20,7 +20,7 @@ type UserContextType = {
     }>
   >;
   loading: boolean;
-  deleteRecord: (id: number) => Promise<void>;
+  deleteRecord: (id: string) => Promise<void>;
 };
 
 const UserContext = createContext<UserContextType | null>(null);

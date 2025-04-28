@@ -611,6 +611,9 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime(6)");
 

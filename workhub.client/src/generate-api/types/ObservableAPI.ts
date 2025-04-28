@@ -4,6 +4,7 @@ import type { Middleware } from '../middleware';
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
+import { BioStarSyncHistoricalEventsResponse } from '../models/BioStarSyncHistoricalEventsResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
@@ -23,6 +24,7 @@ import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { GetHistoricalEventsRequest } from '../models/GetHistoricalEventsRequest';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { NotificationDto } from '../models/NotificationDto';
@@ -43,6 +45,8 @@ import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
 import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
+import { SystemNotificationMessageDto } from '../models/SystemNotificationMessageDto';
+import { SystemNotificationMessageSeverity } from '../models/SystemNotificationMessageSeverity';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -60,6 +64,7 @@ import { UserFullDto } from '../models/UserFullDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
+import { WebSocketState } from '../models/WebSocketState';
 import { WorkTimeDto } from '../models/WorkTimeDto';
 import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 
@@ -417,6 +422,250 @@ export class ObservableAccountApi {
      */
     public accountRefreshToken(_options?: ConfigurationOptions): Observable<RefreshTokenResponse> {
         return this.accountRefreshTokenWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<RefreshTokenResponse>) => apiResponse.data));
+    }
+
+}
+
+import { BioStarApiRequestFactory, BioStarApiResponseProcessor} from "../apis/BioStarApi";
+export class ObservableBioStarApi {
+    private requestFactory: BioStarApiRequestFactory;
+    private responseProcessor: BioStarApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: BioStarApiRequestFactory,
+        responseProcessor?: BioStarApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new BioStarApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new BioStarApiResponseProcessor();
+    }
+
+    /**
+     */
+    public bioStarGetWebSocketStateWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<WebSocketState>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.bioStarGetWebSocketState(_config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.bioStarGetWebSocketStateWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public bioStarGetWebSocketState(_options?: ConfigurationOptions): Observable<WebSocketState> {
+        return this.bioStarGetWebSocketStateWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<WebSocketState>) => apiResponse.data));
+    }
+
+    /**
+     */
+    public bioStarReConnectWebsocketWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<WebSocketState>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.bioStarReConnectWebsocket(_config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.bioStarReConnectWebsocketWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public bioStarReConnectWebsocket(_options?: ConfigurationOptions): Observable<WebSocketState> {
+        return this.bioStarReConnectWebsocketWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<WebSocketState>) => apiResponse.data));
+    }
+
+    /**
+     * @param [getHistoricalEventsRequest]
+     */
+    public bioStarSyncTimesheetsWithHttpInfo(getHistoricalEventsRequest?: GetHistoricalEventsRequest, _options?: ConfigurationOptions): Observable<HttpInfo<BioStarSyncHistoricalEventsResponse>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.bioStarSyncTimesheets(getHistoricalEventsRequest, _config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.bioStarSyncTimesheetsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param [getHistoricalEventsRequest]
+     */
+    public bioStarSyncTimesheets(getHistoricalEventsRequest?: GetHistoricalEventsRequest, _options?: ConfigurationOptions): Observable<BioStarSyncHistoricalEventsResponse> {
+        return this.bioStarSyncTimesheetsWithHttpInfo(getHistoricalEventsRequest, _options).pipe(map((apiResponse: HttpInfo<BioStarSyncHistoricalEventsResponse>) => apiResponse.data));
+    }
+
+    /**
+     */
+    public bioStarSyncUsersWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<BioStarSyncAllUsersResponse>> {
+    let _config = this.configuration;
+    let allMiddleware: Middleware[] = [];
+    if (_options && _options.middleware){
+      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
+      // call-time middleware provided
+      const calltimeMiddleware: Middleware[] = _options.middleware;
+
+      switch(middlewareMergeStrategy){
+      case 'append':
+        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
+        break;
+      case 'prepend':
+        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
+        break;
+      case 'replace':
+        allMiddleware = calltimeMiddleware
+        break;
+      default: 
+        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
+      }
+	}
+	if (_options){
+    _config = {
+      baseServer: _options.baseServer || this.configuration.baseServer,
+      httpApi: _options.httpApi || this.configuration.httpApi,
+      authMethods: _options.authMethods || this.configuration.authMethods,
+      middleware: allMiddleware || this.configuration.middleware
+		};
+	}
+
+        const requestContextPromise = this.requestFactory.bioStarSyncUsers(_config);
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (const middleware of allMiddleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (const middleware of allMiddleware.reverse()) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.bioStarSyncUsersWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public bioStarSyncUsers(_options?: ConfigurationOptions): Observable<BioStarSyncAllUsersResponse> {
+        return this.bioStarSyncUsersWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<BioStarSyncAllUsersResponse>) => apiResponse.data));
     }
 
 }
@@ -3637,62 +3886,6 @@ export class ObservableUserApi {
      */
     public userGetById(id: string, _options?: ConfigurationOptions): Observable<UserFullDto> {
         return this.userGetByIdWithHttpInfo(id, _options).pipe(map((apiResponse: HttpInfo<UserFullDto>) => apiResponse.data));
-    }
-
-    /**
-     */
-    public userImportUserFromTimekeepingDeviceWithHttpInfo(_options?: ConfigurationOptions): Observable<HttpInfo<BioStarSyncAllUsersResponse>> {
-    let _config = this.configuration;
-    let allMiddleware: Middleware[] = [];
-    if (_options && _options.middleware){
-      const middlewareMergeStrategy = _options.middlewareMergeStrategy || 'replace' // default to replace behavior
-      // call-time middleware provided
-      const calltimeMiddleware: Middleware[] = _options.middleware;
-
-      switch(middlewareMergeStrategy){
-      case 'append':
-        allMiddleware = this.configuration.middleware.concat(calltimeMiddleware);
-        break;
-      case 'prepend':
-        allMiddleware = calltimeMiddleware.concat(this.configuration.middleware)
-        break;
-      case 'replace':
-        allMiddleware = calltimeMiddleware
-        break;
-      default: 
-        throw new Error(`unrecognized middleware merge strategy '${middlewareMergeStrategy}'`)
-      }
-	}
-	if (_options){
-    _config = {
-      baseServer: _options.baseServer || this.configuration.baseServer,
-      httpApi: _options.httpApi || this.configuration.httpApi,
-      authMethods: _options.authMethods || this.configuration.authMethods,
-      middleware: allMiddleware || this.configuration.middleware
-		};
-	}
-
-        const requestContextPromise = this.requestFactory.userImportUserFromTimekeepingDevice(_config);
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (const middleware of allMiddleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (const middleware of allMiddleware.reverse()) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.userImportUserFromTimekeepingDeviceWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     */
-    public userImportUserFromTimekeepingDevice(_options?: ConfigurationOptions): Observable<BioStarSyncAllUsersResponse> {
-        return this.userImportUserFromTimekeepingDeviceWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<BioStarSyncAllUsersResponse>) => apiResponse.data));
     }
 
     /**

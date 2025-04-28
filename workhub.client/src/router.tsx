@@ -24,6 +24,11 @@ const router = createBrowserRouter(
               lazy: () => import("./pages/timesheet/TimesheetPage"),
             },
             {
+              path: "/timesheets",
+              lazy: () =>
+                import("./pages/timesheetEmployee/TimesheetEmployeePage"),
+            },
+            {
               path: "/users",
               children: [
                 {

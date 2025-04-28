@@ -1,4 +1,5 @@
 export * from '../models/BioStarSyncAllUsersResponse';
+export * from '../models/BioStarSyncHistoricalEventsResponse';
 export * from '../models/ChangePasswordRequest';
 export * from '../models/CreateDeviceCategoryCommand';
 export * from '../models/CreateDeviceCommand';
@@ -18,6 +19,7 @@ export * from '../models/DeviceMinimalDto';
 export * from '../models/DeviceStatus';
 export * from '../models/ErrorResponse';
 export * from '../models/ErrorValidateResponse';
+export * from '../models/GetHistoricalEventsRequest';
 export * from '../models/LoginRequest';
 export * from '../models/Nationality';
 export * from '../models/NotificationDto';
@@ -38,6 +40,8 @@ export * from '../models/RoleDto';
 export * from '../models/RoleDtoPaginated';
 export * from '../models/RoleFullDto';
 export * from '../models/SendTestNotificationCommand';
+export * from '../models/SystemNotificationMessageDto';
+export * from '../models/SystemNotificationMessageSeverity';
 export * from '../models/TeamDto';
 export * from '../models/TeamDtoPaginated';
 export * from '../models/TeamFullDto';
@@ -55,10 +59,12 @@ export * from '../models/UserFullDto';
 export * from '../models/UserMinimalDto';
 export * from '../models/UserPosition';
 export * from '../models/UserStatus';
+export * from '../models/WebSocketState';
 export * from '../models/WorkTimeDto';
 export * from '../models/WorkTimeDtoPaginated';
 
 import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
+import { BioStarSyncHistoricalEventsResponse } from '../models/BioStarSyncHistoricalEventsResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand       } from '../models/CreateDeviceCommand';
@@ -78,6 +84,7 @@ import { DeviceMinimalDto      } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { GetHistoricalEventsRequest } from '../models/GetHistoricalEventsRequest';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { NotificationDto       } from '../models/NotificationDto';
@@ -98,6 +105,8 @@ import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
 import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
+import { SystemNotificationMessageDto    } from '../models/SystemNotificationMessageDto';
+import { SystemNotificationMessageSeverity } from '../models/SystemNotificationMessageSeverity';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -115,6 +124,7 @@ import { UserFullDto                     } from '../models/UserFullDto';
 import { UserMinimalDto         } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
+import { WebSocketState } from '../models/WebSocketState';
 import { WorkTimeDto } from '../models/WorkTimeDto';
 import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 
@@ -139,12 +149,15 @@ let enumsMap: Set<string> = new Set<string>([
     "ProjectStatus",
     "RequestStatus",
     "RequestType",
+    "SystemNotificationMessageSeverity",
     "UserPosition",
     "UserStatus",
+    "WebSocketState",
 ]);
 
 let typeMap: {[index: string]: any} = {
     "BioStarSyncAllUsersResponse": BioStarSyncAllUsersResponse,
+    "BioStarSyncHistoricalEventsResponse": BioStarSyncHistoricalEventsResponse,
     "ChangePasswordRequest": ChangePasswordRequest,
     "CreateDeviceCategoryCommand": CreateDeviceCategoryCommand,
     "CreateDeviceCommand": CreateDeviceCommand,
@@ -162,6 +175,7 @@ let typeMap: {[index: string]: any} = {
     "DeviceMinimalDto": DeviceMinimalDto,
     "ErrorResponse": ErrorResponse,
     "ErrorValidateResponse": ErrorValidateResponse,
+    "GetHistoricalEventsRequest": GetHistoricalEventsRequest,
     "LoginRequest": LoginRequest,
     "NotificationDto": NotificationDto,
     "NotificationDtoCursorPaginated": NotificationDtoCursorPaginated,
@@ -176,6 +190,7 @@ let typeMap: {[index: string]: any} = {
     "RoleDtoPaginated": RoleDtoPaginated,
     "RoleFullDto": RoleFullDto,
     "SendTestNotificationCommand": SendTestNotificationCommand,
+    "SystemNotificationMessageDto": SystemNotificationMessageDto,
     "TeamDto": TeamDto,
     "TeamDtoPaginated": TeamDtoPaginated,
     "TeamFullDto": TeamFullDto,

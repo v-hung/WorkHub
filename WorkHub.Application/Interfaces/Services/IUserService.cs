@@ -24,5 +24,7 @@ namespace WorkHub.Application.Interfaces.Services
 		Task<D?> UpdateAsync<D>(Guid userId, UserCreateUpdateRequest request) where D : class;
 
 		Task DeleteAsync(Guid userId);
+
+		Task GenerateAvatarForUser(User user);
 	}
 }

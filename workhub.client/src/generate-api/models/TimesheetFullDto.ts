@@ -20,6 +20,7 @@ export class TimesheetFullDto {
     'startTime'?: Date | null;
     'endTime'?: Date | null;
     'workMinutes'?: number | null;
+    'isActive': boolean;
     'requests'?: Array<RequestCombinedMinimalDto> | null;
     'user'?: UserMinimalDto;
 
@@ -57,6 +58,12 @@ export class TimesheetFullDto {
             "baseName": "workMinutes",
             "type": "number",
             "format": "int32"
+        },
+        {
+            "name": "isActive",
+            "baseName": "isActive",
+            "type": "boolean",
+            "format": ""
         },
         {
             "name": "requests",

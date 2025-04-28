@@ -48,14 +48,34 @@ export const getMenuItems = (
       label: t("menus.calendar"),
     },
     {
+      key: "/meeting",
+      icon: <IIonPeopleCircleOutline />,
+      label: t("menus.meeting"),
+    },
+    {
       type: "group",
       label: t("menus.manager"),
     },
     {
-      key: "/timesheets",
+      key: "/timesheet-manager",
       icon: <IIonTimerOutline />,
-      label: t("menus.timesheet"),
+      label: t("menus.timesheet_manager"),
       permission: Permission.PermissionsTimesheetsView,
+      children: [
+        {
+          key: "/timesheets",
+          label: t("menus.timesheet_employee"),
+          permission: Permission.PermissionsTimesheetsView,
+        },
+        {
+          key: "/holidays",
+          label: t("menus.holidays"),
+        },
+        {
+          key: "/makeup-times",
+          label: t("menus.makeup_time"),
+        },
+      ],
     },
     {
       key: "/projects",

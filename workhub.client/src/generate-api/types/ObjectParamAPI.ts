@@ -3,6 +3,7 @@ import { Configuration, ConfigurationOptions } from '../configuration'
 import type { Middleware } from '../middleware';
 
 import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
+import { BioStarSyncHistoricalEventsResponse } from '../models/BioStarSyncHistoricalEventsResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
@@ -22,6 +23,7 @@ import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { GetHistoricalEventsRequest } from '../models/GetHistoricalEventsRequest';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { NotificationDto } from '../models/NotificationDto';
@@ -42,6 +44,8 @@ import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
 import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
+import { SystemNotificationMessageDto } from '../models/SystemNotificationMessageDto';
+import { SystemNotificationMessageSeverity } from '../models/SystemNotificationMessageSeverity';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -59,6 +63,7 @@ import { UserFullDto } from '../models/UserFullDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
+import { WebSocketState } from '../models/WebSocketState';
 import { WorkTimeDto } from '../models/WorkTimeDto';
 import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 
@@ -184,6 +189,92 @@ export class ObjectAccountApi {
      */
     public accountRefreshToken(param: AccountApiAccountRefreshTokenRequest = {}, options?: ConfigurationOptions): Promise<RefreshTokenResponse> {
         return this.api.accountRefreshToken( options).toPromise();
+    }
+
+}
+
+import { ObservableBioStarApi } from "./ObservableAPI";
+import { BioStarApiRequestFactory, BioStarApiResponseProcessor} from "../apis/BioStarApi";
+
+export interface BioStarApiBioStarGetWebSocketStateRequest {
+}
+
+export interface BioStarApiBioStarReConnectWebsocketRequest {
+}
+
+export interface BioStarApiBioStarSyncTimesheetsRequest {
+    /**
+     * 
+     * @type GetHistoricalEventsRequest
+     * @memberof BioStarApibioStarSyncTimesheets
+     */
+    getHistoricalEventsRequest?: GetHistoricalEventsRequest
+}
+
+export interface BioStarApiBioStarSyncUsersRequest {
+}
+
+export class ObjectBioStarApi {
+    private api: ObservableBioStarApi
+
+    public constructor(configuration: Configuration, requestFactory?: BioStarApiRequestFactory, responseProcessor?: BioStarApiResponseProcessor) {
+        this.api = new ObservableBioStarApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarGetWebSocketStateWithHttpInfo(param: BioStarApiBioStarGetWebSocketStateRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<WebSocketState>> {
+        return this.api.bioStarGetWebSocketStateWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarGetWebSocketState(param: BioStarApiBioStarGetWebSocketStateRequest = {}, options?: ConfigurationOptions): Promise<WebSocketState> {
+        return this.api.bioStarGetWebSocketState( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarReConnectWebsocketWithHttpInfo(param: BioStarApiBioStarReConnectWebsocketRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<WebSocketState>> {
+        return this.api.bioStarReConnectWebsocketWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarReConnectWebsocket(param: BioStarApiBioStarReConnectWebsocketRequest = {}, options?: ConfigurationOptions): Promise<WebSocketState> {
+        return this.api.bioStarReConnectWebsocket( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarSyncTimesheetsWithHttpInfo(param: BioStarApiBioStarSyncTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<BioStarSyncHistoricalEventsResponse>> {
+        return this.api.bioStarSyncTimesheetsWithHttpInfo(param.getHistoricalEventsRequest,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarSyncTimesheets(param: BioStarApiBioStarSyncTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<BioStarSyncHistoricalEventsResponse> {
+        return this.api.bioStarSyncTimesheets(param.getHistoricalEventsRequest,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarSyncUsersWithHttpInfo(param: BioStarApiBioStarSyncUsersRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<BioStarSyncAllUsersResponse>> {
+        return this.api.bioStarSyncUsersWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public bioStarSyncUsers(param: BioStarApiBioStarSyncUsersRequest = {}, options?: ConfigurationOptions): Promise<BioStarSyncAllUsersResponse> {
+        return this.api.bioStarSyncUsers( options).toPromise();
     }
 
 }
@@ -1632,9 +1723,6 @@ export interface UserApiUserGetByIdRequest {
     id: string
 }
 
-export interface UserApiUserImportUserFromTimekeepingDeviceRequest {
-}
-
 export interface UserApiUserSearchRequest {
     /**
      * 
@@ -1747,20 +1835,6 @@ export class ObjectUserApi {
      */
     public userGetById(param: UserApiUserGetByIdRequest, options?: ConfigurationOptions): Promise<UserFullDto> {
         return this.api.userGetById(param.id,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public userImportUserFromTimekeepingDeviceWithHttpInfo(param: UserApiUserImportUserFromTimekeepingDeviceRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<BioStarSyncAllUsersResponse>> {
-        return this.api.userImportUserFromTimekeepingDeviceWithHttpInfo( options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public userImportUserFromTimekeepingDevice(param: UserApiUserImportUserFromTimekeepingDeviceRequest = {}, options?: ConfigurationOptions): Promise<BioStarSyncAllUsersResponse> {
-        return this.api.userImportUserFromTimekeepingDevice( options).toPromise();
     }
 
     /**

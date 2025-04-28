@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
+import { SystemNotificationMessageDto } from '../models/SystemNotificationMessageDto';
 import { HttpFile } from '../http/http';
 
 export class SendTestNotificationCommand {
-    'title': string | null;
-    'body': string | null;
     'userId': string | null;
+    'message': SystemNotificationMessageDto;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -23,21 +23,15 @@ export class SendTestNotificationCommand {
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "title",
-            "baseName": "title",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "body",
-            "baseName": "body",
-            "type": "string",
-            "format": ""
-        },
-        {
             "name": "userId",
             "baseName": "userId",
             "type": "string",
+            "format": ""
+        },
+        {
+            "name": "message",
+            "baseName": "message",
+            "type": "SystemNotificationMessageDto",
             "format": ""
         }    ];
 

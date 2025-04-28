@@ -30,7 +30,10 @@ namespace WorkHub.Infrastructure.Services
 
 			if (timesheetDb != null)
 			{
-				throw new BusinessException(HttpStatusCode.BadRequest, _localizer["CheckInAlreadyPerformed"]);
+				return _mapper.Map<TimesheetDto>(timesheetDb);
+
+				// Bỏ kiểm tra chấm công thủ công để ưu tiên ghi nhận tự động từ thiết bị sinh trắc học
+				// throw new BusinessException(HttpStatusCode.BadRequest, _localizer["CheckInAlreadyPerformed"]);
 			}
 
 			Timesheet timesheet = new Timesheet
@@ -62,6 +65,7 @@ namespace WorkHub.Infrastructure.Services
 			}
 
 			timesheet.EndTime = DateTime.UtcNow;
+			timesheet.IsActive = false;
 			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime!.Value, timesheet.EndTime.Value);
 
 			_context.Timesheets.Update(timesheet);

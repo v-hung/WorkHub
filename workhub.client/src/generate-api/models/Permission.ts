@@ -14,7 +14,6 @@ import { HttpFile } from '../http/http';
 
 export enum Permission {
     PermissionsUsersView = 'Permissions.Users.View',
-    PermissionsUsersSync = 'Permissions.Users.Sync',
     PermissionsUsersCreate = 'Permissions.Users.Create',
     PermissionsUsersEdit = 'Permissions.Users.Edit',
     PermissionsUsersDelete = 'Permissions.Users.Delete',
@@ -43,5 +42,7 @@ export enum Permission {
     PermissionsTimesheetsView = 'Permissions.Timesheets.View',
     PermissionsTimesheetsExport = 'Permissions.Timesheets.Export',
     PermissionsSystemSendEmail = 'Permissions.System.SendEmail',
-    PermissionsSystemReport = 'Permissions.System.Report'
+    PermissionsSystemReport = 'Permissions.System.Report',
+    PermissionsBioStarSyncUsers = 'Permissions.BioStar.SyncUsers',
+    PermissionsBioStarSyncTimesheets = 'Permissions.BioStar.SyncTimesheets'
 }

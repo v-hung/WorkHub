@@ -211,5 +211,14 @@ namespace WorkHub.Infrastructure.Services
 			}
 		}
 
+		public async Task GenerateAvatarForUser(User user)
+		{
+			var fileData = AvatarGenerator.GenerateAvatar(user.FullName);
+
+			var file = await _uploadFile.UploadSingleAsync(fileData, "users");
+
+			user.Image = file.Path;
+		}
+
 	}
 }

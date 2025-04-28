@@ -136,9 +136,12 @@ const apiInstance = new NotificationApi(configuration);
 const request: NotificationApiNotificationSendTestNotificationRequest = {
   
   sendTestNotificationCommand: {
-    title: "title_example",
-    body: "body_example",
     userId: "userId_example",
+    message: {
+      title: "title_example",
+      body: "body_example",
+      severity: "Info",
+    },
   },
 };
 

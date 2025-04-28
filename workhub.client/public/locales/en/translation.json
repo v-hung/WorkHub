@@ -5,6 +5,7 @@
 		"notification": "Notification",
 		"timesheet": "Timesheet",
 		"calendar": "Calendar",
+		"meeting": "Meeting",
 		"manager": "Manager",
 		"project": "Project",
 		"team": "Team",
@@ -19,7 +20,11 @@
 		"system": "System",
 		"help": "help",
 		"send-mail": "Send mail",
-		"report": "Report"
+		"report": "Report",
+		"timesheet_manager": "Timesheet Manager",
+		"timesheet_employee": "Timesheet Employee",
+		"holidays": "Holidays",
+		"makeup_time": "Makeup Time"
 	},
 	"locale": {
 		"vi": "Vietnamese",

@@ -18,6 +18,7 @@ namespace WorkHub.Application.Interfaces.BioStar.Services
 		Task StartRealtimeEvents();
 		Task<List<BioStarEvent>> GetHistoricalEvents(GetHistoricalEventsRequest request);
 		Task<BioStarSyncHistoricalEventsResponse> SyncHistoricalEvents(GetHistoricalEventsRequest request);
+		Task SyncMessageEvent(string message);
 		Task<D> ExecuteWithRetryAsync<D>(Func<HttpClient, Task<HttpResponseMessage>> apiCall);
 	}
 }

@@ -18,6 +18,7 @@ export class TimesheetMinimalDto {
     'startTime'?: Date | null;
     'endTime'?: Date | null;
     'workMinutes'?: number | null;
+    'isActive': boolean;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -53,6 +54,12 @@ export class TimesheetMinimalDto {
             "baseName": "workMinutes",
             "type": "number",
             "format": "int32"
+        },
+        {
+            "name": "isActive",
+            "baseName": "isActive",
+            "type": "boolean",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {

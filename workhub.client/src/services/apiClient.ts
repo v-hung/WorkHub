@@ -1,5 +1,6 @@
 import {
   AccountApi,
+  BioStarApi,
   DeviceApi,
   DeviceCategoryApi,
   NotificationApi,
@@ -41,6 +42,7 @@ const deviceApi = new DeviceApi(configWithRefreshToken);
 const deviceCategoryApi = new DeviceCategoryApi(configWithRefreshToken);
 const requestApi = new RequestsApi(configWithRefreshToken);
 const notificationApi = new NotificationApi(configWithRefreshToken);
+const bioStarApi = new BioStarApi(configWithRefreshToken);
 
 export {
   accountApi,
@@ -55,4 +57,5 @@ export {
   deviceCategoryApi,
   requestApi,
   notificationApi,
+  bioStarApi,
 };

@@ -1,7 +1,7 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
 import { UserCreateUpdateRequest, UserDto, UserFullDto } from "@/generate-api";
-import { userApi } from "@/services/apiClient";
+import { bioStarApi, userApi } from "@/services/apiClient";
 import { useState } from "react";
 
 export const useUserAction = () => {
@@ -75,13 +75,13 @@ export const useUserAction = () => {
     }
   };
 
-  // Delete USER
+  // Sync USER
   // =============
 
   const syncUsers = async () => {
     setLoading(true);
     try {
-      return await userApi.userImportUserFromTimekeepingDevice();
+      return await bioStarApi.bioStarSyncUsers();
     } catch (e) {
       getNotification().error({
         message: getMessageError(e),
@@ -94,18 +94,25 @@ export const useUserAction = () => {
   // Delete USER
   // =============
 
-  // const deleteUser = async (id: string, request: UserCreateUpdateRequest) => {
-  //   setLoading(true);
-  //   try {
-  //     return await userApi.userDelete(id);
-  //   } catch (e) {
-  //     notification.error({
-  //       message: getMessageError(e),
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const deleteRecord = async (id: string) => {
+    setLoading(true);
+    try {
+      return await userApi.userDelete(id);
+    } catch (e) {
+      getNotification().error({
+        message: getMessageError(e),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  return { loading, createUser, updateUser, formDefault, syncUsers };
+  return {
+    loading,
+    createUser,
+    updateUser,
+    formDefault,
+    syncUsers,
+    deleteRecord,
+  };
 };

@@ -3,6 +3,7 @@ import { Configuration, ConfigurationOptions, PromiseConfigurationOptions } from
 import { PromiseMiddleware, Middleware, PromiseMiddlewareWrapper } from '../middleware';
 
 import { BioStarSyncAllUsersResponse } from '../models/BioStarSyncAllUsersResponse';
+import { BioStarSyncHistoricalEventsResponse } from '../models/BioStarSyncHistoricalEventsResponse';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 import { CreateDeviceCategoryCommand } from '../models/CreateDeviceCategoryCommand';
 import { CreateDeviceCommand } from '../models/CreateDeviceCommand';
@@ -22,6 +23,7 @@ import { DeviceMinimalDto } from '../models/DeviceMinimalDto';
 import { DeviceStatus } from '../models/DeviceStatus';
 import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
+import { GetHistoricalEventsRequest } from '../models/GetHistoricalEventsRequest';
 import { LoginRequest } from '../models/LoginRequest';
 import { Nationality } from '../models/Nationality';
 import { NotificationDto } from '../models/NotificationDto';
@@ -42,6 +44,8 @@ import { RoleDto } from '../models/RoleDto';
 import { RoleDtoPaginated } from '../models/RoleDtoPaginated';
 import { RoleFullDto } from '../models/RoleFullDto';
 import { SendTestNotificationCommand } from '../models/SendTestNotificationCommand';
+import { SystemNotificationMessageDto } from '../models/SystemNotificationMessageDto';
+import { SystemNotificationMessageSeverity } from '../models/SystemNotificationMessageSeverity';
 import { TeamDto } from '../models/TeamDto';
 import { TeamDtoPaginated } from '../models/TeamDtoPaginated';
 import { TeamFullDto } from '../models/TeamFullDto';
@@ -59,6 +63,7 @@ import { UserFullDto } from '../models/UserFullDto';
 import { UserMinimalDto } from '../models/UserMinimalDto';
 import { UserPosition } from '../models/UserPosition';
 import { UserStatus } from '../models/UserStatus';
+import { WebSocketState } from '../models/WebSocketState';
 import { WorkTimeDto } from '../models/WorkTimeDto';
 import { WorkTimeDtoPaginated } from '../models/WorkTimeDtoPaginated';
 import { ObservableAccountApi } from './ObservableAPI';
@@ -304,6 +309,179 @@ export class PromiseAccountApi {
 	    }
 	}
         const result = this.api.accountRefreshToken(observableOptions);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableBioStarApi } from './ObservableAPI';
+
+import { BioStarApiRequestFactory, BioStarApiResponseProcessor} from "../apis/BioStarApi";
+export class PromiseBioStarApi {
+    private api: ObservableBioStarApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: BioStarApiRequestFactory,
+        responseProcessor?: BioStarApiResponseProcessor
+    ) {
+        this.api = new ObservableBioStarApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     */
+    public bioStarGetWebSocketStateWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<WebSocketState>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarGetWebSocketStateWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public bioStarGetWebSocketState(_options?: PromiseConfigurationOptions): Promise<WebSocketState> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarGetWebSocketState(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public bioStarReConnectWebsocketWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<WebSocketState>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarReConnectWebsocketWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public bioStarReConnectWebsocket(_options?: PromiseConfigurationOptions): Promise<WebSocketState> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarReConnectWebsocket(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [getHistoricalEventsRequest]
+     */
+    public bioStarSyncTimesheetsWithHttpInfo(getHistoricalEventsRequest?: GetHistoricalEventsRequest, _options?: PromiseConfigurationOptions): Promise<HttpInfo<BioStarSyncHistoricalEventsResponse>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarSyncTimesheetsWithHttpInfo(getHistoricalEventsRequest, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     * @param [getHistoricalEventsRequest]
+     */
+    public bioStarSyncTimesheets(getHistoricalEventsRequest?: GetHistoricalEventsRequest, _options?: PromiseConfigurationOptions): Promise<BioStarSyncHistoricalEventsResponse> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarSyncTimesheets(getHistoricalEventsRequest, observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public bioStarSyncUsersWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<BioStarSyncAllUsersResponse>> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarSyncUsersWithHttpInfo(observableOptions);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public bioStarSyncUsers(_options?: PromiseConfigurationOptions): Promise<BioStarSyncAllUsersResponse> {
+        let observableOptions: undefined | ConfigurationOptions
+        if (_options){
+	    observableOptions = {
+                baseServer: _options.baseServer,
+                httpApi: _options.httpApi,
+                middleware: _options.middleware?.map(
+                    m => new PromiseMiddlewareWrapper(m)
+		),
+		middlewareMergeStrategy: _options.middlewareMergeStrategy,
+                authMethods: _options.authMethods
+	    }
+	}
+        const result = this.api.bioStarSyncUsers(observableOptions);
         return result.toPromise();
     }
 
@@ -2597,44 +2775,6 @@ export class PromiseUserApi {
 	    }
 	}
         const result = this.api.userGetById(id, observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     */
-    public userImportUserFromTimekeepingDeviceWithHttpInfo(_options?: PromiseConfigurationOptions): Promise<HttpInfo<BioStarSyncAllUsersResponse>> {
-        let observableOptions: undefined | ConfigurationOptions
-        if (_options){
-	    observableOptions = {
-                baseServer: _options.baseServer,
-                httpApi: _options.httpApi,
-                middleware: _options.middleware?.map(
-                    m => new PromiseMiddlewareWrapper(m)
-		),
-		middlewareMergeStrategy: _options.middlewareMergeStrategy,
-                authMethods: _options.authMethods
-	    }
-	}
-        const result = this.api.userImportUserFromTimekeepingDeviceWithHttpInfo(observableOptions);
-        return result.toPromise();
-    }
-
-    /**
-     */
-    public userImportUserFromTimekeepingDevice(_options?: PromiseConfigurationOptions): Promise<BioStarSyncAllUsersResponse> {
-        let observableOptions: undefined | ConfigurationOptions
-        if (_options){
-	    observableOptions = {
-                baseServer: _options.baseServer,
-                httpApi: _options.httpApi,
-                middleware: _options.middleware?.map(
-                    m => new PromiseMiddlewareWrapper(m)
-		),
-		middlewareMergeStrategy: _options.middlewareMergeStrategy,
-                authMethods: _options.authMethods
-	    }
-	}
-        const result = this.api.userImportUserFromTimekeepingDevice(observableOptions);
         return result.toPromise();
     }
 

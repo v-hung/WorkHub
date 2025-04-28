@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 using WorkHub.Application.Interfaces.SignalR;
+using WorkHub.Application.Models.SignalR.Notification;
 using WorkHub.Server.Hubs;
 
 namespace WorkHub.Server.SignalR
@@ -13,14 +14,19 @@ namespace WorkHub.Server.SignalR
 			_hubContext = hubContext;
 		}
 
-		public async Task SendToUserAsync(string userId, string message)
+		public async Task SendToUserAsync(string userId, BaseNotificationHubMessage message)
 		{
-			await _hubContext.Clients.User(userId).SendAsync("NotificationReceived", message);
+			await _hubContext.Clients.User(userId).SendAsync("ReceiveMessage", message);
 		}
 
-		public async Task SendToUsersAsync(List<string> userIds, string message)
+		public async Task SendToUsersAsync(List<string> userIds, BaseNotificationHubMessage message)
 		{
-			await _hubContext.Clients.Users(userIds).SendAsync("NotificationReceived", message);
+			await _hubContext.Clients.Users(userIds).SendAsync("ReceiveMessage", message);
+		}
+
+		public async Task SendToAllUsersAsync(BaseNotificationHubMessage message)
+		{
+			await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
 		}
 
 	}

@@ -5,6 +5,7 @@
 		"notification": "Thông báo",
 		"timesheet": "Chấm công",
 		"calendar": "Lịch trình",
+		"meeting": "Phòng họp",
 		"manager": "Quản trị",
 		"project": "Dự án",
 		"team": "Nhóm",
@@ -19,7 +20,11 @@
 		"system": "Hệ thống",
 		"help": "Trợ giúp",
 		"send-mail": "Gửi mail",
-		"report": "Báo cáo"
+		"report": "Báo cáo",
+		"timesheet_manager": "Quản lý chấm công",
+		"timesheet_employee": "Chấm công nhân viên",
+		"holidays": "Ngày nghỉ",
+		"makeup_time": "Thời gian làm bù"
 	},
 	"locale": {
 		"vi": "Tiếng việt",

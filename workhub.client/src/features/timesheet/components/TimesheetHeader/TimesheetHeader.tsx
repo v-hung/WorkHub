@@ -12,7 +12,7 @@ import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHea
 const TImesheetHeader = () => {
   const { loading, timeString } = useTimesheet();
 
-  const { startTime, endTime, checkIn, checkOut } = useTimesheetStore();
+  const { startTime, isActive, checkIn, checkOut } = useTimesheetStore();
   const { getTimesheets, isCurrentMonth } = useTimesheetContext();
   const { openRequest } = useRequestContext();
 
@@ -48,7 +48,9 @@ const TImesheetHeader = () => {
                 icon={
                   <IIonClock
                     width={20}
-                    style={{ color: endTime ? red.primary : blueDark.primary }}
+                    style={{
+                      color: !isActive ? red.primary : blueDark.primary,
+                    }}
                   />
                 }
                 style={{ pointerEvents: "none" }}
@@ -63,12 +65,13 @@ const TImesheetHeader = () => {
               ) : (
                 <Popconfirm
                   title="Are you sure you want to checkout?"
+                  description="Chúng tôi sẽ tự động ghi nhận thời gian kết thúc của bạn vào lượt chấm công cuối cùng. Nếu bạn muốn kết thúc ngay bây giờ, thời gian làm việc của bạn sẽ được tính đến thời điểm này"
                   okText="Yes"
                   cancelText="No"
                   placement="bottomRight"
                   onConfirm={() => handleTimeAction(checkOut)}
                 >
-                  <Button danger disabled={!!endTime}>
+                  <Button danger disabled={!isActive}>
                     <IIonPause />
                   </Button>
                 </Popconfirm>

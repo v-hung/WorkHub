@@ -4,7 +4,7 @@ import ProgressIndicator from "@/ui/navigation/ProgressIndicator/ProgressIndicat
 import { LayoutProvider } from "./contexts/LayoutContext";
 import DefaultMenu from "./components/DefaultMenu/DefaultMenu";
 import "./DefaultLayout.css";
-import { NotificationHubProvider } from "@/contexts/signalR/notificationHubContext";
+import { NotificationHubProvider } from "@/contexts/signalR/notification/NotificationHubContext";
 
 export const Component = () => {
   return (

@@ -5,7 +5,7 @@ import { calculateWorkDay } from "../utils/timesheet.util";
 import { useAuthStore } from "@/stores/auth.store";
 
 export const useTimesheet = () => {
-  const { startTime, endTime, timeDifference, fetchTodayTimesheet } =
+  const { startTime, endTime, timeDifference, isActive, fetchTodayTimesheet } =
     useTimesheetStore();
   const workTime = useAuthStore((state) => state.user?.workTime);
 
@@ -17,8 +17,12 @@ export const useTimesheet = () => {
   const updateTimeUI = useCallback(() => {
     if (!startTime || !workTime) return;
 
-    if (endTime) {
-      const durationWork = calculateWorkDay(startTime, endTime, workTime);
+    if (!isActive) {
+      const durationWork = calculateWorkDay(
+        startTime,
+        endTime ?? startTime,
+        workTime
+      );
       setTimeString(`${durationWork.toFixed(2)}`);
     } else {
       const currentServerTime = new Date(Date.now() - timeDifference);
@@ -33,7 +37,7 @@ export const useTimesheet = () => {
         `${durationWork.toFixed(2)} - ${currentServerTimeFormatted}`
       );
     }
-  }, [startTime, timeDifference, workTime, endTime]);
+  }, [startTime, timeDifference, workTime, endTime, isActive]);
 
   useEffect(() => {
     if (!startTime) {
@@ -49,7 +53,7 @@ export const useTimesheet = () => {
     if (startTime) {
       updateTimeUI();
 
-      if (!intervalId.current && !endTime) {
+      if (!intervalId.current && isActive) {
         intervalId.current = setInterval(updateTimeUI, 1000);
       }
     }
@@ -60,7 +64,7 @@ export const useTimesheet = () => {
         intervalId.current = null;
       }
     };
-  }, [startTime, endTime, updateTimeUI]);
+  }, [startTime, updateTimeUI]);
 
   return { timeString, loading };
 };

@@ -7,8 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { createInfoNotification } from "../feedback/FeedbackProvider";
-import { useNotificationStore } from "@/stores/notification.store";
+import { useReceiveMessageHandler } from "./useReceiveMessageHandler";
 
 interface NotificationHubContextType {
   connection: HubConnection | null;
@@ -55,17 +54,9 @@ export const NotificationHubProvider: FC<PropsWithChildren> = ({
       setIsConnected(false);
       console.log("NotificationHub disconnected");
     });
-
-    connection.on("NotificationReceived", (notification) => {
-      createInfoNotification({
-        message: notification.message,
-      });
-    });
-
-    connection.on("SendUnreadCount", (unReadCount) => {
-      useNotificationStore.setState({ unReadCount });
-    });
   }, [connection]);
+
+  useReceiveMessageHandler(connection);
 
   return (
     <NotificationHubContext.Provider value={{ connection, isConnected }}>

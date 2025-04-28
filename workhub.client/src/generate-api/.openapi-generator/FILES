@@ -1,6 +1,7 @@
 .gitattributes
 .gitignore
 AccountApi.md
+BioStarApi.md
 DeviceApi.md
 DeviceCategoryApi.md
 NotificationApi.md
@@ -13,6 +14,7 @@ TimesheetApi.md
 UserApi.md
 WorkTimeApi.md
 apis/AccountApi.ts
+apis/BioStarApi.ts
 apis/DeviceApi.ts
 apis/DeviceCategoryApi.ts
 apis/NotificationApi.ts
@@ -33,6 +35,7 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/BioStarSyncAllUsersResponse.ts
+models/BioStarSyncHistoricalEventsResponse.ts
 models/ChangePasswordRequest.ts
 models/CreateDeviceCategoryCommand.ts
 models/CreateDeviceCommand.ts
@@ -52,6 +55,7 @@ models/DeviceMinimalDto.ts
 models/DeviceStatus.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
+models/GetHistoricalEventsRequest.ts
 models/LoginRequest.ts
 models/Nationality.ts
 models/NotificationDto.ts
@@ -73,6 +77,8 @@ models/RoleDto.ts
 models/RoleDtoPaginated.ts
 models/RoleFullDto.ts
 models/SendTestNotificationCommand.ts
+models/SystemNotificationMessageDto.ts
+models/SystemNotificationMessageSeverity.ts
 models/TeamDto.ts
 models/TeamDtoPaginated.ts
 models/TeamFullDto.ts
@@ -90,6 +96,7 @@ models/UserFullDto.ts
 models/UserMinimalDto.ts
 models/UserPosition.ts
 models/UserStatus.ts
+models/WebSocketState.ts
 models/WorkTimeDto.ts
 models/WorkTimeDtoPaginated.ts
 models/all.ts

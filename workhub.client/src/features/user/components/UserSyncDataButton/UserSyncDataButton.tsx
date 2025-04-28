@@ -1,8 +1,7 @@
+import PageLoading from "@/ui/elements/PageLoading/PageLoading";
 import { Button, Popconfirm, Spin } from "antd";
 import { useState, type FC, type HTMLAttributes } from "react";
-import styles from "./UserSyncDataButton.module.css";
 import { createPortal } from "react-dom";
-import { useUserAction } from "../../hooks/useUserAction";
 
 type State = HTMLAttributes<HTMLDivElement>;
 
@@ -30,20 +29,13 @@ const UserSyncDataButton: FC<State> = () => {
         <Button
           color="cyan"
           variant="solid"
-          icon={<IIonPersonAddOutline width={16} height={16} />}
+          icon={<IIonSync width={16} height={16} />}
         >
           Load user form timekeeping machine
         </Button>
       </Popconfirm>
 
-      {loading
-        ? createPortal(
-            <div className={styles.loading}>
-              <Spin />
-            </div>,
-            document.body
-          )
-        : null}
+      {loading ? createPortal(<PageLoading />, document.body) : null}
     </>
   );
 };

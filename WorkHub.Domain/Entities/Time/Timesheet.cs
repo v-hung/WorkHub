@@ -17,6 +17,8 @@ namespace WorkHub.Domain.Entities.Time
 
 		public int WorkedMinutes { get; set; } = 0;
 
+		public bool IsActive { get; set; } = true;
+
 		// Navigation
 
 		[ForeignKey("User")]

@@ -80,7 +80,14 @@ namespace WorkHub.Infrastructure.Services.BioStar
 						string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
 						_logger.LogInformation("Received message: " + message);
 
-						// _bioStarEventProcessingQueue.Enqueue(message);
+						_bioStarEventProcessingQueue.Enqueue(async token =>
+						{
+							using (var scope = _serviceProvider.CreateScope())
+							{
+								var bioStarService = scope.ServiceProvider.GetRequiredService<IBioStarService>();
+								await bioStarService.SyncMessageEvent(message);
+							}
+						});
 					}
 					else if (result.MessageType == WebSocketMessageType.Close)
 					{

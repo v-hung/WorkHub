@@ -23,7 +23,7 @@ export function Component() {
     <DefaultPage pageClassName="h-screen">
       <UserProvider>
         <DefaultHeader title="User Manager">
-          {hasPermission(Permission.PermissionsUsersSync) ? (
+          {hasPermission(Permission.PermissionsBioStarSyncUsers) ? (
             <UserSyncDataButton />
           ) : null}
 
