@@ -163,7 +163,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **timesheetGetMonthlyTimesheets**
-> Array<TimesheetFullDto> timesheetGetMonthlyTimesheets()
+> TimesheetFullDtoPaginated timesheetGetMonthlyTimesheets()
 
 
 ### Example
@@ -181,6 +181,14 @@ const request: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {
   month: 1,
   
   year: 1,
+  
+  pageNumber: 1,
+  
+  pageSize: 1,
+  
+  ids: [
+    "Ids_example",
+  ],
 };
 
 const data = await apiInstance.timesheetGetMonthlyTimesheets(request);
@@ -194,11 +202,14 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **month** | [**number**] |  | (optional) defaults to undefined
  **year** | [**number**] |  | (optional) defaults to undefined
+ **pageNumber** | [**number**] |  | (optional) defaults to undefined
+ **pageSize** | [**number**] |  | (optional) defaults to undefined
+ **ids** | **Array&lt;string&gt;** |  | (optional) defaults to undefined
 
 
 ### Return type
 
-**Array<TimesheetFullDto>**
+**TimesheetFullDtoPaginated**
 
 ### Authorization
 

@@ -13,7 +13,8 @@ const TImesheetHeader = () => {
   const { loading, timeString } = useTimesheet();
 
   const { startTime, isActive, checkIn, checkOut } = useTimesheetStore();
-  const { getTimesheets, isCurrentMonth } = useTimesheetContext();
+  const { getCurrentTimesheets: getTimesheets, isCurrentMonth } =
+    useTimesheetContext();
   const { openRequest } = useRequestContext();
 
   const handleTimeAction = async (cb: () => Promise<void>) => {

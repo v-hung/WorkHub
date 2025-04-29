@@ -39,11 +39,20 @@ export const useAuthStore = create<AuthStoreState>()(
       //   user: USER,
       // });
 
-      await wrapPromise(() =>
-        accountApi.accountLogin(credentials).then(async (response) => {
-          set({ user: response.user });
-        })
-      );
+      try {
+        const user = await accountApi
+          .accountLogin(credentials)
+          .then((res) => res.user);
+
+        const rawPermissions =
+          await accountApiWithRefreshToken.accountGetPermissions();
+
+        const permissions: Permission[] = rawPermissions.map(
+          (p) => p as Permission
+        );
+
+        set({ user, permissions, isFirstLoaded: true });
+      } catch (error) {}
     },
 
     logout: async () => {
@@ -93,6 +102,7 @@ export const useAuthStore = create<AuthStoreState>()(
 const USER: UserDto = {
   id: "1",
   fullName: "Nguyễn Việt Hùng",
+  userName: "hungnv@wbcvn.vn",
   email: "hungnv@wbcvn.vn",
   createdAt: new Date(),
   updatedAt: new Date(),

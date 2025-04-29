@@ -4,6 +4,7 @@ using WorkHub.Application.DTOs.Time;
 using WorkHub.Application.Features.Timesheets.Commands;
 using WorkHub.Application.Features.Timesheets.Queries;
 using WorkHub.Application.Responses.Time;
+using WorkHub.Application.Wrapper;
 
 namespace WorkHub.Server.Controllers.Time
 {
@@ -31,9 +32,9 @@ namespace WorkHub.Server.Controllers.Time
 
 		[HttpGet("monthly/all")]
 		[Authorize(Policy = "Permissions.Timesheets.View")]
-		public async Task<ActionResult<List<TimesheetFullDto>>> GetMonthlyTimesheets(int month, int year)
+		public async Task<ActionResult<Paginated<TimesheetFullDto>>> GetMonthlyTimesheets([FromQuery] GetMonthlyTimesheetsQuery query)
 		{
-			var data = await _mediator.Send(new GetMonthlyTimesheetsQuery { Month = month, Year = year });
+			var data = await _mediator.Send(query);
 
 			return Ok(data);
 		}

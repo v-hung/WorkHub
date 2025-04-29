@@ -49,6 +49,7 @@ export * from '../models/TeamMinimalDto';
 export * from '../models/TimesheetDto';
 export * from '../models/TimesheetDtoTimesheetResponse';
 export * from '../models/TimesheetFullDto';
+export * from '../models/TimesheetFullDtoPaginated';
 export * from '../models/TimesheetMinimalDto';
 export * from '../models/UserCreateUpdateRequest';
 export * from '../models/UserDetailDto';
@@ -114,6 +115,7 @@ import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
+import { TimesheetFullDtoPaginated } from '../models/TimesheetFullDtoPaginated';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
 import { UserCreateUpdateRequest               } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto        } from '../models/UserDetailDto';
@@ -198,6 +200,7 @@ let typeMap: {[index: string]: any} = {
     "TimesheetDto": TimesheetDto,
     "TimesheetDtoTimesheetResponse": TimesheetDtoTimesheetResponse,
     "TimesheetFullDto": TimesheetFullDto,
+    "TimesheetFullDtoPaginated": TimesheetFullDtoPaginated,
     "TimesheetMinimalDto": TimesheetMinimalDto,
     "UserCreateUpdateRequest": UserCreateUpdateRequest,
     "UserDetailDto": UserDetailDto,

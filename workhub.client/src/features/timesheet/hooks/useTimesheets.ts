@@ -21,7 +21,7 @@ export const useTimesheets = () => {
   const getTimesheets = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await timesheetApi.timesheetGetCurrentUserMonthlyTimesheets(
+      const data = await timesheetApi.timesheetGetMonthlyTimesheets(
         getMonth(selectedDate) + 1,
         getYear(selectedDate)
       );
@@ -45,6 +45,6 @@ export const useTimesheets = () => {
     selectedDate,
     isCurrentMonth,
     setSelectedDate,
-    getTimesheets,
+    getTimesheets: getTimesheets,
   };
 };

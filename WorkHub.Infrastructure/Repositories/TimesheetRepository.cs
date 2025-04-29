@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkHub.Application.DTOs.Time;
 using WorkHub.Application.Interfaces.Repositories;
+using WorkHub.Application.Wrapper;
 using WorkHub.Domain.Entities.Time;
 using WorkHub.Infrastructure.Data;
 
@@ -60,7 +61,7 @@ namespace WorkHub.Infrastructure.Repositories
 			return result;
 		}
 
-		public async Task<List<TimesheetFullDto>> GetMonthlyTimesheets(int month, int year)
+		public async Task<Paginated<TimesheetFullDto>> GetMonthlyTimesheets(int month, int year, int pageNumber, int pageSize, List<Guid> Ids)
 		{
 			var startDate = new DateTime(year, month, 1);
 			var daysInMonth = DateTime.DaysInMonth(year, month);
@@ -70,10 +71,18 @@ namespace WorkHub.Infrastructure.Repositories
 				.Select(day => startDate.AddDays(day).Date)
 				.ToList();
 
-			var timesheets = await _context.Timesheets.AsNoTracking()
-				.Where(t => t.Date >= startDate && t.Date < endDate)
-				.ProjectTo<TimesheetFullDto>(_mapper.ConfigurationProvider)
-				.ToListAsync();
+			var query = _context.Timesheets.AsNoTracking()
+				.Where(t => t.Date >= startDate && t.Date < endDate);
+
+			if (Ids.Count > 0)
+			{
+				query = query.Where(t => t.UserId.HasValue && Ids.Contains(t.UserId.Value));
+			}
+
+			var totalRecords = await query.CountAsync();
+
+			var timesheets = await query.ProjectTo<TimesheetFullDto>(_mapper.ConfigurationProvider).Skip((pageNumber - 1) * pageSize)
+				.Take(pageSize).OrderBy(t => t.Date).ToListAsync();
 
 			var result = allDays.GroupJoin(
 				timesheets,
@@ -90,7 +99,7 @@ namespace WorkHub.Infrastructure.Repositories
 					User = times.FirstOrDefault()?.User,
 				}).ToList();
 
-			return result;
+			return new Paginated<TimesheetFullDto>(result, totalRecords, pageNumber, pageSize);
 		}
 
 		public async Task<TimesheetDto?> GetTodayTimesheet(string userId)

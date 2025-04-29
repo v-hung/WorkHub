@@ -14,15 +14,13 @@ namespace WorkHub.Application.DTOs.Identity
 
 		public string? Email { get; set; }
 
-		[Required]
 		public string? FullName { get; set; }
 
 		public string? PhoneNumber { get; set; }
 
 		public string? Image { get; set; }
 
-		[Required]
-		public required UserPosition UserPosition { get; set; }
+		public UserPosition? UserPosition { get; set; }
 
 		[Required]
 		public UserStatus UserStatus { get; set; } = UserStatus.ACTIVE;

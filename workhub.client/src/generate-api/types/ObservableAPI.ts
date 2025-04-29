@@ -54,6 +54,7 @@ import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
+import { TimesheetFullDtoPaginated } from '../models/TimesheetFullDtoPaginated';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
@@ -3525,8 +3526,11 @@ export class ObservableTimesheetApi {
     /**
      * @param [month]
      * @param [year]
+     * @param [pageNumber]
+     * @param [pageSize]
+     * @param [ids]
      */
-    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: ConfigurationOptions): Observable<HttpInfo<Array<TimesheetFullDto>>> {
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, pageNumber?: number, pageSize?: number, ids?: Array<string>, _options?: ConfigurationOptions): Observable<HttpInfo<TimesheetFullDtoPaginated>> {
     let _config = this.configuration;
     let allMiddleware: Middleware[] = [];
     if (_options && _options.middleware){
@@ -3557,7 +3561,7 @@ export class ObservableTimesheetApi {
 		};
 	}
 
-        const requestContextPromise = this.requestFactory.timesheetGetMonthlyTimesheets(month, year, _config);
+        const requestContextPromise = this.requestFactory.timesheetGetMonthlyTimesheets(month, year, pageNumber, pageSize, ids, _config);
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
         for (const middleware of allMiddleware) {
@@ -3577,9 +3581,12 @@ export class ObservableTimesheetApi {
     /**
      * @param [month]
      * @param [year]
+     * @param [pageNumber]
+     * @param [pageSize]
+     * @param [ids]
      */
-    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: ConfigurationOptions): Observable<Array<TimesheetFullDto>> {
-        return this.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, _options).pipe(map((apiResponse: HttpInfo<Array<TimesheetFullDto>>) => apiResponse.data));
+    public timesheetGetMonthlyTimesheets(month?: number, year?: number, pageNumber?: number, pageSize?: number, ids?: Array<string>, _options?: ConfigurationOptions): Observable<TimesheetFullDtoPaginated> {
+        return this.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, pageNumber, pageSize, ids, _options).pipe(map((apiResponse: HttpInfo<TimesheetFullDtoPaginated>) => apiResponse.data));
     }
 
     /**

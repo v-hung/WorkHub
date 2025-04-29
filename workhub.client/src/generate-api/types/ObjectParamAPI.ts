@@ -53,6 +53,7 @@ import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
+import { TimesheetFullDtoPaginated } from '../models/TimesheetFullDtoPaginated';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
@@ -1597,6 +1598,27 @@ export interface TimesheetApiTimesheetGetMonthlyTimesheetsRequest {
      * @memberof TimesheetApitimesheetGetMonthlyTimesheets
      */
     year?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
+     */
+    pageNumber?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type number
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
+     */
+    pageSize?: number
+    /**
+     * 
+     * Defaults to: undefined
+     * @type Array&lt;string&gt;
+     * @memberof TimesheetApitimesheetGetMonthlyTimesheets
+     */
+    ids?: Array<string>
 }
 
 export interface TimesheetApiTimesheetGetTodayTimesheetRequest {
@@ -1654,15 +1676,15 @@ export class ObjectTimesheetApi {
     /**
      * @param param the request object
      */
-    public timesheetGetMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<Array<TimesheetFullDto>>> {
-        return this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(param.month, param.year,  options).toPromise();
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<HttpInfo<TimesheetFullDtoPaginated>> {
+        return this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(param.month, param.year, param.pageNumber, param.pageSize, param.ids,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public timesheetGetMonthlyTimesheets(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<Array<TimesheetFullDto>> {
-        return this.api.timesheetGetMonthlyTimesheets(param.month, param.year,  options).toPromise();
+    public timesheetGetMonthlyTimesheets(param: TimesheetApiTimesheetGetMonthlyTimesheetsRequest = {}, options?: ConfigurationOptions): Promise<TimesheetFullDtoPaginated> {
+        return this.api.timesheetGetMonthlyTimesheets(param.month, param.year, param.pageNumber, param.pageSize, param.ids,  options).toPromise();
     }
 
     /**

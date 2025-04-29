@@ -86,6 +86,7 @@ models/TeamMinimalDto.ts
 models/TimesheetDto.ts
 models/TimesheetDtoTimesheetResponse.ts
 models/TimesheetFullDto.ts
+models/TimesheetFullDtoPaginated.ts
 models/TimesheetMinimalDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts

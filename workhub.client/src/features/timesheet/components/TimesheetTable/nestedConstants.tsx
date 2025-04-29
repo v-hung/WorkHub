@@ -70,7 +70,8 @@ const RequestTableActionRender: FC<{
   request: RequestCombinedMinimalDto;
 }> = ({ request }) => {
   const { loading, cancel } = useCancelRequest();
-  const { getTimesheets, isCurrentMonth } = useTimesheetContext();
+  const { getCurrentTimesheets: getTimesheets, isCurrentMonth } =
+    useTimesheetContext();
 
   if (request.status !== RequestStatus.Pending) return null;
 

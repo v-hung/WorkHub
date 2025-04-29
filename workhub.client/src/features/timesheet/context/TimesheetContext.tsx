@@ -6,7 +6,7 @@ import {
   SetStateAction,
   useContext,
 } from "react";
-import { useTimesheets } from "../hooks/useTimesheets";
+import { useCurrentTimesheets } from "../hooks/useCurrentTimesheets";
 import { TimesheetDto } from "@/generate-api";
 
 type TimesheetContextType = {
@@ -15,7 +15,7 @@ type TimesheetContextType = {
   selectedDate: Date;
   setSelectedDate: Dispatch<SetStateAction<Date>>;
   isCurrentMonth: boolean;
-  getTimesheets: () => Promise<void>;
+  getCurrentTimesheets: () => Promise<void>;
 };
 
 const TimesheetContext = createContext<TimesheetContextType | null>(null);
@@ -27,8 +27,8 @@ export const TimesheetProvider: FC<PropsWithChildren> = ({ children }) => {
     selectedDate,
     setSelectedDate,
     isCurrentMonth,
-    getTimesheets,
-  } = useTimesheets();
+    getCurrentTimesheets,
+  } = useCurrentTimesheets();
 
   return (
     <TimesheetContext.Provider
@@ -38,7 +38,7 @@ export const TimesheetProvider: FC<PropsWithChildren> = ({ children }) => {
         selectedDate,
         setSelectedDate,
         isCurrentMonth,
-        getTimesheets,
+        getCurrentTimesheets,
       }}
     >
       {children}

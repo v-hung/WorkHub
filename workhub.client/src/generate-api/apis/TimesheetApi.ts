@@ -12,7 +12,7 @@ import { ErrorResponse } from '../models/ErrorResponse';
 import { ErrorValidateResponse } from '../models/ErrorValidateResponse';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
-import { TimesheetFullDto } from '../models/TimesheetFullDto';
+import { TimesheetFullDtoPaginated } from '../models/TimesheetFullDtoPaginated';
 
 /**
  * no description
@@ -120,9 +120,15 @@ export class TimesheetApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param month 
      * @param year 
+     * @param pageNumber 
+     * @param pageSize 
+     * @param ids 
      */
-    public async timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: Configuration): Promise<RequestContext> {
+    public async timesheetGetMonthlyTimesheets(month?: number, year?: number, pageNumber?: number, pageSize?: number, ids?: Array<string>, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
+
+
 
 
 
@@ -135,12 +141,30 @@ export class TimesheetApiRequestFactory extends BaseAPIRequestFactory {
 
         // Query Params
         if (month !== undefined) {
-            requestContext.setQueryParam("month", ObjectSerializer.serialize(month, "number", "int32"));
+            requestContext.setQueryParam("Month", ObjectSerializer.serialize(month, "number", "int32"));
         }
 
         // Query Params
         if (year !== undefined) {
-            requestContext.setQueryParam("year", ObjectSerializer.serialize(year, "number", "int32"));
+            requestContext.setQueryParam("Year", ObjectSerializer.serialize(year, "number", "int32"));
+        }
+
+        // Query Params
+        if (pageNumber !== undefined) {
+            requestContext.setQueryParam("PageNumber", ObjectSerializer.serialize(pageNumber, "number", "int32"));
+        }
+
+        // Query Params
+        if (pageSize !== undefined) {
+            requestContext.setQueryParam("PageSize", ObjectSerializer.serialize(pageSize, "number", "int32"));
+        }
+
+        // Query Params
+        if (ids !== undefined) {
+            const serializedParams = ObjectSerializer.serialize(ids, "Array<string>", "uuid");
+            for (const serializedParam of serializedParams) {
+                requestContext.appendQueryParam("Ids", serializedParam);
+            }
         }
 
 
@@ -327,13 +351,13 @@ export class TimesheetApiResponseProcessor {
      * @params response Response returned by the server for a request to timesheetGetMonthlyTimesheets
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async timesheetGetMonthlyTimesheetsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Array<TimesheetFullDto> >> {
+     public async timesheetGetMonthlyTimesheetsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<TimesheetFullDtoPaginated >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
-            const body: Array<TimesheetFullDto> = ObjectSerializer.deserialize(
+            const body: TimesheetFullDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<TimesheetFullDto>", ""
-            ) as Array<TimesheetFullDto>;
+                "TimesheetFullDtoPaginated", ""
+            ) as TimesheetFullDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
         if (isCodeInRange("500", response.httpStatusCode)) {
@@ -353,10 +377,10 @@ export class TimesheetApiResponseProcessor {
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
-            const body: Array<TimesheetFullDto> = ObjectSerializer.deserialize(
+            const body: TimesheetFullDtoPaginated = ObjectSerializer.deserialize(
                 ObjectSerializer.parse(await response.body.text(), contentType),
-                "Array<TimesheetFullDto>", ""
-            ) as Array<TimesheetFullDto>;
+                "TimesheetFullDtoPaginated", ""
+            ) as TimesheetFullDtoPaginated;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

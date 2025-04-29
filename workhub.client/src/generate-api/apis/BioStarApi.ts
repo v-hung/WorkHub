@@ -26,7 +26,7 @@ export class BioStarApiRequestFactory extends BaseAPIRequestFactory {
         let _config = _options || this.configuration;
 
         // Path Params
-        const localVarPath = '/websocket-state';
+        const localVarPath = '/api/biostar/websocket-state';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.GET);
@@ -54,7 +54,7 @@ export class BioStarApiRequestFactory extends BaseAPIRequestFactory {
         let _config = _options || this.configuration;
 
         // Path Params
-        const localVarPath = '/reconnect-websocket';
+        const localVarPath = '/api/biostar/reconnect-websocket';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -84,7 +84,7 @@ export class BioStarApiRequestFactory extends BaseAPIRequestFactory {
 
 
         // Path Params
-        const localVarPath = '/sync-timesheets';
+        const localVarPath = '/api/biostar/sync-timesheets';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -127,7 +127,7 @@ export class BioStarApiRequestFactory extends BaseAPIRequestFactory {
         let _config = _options || this.configuration;
 
         // Path Params
-        const localVarPath = '/sync-users';
+        const localVarPath = '/api/biostar/sync-users';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);

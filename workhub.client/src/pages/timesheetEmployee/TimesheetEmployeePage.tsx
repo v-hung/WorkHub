@@ -5,19 +5,36 @@ import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultC
 import { hasPermission } from "@/utils/hasPermission";
 import { Permission } from "@/generate-api";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
-import TimesheetSyncDataButton from "@/features/timesheet/components/TimesheetSyncDataButton/TimesheetSyncDataButton";
 import TimesheetEmployeeTable from "@/features/timesheet/components/TimesheetEmployeeTable/TimesheetEmployeeTable";
 import { TimesheetEmployeeProvider } from "@/features/timesheet/context/TimesheetEmployeeContext";
+import { Button } from "antd";
+import { lazy, Suspense, useState } from "react";
+
+const TimesheetSyncDataModalLazy = lazy(
+  () =>
+    import(
+      "@/features/timesheet/components/TimesheetSyncDataModal/TimesheetSyncDataModal"
+    )
+);
 
 export const loader = wrapLoaderWithPermission();
 
 export function Component() {
+  const [openSyncModal, setOpenSyncModal] = useState(false);
+
   return (
     <DefaultPage pageClassName="h-screen">
       <TimesheetEmployeeProvider>
         <DefaultHeader title="Timesheets Employees">
           {hasPermission(Permission.PermissionsBioStarSyncTimesheets) ? (
-            <TimesheetSyncDataButton />
+            <Button
+              color="cyan"
+              variant="solid"
+              icon={<IIonSync width={16} height={16} />}
+              onClick={() => setOpenSyncModal(true)}
+            >
+              Load timesheet form timekeeping machine
+            </Button>
           ) : null}
         </DefaultHeader>
 
@@ -31,6 +48,13 @@ export function Component() {
         <DefaultContent>
           <TimesheetEmployeeTable />
         </DefaultContent>
+
+        <Suspense fallback={null}>
+          <TimesheetSyncDataModalLazy
+            open={openSyncModal}
+            onCancel={() => setOpenSyncModal(false)}
+          />
+        </Suspense>
       </TimesheetEmployeeProvider>
     </DefaultPage>
   );

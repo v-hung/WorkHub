@@ -1,0 +1,9 @@
+.user-card {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.user-card .card__title {
+  font-weight: 600;
+}

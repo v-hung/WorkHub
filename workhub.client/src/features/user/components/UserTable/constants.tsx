@@ -1,26 +1,38 @@
-import { Permission } from "@/generate-api";
+import { Permission, UserDto } from "@/generate-api";
 import ButtonLink from "@/ui/elements/ButtonLink";
 import { hasPermission } from "@/utils/hasPermission";
 import { Space, TableProps } from "antd";
+import UserCard from "../UserCard/UserCard";
 
-export type DataUserTableType = {
-  id: string;
-  email: string;
-  fullName: string;
-  image?: string | null;
-  createdAt: string;
-};
-
-export const userTableColumns: TableProps<DataUserTableType>["columns"] = [
-  { title: "Email", dataIndex: "email", key: "email" },
-  { title: "FullName", dataIndex: "fullName", key: "fullName" },
+export const userTableColumns: TableProps<UserDto>["columns"] = [
   {
-    title: "Image",
-    dataIndex: "image",
-    key: "image",
-    // render
+    title: "User",
+    width: "20rem",
+    render: (_, record) => <UserCard user={record} />,
   },
-  { title: "CreatedAt", dataIndex: "createdAt", key: "createdAt" },
+  { title: "Email", dataIndex: "email", key: "email" },
+  {
+    title: "User Position",
+    dataIndex: "userPosition",
+    key: "userPosition",
+  },
+  {
+    title: "User Status",
+    dataIndex: "userStatus",
+    key: "userStatus",
+    width: "10rem",
+  },
+  {
+    title: "Team",
+    render: (_, record) => record.team?.name || "No team",
+    width: "10rem",
+  },
+  {
+    title: "CreatedAt",
+    dataIndex: "createdAt",
+    key: "createdAt",
+    width: "10rem",
+  },
   {
     title: "Action",
     key: "action",

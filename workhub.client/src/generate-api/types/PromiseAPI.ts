@@ -53,6 +53,7 @@ import { TeamMinimalDto } from '../models/TeamMinimalDto';
 import { TimesheetDto } from '../models/TimesheetDto';
 import { TimesheetDtoTimesheetResponse } from '../models/TimesheetDtoTimesheetResponse';
 import { TimesheetFullDto } from '../models/TimesheetFullDto';
+import { TimesheetFullDtoPaginated } from '../models/TimesheetFullDtoPaginated';
 import { TimesheetMinimalDto } from '../models/TimesheetMinimalDto';
 import { UserCreateUpdateRequest } from '../models/UserCreateUpdateRequest';
 import { UserDetailDto } from '../models/UserDetailDto';
@@ -2522,8 +2523,11 @@ export class PromiseTimesheetApi {
     /**
      * @param [month]
      * @param [year]
+     * @param [pageNumber]
+     * @param [pageSize]
+     * @param [ids]
      */
-    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<HttpInfo<Array<TimesheetFullDto>>> {
+    public timesheetGetMonthlyTimesheetsWithHttpInfo(month?: number, year?: number, pageNumber?: number, pageSize?: number, ids?: Array<string>, _options?: PromiseConfigurationOptions): Promise<HttpInfo<TimesheetFullDtoPaginated>> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -2536,15 +2540,18 @@ export class PromiseTimesheetApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, observableOptions);
+        const result = this.api.timesheetGetMonthlyTimesheetsWithHttpInfo(month, year, pageNumber, pageSize, ids, observableOptions);
         return result.toPromise();
     }
 
     /**
      * @param [month]
      * @param [year]
+     * @param [pageNumber]
+     * @param [pageSize]
+     * @param [ids]
      */
-    public timesheetGetMonthlyTimesheets(month?: number, year?: number, _options?: PromiseConfigurationOptions): Promise<Array<TimesheetFullDto>> {
+    public timesheetGetMonthlyTimesheets(month?: number, year?: number, pageNumber?: number, pageSize?: number, ids?: Array<string>, _options?: PromiseConfigurationOptions): Promise<TimesheetFullDtoPaginated> {
         let observableOptions: undefined | ConfigurationOptions
         if (_options){
 	    observableOptions = {
@@ -2557,7 +2564,7 @@ export class PromiseTimesheetApi {
                 authMethods: _options.authMethods
 	    }
 	}
-        const result = this.api.timesheetGetMonthlyTimesheets(month, year, observableOptions);
+        const result = this.api.timesheetGetMonthlyTimesheets(month, year, pageNumber, pageSize, ids, observableOptions);
         return result.toPromise();
     }
 

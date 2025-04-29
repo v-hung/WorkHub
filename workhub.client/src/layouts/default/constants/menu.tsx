@@ -100,17 +100,16 @@ export const getMenuItems = (
           permission: Permission.PermissionsUsersView,
         },
         {
+          key: "/roles",
+          label: t("menus.permission"),
+          permission: Permission.PermissionsRolesView,
+        },
+        {
           key: "/work-times",
           label: t("menus.work-time"),
           permission: Permission.PermissionsWorkTimesView,
         },
       ],
-    },
-    {
-      key: "/roles",
-      icon: <IIonLockClosedOutline />,
-      label: t("menus.permission"),
-      permission: Permission.PermissionsRolesView,
     },
     {
       key: "/equipment",

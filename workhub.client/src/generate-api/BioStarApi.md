@@ -4,10 +4,10 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**bioStarGetWebSocketState**](BioStarApi.md#bioStarGetWebSocketState) | **GET** /websocket-state | 
-[**bioStarReConnectWebsocket**](BioStarApi.md#bioStarReConnectWebsocket) | **POST** /reconnect-websocket | 
-[**bioStarSyncTimesheets**](BioStarApi.md#bioStarSyncTimesheets) | **POST** /sync-timesheets | 
-[**bioStarSyncUsers**](BioStarApi.md#bioStarSyncUsers) | **POST** /sync-users | 
+[**bioStarGetWebSocketState**](BioStarApi.md#bioStarGetWebSocketState) | **GET** /api/biostar/websocket-state | 
+[**bioStarReConnectWebsocket**](BioStarApi.md#bioStarReConnectWebsocket) | **POST** /api/biostar/reconnect-websocket | 
+[**bioStarSyncTimesheets**](BioStarApi.md#bioStarSyncTimesheets) | **POST** /api/biostar/sync-timesheets | 
+[**bioStarSyncUsers**](BioStarApi.md#bioStarSyncUsers) | **POST** /api/biostar/sync-users | 
 
 
 # **bioStarGetWebSocketState**

@@ -1,6 +1,11 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { UserCreateUpdateRequest, UserDto, UserFullDto } from "@/generate-api";
+import {
+  BioStarSyncAllUsersResponse,
+  UserCreateUpdateRequest,
+  UserDto,
+  UserFullDto,
+} from "@/generate-api";
 import { bioStarApi, userApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -78,10 +83,14 @@ export const useUserAction = () => {
   // Sync USER
   // =============
 
-  const syncUsers = async () => {
+  const syncUsers = async (
+    cb?: (data: BioStarSyncAllUsersResponse) => void
+  ) => {
     setLoading(true);
     try {
-      return await bioStarApi.bioStarSyncUsers();
+      let data = await bioStarApi.bioStarSyncUsers();
+
+      cb?.(data);
     } catch (e) {
       getNotification().error({
         message: getMessageError(e),

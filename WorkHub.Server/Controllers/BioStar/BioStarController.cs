@@ -9,6 +9,7 @@ using WorkHub.Infrastructure.Services.BioStar;
 
 namespace WorkHub.Server.Controllers.BioStar
 {
+	[Route("api/biostar")]
 	public class BioStarController : BaseApiController<BioStarController>
 	{
 
@@ -21,7 +22,7 @@ namespace WorkHub.Server.Controllers.BioStar
 			_bioStarWebSocketClient = bioStarWebSocketClient;
 		}
 
-		// [Authorize(Policy = Permissions.BioStar.SyncUsers)]
+		[Authorize(Policy = Permissions.BioStar.SyncUsers)]
 		[HttpPost("sync-users")]
 		public async Task<ActionResult<BioStarSyncAllUsersResponse>> SyncUsers()
 		{
@@ -29,7 +30,7 @@ namespace WorkHub.Server.Controllers.BioStar
 			return Ok(data);
 		}
 
-		// [Authorize(Policy = Permissions.BioStar.SyncTimesheets)]
+		[Authorize(Policy = Permissions.BioStar.SyncTimesheets)]
 		[HttpPost("sync-timesheets")]
 		public async Task<ActionResult<BioStarSyncHistoricalEventsResponse>> SyncTimesheets(GetHistoricalEventsRequest request)
 		{
