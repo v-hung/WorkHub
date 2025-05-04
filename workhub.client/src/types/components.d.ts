@@ -29,6 +29,7 @@ declare global {
   const IIonPlay: typeof import('~icons/ion/play.jsx')['default']
   const IIonPlus: typeof import('~icons/ion/plus.jsx')['default']
   const IIonRefresh: typeof import('~icons/ion/refresh.jsx')['default']
+  const IIonSaveOutline: typeof import('~icons/ion/save-outline.jsx')['default']
   const IIonSendOutline: typeof import('~icons/ion/send-outline.jsx')['default']
   const IIonSync: typeof import('~icons/ion/sync.jsx')['default']
   const IIonTimerOutline: typeof import('~icons/ion/timer-outline.jsx')['default']

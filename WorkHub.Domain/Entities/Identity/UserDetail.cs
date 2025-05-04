@@ -8,7 +8,7 @@ namespace WorkHub.Domain.Entities.Identity
 	public class UserDetail : Entity<int>
 	{
 
-		public DateTime BirthDate { get; set; }
+		public DateTime? BirthDate { get; set; }
 
 		public bool Gender { get; set; }
 

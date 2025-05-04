@@ -7,7 +7,7 @@ namespace WorkHub.Application.DTOs.Identity
 	{
 		public int? Id { get; set; }
 
-		public DateTime BirthDate { get; set; }
+		public DateTime? BirthDate { get; set; }
 
 		public bool? Gender { get; set; }
 

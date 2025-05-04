@@ -124,11 +124,11 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item
-                label="Username"
-                name="username"
+                label="UserName"
+                name="userName"
                 rules={[{ required: true }]}
               >
-                <Input placeholder="Username" />
+                <Input placeholder="UserName" />
               </Form.Item>
             </Col>
 
@@ -230,7 +230,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
               <Form.Item
                 label="Roles"
                 name="roleNames"
-                rules={[{ required: true }]}
+                // rules={[{ required: true }]}
                 className={styles.colCustomResponsive}
               >
                 <RoleSelectMemo />
