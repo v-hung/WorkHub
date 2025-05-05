@@ -16,7 +16,9 @@ namespace WorkHub.Application.DTOs.Misc
 		public string Message { get; set; } = string.Empty;
 
 		[Required]
-		public required NotificationType Type { get; set; }
+		public required NotificationCategory Category { get; set; }
+
+		public string? RelatedEntityId { get; set; }
 
 		[Required]
 		public DateTime Date { get; set; } = DateTime.UtcNow;

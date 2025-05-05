@@ -24,12 +24,12 @@ export const useNotifications = () => {
     async (direction?: CursorPagedRequestDirection) => {
       setLoading(true);
       try {
-        const data = await notificationApi.notificationSearch(
-          direction
+        const data = await notificationApi.notificationSearch({
+          cursorId: direction
             ? notificationCursorPaginated.lastId ?? undefined
             : undefined,
-          direction
-        );
+          cursorPagedRequestDirection: direction,
+        });
         setNotificationCursorPaginated(data);
       } catch (e) {
         notification.error({

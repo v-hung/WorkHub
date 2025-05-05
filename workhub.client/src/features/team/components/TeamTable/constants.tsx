@@ -4,23 +4,23 @@ import { FC } from "react";
 import { useTeamContext } from "../../contexts/TeamContext";
 import { Permission, TeamDto } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
+import UserTableItem from "@/features/user/components/UserTableItem/UserTableItem";
+import TeamTableItem from "../TeamTableItem/TeamTableItem";
 
 export const teamTableColumns: TableProps<TeamDto>["columns"] = [
-  { title: "Name", dataIndex: "name", key: "name" },
+  { title: "Name", render: (_, record) => <TeamTableItem team={record} /> },
+  { title: "Description", dataIndex: "description", key: "description" },
   {
-    title: "Total Members",
-    dataIndex: "totalMembers",
-    key: "totalMembers",
+    title: "Members",
+    key: "members",
+    render: (_, record) => (
+      <UserTableItem manager={record.manager} members={record.members} />
+    ),
   },
   {
-    title: "Active Projects",
-    dataIndex: "activeProjects",
-    key: "activeProjects",
-  },
-  {
-    title: "Manager",
-    dataIndex: "manager",
-    key: "manager",
+    title: "Projects",
+    dataIndex: "projects",
+    key: "projects",
   },
   {
     title: "Action",

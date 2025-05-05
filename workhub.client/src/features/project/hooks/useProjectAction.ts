@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { CreateProjectCommand, ProjectDto } from "@/generate-api";
+import {
+  CreateProjectCommand,
+  CreateProjectCommandFromJSON,
+  ProjectDto,
+} from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -16,7 +20,7 @@ export const useProjectAction = () => {
 
   const formDefault = (data?: ProjectDto): CreateProjectCommandCustomType => {
     if (!data) {
-      const form = new CreateProjectCommand();
+      const form = CreateProjectCommandFromJSON({});
       return {
         ...form,
         completionTime: [null, null],
@@ -38,7 +42,7 @@ export const useProjectAction = () => {
   const create = async (request: CreateProjectCommand, cb?: () => void) => {
     setLoading(true);
     try {
-      await projectApi.projectCreate(request);
+      await projectApi.projectCreate({ createProjectCommand: request });
 
       cb?.();
 
@@ -64,7 +68,7 @@ export const useProjectAction = () => {
   ) => {
     setLoading(true);
     try {
-      await projectApi.projectUpdate(id, request);
+      await projectApi.projectUpdate({ id, createProjectCommand: request });
 
       cb?.();
 
@@ -86,7 +90,7 @@ export const useProjectAction = () => {
   const deleteRecord = async (id: number) => {
     setLoading(true);
     try {
-      await projectApi.projectDelete(id);
+      await projectApi.projectDelete({ id });
       getNotification().success({
         message: "Successfully completed",
       });

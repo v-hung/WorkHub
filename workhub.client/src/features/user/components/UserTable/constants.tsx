@@ -1,8 +1,12 @@
 import { Permission, UserDto } from "@/generate-api";
 import ButtonLink from "@/ui/elements/ButtonLink";
 import { hasPermission } from "@/utils/hasPermission";
-import { Space, TableProps } from "antd";
+import { Button, Popconfirm, Space, TableProps } from "antd";
 import UserCard from "../UserCard/UserCard";
+import { format } from "@/utils/date.utils";
+import { FC } from "react";
+import { useUserContext } from "../../contexts/UserContext";
+import TeamTableItem from "@/features/team/components/TeamTableItem/TeamTableItem";
 
 export const userTableColumns: TableProps<UserDto>["columns"] = [
   {
@@ -20,18 +24,16 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
     title: "User Status",
     dataIndex: "userStatus",
     key: "userStatus",
-    width: "10rem",
+    // width: "10rem",
   },
   {
     title: "Team",
-    render: (_, record) => record.team?.name || "No team",
-    width: "10rem",
+    render: (_, record) => <TeamTableItem team={record.team} />,
   },
   {
     title: "CreatedAt",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    width: "10rem",
+    render: (_, record) => format(record.createdAt, "dd/MM/yyyy"),
+    // width: "10rem",
   },
   {
     title: "Action",
@@ -59,10 +61,36 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
           </ButtonLink>
         ) : null}
 
-        {/* {hasPermission(Permission.PermissionsUsersDelete) ? (
+        {hasPermission(Permission.PermissionsUsersDelete) ? (
           <ActionDeleteRender id={record.id} />
-        ) : null} */}
+        ) : null}
       </Space>
     ),
   },
 ];
+
+const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
+  const { setRequest, deleteRecord } = useUserContext();
+
+  const confirm = async () => {
+    await deleteRecord(id);
+
+    setRequest((state) => ({
+      ...state,
+      pageNumber: 1,
+    }));
+  };
+
+  return (
+    <Popconfirm
+      title="Delete the user"
+      description="Are you sure to delete this user?"
+      onConfirm={confirm}
+      placement="bottomRight"
+    >
+      <Button size="small" danger>
+        Delete
+      </Button>
+    </Popconfirm>
+  );
+};

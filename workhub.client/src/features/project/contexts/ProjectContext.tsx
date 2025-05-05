@@ -8,17 +8,11 @@ import {
 } from "react";
 import { useProjects } from "../hooks/useProjects";
 import { useProjectAction } from "../hooks/useProjectAction";
-import { ProjectDtoPaginated } from "@/generate-api";
+import { ProjectDtoPaginated, ProjectSearchRequest } from "@/generate-api";
 
 type ProjectsContextType = {
   projectPaginated: ProjectDtoPaginated;
-  setRequest: Dispatch<
-    SetStateAction<{
-      pageNumber: number;
-      pageSize: number;
-      searchString: string;
-    }>
-  >;
+  setRequest: Dispatch<SetStateAction<ProjectSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

@@ -15,7 +15,7 @@ export const roleTableColumns: TableProps<RoleDto>["columns"] = [
   {
     title: "Action",
     key: "action",
-    width: "12rem",
+    width: "9rem",
     fixed: "right",
     render: (_, record) => (
       <div>

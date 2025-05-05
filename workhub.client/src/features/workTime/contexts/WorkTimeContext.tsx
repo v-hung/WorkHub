@@ -8,17 +8,11 @@ import {
 } from "react";
 import { useWorkTimes } from "../hooks/useWorkTimes";
 import { useWorkTimeAction } from "../hooks/useWorkTimeAction";
-import { WorkTimeDtoPaginated } from "@/generate-api";
+import { WorkTimeDtoPaginated, WorkTimeSearchRequest } from "@/generate-api";
 
 type WorkTimesContextType = {
   workTimePaginated: WorkTimeDtoPaginated;
-  setRequest: Dispatch<
-    SetStateAction<{
-      pageNumber: number;
-      pageSize: number;
-      searchString: string;
-    }>
-  >;
+  setRequest: Dispatch<SetStateAction<WorkTimeSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

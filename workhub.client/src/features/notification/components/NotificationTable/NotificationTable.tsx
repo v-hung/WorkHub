@@ -3,8 +3,11 @@ import { useEffect, useMemo, useState } from "react";
 import { notificationTableColumns } from "./constants";
 import { useNotifications } from "../../hooks/useNotifications";
 import NotificationToolbar from "../NotificationToolbar/NotificationToolbar";
+import "./NotificationTable.css";
+import { useNavigate } from "react-router";
 
 const NotificationTable = () => {
+  const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   const { notificationPaginated, loading, fetchPaginatedNotifications } =
@@ -48,6 +51,17 @@ const NotificationTable = () => {
             setSelectedRowKeys(newSelectedRowKeys);
           },
         }}
+        className="notification-table"
+        rowClassName={(record) =>
+          `notification-table__row ${record.isRead ? "" : "unread"}`
+        }
+        onRow={(record) => ({
+          onClick: () => {
+            if (record.category == "REQUEST" && record.relatedEntityId) {
+              navigate(`/requests/${record.relatedEntityId}`);
+            }
+          },
+        })}
       />
     </>
   );

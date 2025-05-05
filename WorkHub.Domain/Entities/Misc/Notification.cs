@@ -17,7 +17,9 @@ namespace WorkHub.Domain.Entities.Misc
 		[Required]
 		public DateTime Date { get; set; } = DateTime.UtcNow;
 
-		public required NotificationType Type { get; set; }
+		public required NotificationCategory Category { get; set; }
+
+		public string? RelatedEntityId { get; set; }
 
 		public bool IsRead { get; set; } = false;
 

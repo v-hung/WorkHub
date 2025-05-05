@@ -72,7 +72,8 @@ namespace WorkHub.Infrastructure.Services.Requests
 			{
 				Title = _localizer["New Request Submitted"].Value,
 				Message = _localizer["You have a new request to approve."].Value,
-				Type = NotificationType.REQUEST,
+				Category = NotificationCategory.REQUEST,
+				RelatedEntityId = request.Id.ToString(),
 				UserId = request.ApprovedId,
 			};
 			_context.Notifications.Add(notification);

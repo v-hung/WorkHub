@@ -25,7 +25,7 @@ export const loader = wrapLoaderWithPermission(
 
     ensurePermission(permissions, Permission.PermissionsDevicesEdit);
 
-    const data = await wrapPromise(() => deviceApi.deviceGetById(+id));
+    const data = await wrapPromise(() => deviceApi.deviceGetById({ id: +id }));
 
     if (!data) {
       throw redirect("/devices");

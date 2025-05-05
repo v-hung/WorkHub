@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { ProjectDtoPaginated } from "@/generate-api";
+import { ProjectDtoPaginated, ProjectSearchRequest } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -24,7 +24,7 @@ export const useProjects = () => {
     }
   );
 
-  const [request, setRequest] = useState({
+  const [request, setRequest] = useState<ProjectSearchRequest>({
     pageNumber: projectPaginated.currentPage,
     pageSize: projectPaginated.pageSize,
     searchString: "",
@@ -33,10 +33,7 @@ export const useProjects = () => {
   const fetchPaginatedProjects = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await projectApi.projectSearch(
-        request.pageNumber,
-        request.pageSize
-      );
+      const data = await projectApi.projectSearch(request);
       setProjectPaginated(data);
     } catch (e) {
       notification.error({
@@ -62,7 +59,7 @@ export const useProjects = () => {
   const fetchProjects = async (ids: number[]) => {
     setLoading(true);
     try {
-      return await projectApi.projectGetAll(ids);
+      return await projectApi.projectGetAll({ ids });
     } catch (e) {
       notification.error({
         message: getMessageError(e),

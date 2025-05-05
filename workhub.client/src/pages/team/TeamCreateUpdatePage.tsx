@@ -25,7 +25,7 @@ export const loader = wrapLoaderWithPermission(
 
     ensurePermission(permissions, Permission.PermissionsTeamsEdit);
 
-    const data = await wrapPromise(() => teamApi.teamGetById(+id));
+    const data = await wrapPromise(() => teamApi.teamGetById({ id: +id }));
 
     if (!data) {
       throw redirect("/teams");

@@ -21,7 +21,9 @@ const RequestContext = createContext<RequestContextType | null>(null);
 export const RequestProvider: FC<PropsWithChildren> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
-  const [requestType, setRequestType] = useState(RequestType.LeaveRequest);
+  const [requestType, setRequestType] = useState<RequestType>(
+    RequestType.LeaveRequest
+  );
 
   const openRequest = (
     type: RequestType,

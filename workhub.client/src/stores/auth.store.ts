@@ -45,8 +45,7 @@ export const useAuthStore = create<AuthStoreState>()(
           .accountLogin({ loginRequest: credentials })
           .then((res) => res.user);
 
-        const rawPermissions =
-          await accountApiWithRefreshToken.accountGetPermissions();
+        const rawPermissions = await accountApi.accountGetPermissions();
 
         const permissions: Permission[] = rawPermissions.map(
           (p) => p as Permission

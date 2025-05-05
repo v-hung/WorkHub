@@ -25,7 +25,7 @@ export const loader = wrapLoaderWithPermission(
 
     ensurePermission(permissions, Permission.PermissionsRolesView);
 
-    const data = await wrapPromise(() => roleApi.roleGetById(id));
+    const data = await wrapPromise(() => roleApi.roleGetById({ id }));
 
     if (!data) {
       throw redirect("/roles");

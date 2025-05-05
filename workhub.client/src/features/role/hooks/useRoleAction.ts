@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { RoleCreateUpdateRequest, RoleDto } from "@/generate-api";
+import {
+  RoleCreateUpdateRequest,
+  RoleCreateUpdateRequestFromJSON,
+  RoleDto,
+} from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -12,7 +16,7 @@ export const useRoleAction = () => {
 
   const formDefault = (data?: RoleDto): RoleCreateUpdateRequest => {
     if (!data) {
-      const form = new RoleCreateUpdateRequest();
+      const form = RoleCreateUpdateRequestFromJSON({});
       return {
         ...form,
       };
@@ -29,7 +33,7 @@ export const useRoleAction = () => {
   const create = async (request: RoleCreateUpdateRequest, cb?: () => void) => {
     setLoading(true);
     try {
-      await roleApi.roleCreate(request);
+      await roleApi.roleCreate({ roleCreateUpdateRequest: request });
 
       cb?.();
 
@@ -55,7 +59,7 @@ export const useRoleAction = () => {
   ) => {
     setLoading(true);
     try {
-      await roleApi.roleUpdate(id, request);
+      await roleApi.roleUpdate({ id, roleCreateUpdateRequest: request });
 
       cb?.();
 
@@ -77,7 +81,7 @@ export const useRoleAction = () => {
   const deleteRecord = async (id: string) => {
     setLoading(true);
     try {
-      await roleApi.roleDelete(id);
+      await roleApi.roleDelete({ id });
       getNotification().success({
         message: "Successfully completed",
       });

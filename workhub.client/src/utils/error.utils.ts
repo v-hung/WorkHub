@@ -1,13 +1,9 @@
-import {
-  ApiException,
-  ErrorResponse,
-  ErrorValidateResponse,
-} from "@/generate-api";
+import { ErrorResponse, ErrorValidateResponse } from "@/generate-api";
 import i18n from "./i18n";
 
 export const getMessageError = (e: any): string => {
   try {
-    if (!(e instanceof ApiException)) throw e;
+    // if (!(e instanceof any)) throw e;
 
     console.log({ e });
 

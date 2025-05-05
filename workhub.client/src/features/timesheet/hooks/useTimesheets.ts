@@ -1,13 +1,14 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { TimesheetDto } from "@/generate-api";
+import { TimesheetFullDtoPaginated } from "@/generate-api";
 import { timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const useTimesheets = () => {
   const [loading, setLoading] = useState(false);
-  const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
+  const [timesheetPaginated, setTimesheetPaginated] =
+    useState<TimesheetFullDtoPaginated>();
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const isCurrentMonth = useMemo(
@@ -21,11 +22,11 @@ export const useTimesheets = () => {
   const getTimesheets = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await timesheetApi.timesheetGetMonthlyTimesheets(
-        getMonth(selectedDate) + 1,
-        getYear(selectedDate)
-      );
-      setTimesheets(data);
+      const data = await timesheetApi.timesheetGetMonthlyTimesheets({
+        month: getMonth(selectedDate) + 1,
+        year: getYear(selectedDate),
+      });
+      setTimesheetPaginated(data);
     } catch (e) {
       getNotification().error({
         message: getMessageError(e),
@@ -40,7 +41,7 @@ export const useTimesheets = () => {
   }, [selectedDate]);
 
   return {
-    timesheets,
+    timesheets: timesheetPaginated,
     loading,
     selectedDate,
     isCurrentMonth,

@@ -66,7 +66,13 @@ const TImesheetHeader = () => {
               ) : (
                 <Popconfirm
                   title="Are you sure you want to checkout?"
-                  description="Chúng tôi sẽ tự động ghi nhận thời gian kết thúc của bạn vào lượt chấm công cuối cùng. Nếu bạn muốn kết thúc ngay bây giờ, thời gian làm việc của bạn sẽ được tính đến thời điểm này"
+                  description={
+                    <div style={{ maxWidth: "400px" }}>
+                      Ngay cả khi bạn không thực hiện checkout, hệ thống vẫn sẽ
+                      tự động ghi nhận thời gian kết thúc dựa trên lượt chấm
+                      công cuối cùng của bạn.
+                    </div>
+                  }
                   okText="Yes"
                   cancelText="No"
                   placement="bottomRight"

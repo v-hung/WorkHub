@@ -26,7 +26,7 @@ export const loader = wrapLoaderWithPermission(
     ensurePermission(permissions, Permission.PermissionsDevicesEdit);
 
     const data = await wrapPromise(() =>
-      deviceCategoryApi.deviceCategoryGetById(+id)
+      deviceCategoryApi.deviceCategoryGetById({ id: +id })
     );
 
     if (!data) {

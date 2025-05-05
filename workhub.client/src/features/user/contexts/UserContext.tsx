@@ -8,17 +8,11 @@ import {
 } from "react";
 import { useUsers } from "../hooks/useUsers";
 import { useUserAction } from "../hooks/useUserAction";
-import { UserDtoPaginated } from "@/generate-api";
+import { UserDtoPaginated, UserSearchRequest } from "@/generate-api";
 
 type UserContextType = {
   userPaginated: UserDtoPaginated;
-  setRequest: Dispatch<
-    SetStateAction<{
-      pageNumber: number;
-      pageSize: number;
-      searchString: string;
-    }>
-  >;
+  setRequest: Dispatch<SetStateAction<UserSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;
 };

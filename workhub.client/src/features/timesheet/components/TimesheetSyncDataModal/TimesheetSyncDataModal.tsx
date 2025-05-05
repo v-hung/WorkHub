@@ -22,7 +22,7 @@ const TimesheetSyncDataModal: FC<State> = (props) => {
 
       await syncTimesheet(
         {
-          _from: startOfMonth(formValues.month),
+          from: startOfMonth(formValues.month),
           to: endOfMonth(formValues.month),
         },
         (data) => {

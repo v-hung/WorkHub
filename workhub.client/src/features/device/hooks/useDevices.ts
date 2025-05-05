@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { DeviceDtoPaginated } from "@/generate-api";
+import { DeviceDtoPaginated, DeviceSearchRequest } from "@/generate-api";
 import { deviceApi } from "@/services/apiClient";
 import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -22,7 +22,7 @@ export const useDevices = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState({
+  const [request, setRequest] = useState<DeviceSearchRequest>({
     pageNumber: devicePaginated.currentPage,
     pageSize: devicePaginated.pageSize,
     searchString: "",
@@ -31,11 +31,7 @@ export const useDevices = () => {
   const fetchPaginatedDevices = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await deviceApi.deviceSearch(
-        request.pageNumber,
-        request.pageSize,
-        request.searchString
-      );
+      const data = await deviceApi.deviceSearch(request);
       setDevicePaginated(data);
     } catch (e) {
       notification.error({
@@ -61,7 +57,7 @@ export const useDevices = () => {
   const fetchDevices = async (ids: number[]) => {
     setLoading(true);
     try {
-      return await deviceApi.deviceGetAll(ids);
+      return await deviceApi.deviceGetAll({ ids });
     } catch (e) {
       notification.error({
         message: getMessageError(e),

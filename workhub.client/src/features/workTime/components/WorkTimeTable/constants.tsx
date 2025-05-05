@@ -35,20 +35,11 @@ export const workTimeTableColumns: TableProps<WorkTimeDto>["columns"] = [
   {
     title: "Action",
     key: "action",
-    width: "12rem",
+    width: "9rem",
     fixed: "right",
     render: (_, record) => (
       <div>
         <Space size="small">
-          <ButtonLink
-            href={`/work-times/${record.id}`}
-            size="small"
-            color="primary"
-            variant="outlined"
-          >
-            View
-          </ButtonLink>
-
           {hasPermission(Permission.PermissionsWorkTimesEdit) ? (
             <ButtonLink
               href={`/work-times/${record.id}/edit`}

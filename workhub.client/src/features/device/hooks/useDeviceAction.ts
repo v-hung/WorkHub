@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { CreateDeviceCommand, DeviceDto } from "@/generate-api";
+import {
+  CreateDeviceCommand,
+  CreateDeviceCommandFromJSON,
+  DeviceDto,
+} from "@/generate-api";
 import { deviceApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -12,7 +16,7 @@ export const useDeviceAction = () => {
 
   const formDefault = (data?: DeviceDto): CreateDeviceCommand => {
     if (!data) {
-      return new CreateDeviceCommand();
+      return CreateDeviceCommandFromJSON({});
     }
 
     return {
@@ -31,7 +35,7 @@ export const useDeviceAction = () => {
   const create = async (request: CreateDeviceCommand, cb?: () => void) => {
     setLoading(true);
     try {
-      await deviceApi.deviceCreate(request);
+      await deviceApi.deviceCreate({ createDeviceCommand: request });
 
       cb?.();
 
@@ -57,7 +61,7 @@ export const useDeviceAction = () => {
   ) => {
     setLoading(true);
     try {
-      await deviceApi.deviceUpdate(id, request);
+      await deviceApi.deviceUpdate({ id, createDeviceCommand: request });
 
       cb?.();
 
@@ -79,7 +83,7 @@ export const useDeviceAction = () => {
   const deleteRecord = async (id: number) => {
     setLoading(true);
     try {
-      await deviceApi.deviceDelete(id);
+      await deviceApi.deviceDelete({ id });
       getNotification().success({
         message: "Successfully completed",
       });

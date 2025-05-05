@@ -8,17 +8,14 @@ import {
 } from "react";
 import { useDeviceCategories } from "../hooks/useDeviceCategories";
 import { useDeviceCategoryAction } from "../hooks/useDeviceCategoryAction";
-import { DeviceCategoryDtoPaginated } from "@/generate-api";
+import {
+  DeviceCategoryDtoPaginated,
+  DeviceCategorySearchRequest,
+} from "@/generate-api";
 
 type DeviceCategoriesContextType = {
   deviceCategoryPaginated: DeviceCategoryDtoPaginated;
-  setRequest: Dispatch<
-    SetStateAction<{
-      pageNumber: number;
-      pageSize: number;
-      searchString: string;
-    }>
-  >;
+  setRequest: Dispatch<SetStateAction<DeviceCategorySearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

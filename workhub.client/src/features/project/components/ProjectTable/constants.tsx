@@ -1,20 +1,13 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
-import {
-  Avatar,
-  Button,
-  Popconfirm,
-  Space,
-  TableProps,
-  Tag,
-  Tooltip,
-} from "antd";
+import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useProjectsContext } from "../../contexts/ProjectContext";
-import { Permission, ProjectDto, UserMinimalDto } from "@/generate-api";
+import { Permission, ProjectDto } from "@/generate-api";
 import { format } from "@/utils/date.utils";
-import { getUniqueColor } from "@/utils/color.utils";
 import { differenceInDays } from "date-fns";
 import { hasPermission } from "@/utils/hasPermission";
+import UserTableItem from "@/features/user/components/UserTableItem/UserTableItem";
+import TeamTableItem from "@/features/team/components/TeamTableItem/TeamTableItem";
 
 export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
@@ -36,8 +29,8 @@ export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
 
       return (
         <>
-          <span>{`${startDate} - ${endDate}`}</span>
-          {daysDifference && <b>&nbsp;({daysDifference} Days)</b>}
+          <div>{`${startDate} - ${endDate}`}</div>
+          <div>{daysDifference && <b>({daysDifference} Days)</b>}</div>
         </>
       );
     },
@@ -45,58 +38,14 @@ export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
   {
     title: "Team",
     key: "team",
-    render: (_, record) =>
-      record.team ? (
-        <Tag color={getUniqueColor("team-" + record.team.id)}>
-          {record.team.name}
-        </Tag>
-      ) : (
-        "N/A"
-      ),
+    render: (_, record) => <TeamTableItem team={record.team} />,
   },
   {
     title: "Members",
     key: "members",
-    render: (_, record) => {
-      const members: UserMinimalDto[] = [
-        ...(record.manager ? [record.manager] : []),
-        ...(record.members ?? []),
-      ];
-
-      if (members.length === 0) return "No members";
-
-      const uniqueMembers = Array.from(
-        new Map(members.map((m) => [m.id, m])).values()
-      );
-
-      const colors = uniqueMembers.map((v) =>
-        getUniqueColor("user-" + v.id, true)
-      );
-
-      return (
-        <Avatar.Group max={{ count: 5 }}>
-          {uniqueMembers.map((member, index) => (
-            <Tooltip
-              key={member.id || index}
-              title={member.fullName}
-              placement="top"
-            >
-              <Avatar
-                size={30}
-                style={{
-                  backgroundColor: colors[index],
-                  border:
-                    member.id === record.manager?.id
-                      ? "1px solid #eb2f96"
-                      : "none",
-                }}
-                icon={<IIonPerson />}
-              />
-            </Tooltip>
-          ))}
-        </Avatar.Group>
-      );
-    },
+    render: (_, record) => (
+      <UserTableItem manager={record.manager} members={record.members} />
+    ),
   },
   {
     title: "Status",

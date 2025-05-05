@@ -8,7 +8,7 @@ const MainTable = <T,>(props: State<T>) => {
   const {
     className,
     scroll = {
-      x: "max-content",
+      x: 1280,
       y: "auto",
     },
     ...rest

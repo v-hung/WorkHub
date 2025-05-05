@@ -21,10 +21,10 @@ export const useCurrentTimesheets = () => {
   const getCurrentTimesheets = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await timesheetApi.timesheetGetCurrentUserMonthlyTimesheets(
-        getMonth(selectedDate) + 1,
-        getYear(selectedDate)
-      );
+      const data = await timesheetApi.timesheetGetCurrentUserMonthlyTimesheets({
+        month: getMonth(selectedDate) + 1,
+        year: getYear(selectedDate),
+      });
       setTimesheets(data);
     } catch (e) {
       getNotification().error({

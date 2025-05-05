@@ -32,6 +32,7 @@ export function Component() {
               { title: "Home", path: "/" },
               { title: "Timesheets Manager" },
             ]}
+            style={{ paddingBottom: "1rem" }}
           />
 
           <DefaultContent>

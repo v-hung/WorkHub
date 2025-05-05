@@ -1,18 +1,11 @@
 import ButtonLink from "@/ui/elements/ButtonLink";
-import {
-  Avatar,
-  Button,
-  Popconfirm,
-  Space,
-  TableProps,
-  Tag,
-  Tooltip,
-} from "antd";
+import { Button, Popconfirm, Space, TableProps, Tag } from "antd";
 import { FC } from "react";
 import { useDevicesContext } from "../../contexts/DeviceContext";
 import { DeviceDto, Permission } from "@/generate-api";
 import { getUniqueColor } from "@/utils/color.utils";
 import { hasPermission } from "@/utils/hasPermission";
+import UserTableItem from "@/features/user/components/UserTableItem/UserTableItem";
 
 export const deviceTableColumns: TableProps<DeviceDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
@@ -29,27 +22,11 @@ export const deviceTableColumns: TableProps<DeviceDto>["columns"] = [
   {
     title: "Assigned User",
     key: "assignedUser",
-    render: (_, record) =>
-      record.assignedUser ? (
-        <Tooltip
-          key={record.assignedUser.id}
-          title={record.assignedUser.fullName}
-          placement="top"
-        >
-          <Avatar
-            size={30}
-            style={{
-              backgroundColor: getUniqueColor(
-                "user-" + record.assignedUser?.id,
-                true
-              ),
-            }}
-            icon={<IIonPerson />}
-          />
-        </Tooltip>
-      ) : (
-        ""
-      ),
+    render: (_, record) => (
+      <UserTableItem
+        members={record.assignedUser ? [record.assignedUser] : null}
+      />
+    ),
   },
   {
     title: "Device Categories",
@@ -71,20 +48,11 @@ export const deviceTableColumns: TableProps<DeviceDto>["columns"] = [
   {
     title: "Action",
     key: "action",
-    width: "12rem",
+    width: "9rem",
     fixed: "right",
     render: (_, record) => (
       <div>
         <Space size="small">
-          <ButtonLink
-            href={`/devices/${record.id}`}
-            size="small"
-            color="primary"
-            variant="outlined"
-          >
-            View
-          </ButtonLink>
-
           {hasPermission(Permission.PermissionsDevicesEdit) ? (
             <ButtonLink
               href={`/devices/${record.id}/edit`}

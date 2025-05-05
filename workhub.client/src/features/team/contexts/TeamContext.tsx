@@ -8,17 +8,11 @@ import {
 } from "react";
 import { useTeams } from "../hooks/useTeams";
 import { useTeamAction } from "../hooks/useTeamAction";
-import { TeamDtoPaginated } from "@/generate-api";
+import { TeamDtoPaginated, TeamSearchRequest } from "@/generate-api";
 
 type TeamContextType = {
   teamPaginated: TeamDtoPaginated;
-  setRequest: Dispatch<
-    SetStateAction<{
-      pageNumber: number;
-      pageSize: number;
-      searchString: string;
-    }>
-  >;
+  setRequest: Dispatch<SetStateAction<TeamSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

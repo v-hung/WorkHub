@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { UserDtoPaginated } from "@/generate-api";
+import { UserDtoPaginated, UserSearchRequest } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -22,7 +22,7 @@ export const useUsers = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState({
+  const [request, setRequest] = useState<UserSearchRequest>({
     pageNumber: userPaginated.currentPage,
     pageSize: userPaginated.pageSize,
     searchString: "",
@@ -31,10 +31,7 @@ export const useUsers = () => {
   const fetchPaginatedUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await userApi.userSearch(
-        request.pageNumber,
-        request.pageSize
-      );
+      const data = await userApi.userSearch(request);
       setUserPaginated(data);
     } catch (e) {
       notification.error({
@@ -60,7 +57,7 @@ export const useUsers = () => {
   const fetchUsers = async (ids: string[]) => {
     setLoading(true);
     try {
-      return await userApi.userGetAll(ids);
+      return await userApi.userGetAll({ ids });
     } catch (e) {
       notification.error({
         message: getMessageError(e),

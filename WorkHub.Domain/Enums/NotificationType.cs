@@ -1,6 +1,6 @@
 namespace WorkHub.Domain.Enums
 {
-	public enum NotificationType
+	public enum NotificationCategory
 	{
 		REQUEST
 	}

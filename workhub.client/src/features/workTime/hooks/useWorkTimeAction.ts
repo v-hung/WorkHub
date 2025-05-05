@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
+import {
+  CreateWorkTimeCommand,
+  CreateWorkTimeCommandFromJSON,
+  WorkTimeDto,
+} from "@/generate-api";
 import { workTimeApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -12,7 +16,7 @@ export const useWorkTimeAction = () => {
 
   const formDefault = (data?: WorkTimeDto): CreateWorkTimeCommand => {
     if (!data) {
-      return new CreateWorkTimeCommand();
+      return CreateWorkTimeCommandFromJSON({});
     }
 
     return data;
@@ -24,7 +28,7 @@ export const useWorkTimeAction = () => {
   const create = async (request: CreateWorkTimeCommand, cb?: () => void) => {
     setLoading(true);
     try {
-      await workTimeApi.workTimeCreate(request);
+      await workTimeApi.workTimeCreate({ createWorkTimeCommand: request });
 
       cb?.();
 
@@ -50,7 +54,7 @@ export const useWorkTimeAction = () => {
   ) => {
     setLoading(true);
     try {
-      await workTimeApi.workTimeUpdate(id, request);
+      await workTimeApi.workTimeUpdate({ id, createWorkTimeCommand: request });
 
       cb?.();
 
@@ -72,7 +76,7 @@ export const useWorkTimeAction = () => {
   const deleteRecord = async (id: number) => {
     setLoading(true);
     try {
-      await workTimeApi.workTimeDelete(id);
+      await workTimeApi.workTimeDelete({ id });
       getNotification().success({
         message: "Successfully completed",
       });

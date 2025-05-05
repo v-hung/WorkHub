@@ -25,7 +25,7 @@ export const loader = wrapLoaderWithPermission(
 
     ensurePermission(permissions, Permission.PermissionsUsersEdit);
 
-    const data = await wrapPromise(() => userApi.userGetById(id));
+    const data = await wrapPromise(() => userApi.userGetById({ id }));
 
     if (!data) {
       throw redirect("/users");

@@ -25,7 +25,9 @@ export const loader = wrapLoaderWithPermission(
 
     ensurePermission(permissions, Permission.PermissionsProjectsEdit);
 
-    const data = await wrapPromise(() => projectApi.projectGetById(+id));
+    const data = await wrapPromise(() =>
+      projectApi.projectGetById({ id: +id })
+    );
 
     if (!data) {
       throw redirect("/projects");

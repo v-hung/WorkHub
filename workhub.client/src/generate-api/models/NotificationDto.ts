@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { NotificationType } from './NotificationType';
+import type { NotificationCategory } from './NotificationCategory';
 import {
-    NotificationTypeFromJSON,
-    NotificationTypeFromJSONTyped,
-    NotificationTypeToJSON,
-    NotificationTypeToJSONTyped,
-} from './NotificationType';
+    NotificationCategoryFromJSON,
+    NotificationCategoryFromJSONTyped,
+    NotificationCategoryToJSON,
+    NotificationCategoryToJSONTyped,
+} from './NotificationCategory';
 
 /**
  * 
@@ -47,10 +47,16 @@ export interface NotificationDto {
     message: string;
     /**
      * 
-     * @type {NotificationType}
+     * @type {NotificationCategory}
      * @memberof NotificationDto
      */
-    type: NotificationType;
+    category: NotificationCategory;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationDto
+     */
+    relatedEntityId?: string | null;
     /**
      * 
      * @type {Date}
@@ -74,7 +80,7 @@ export function instanceOfNotificationDto(value: object): value is NotificationD
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('message' in value) || value['message'] === undefined) return false;
-    if (!('type' in value) || value['type'] === undefined) return false;
+    if (!('category' in value) || value['category'] === undefined) return false;
     if (!('date' in value) || value['date'] === undefined) return false;
     if (!('isRead' in value) || value['isRead'] === undefined) return false;
     return true;
@@ -93,7 +99,8 @@ export function NotificationDtoFromJSONTyped(json: any, ignoreDiscriminator: boo
         'id': json['id'],
         'title': json['title'],
         'message': json['message'],
-        'type': NotificationTypeFromJSON(json['type']),
+        'category': NotificationCategoryFromJSON(json['category']),
+        'relatedEntityId': json['relatedEntityId'] == null ? undefined : json['relatedEntityId'],
         'date': (new Date(json['date'])),
         'isRead': json['isRead'],
     };
@@ -113,7 +120,8 @@ export function NotificationDtoToJSONTyped(value?: NotificationDto | null, ignor
         'id': value['id'],
         'title': value['title'],
         'message': value['message'],
-        'type': NotificationTypeToJSON(value['type']),
+        'category': NotificationCategoryToJSON(value['category']),
+        'relatedEntityId': value['relatedEntityId'],
         'date': ((value['date']).toISOString()),
         'isRead': value['isRead'],
     };

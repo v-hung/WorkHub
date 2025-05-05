@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { WorkTimeDtoPaginated } from "@/generate-api";
+import { WorkTimeDtoPaginated, WorkTimeSearchRequest } from "@/generate-api";
 import { workTimeApi } from "@/services/apiClient";
 import { App } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -23,7 +23,7 @@ export const useWorkTimes = () => {
       hasPreviousPage: false,
     });
 
-  const [request, setRequest] = useState({
+  const [request, setRequest] = useState<WorkTimeSearchRequest>({
     pageNumber: workTimePaginated.currentPage,
     pageSize: workTimePaginated.pageSize,
     searchString: "",
@@ -32,10 +32,7 @@ export const useWorkTimes = () => {
   const fetchPaginatedWorkTimes = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await workTimeApi.workTimeSearch(
-        request.pageNumber,
-        request.pageSize
-      );
+      const data = await workTimeApi.workTimeSearch(request);
       setWorkTimePaginated(data);
     } catch (e) {
       notification.error({
@@ -61,7 +58,7 @@ export const useWorkTimes = () => {
   const fetchWorkTimes = async (ids: number[]) => {
     setLoading(true);
     try {
-      return await workTimeApi.workTimeGetAll(ids);
+      return await workTimeApi.workTimeGetAll({ ids });
     } catch (e) {
       notification.error({
         message: getMessageError(e),

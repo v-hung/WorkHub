@@ -15,7 +15,9 @@ export const useTimesheetAction = () => {
     cb?: (data: BioStarSyncHistoricalEventsResponse) => void
   ) => {
     try {
-      let data = await bioStarApi.bioStarSyncTimesheets(request);
+      let data = await bioStarApi.bioStarSyncTimesheets({
+        getHistoricalEventsRequest: request,
+      });
 
       cb?.(data);
     } catch (e) {

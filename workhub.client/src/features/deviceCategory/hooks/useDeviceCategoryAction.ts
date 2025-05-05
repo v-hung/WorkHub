@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { CreateDeviceCategoryCommand, DeviceCategoryDto } from "@/generate-api";
+import {
+  CreateDeviceCategoryCommand,
+  CreateDeviceCategoryCommandFromJSON,
+  DeviceCategoryDto,
+} from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -14,7 +18,7 @@ export const useDeviceCategoryAction = () => {
     data?: DeviceCategoryDto
   ): CreateDeviceCategoryCommand => {
     if (!data) {
-      return new CreateDeviceCategoryCommand();
+      return CreateDeviceCategoryCommandFromJSON({});
     }
 
     return {
@@ -33,7 +37,9 @@ export const useDeviceCategoryAction = () => {
   ) => {
     setLoading(true);
     try {
-      await deviceCategoryApi.deviceCategoryCreate(request);
+      await deviceCategoryApi.deviceCategoryCreate({
+        createDeviceCategoryCommand: request,
+      });
 
       cb?.();
 
@@ -59,7 +65,10 @@ export const useDeviceCategoryAction = () => {
   ) => {
     setLoading(true);
     try {
-      await deviceCategoryApi.deviceCategoryUpdate(id, request);
+      await deviceCategoryApi.deviceCategoryUpdate({
+        id,
+        createDeviceCategoryCommand: request,
+      });
 
       cb?.();
 
@@ -81,7 +90,7 @@ export const useDeviceCategoryAction = () => {
   const deleteRecord = async (id: number) => {
     setLoading(true);
     try {
-      await deviceCategoryApi.deviceCategoryDelete(id);
+      await deviceCategoryApi.deviceCategoryDelete({ id });
       getNotification().success({
         message: "Successfully completed",
       });

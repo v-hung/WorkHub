@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { CreateTeamCommand, TeamFullDto } from "@/generate-api";
+import {
+  CreateTeamCommand,
+  CreateTeamCommandFromJSON,
+  TeamFullDto,
+} from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { useState } from "react";
 
@@ -12,7 +16,7 @@ export const useTeamAction = () => {
 
   const formDefault = (data?: TeamFullDto): CreateTeamCommand => {
     if (!data) {
-      return new CreateTeamCommand();
+      return CreateTeamCommandFromJSON({});
     }
 
     return {
@@ -29,7 +33,7 @@ export const useTeamAction = () => {
   const create = async (request: CreateTeamCommand, cb?: () => void) => {
     setLoading(true);
     try {
-      await teamApi.teamCreate(request);
+      await teamApi.teamCreate({ createTeamCommand: request });
 
       cb?.();
 
@@ -55,7 +59,7 @@ export const useTeamAction = () => {
   ) => {
     setLoading(true);
     try {
-      await teamApi.teamUpdate(id, request);
+      await teamApi.teamUpdate({ id, createTeamCommand: request });
 
       cb?.();
 
@@ -77,7 +81,7 @@ export const useTeamAction = () => {
   const deleteRecord = async (id: number) => {
     setLoading(true);
     try {
-      await teamApi.teamDelete(id);
+      await teamApi.teamDelete({ id });
       getNotification().success({
         message: "Successfully completed",
       });

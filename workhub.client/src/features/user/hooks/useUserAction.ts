@@ -3,6 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   BioStarSyncAllUsersResponse,
   UserCreateUpdateRequest,
+  UserCreateUpdateRequestFromJSON,
   UserDto,
   UserFullDto,
 } from "@/generate-api";
@@ -17,11 +18,12 @@ export const useUserAction = () => {
 
   const formDefault = (data?: UserFullDto): UserCreateUpdateRequest => {
     if (!data) {
-      return new UserCreateUpdateRequest();
+      return UserCreateUpdateRequestFromJSON({});
     }
 
     return {
       ...data,
+      fullName: data.fullName ?? "",
       workTimeId: data.workTime?.id,
       teamId: data.team?.id,
       supervisorId: data.supervisor?.id,
@@ -39,7 +41,7 @@ export const useUserAction = () => {
   ) => {
     setLoading(true);
     try {
-      await userApi.userCreate(request);
+      await userApi.userCreate({ userCreateUpdateRequest: request });
 
       if (cb) cb();
 
@@ -65,7 +67,10 @@ export const useUserAction = () => {
   ) => {
     setLoading(true);
     try {
-      let data = await userApi.userUpdate(id, request);
+      let data = await userApi.userUpdate({
+        id,
+        userCreateUpdateRequest: request,
+      });
       cb?.(data);
 
       getNotification().success({
@@ -106,7 +111,7 @@ export const useUserAction = () => {
   const deleteRecord = async (id: string) => {
     setLoading(true);
     try {
-      return await userApi.userDelete(id);
+      return await userApi.userDelete({ id });
     } catch (e) {
       getNotification().error({
         message: getMessageError(e),

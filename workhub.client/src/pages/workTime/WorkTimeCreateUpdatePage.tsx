@@ -25,7 +25,9 @@ export const loader = wrapLoaderWithPermission(
 
     ensurePermission(permissions, Permission.PermissionsWorkTimesEdit);
 
-    const data = await wrapPromise(() => workTimeApi.workTimeGetById(+id));
+    const data = await wrapPromise(() =>
+      workTimeApi.workTimeGetById({ id: +id })
+    );
 
     if (!data) {
       throw redirect("/work-times");

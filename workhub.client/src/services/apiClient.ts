@@ -16,9 +16,12 @@ import {
 import { createFetchHttp } from "./interceptors";
 
 export const config = new Configuration({
+  basePath: "",
   fetchApi: createFetchHttp(false),
 });
+
 export const configWithRefreshToken = new Configuration({
+  basePath: "",
   fetchApi: createFetchHttp(true),
 });
 
