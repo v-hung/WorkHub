@@ -12,10 +12,10 @@ export const useCancelRequest = () => {
 
   const cancelRequestMap: Record<RequestType, (id: number) => Promise<void>> = {
     [RequestType.LeaveRequest]: async (id: number) => {
-      await requestApi.leaveRequestCancelRequest(id);
+      await requestApi.leaveRequestCancelRequest({ id });
     },
     [RequestType.TimesheetAdjustmentRequest]: async (id: number) => {
-      await requestApi.timesheetAdjustmentRequestCancelRequest(id);
+      await requestApi.timesheetAdjustmentRequestCancelRequest({ id });
     },
     [RequestType.OvertimeRequest]: async () => {},
     [RequestType.WorkFromHomeRequest]: async () => {},

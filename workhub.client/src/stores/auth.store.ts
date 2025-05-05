@@ -5,6 +5,7 @@ import {
   UserPosition,
   UserStatus,
   WorkTimeDto,
+  WorkTimeDtoFromJSON,
 } from "@/generate-api";
 import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
@@ -41,7 +42,7 @@ export const useAuthStore = create<AuthStoreState>()(
 
       try {
         const user = await accountApi
-          .accountLogin(credentials)
+          .accountLogin({ loginRequest: credentials })
           .then((res) => res.user);
 
         const rawPermissions =
@@ -110,5 +111,5 @@ const USER: UserDto = {
   userPosition: UserPosition.Developer,
   userStatus: UserStatus.Active,
   remainingLeaveMinutes: 480,
-  workTime: new WorkTimeDto(),
+  workTime: WorkTimeDtoFromJSON({}),
 };

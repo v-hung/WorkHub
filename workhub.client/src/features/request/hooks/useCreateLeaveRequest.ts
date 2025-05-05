@@ -1,6 +1,10 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
+import {
+  CreateLeaveRequestDto,
+  CreateLeaveRequestDtoFromJSON,
+  RequestType,
+} from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
 import { useAuthStore } from "@/stores/auth.store";
 import { useState } from "react";
@@ -18,7 +22,7 @@ export const useCreateLeaveRequest = () => {
   // =============
 
   const formDefault = (date?: Date): CreateLeaveRequestDtoCustomType => {
-    const form = new CreateLeaveRequestDto();
+    const form = CreateLeaveRequestDtoFromJSON({});
     return {
       ...form,
       approvedId: supervisor?.id,
@@ -35,7 +39,9 @@ export const useCreateLeaveRequest = () => {
   const create = async (request: CreateLeaveRequestDto, cb?: () => void) => {
     setLoading(true);
     try {
-      await requestApi.leaveRequestCreateRequest(request);
+      await requestApi.leaveRequestCreateRequest({
+        createLeaveRequestDto: request,
+      });
 
       cb?.();
 

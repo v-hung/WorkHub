@@ -2,6 +2,7 @@ import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
 import {
   CreateTimesheetAdjustmentRequestDto,
+  CreateTimesheetAdjustmentRequestDtoFromJSON,
   RequestType,
 } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
@@ -25,7 +26,8 @@ export const useCreateTimesheetAdjustmentRequest = () => {
   const formDefault = (
     date?: Date
   ): CreateTimesheetAdjustmentRequestDtoCustomType => {
-    const form = new CreateTimesheetAdjustmentRequestDto();
+    const form = CreateTimesheetAdjustmentRequestDtoFromJSON({});
+
     return {
       ...form,
       approvedId: supervisor?.id,
@@ -46,7 +48,9 @@ export const useCreateTimesheetAdjustmentRequest = () => {
   ) => {
     setLoading(true);
     try {
-      await requestApi.timesheetAdjustmentRequestCreateRequest(request);
+      await requestApi.timesheetAdjustmentRequestCreateRequest({
+        createTimesheetAdjustmentRequestDto: request,
+      });
 
       cb?.();
 

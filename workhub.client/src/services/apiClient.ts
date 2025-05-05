@@ -1,6 +1,7 @@
 import {
   AccountApi,
   BioStarApi,
+  Configuration,
   DeviceApi,
   DeviceCategoryApi,
   NotificationApi,
@@ -11,23 +12,14 @@ import {
   TimesheetApi,
   UserApi,
   WorkTimeApi,
-  createConfiguration,
-  server1,
 } from "@/generate-api";
-import type { ConfigurationParameters } from "@/generate-api/configuration";
-import { FetchHttpLibrary } from "./interceptors";
+import { createFetchHttp } from "./interceptors";
 
-const baseServer = server1;
-
-const configurationParameters: ConfigurationParameters = {
-  baseServer: baseServer,
-  httpApi: new FetchHttpLibrary(),
-};
-
-export const config = createConfiguration(configurationParameters);
-export const configWithRefreshToken = createConfiguration({
-  ...configurationParameters,
-  httpApi: new FetchHttpLibrary(true),
+export const config = new Configuration({
+  fetchApi: createFetchHttp(false),
+});
+export const configWithRefreshToken = new Configuration({
+  fetchApi: createFetchHttp(true),
 });
 
 const accountApi = new AccountApi(config);
