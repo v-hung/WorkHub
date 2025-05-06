@@ -42,7 +42,7 @@ export const useRoleAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -68,7 +68,7 @@ export const useRoleAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -87,7 +87,7 @@ export const useRoleAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);

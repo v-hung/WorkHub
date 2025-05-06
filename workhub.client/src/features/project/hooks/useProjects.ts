@@ -37,7 +37,7 @@ export const useProjects = () => {
       setProjectPaginated(data);
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -62,7 +62,7 @@ export const useProjects = () => {
       return await projectApi.projectGetAll({ ids });
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
       return [];
     } finally {

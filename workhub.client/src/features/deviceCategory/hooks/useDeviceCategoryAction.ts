@@ -48,7 +48,7 @@ export const useDeviceCategoryAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -77,7 +77,7 @@ export const useDeviceCategoryAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -96,7 +96,7 @@ export const useDeviceCategoryAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);

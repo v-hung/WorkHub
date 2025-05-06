@@ -35,7 +35,7 @@ export const useDevices = () => {
       setDevicePaginated(data);
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -60,7 +60,7 @@ export const useDevices = () => {
       return await deviceApi.deviceGetAll({ ids });
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
       return [];
     } finally {

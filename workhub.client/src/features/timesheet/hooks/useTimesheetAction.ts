@@ -22,7 +22,7 @@ export const useTimesheetAction = () => {
       cb?.(data);
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);

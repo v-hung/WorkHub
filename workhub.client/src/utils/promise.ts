@@ -2,10 +2,11 @@ import { getMessageError } from "./error.utils";
 import { getNotification } from "../contexts/feedback/FeedbackProvider";
 
 export const wrapPromise = async <T>(callback: () => Promise<T>) => {
-  return callback().catch((e) => {
-    getNotification()?.error({
-      message: getMessageError(e),
-    });
-    return undefined;
-  });
+  try {
+    return await callback();
+  } catch (error) {
+    const message = await getMessageError(error);
+    getNotification()?.error({ message });
+    // throw error;
+  }
 };

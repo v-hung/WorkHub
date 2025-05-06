@@ -3,8 +3,20 @@ import NotificationTable from "@/features/notification/components/NotificationTa
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
+import { wrapPromise } from "@/utils/promise";
+import { requestApi } from "@/services/apiClient";
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapLoaderWithPermission(
+  async ({ params }, { permissions }) => {
+    const { id } = params;
+
+    // const data = await wrapPromise(() =>
+    // 	requestApi.({ id: +id })
+    // );
+
+    // return data;
+  }
+);
 
 export function Component() {
   return (

@@ -36,7 +36,7 @@ export const useWorkTimes = () => {
       setWorkTimePaginated(data);
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -61,7 +61,7 @@ export const useWorkTimes = () => {
       return await workTimeApi.workTimeGetAll({ ids });
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
       return [];
     } finally {

@@ -39,7 +39,7 @@ export const useDeviceCategories = () => {
       setDeviceCategoryPaginated(data);
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -64,7 +64,7 @@ export const useDeviceCategories = () => {
       return await deviceCategoryApi.deviceCategoryGetAll({ ids });
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
       return [];
     } finally {

@@ -35,7 +35,7 @@ export const useRoles = () => {
       setRolePaginated(data);
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -60,7 +60,7 @@ export const useRoles = () => {
       return await roleApi.roleGetAllByNames({ names: names });
     } catch (e) {
       notification.error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
       return [];
     } finally {

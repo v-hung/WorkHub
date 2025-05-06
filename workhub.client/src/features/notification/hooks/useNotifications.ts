@@ -33,7 +33,7 @@ export const useNotifications = () => {
         setNotificationCursorPaginated(data);
       } catch (e) {
         notification.error({
-          message: getMessageError(e),
+          message: await getMessageError(e),
         });
       } finally {
         setLoading(false);

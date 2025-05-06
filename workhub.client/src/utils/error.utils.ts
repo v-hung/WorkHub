@@ -1,17 +1,16 @@
-import { ErrorResponse, ErrorValidateResponse } from "@/generate-api";
+import {
+  ErrorResponse,
+  ErrorValidateResponse,
+  ResponseError,
+} from "@/generate-api";
 import i18n from "./i18n";
 
-export const getMessageError = (e: any): string => {
+export async function getMessageError(e: any): Promise<string> {
   try {
-    // if (!(e instanceof any)) throw e;
+    if (!(e instanceof ResponseError)) throw e;
 
-    console.log({ e });
-
-    let error = JSON.parse(e.body) as Partial<
-      ErrorResponse & ErrorValidateResponse
-    >;
-
-    console.log({ error });
+    const json = await e.response.json();
+    const error = json as Partial<ErrorResponse & ErrorValidateResponse>;
 
     if (error.message) return error.message;
     if (error.title) return error.title;
@@ -20,4 +19,4 @@ export const getMessageError = (e: any): string => {
   } catch {
     return i18n.t("message.error");
   }
-};
+}

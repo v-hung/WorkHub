@@ -50,7 +50,7 @@ export const useUserAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -78,7 +78,7 @@ export const useUserAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -98,7 +98,7 @@ export const useUserAction = () => {
       cb?.(data);
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -114,7 +114,7 @@ export const useUserAction = () => {
       return await userApi.userDelete({ id });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);

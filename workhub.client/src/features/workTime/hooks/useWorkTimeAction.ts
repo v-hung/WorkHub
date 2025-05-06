@@ -37,7 +37,7 @@ export const useWorkTimeAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       // setLoading(false);
@@ -63,7 +63,7 @@ export const useWorkTimeAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
@@ -82,7 +82,7 @@ export const useWorkTimeAction = () => {
       });
     } catch (e) {
       getNotification().error({
-        message: getMessageError(e),
+        message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
