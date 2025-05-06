@@ -3,13 +3,10 @@ import { memo, useEffect, useState, type ComponentProps, type FC } from "react";
 import { useAuthStore } from "@/stores/auth.store";
 import { useRequestContext } from "../../contexts/RequestContext";
 import {
-  CreateTimesheetAdjustmentRequestDtoCustomType,
-  useCreateTimesheetAdjustmentRequest,
-} from "../../hooks/useCreateTimesheetAdjustmentRequest";
-import {
-  CreateTimesheetAdjustmentRequestDto,
-  RequestType,
-} from "@/generate-api";
+  CreateLeaveRequestDtoCustomType,
+  useCreateLeaveRequest,
+} from "../../hooks/useCreateLeaveRequest";
+import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
 import MyDatePicker from "@/ui/form/MyDatePicker";
 import TextArea from "antd/es/input/TextArea";
 import MyRangeTimePicker from "@/ui/form/MyRangeTimePicker";
@@ -21,33 +18,27 @@ import { useTimesheetContext } from "@/features/timesheet/context/TimesheetConte
 
 type State = ComponentProps<typeof Modal>;
 
-const TimesheetAdjustmentRequest: FC<State> = (props) => {
+const LeaveRequestModel: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
   const { isOpen, closeRequest, date } = useRequestContext();
   const { getCurrentTimesheets: getTimesheets, isCurrentMonth } =
     useTimesheetContext();
-  const { loading, create, formDefault } =
-    useCreateTimesheetAdjustmentRequest();
+  const { loading, create, formDefault } = useCreateLeaveRequest();
 
   const workTime = useAuthStore((state) => state.user!.workTime);
 
-  const [form] = Form.useForm();
-  const [formState] = useState<CreateTimesheetAdjustmentRequestDtoCustomType>(
-    formDefault()
-  );
+  const [form] = Form.useForm<CreateLeaveRequestDtoCustomType>();
+  const [formState] = useState<CreateLeaveRequestDtoCustomType>(formDefault());
 
   const handleOk = () => {
     form.validateFields().then(async () => {
-      const formValues =
-        form.getFieldsValue() as CreateTimesheetAdjustmentRequestDtoCustomType;
+      const formValues = form.getFieldsValue();
 
-      const body: CreateTimesheetAdjustmentRequestDto = {
+      const body: CreateLeaveRequestDto = {
         ...formValues,
         breakStartDate: formValues.breakTime[0]!,
         breakEndDate: formValues.breakTime[1]!,
-        checkIn: formValues.workingTime[0]!,
-        checkOut: formValues.workingTime[1]!,
       };
 
       await create(body).then(() => {
@@ -65,15 +56,15 @@ const TimesheetAdjustmentRequest: FC<State> = (props) => {
   };
 
   useEffect(() => {
-    if (form && isOpen(RequestType.TimesheetAdjustmentRequest)) {
+    if (form && isOpen(RequestType.LeaveRequest)) {
       form.resetFields();
       form.setFieldsValue(formDefault(date));
     }
-  }, [date, form, isOpen(RequestType.TimesheetAdjustmentRequest)]);
+  }, [date, form, isOpen(RequestType.LeaveRequest)]);
 
   return (
     <Modal
-      open={isOpen(RequestType.TimesheetAdjustmentRequest)}
+      open={isOpen(RequestType.LeaveRequest)}
       {...rest}
       className={`${className}`}
       title="Leave Request"
@@ -86,7 +77,7 @@ const TimesheetAdjustmentRequest: FC<State> = (props) => {
         form={form}
         initialValues={formState}
         validateTrigger="onSubmit"
-        name="timesheetAdjustmentRequest"
+        name="leaveRequest"
         autoComplete="off"
         layout="horizontal"
         style={{ marginTop: "2rem" }}
@@ -129,22 +120,10 @@ const TimesheetAdjustmentRequest: FC<State> = (props) => {
         </Form.Item>
 
         <Form.Item
-          label="Working Time"
-          name="workingTime"
-          required
-          rules={[{ validator: requestValidateTime(workTime, true) }]}
-        >
-          <MyRangeTimePicker
-            disabledTime={() => requestDisabledTime(workTime)}
-            hideDisabledOptions
-            showSecond={false}
-          />
-        </Form.Item>
-
-        <Form.Item
           label="Break Time"
           name="breakTime"
-          rules={[{ validator: requestValidateTime(workTime) }]}
+          required
+          rules={[{ validator: requestValidateTime(workTime, true) }]}
         >
           <MyRangeTimePicker
             disabledTime={() => requestDisabledTime(workTime)}
@@ -165,6 +144,6 @@ const TimesheetAdjustmentRequest: FC<State> = (props) => {
   );
 };
 
-export default TimesheetAdjustmentRequest;
+export default LeaveRequestModel;
 
-export const TimesheetAdjustmentRequestMemo = memo(TimesheetAdjustmentRequest);
+export const LeaveRequestModelMemo = memo(LeaveRequestModel);

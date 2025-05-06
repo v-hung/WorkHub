@@ -8,14 +8,15 @@ import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 
-const TimesheetAdjustmentRequestLazy = lazy(
+const TimesheetAdjustmentRequestModelLazy = lazy(
   () =>
     import(
-      "@/features/request/components/TimesheetAdjustmentRequest/TimesheetAdjustmentRequest"
+      "@/features/request/components/TimesheetAdjustmentRequestModel/TimesheetAdjustmentRequestModel"
     )
 );
-const LeaveRequestLazy = lazy(
-  () => import("@/features/request/components/LeaveRequest/LeaveRequest")
+const LeaveRequestModelLazy = lazy(
+  () =>
+    import("@/features/request/components/LeaveRequestModel/LeaveRequestModel")
 );
 
 export const loader = wrapLoaderWithPermission();
@@ -40,8 +41,8 @@ export function Component() {
           </DefaultContent>
 
           <Suspense fallback={null}>
-            <LeaveRequestLazy />
-            <TimesheetAdjustmentRequestLazy />
+            <LeaveRequestModelLazy />
+            <TimesheetAdjustmentRequestModelLazy />
           </Suspense>
         </DefaultPage>
       </RequestProvider>

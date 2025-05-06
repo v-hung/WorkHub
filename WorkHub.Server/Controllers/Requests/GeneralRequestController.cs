@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Requests
 		[Authorize]
 		public async Task<ActionResult<RequestCombinedDto>> GetById(int id)
 		{
-			var result = await _mediator.Send(new GetRequestByIdQuery<RequestCombinedDto> { Id = id });
+			var result = await _mediator.Send(new GetRequestByIdQuery { Id = id });
 
 			return Ok(result);
 		}

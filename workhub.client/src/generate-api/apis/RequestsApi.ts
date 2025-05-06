@@ -34,6 +34,10 @@ import {
     RequestCombinedDtoToJSON,
 } from '../models/index';
 
+export interface GeneralRequestGetByIdRequest {
+    id: number;
+}
+
 export interface LeaveRequestApprovalRequestRequest {
     id: number;
 }
@@ -70,6 +74,41 @@ export interface TimesheetAdjustmentRequestRejectRequestRequest {
  * 
  */
 export class RequestsApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async generalRequestGetByIdRaw(requestParameters: GeneralRequestGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling generalRequestGetById().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // Bearer authentication
+        }
+
+        const response = await this.request({
+            path: `/api/requests/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async generalRequestGetById(requestParameters: GeneralRequestGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+        const response = await this.generalRequestGetByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      */

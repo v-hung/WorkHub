@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNotificationStore } from "@/stores/notification.store";
 import { getMenuItems } from "../constants/menu";
@@ -7,12 +7,7 @@ import { useAuthStore } from "@/stores/auth.store";
 export const useMenu = () => {
   const { t } = useTranslation();
   const unReadCount = useNotificationStore((state) => state.unReadCount);
-  const loadReadCount = useNotificationStore((state) => state.load);
   const permissions = useAuthStore((state) => state.permissions);
-
-  useEffect(() => {
-    loadReadCount();
-  }, [loadReadCount]);
 
   const menuItems = useMemo(() => {
     const menus = getMenuItems(t, unReadCount) ?? [];

@@ -36,6 +36,8 @@ public static class ServiceCollectionExtensions
 		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
 		services.AddScoped<ITimesheetService, TimesheetService>();
 
+		// requests
+		services.AddScoped<IRequestRepository, RequestRepository>();
 		services.AddScoped<IRequestService<CreateLeaveRequestDto>, LeaveRequestService>();
 		services.AddScoped<IRequestService<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestService>();
 

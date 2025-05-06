@@ -1,0 +1,36 @@
+using System.Net;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using WorkHub.Application.Exceptions;
+using WorkHub.Application.Interfaces.Repositories;
+using WorkHub.Infrastructure.Data;
+
+namespace WorkHub.Infrastructure.Repositories
+{
+	public class RequestRepository : IRequestRepository
+	{
+		private readonly ApplicationDbContext _context;
+		protected readonly IStringLocalizer<RequestRepository> _localizer;
+		private readonly IMapper _mapper;
+
+		public RequestRepository(ApplicationDbContext context, IStringLocalizer<RequestRepository> localizer, IMapper mapper)
+
+		{
+			_context = context;
+			_localizer = localizer;
+			_mapper = mapper;
+		}
+
+		public async Task<D> GetByIdAsync<D>(int id) where D : class
+		{
+			var request = await _context.Requests
+				.Include(r => r.User)
+				.Include(r => r.Approved)
+				.Include(r => r.Timesheet)
+				.FirstOrDefaultAsync(r => r.Id == id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
+
+			return _mapper.Map<D>(request);
+		}
+	}
+}

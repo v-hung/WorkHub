@@ -10,11 +10,9 @@ namespace WorkHub.Application.DTOs.Requests
 		// Navigation properties
 
 		[Required]
-		[InverseProperty("Requests")]
 		public required UserMinimalDto User { get; set; }
 
 		[Required]
-		[InverseProperty("ApprovedRequests")]
 		public required UserMinimalDto Approved { get; set; }
 
 		[Required]

@@ -2,9 +2,7 @@
 
 using System.Reflection;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WorkHub.Application.Configs;
 using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Features.Approvals.Commands;
 using WorkHub.Application.Features.Requests.Commands;

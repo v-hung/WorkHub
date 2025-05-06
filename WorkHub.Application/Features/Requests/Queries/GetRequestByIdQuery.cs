@@ -1,27 +1,28 @@
 using MediatR;
+using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Domain.Entities.Audit;
 using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Application.Features.Requests.Queries
 {
-	public class GetRequestByIdQuery<D> : IRequest<D> where D : class, IEntity<int>
+	public class GetRequestByIdQuery : IRequest<RequestCombinedDto>
 	{
 		public int Id { get; set; }
 	}
 
-	public class GetRequestByIdQueryHandler<D> : IRequestHandler<GetRequestByIdQuery<D>, D> where D : class, IEntity<int>
+	public class GetRequestByIdQueryHandler : IRequestHandler<GetRequestByIdQuery, RequestCombinedDto>
 	{
-		private readonly IRepository<Request, int> _repository;
+		private readonly IRequestRepository _requestRepository;
 
-		public GetRequestByIdQueryHandler(IRepository<Request, int> repository)
+		public GetRequestByIdQueryHandler(IRequestRepository requestRepository)
 		{
-			_repository = repository;
+			_requestRepository = requestRepository;
 		}
 
-		public async Task<D> Handle(GetRequestByIdQuery<D> query, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDto> Handle(GetRequestByIdQuery query, CancellationToken cancellationToken)
 		{
-			var data = await _repository.GetByIdAsync<D, int>(query.Id);
+			var data = await _requestRepository.GetByIdAsync<RequestCombinedDto>(query.Id);
 
 			return data;
 		}

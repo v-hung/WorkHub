@@ -16,11 +16,11 @@ namespace WorkHub.Server.Hubs
 		}
 
 		[Authorize]
-		public async Task RequestUnreadCount()
+		public async Task RequestUnReadCount()
 		{
 			var data = await _mediator.Send(new GetUnreadCountQuery());
 
-			await Clients.Caller.SendAsync("SendUnreadCount", data);
+			await Clients.Caller.SendAsync("SendUnReadCount", data);
 		}
 	}
 }

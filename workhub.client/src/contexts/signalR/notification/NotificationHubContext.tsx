@@ -45,7 +45,7 @@ export const NotificationHubProvider: FC<PropsWithChildren> = ({
       .start()
       .then(() => {
         setIsConnected(true);
-        connection.invoke("RequestUnreadCount");
+        connection.invoke("RequestUnReadCount");
         console.log("Connected to NotificationHub hub");
       })
       .catch((err) => console.error("NotificationHub connection error: ", err));
