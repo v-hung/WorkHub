@@ -40,19 +40,17 @@ export const useAuthStore = create<AuthStoreState>()(
       //   user: USER,
       // });
 
-      try {
-        const user = await accountApi
-          .accountLogin({ loginRequest: credentials })
-          .then((res) => res.user);
+      const user = await accountApi
+        .accountLogin({ loginRequest: credentials })
+        .then((res) => res.user);
 
-        const rawPermissions = await accountApi.accountGetPermissions();
+      const rawPermissions = await accountApi.accountGetPermissions();
 
-        const permissions: Permission[] = rawPermissions.map(
-          (p) => p as Permission
-        );
+      const permissions: Permission[] = rawPermissions.map(
+        (p) => p as Permission
+      );
 
-        set({ user, permissions, isFirstLoaded: true });
-      } catch (error) {}
+      set({ user, permissions, isFirstLoaded: true });
     },
 
     logout: async () => {

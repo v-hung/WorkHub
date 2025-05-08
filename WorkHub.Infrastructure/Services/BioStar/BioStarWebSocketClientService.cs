@@ -125,12 +125,8 @@ namespace WorkHub.Infrastructure.Services.BioStar
 		{
 			if (_clientWebSocket.State == WebSocketState.Closed || _clientWebSocket.State == WebSocketState.Aborted)
 			{
-				var connect = await ConnectAsync(cancellationToken);
-				if (connect)
-				{
-					await ReceiveMessagesAsync(cancellationToken);
-					_logger.LogInformation("Reconnected to BioStar WebSocket.");
-				}
+				await ConnectAsync(cancellationToken);
+				_logger.LogInformation("Reconnected to BioStar WebSocket.");
 			}
 
 			return _clientWebSocket.State;

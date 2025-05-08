@@ -1,13 +1,12 @@
 import { getMessageError } from "@/utils/error.utils";
 import { UserDtoPaginated, UserSearchRequest } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
-import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 
 export const useUsers = () => {
   const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
-  const { notification } = App.useApp();
 
   // GET LIST USER
   // =============
@@ -28,19 +27,19 @@ export const useUsers = () => {
     searchString: "",
   });
 
-  const fetchPaginatedUsers = useCallback(async () => {
-    setLoading(true);
+  const fetchPaginatedUsers = async (request: UserSearchRequest) => {
     try {
+      setLoading(true);
       const data = await userApi.userSearch(request);
       setUserPaginated(data);
     } catch (e) {
-      notification.error({
+      getNotification().error({
         message: await getMessageError(e),
       });
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
   useEffect(() => {
     if (!mounted.current) {
@@ -48,7 +47,7 @@ export const useUsers = () => {
       return;
     }
 
-    fetchPaginatedUsers();
+    fetchPaginatedUsers(request);
   }, [request]);
 
   // GET All USER
@@ -59,7 +58,7 @@ export const useUsers = () => {
     try {
       return await userApi.userGetAll({ ids });
     } catch (e) {
-      notification.error({
+      getNotification().error({
         message: await getMessageError(e),
       });
       return [];
