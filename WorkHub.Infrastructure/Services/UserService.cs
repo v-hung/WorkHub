@@ -75,13 +75,16 @@ namespace WorkHub.Infrastructure.Services
 			// Navigation
 			query = query.Include(u => u.WorkTime).Include(u => u.Supervisor).Include(u => u.Team);
 
-			// Pagination
-			query = query.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
+			// Total Records
+			var totalRecords = await query.CountAsync();
 
 			// Mapping to DTO & Return
-			List<D> users = await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
+			List<D> users = await query
+				.Skip((request.PageNumber - 1) * request.PageSize)
+				.Take(request.PageSize)
+				.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 
-			return new Paginated<D>(users, await query.CountAsync(), request.PageNumber, request.PageSize);
+			return new Paginated<D>(users, totalRecords, request.PageNumber, request.PageSize);
 		}
 
 		public async Task<D> GetAsync<D, DId>(DId userId) where D : IEntity<DId> where DId : notnull

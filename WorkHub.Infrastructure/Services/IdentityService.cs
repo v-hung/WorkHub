@@ -35,7 +35,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 
 	public async Task<LoginResponse<D>> LoginAsync<D>(LoginRequest request) where D : class, IRoleAudit<string>
 	{
-		var user = await _userManager.FindByNameAsync(request.Email)
+		var user = await _userManager.FindByEmailAsync(request.Email)
 			?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exit");
 
 		var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);

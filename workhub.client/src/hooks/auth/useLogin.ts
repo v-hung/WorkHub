@@ -24,7 +24,7 @@ export const useLogin = () => {
       navigate(redirectUrl);
     } catch (error) {
       getNotification().error({
-        message: getMessageError(error),
+        message: await getMessageError(error),
       });
     } finally {
       setLoading(false);

@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using LinqKit;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -19,6 +20,7 @@ using WorkHub.Application.Models.SignalR.Notification.DTOs;
 using WorkHub.Application.Requests.BioStar;
 using WorkHub.Application.Responses.BioStar;
 using WorkHub.Domain.Constants.BioStar;
+using WorkHub.Domain.Constants.Identity;
 using WorkHub.Domain.Entities.Identity;
 using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Enums;
@@ -35,10 +37,11 @@ namespace WorkHub.Infrastructure.BioStar.Services
 		private readonly ApplicationDbContext _context;
 		private readonly IUserService _userService;
 		private readonly INotificationSender _notificationSender;
+		private readonly UserManager<User> _userManager;
 		private readonly IMemoryCache _memoryCache;
 		private const string AccessTokenCacheKey = "BioStarAccessToken";
 
-		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context, INotificationSender notificationSender, IUserService userService)
+		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context, INotificationSender notificationSender, IUserService userService, UserManager<User> userManager)
 		{
 			_httpClientFactory = httpClientFactory;
 			_logger = logger;
@@ -48,6 +51,7 @@ namespace WorkHub.Infrastructure.BioStar.Services
 			_memoryCache = memoryCache;
 			_context = context;
 			_userService = userService;
+			_userManager = userManager;
 		}
 
 		public async Task<string?> GetAccessTokenAsync()
@@ -151,11 +155,12 @@ namespace WorkHub.Infrastructure.BioStar.Services
 					FullName = b.Name ?? $"bioStar_{b.UserId}",
 					UserStatus = UserStatus.INACTIVE,
 					RemainingLeaveMinutes = 0,
-					BioStarUserId = b.UserId,
+					BioStarUserId = b.UserId
 				}).ToList();
 
 				foreach (var user in userCreate)
 				{
+					user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, UserConst.DefaultPassword);
 					await _userService.GenerateAvatarForUser(user);
 				}
 
