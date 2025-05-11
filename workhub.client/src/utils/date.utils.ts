@@ -3,9 +3,9 @@ import {
   format as formatDate,
   formatDistance as formatDistanceDate,
   formatDuration as formatDurationDate,
+  formatDistanceStrict as formatDistanceStrictDate,
   FormatDurationOptions,
   Locale,
-  parse,
 } from "date-fns";
 import { enUS, vi } from "date-fns/locale";
 
@@ -24,6 +24,12 @@ export function formatDistance(startDate: Date, endDate: Date) {
   });
 }
 
+export function formatDistanceStrict(startDate: Date, endDate: Date) {
+  return formatDistanceStrictDate(startDate, endDate, {
+    locale: getCurrentDateLocale(),
+  });
+}
+
 export function formatDuration(
   duration: Duration,
   options?: FormatDurationOptions
@@ -35,10 +41,19 @@ export function formatDuration(
 }
 
 export function localTimeToDate(localTime: string) {
-  const today = new Date();
-  const dateTimeString = today.toISOString().split("T")[0] + `T${localTime}`;
+  const [hours, minutes, seconds] = localTime.split(":").map(Number);
+  return new Date(1970, 0, 1, hours, minutes, seconds);
+}
 
-  return parse(dateTimeString, "yyyy-MM-dd'T'HH:mm:ss", new Date());
+export function setTimeToDate(time: Date): Date {
+  return new Date(
+    1970,
+    0,
+    1,
+    time.getHours(),
+    time.getMinutes(),
+    time.getSeconds()
+  );
 }
 
 const getCurrentDateLocale = () => {

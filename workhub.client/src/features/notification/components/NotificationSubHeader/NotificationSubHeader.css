@@ -1,0 +1,10 @@
+.notification-sub-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #f8fafd;
+  padding: 0.25rem 0.5rem;
+  position: sticky;
+  top: calc(var(--header-height));
+  z-index: 1;
+}

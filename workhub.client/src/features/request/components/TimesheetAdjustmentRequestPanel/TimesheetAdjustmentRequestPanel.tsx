@@ -1,10 +1,18 @@
+import UserCard from "@/features/user/components/UserCard/UserCard";
+import { RequestCombinedDto } from "@/generate-api";
 import type { FC, HTMLAttributes } from "react";
 
-type State = HTMLAttributes<HTMLDivElement>;
+type State = HTMLAttributes<HTMLDivElement> & {
+  data: RequestCombinedDto;
+};
 
 const TimesheetAdjustmentRequestPanel: FC<State> = (props) => {
-  const { className = "", ...rest } = props;
-  return <div {...rest} className={`${className}`}></div>;
+  const { className = "", data, ...rest } = props;
+  return (
+    <div {...rest} className={`${className}`}>
+      <UserCard user={data.approved} />
+    </div>
+  );
 };
 
 export default TimesheetAdjustmentRequestPanel;

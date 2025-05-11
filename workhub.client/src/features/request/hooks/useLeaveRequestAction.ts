@@ -3,6 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateLeaveRequestDto,
   CreateLeaveRequestDtoFromJSON,
+  RequestCombinedDto,
   RequestType,
 } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
@@ -14,7 +15,7 @@ export type CreateLeaveRequestDtoCustomType = CreateLeaveRequestDto & {
   approvedName: string;
 };
 
-export const useCreateLeaveRequest = () => {
+export const useLeaveRequestAction = () => {
   const [loading, setLoading] = useState(false);
   const supervisor = useAuthStore((state) => state.user!.supervisor);
 
@@ -57,5 +58,59 @@ export const useCreateLeaveRequest = () => {
     }
   };
 
-  return { formDefault, loading, create };
+  // Create
+  // =============
+
+  const approval = async (
+    id: number,
+    cb?: (data: RequestCombinedDto) => void
+  ) => {
+    setLoading(true);
+    try {
+      const data = await requestApi.leaveRequestApprovalRequest({
+        id: id,
+      });
+
+      cb?.(data);
+
+      getNotification().success({
+        message: "Successfully completed",
+      });
+    } catch (e) {
+      getNotification().error({
+        message: await getMessageError(e),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Create
+  // =============
+
+  const reject = async (
+    id: number,
+    cb?: (data: RequestCombinedDto) => void
+  ) => {
+    setLoading(true);
+    try {
+      const data = await requestApi.leaveRequestRejectRequest({
+        id: id,
+      });
+
+      cb?.(data);
+
+      getNotification().success({
+        message: "Successfully completed",
+      });
+    } catch (e) {
+      getNotification().error({
+        message: await getMessageError(e),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { formDefault, loading, create, approval, reject };
 };

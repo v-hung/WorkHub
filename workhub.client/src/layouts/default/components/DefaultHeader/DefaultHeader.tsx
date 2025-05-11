@@ -2,6 +2,7 @@ import { Button, Layout } from "antd";
 import { ComponentProps, FC } from "react";
 import { useLayout } from "../../contexts/LayoutContext";
 import "./DefaultHeader.css";
+import { useStickyHeight } from "@/layouts/default/hooks/useStickyHeight";
 
 const { Header } = Layout;
 
@@ -9,6 +10,8 @@ type State = ComponentProps<typeof Header>;
 
 const DefaultHeader: FC<State> = (props) => {
   const { className, children, ...rest } = props;
+
+  useStickyHeight("--header-height", 72);
 
   const { collapsed, setCollapsed } = useLayout();
 

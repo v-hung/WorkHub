@@ -12,6 +12,7 @@ namespace WorkHub.Application.Mappings
 		public UserProfile()
 		{
 			CreateMap<User, UserMinimalDto>().ReverseMap();
+			CreateMap<User, UserMinimalWithWorkTimeDto>().ForMember(dest => dest.WorkTime, opt => opt.NullSubstitute(new WorkTime()));
 			CreateMap<User, UserDto>()
 				.ForMember(dest => dest.WorkTime, opt => opt.NullSubstitute(new WorkTime()))
 				.ReverseMap();

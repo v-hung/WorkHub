@@ -4,6 +4,12 @@
   align-items: center;
 }
 
-.user-card .card__title {
+.user-card .user-card__title {
   font-weight: 600;
+  margin: 0;
+}
+
+.user-card .user-card__text {
+  margin: 0;
+  font-size: 13px;
 }

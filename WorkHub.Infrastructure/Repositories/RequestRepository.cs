@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Repositories;
+using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Repositories
@@ -26,9 +27,17 @@ namespace WorkHub.Infrastructure.Repositories
 		{
 			var request = await _context.Requests
 				.Include(r => r.User)
+				.ThenInclude(u => u.WorkTime)
 				.Include(r => r.Approved)
-				.Include(r => r.Timesheet)
 				.FirstOrDefaultAsync(r => r.Id == id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
+
+			var notification = await _context.Notifications.FirstOrDefaultAsync(n => n.Category == NotificationCategory.REQUEST && n.RelatedEntityId == id.ToString());
+			if (notification != null)
+			{
+				notification.IsRead = true;
+				_context.Notifications.Update(notification);
+				await _context.SaveChangesAsync();
+			}
 
 			return _mapper.Map<D>(request);
 		}

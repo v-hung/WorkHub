@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Services;
+using WorkHub.Domain.Entities.Misc;
 using WorkHub.Domain.Entities.Requests;
 using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
@@ -31,7 +32,10 @@ namespace WorkHub.Infrastructure.Services.Approvals
 
 		public virtual async Task<D> ApproveRequestAsync<D>(int requestId) where D : class
 		{
-			TRequest request = await _context.Set<TRequest>().FindAsync(requestId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
+			TRequest request = await _context.Set<TRequest>().Include(r => r.User)
+				.ThenInclude(u => u.WorkTime)
+				.Include(r => r.Approved).FirstOrDefaultAsync(r => r.Id == requestId)
+				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
 			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedId.ToString()!))
 			{
@@ -45,9 +49,12 @@ namespace WorkHub.Infrastructure.Services.Approvals
 			return _mapper.Map<D>(request);
 		}
 
-		public async Task<D> RejectRequestAsync<D>(int requestId) where D : class
+		public virtual async Task<D> RejectRequestAsync<D>(int requestId) where D : class
 		{
-			TRequest request = _context.Set<TRequest>().Find(requestId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
+			TRequest request = await _context.Set<TRequest>().Include(r => r.User)
+				.ThenInclude(u => u.WorkTime)
+				.Include(r => r.Approved).FirstOrDefaultAsync(r => r.Id == requestId)
+				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
 			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedId.ToString()!))
 			{
@@ -59,6 +66,49 @@ namespace WorkHub.Infrastructure.Services.Approvals
 
 			await _context.SaveChangesAsync();
 			return _mapper.Map<D>(request);
+		}
+
+		protected async Task CreateRequestNotification(Request request)
+		{
+			string title;
+			string message;
+
+			switch (request.Status)
+			{
+				case RequestStatus.APPROVED:
+					title = _localizer["Request Approved"].Value;
+					message = _localizer["Your request has been approved."].Value;
+					break;
+
+				case RequestStatus.REJECTED:
+					title = _localizer["Request Rejected"].Value;
+					message = _localizer["Your request has been rejected."].Value;
+					break;
+
+				default:
+					return; // or throw new Exception("Unknown status");
+			}
+
+			Notification notification = new()
+			{
+				Title = title,
+				Message = message,
+				Category = NotificationCategory.REQUEST,
+				RelatedEntityId = request.Id.ToString(),
+				UserId = request.UserId
+			};
+
+			_context.Notifications.Add(notification);
+			await _context.SaveChangesAsync();
+
+			// await _notificationSender.SendToUserAsync(request.UserId.Value.ToString(), new BaseNotificationHubMessage
+			// 		{
+			// 			Data = new CheckInEventMessageDto
+			// 			{
+			// 				UserId = userId.Value.ToString(),
+			// 				CheckInTime = exitingTimesheet.StartTime ?? DateTime.UtcNow
+			// 			}
+			// 		});
 		}
 	}
 }

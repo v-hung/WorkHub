@@ -37,6 +37,8 @@ namespace WorkHub.Infrastructure.Services.Approvals
 				await _context.SaveChangesAsync();
 			}
 
+			await base.CreateRequestNotification(request);
+
 			return _mapper.Map<D>(request);
 		}
 	}

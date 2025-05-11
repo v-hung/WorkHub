@@ -64,7 +64,6 @@ models/TimesheetDto.ts
 models/TimesheetDtoTimesheetResponse.ts
 models/TimesheetFullDto.ts
 models/TimesheetFullDtoPaginated.ts
-models/TimesheetMinimalDto.ts
 models/UserCreateUpdateRequest.ts
 models/UserDetailDto.ts
 models/UserDto.ts
@@ -72,6 +71,7 @@ models/UserDtoLoginResponse.ts
 models/UserDtoPaginated.ts
 models/UserFullDto.ts
 models/UserMinimalDto.ts
+models/UserMinimalWithWorkTimeDto.ts
 models/UserPosition.ts
 models/UserStatus.ts
 models/WebSocketState.ts

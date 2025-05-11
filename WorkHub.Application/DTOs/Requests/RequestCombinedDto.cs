@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using WorkHub.Application.DTOs.Identity;
-using WorkHub.Application.DTOs.Time;
 
 namespace WorkHub.Application.DTOs.Requests
 {
@@ -10,12 +8,9 @@ namespace WorkHub.Application.DTOs.Requests
 		// Navigation properties
 
 		[Required]
-		public required UserMinimalDto User { get; set; }
+		public required UserMinimalWithWorkTimeDto User { get; set; }
 
 		[Required]
 		public required UserMinimalDto Approved { get; set; }
-
-		[Required]
-		public required TimesheetMinimalDto Timesheet { get; set; }
 	}
 }

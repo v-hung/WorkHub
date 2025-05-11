@@ -10,6 +10,7 @@ using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Domain.Entities.Requests;
 using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Services.Requests
@@ -31,6 +32,11 @@ namespace WorkHub.Infrastructure.Services.Requests
 			if (!await _approvalService.CanApproveRequestAsync(_currentUserService.UserId!, request.ApprovedId.ToString()))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["The specified approver is not authorized to approve this request."]);
+			}
+
+			if (_context.Requests.Any(r => r.UserId == Guid.Parse(_currentUserService.UserId!) && r.Date == request.Date && r.Status == RequestStatus.PENDING && r.RequestType == RequestType.TIMESHEET_ADJUSTMENT_REQUEST))
+			{
+				throw new BusinessException(HttpStatusCode.Conflict, _localizer["You already have a request for this date."]);
 			}
 
 			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date);

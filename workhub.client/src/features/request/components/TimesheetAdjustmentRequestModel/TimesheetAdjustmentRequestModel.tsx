@@ -4,8 +4,8 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useRequestContext } from "../../contexts/RequestContext";
 import {
   CreateTimesheetAdjustmentRequestDtoCustomType,
-  useCreateTimesheetAdjustmentRequest,
-} from "../../hooks/useCreateTimesheetAdjustmentRequest";
+  useTimesheetAdjustmentRequestAction,
+} from "../../hooks/useTimesheetAdjustmentRequestAction";
 import {
   CreateTimesheetAdjustmentRequestDto,
   RequestType,
@@ -28,7 +28,7 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
   const { getCurrentTimesheets: getTimesheets, isCurrentMonth } =
     useTimesheetContext();
   const { loading, create, formDefault } =
-    useCreateTimesheetAdjustmentRequest();
+    useTimesheetAdjustmentRequestAction();
 
   const workTime = useAuthStore((state) => state.user!.workTime);
 

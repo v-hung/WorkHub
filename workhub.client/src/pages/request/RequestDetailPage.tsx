@@ -7,6 +7,7 @@ import { requestApi } from "@/services/apiClient";
 import { redirect, useLoaderData } from "react-router";
 import { RequestCombinedDto, RequestType } from "@/generate-api";
 import { JSX, lazy, Suspense } from "react";
+import NotificationSubHeader from "@/features/notification/components/NotificationSubHeader/NotificationSubHeader";
 
 const LeaveRequestPanelLazy = lazy(
   () =>
@@ -37,12 +38,12 @@ export function Component() {
   const data = useLoaderData() as RequestCombinedDto;
 
   const requestTypePages: Record<RequestType, JSX.Element> = {
-    [RequestType.LeaveRequest]: <LeaveRequestPanelLazy />,
+    [RequestType.LeaveRequest]: <LeaveRequestPanelLazy data={data} />,
     [RequestType.TimesheetAdjustmentRequest]: (
-      <TimesheetAdjustmentRequestLazy />
+      <TimesheetAdjustmentRequestLazy data={data} />
     ),
-    [RequestType.OvertimeRequest]: <LeaveRequestPanelLazy />,
-    [RequestType.WorkFromHomeRequest]: <LeaveRequestPanelLazy />,
+    [RequestType.OvertimeRequest]: <LeaveRequestPanelLazy data={data} />,
+    [RequestType.WorkFromHomeRequest]: <LeaveRequestPanelLazy data={data} />,
   };
 
   const renderPage = requestTypePages[data.requestType] || (
@@ -50,10 +51,15 @@ export function Component() {
   );
 
   return (
-    <DefaultPage pageClassName="h-screen">
+    <DefaultPage>
       <DefaultHeader title="Notifications"></DefaultHeader>
 
+      <NotificationSubHeader title="New Request Submitted" />
+
       <DefaultContent>
+        <p style={{ margin: "1rem 0", fontSize: "18px" }}>
+          You have a new request to approve.
+        </p>
         <Suspense fallback={<div>Loading...</div>}>{renderPage}</Suspense>
       </DefaultContent>
     </DefaultPage>

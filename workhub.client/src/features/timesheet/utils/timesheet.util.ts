@@ -1,4 +1,4 @@
-import { localTimeToDate } from "@/utils/date.utils";
+import { localTimeToDate, setTimeToDate } from "@/utils/date.utils";
 import { WorkTimeDto } from "@/generate-api";
 import { isAfter, differenceInSeconds, add, isBefore } from "date-fns";
 
@@ -8,6 +8,9 @@ export function calculateWorkDay(
   workTime: WorkTimeDto
 ): number {
   let totalWorkingSeconds = 0;
+
+  startTime = setTimeToDate(startTime);
+  endTime = setTimeToDate(endTime);
 
   const startTimeMorning = localTimeToDate(workTime.startTimeMorning);
   const endTimeMorning = localTimeToDate(workTime.endTimeMorning);

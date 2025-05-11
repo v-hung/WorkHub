@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { TimesheetMinimalDto } from './TimesheetMinimalDto';
+import type { UserMinimalWithWorkTimeDto } from './UserMinimalWithWorkTimeDto';
 import {
-    TimesheetMinimalDtoFromJSON,
-    TimesheetMinimalDtoFromJSONTyped,
-    TimesheetMinimalDtoToJSON,
-    TimesheetMinimalDtoToJSONTyped,
-} from './TimesheetMinimalDto';
+    UserMinimalWithWorkTimeDtoFromJSON,
+    UserMinimalWithWorkTimeDtoFromJSONTyped,
+    UserMinimalWithWorkTimeDtoToJSON,
+    UserMinimalWithWorkTimeDtoToJSONTyped,
+} from './UserMinimalWithWorkTimeDto';
 import type { UserMinimalDto } from './UserMinimalDto';
 import {
     UserMinimalDtoFromJSON,
@@ -110,22 +110,16 @@ export interface RequestCombinedDto {
     checkOut: Date;
     /**
      * 
-     * @type {UserMinimalDto}
+     * @type {UserMinimalWithWorkTimeDto}
      * @memberof RequestCombinedDto
      */
-    user: UserMinimalDto;
+    user: UserMinimalWithWorkTimeDto;
     /**
      * 
      * @type {UserMinimalDto}
      * @memberof RequestCombinedDto
      */
     approved: UserMinimalDto;
-    /**
-     * 
-     * @type {TimesheetMinimalDto}
-     * @memberof RequestCombinedDto
-     */
-    timesheet: TimesheetMinimalDto;
 }
 
 
@@ -146,7 +140,6 @@ export function instanceOfRequestCombinedDto(value: object): value is RequestCom
     if (!('checkOut' in value) || value['checkOut'] === undefined) return false;
     if (!('user' in value) || value['user'] === undefined) return false;
     if (!('approved' in value) || value['approved'] === undefined) return false;
-    if (!('timesheet' in value) || value['timesheet'] === undefined) return false;
     return true;
 }
 
@@ -170,9 +163,8 @@ export function RequestCombinedDtoFromJSONTyped(json: any, ignoreDiscriminator: 
         'breakEndDate': (new Date(json['breakEndDate'])),
         'checkIn': (new Date(json['checkIn'])),
         'checkOut': (new Date(json['checkOut'])),
-        'user': UserMinimalDtoFromJSON(json['user']),
+        'user': UserMinimalWithWorkTimeDtoFromJSON(json['user']),
         'approved': UserMinimalDtoFromJSON(json['approved']),
-        'timesheet': TimesheetMinimalDtoFromJSON(json['timesheet']),
     };
 }
 
@@ -197,9 +189,8 @@ export function RequestCombinedDtoToJSONTyped(value?: RequestCombinedDto | null,
         'breakEndDate': ((value['breakEndDate']).toISOString()),
         'checkIn': ((value['checkIn']).toISOString()),
         'checkOut': ((value['checkOut']).toISOString()),
-        'user': UserMinimalDtoToJSON(value['user']),
+        'user': UserMinimalWithWorkTimeDtoToJSON(value['user']),
         'approved': UserMinimalDtoToJSON(value['approved']),
-        'timesheet': TimesheetMinimalDtoToJSON(value['timesheet']),
     };
 }
 
