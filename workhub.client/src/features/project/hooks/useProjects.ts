@@ -2,10 +2,9 @@ import { getMessageError } from "@/utils/error.utils";
 import { ProjectDtoPaginated, ProjectSearchRequest } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useProjects = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -27,10 +26,10 @@ export const useProjects = () => {
   const [request, setRequest] = useState<ProjectSearchRequest>({
     pageNumber: projectPaginated.currentPage,
     pageSize: projectPaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
-  const fetchPaginatedProjects = useCallback(async () => {
+  const fetchPaginatedProjects = async (request: ProjectSearchRequest) => {
     setLoading(true);
     try {
       const data = await projectApi.projectSearch(request);
@@ -42,16 +41,18 @@ export const useProjects = () => {
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<ProjectSearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedProjects();
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedProjects(newRequest);
+    },
+    [request]
+  );
 
   // GET All
   // ==============
@@ -77,5 +78,6 @@ export const useProjects = () => {
     request,
     setRequest,
     fetchProjects,
+    updateRequest,
   };
 };

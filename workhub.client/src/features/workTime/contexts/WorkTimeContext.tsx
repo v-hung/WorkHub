@@ -1,6 +1,5 @@
 import {
   createContext,
-  Dispatch,
   FC,
   PropsWithChildren,
   SetStateAction,
@@ -12,7 +11,7 @@ import { WorkTimeDtoPaginated, WorkTimeSearchRequest } from "@/generate-api";
 
 type WorkTimesContextType = {
   workTimePaginated: WorkTimeDtoPaginated;
-  setRequest: Dispatch<SetStateAction<WorkTimeSearchRequest>>;
+  updateRequest: (updater: SetStateAction<WorkTimeSearchRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };
@@ -20,12 +19,12 @@ type WorkTimesContextType = {
 const WorkTimesContext = createContext<WorkTimesContextType | null>(null);
 
 export const WorkTimeProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { workTimePaginated, setRequest, loading } = useWorkTimes();
+  const { workTimePaginated, updateRequest, loading } = useWorkTimes();
   const { deleteRecord } = useWorkTimeAction();
 
   return (
     <WorkTimesContext.Provider
-      value={{ workTimePaginated, setRequest, loading, deleteRecord }}
+      value={{ workTimePaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </WorkTimesContext.Provider>

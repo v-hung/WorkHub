@@ -60,12 +60,12 @@ export const teamTableColumns: TableProps<TeamDto>["columns"] = [
 ];
 
 const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useTeamContext();
+  const { updateRequest, deleteRecord } = useTeamContext();
 
   const confirm = async () => {
     await deleteRecord(id);
 
-    setRequest((state) => ({
+    updateRequest((state) => ({
       ...state,
       pageNumber: 1,
     }));

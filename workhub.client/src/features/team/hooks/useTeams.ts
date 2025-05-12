@@ -2,10 +2,9 @@ import { getMessageError } from "@/utils/error.utils";
 import { TeamDtoPaginated, TeamSearchRequest } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useTeams = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -25,10 +24,10 @@ export const useTeams = () => {
   const [request, setRequest] = useState<TeamSearchRequest>({
     pageNumber: teamPaginated.currentPage,
     pageSize: teamPaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
-  const fetchPaginatedTeams = useCallback(async () => {
+  const fetchPaginatedTeams = async (request: TeamSearchRequest) => {
     setLoading(true);
     try {
       const data = await teamApi.teamSearch(request);
@@ -40,16 +39,18 @@ export const useTeams = () => {
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<TeamSearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedTeams();
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedTeams(newRequest);
+    },
+    [request]
+  );
 
   // GET All
   // ==============
@@ -75,5 +76,6 @@ export const useTeams = () => {
     request,
     setRequest,
     fetchTeams,
+    updateRequest,
   };
 };

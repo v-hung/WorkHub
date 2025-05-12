@@ -12,7 +12,7 @@ import { useRoleAction } from "../hooks/useRoleAction";
 
 type RolesContextType = {
   rolePaginated: RoleDtoPaginated;
-  setRequest: Dispatch<SetStateAction<RoleSearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<RoleSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;
 };
@@ -20,12 +20,12 @@ type RolesContextType = {
 const RolesContext = createContext<RolesContextType | null>(null);
 
 export const RoleProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { rolePaginated, setRequest, loading } = useRoles();
+  const { rolePaginated, updateRequest, loading } = useRoles();
   const { deleteRecord } = useRoleAction();
 
   return (
     <RolesContext.Provider
-      value={{ rolePaginated, setRequest, loading, deleteRecord }}
+      value={{ rolePaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </RolesContext.Provider>

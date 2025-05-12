@@ -1,11 +1,10 @@
 import { getMessageError } from "@/utils/error.utils";
 import { UserDtoPaginated, UserSearchRequest } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 
 export const useUsers = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
 
   // GET LIST USER
@@ -24,7 +23,7 @@ export const useUsers = () => {
   const [request, setRequest] = useState<UserSearchRequest>({
     pageNumber: userPaginated.currentPage,
     pageSize: userPaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
   const fetchPaginatedUsers = async (request: UserSearchRequest) => {
@@ -41,14 +40,16 @@ export const useUsers = () => {
     }
   };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<UserSearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedUsers(request);
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedUsers(newRequest);
+    },
+    [request]
+  );
 
   // GET All USER
   // ==============
@@ -74,5 +75,6 @@ export const useUsers = () => {
     request,
     setRequest,
     fetchUsers,
+    updateRequest,
   };
 };

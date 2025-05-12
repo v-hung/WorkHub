@@ -2,10 +2,9 @@ import { getMessageError } from "@/utils/error.utils";
 import { WorkTimeDtoPaginated, WorkTimeSearchRequest } from "@/generate-api";
 import { workTimeApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useWorkTimes = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -26,10 +25,10 @@ export const useWorkTimes = () => {
   const [request, setRequest] = useState<WorkTimeSearchRequest>({
     pageNumber: workTimePaginated.currentPage,
     pageSize: workTimePaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
-  const fetchPaginatedWorkTimes = useCallback(async () => {
+  const fetchPaginatedWorkTimes = async (request: WorkTimeSearchRequest) => {
     setLoading(true);
     try {
       const data = await workTimeApi.workTimeSearch(request);
@@ -41,16 +40,18 @@ export const useWorkTimes = () => {
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<WorkTimeSearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedWorkTimes();
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedWorkTimes(newRequest);
+    },
+    [request]
+  );
 
   // GET All
   // ==============
@@ -76,5 +77,6 @@ export const useWorkTimes = () => {
     request,
     setRequest,
     fetchWorkTimes,
+    updateRequest,
   };
 };

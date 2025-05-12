@@ -12,7 +12,7 @@ import { UserDtoPaginated, UserSearchRequest } from "@/generate-api";
 
 type UserContextType = {
   userPaginated: UserDtoPaginated;
-  setRequest: Dispatch<SetStateAction<UserSearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<UserSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;
 };
@@ -20,12 +20,12 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { userPaginated, setRequest, loading } = useUsers();
+  const { userPaginated, updateRequest, loading } = useUsers();
   const { deleteRecord } = useUserAction();
 
   return (
     <UserContext.Provider
-      value={{ userPaginated, setRequest, loading, deleteRecord }}
+      value={{ userPaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </UserContext.Provider>

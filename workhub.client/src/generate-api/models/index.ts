@@ -41,6 +41,8 @@ export * from './RoleCreateUpdateRequest';
 export * from './RoleDto';
 export * from './RoleDtoPaginated';
 export * from './RoleFullDto';
+export * from './SearchCondition';
+export * from './SearchOperator';
 export * from './SendTestNotificationCommand';
 export * from './SystemNotificationMessageDto';
 export * from './SystemNotificationMessageSeverity';

@@ -15,7 +15,7 @@ import {
 
 type DeviceCategoriesContextType = {
   deviceCategoryPaginated: DeviceCategoryDtoPaginated;
-  setRequest: Dispatch<SetStateAction<DeviceCategorySearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<DeviceCategorySearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };
@@ -24,13 +24,13 @@ const DeviceCategoriesContext =
   createContext<DeviceCategoriesContextType | null>(null);
 
 export const DeviceCategoryProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { deviceCategoryPaginated, setRequest, loading } =
+  const { deviceCategoryPaginated, updateRequest, loading } =
     useDeviceCategories();
   const { deleteRecord } = useDeviceCategoryAction();
 
   return (
     <DeviceCategoriesContext.Provider
-      value={{ deviceCategoryPaginated, setRequest, loading, deleteRecord }}
+      value={{ deviceCategoryPaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </DeviceCategoriesContext.Provider>

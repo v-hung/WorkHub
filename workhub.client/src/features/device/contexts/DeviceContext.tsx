@@ -12,7 +12,7 @@ import { DeviceDtoPaginated, DeviceSearchRequest } from "@/generate-api";
 
 type DevicesContextType = {
   devicePaginated: DeviceDtoPaginated;
-  setRequest: Dispatch<SetStateAction<DeviceSearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<DeviceSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };
@@ -20,12 +20,12 @@ type DevicesContextType = {
 const DevicesContext = createContext<DevicesContextType | null>(null);
 
 export const DeviceProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { devicePaginated, setRequest, loading } = useDevices();
+  const { devicePaginated, updateRequest, loading } = useDevices();
   const { deleteRecord } = useDeviceAction();
 
   return (
     <DevicesContext.Provider
-      value={{ devicePaginated, setRequest, loading, deleteRecord }}
+      value={{ devicePaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </DevicesContext.Provider>

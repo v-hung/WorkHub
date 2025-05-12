@@ -2,10 +2,9 @@ import { getMessageError } from "@/utils/error.utils";
 import { DeviceDtoPaginated, DeviceSearchRequest } from "@/generate-api";
 import { deviceApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useDevices = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -25,10 +24,10 @@ export const useDevices = () => {
   const [request, setRequest] = useState<DeviceSearchRequest>({
     pageNumber: devicePaginated.currentPage,
     pageSize: devicePaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
-  const fetchPaginatedDevices = useCallback(async () => {
+  const fetchPaginatedDevices = async (request: DeviceSearchRequest) => {
     setLoading(true);
     try {
       const data = await deviceApi.deviceSearch(request);
@@ -40,16 +39,18 @@ export const useDevices = () => {
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<DeviceSearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedDevices();
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedDevices(newRequest);
+    },
+    [request]
+  );
 
   // GET All
   // ==============
@@ -75,5 +76,6 @@ export const useDevices = () => {
     request,
     setRequest,
     fetchDevices,
+    updateRequest,
   };
 };

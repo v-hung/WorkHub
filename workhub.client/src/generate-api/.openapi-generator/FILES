@@ -53,6 +53,8 @@ models/RoleCreateUpdateRequest.ts
 models/RoleDto.ts
 models/RoleDtoPaginated.ts
 models/RoleFullDto.ts
+models/SearchCondition.ts
+models/SearchOperator.ts
 models/SendTestNotificationCommand.ts
 models/SystemNotificationMessageDto.ts
 models/SystemNotificationMessageSeverity.ts

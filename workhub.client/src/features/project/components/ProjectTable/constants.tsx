@@ -90,12 +90,12 @@ export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
 ];
 
 const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useProjectsContext();
+  const { updateRequest, deleteRecord } = useProjectsContext();
 
   const confirm = async () => {
     await deleteRecord(id);
 
-    setRequest((state) => ({
+    updateRequest((state) => ({
       ...state,
       pageNumber: 1,
     }));

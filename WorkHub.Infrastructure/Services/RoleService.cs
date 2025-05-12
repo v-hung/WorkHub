@@ -16,6 +16,7 @@ using WorkHub.Application.Requests;
 using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using WorkHub.Domain.Constants.Permission;
+using WorkHub.Infrastructure.Extensions;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -51,18 +52,16 @@ namespace WorkHub.Infrastructure.Services
 			var query = _context.Roles.AsQueryable();
 
 			// Filtering
-			if (!string.IsNullOrWhiteSpace(request.SearchString))
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			if (predicate != null)
 			{
-				if (request.SearchString != null)
-				{
-					query = query.Where(u => !string.IsNullOrEmpty(u.Name) && u.Name.Contains(request.SearchString));
-				}
+				query = query.Where(predicate);
 			}
 
 			// Sorting
-			if (request.OrderBy?.Any() == true)
+			if (request.OrderBy != null)
 			{
-				query = query.OrderBy(request.OrderByString);
+				query = query.OrderBy(request.OrderBy);
 			}
 			else
 			{

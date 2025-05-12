@@ -19,6 +19,7 @@ import type {
   ErrorResponse,
   ErrorValidateResponse,
   NotificationDtoCursorPaginated,
+  SearchCondition,
   SendTestNotificationCommand,
 } from '../models/index';
 import {
@@ -30,6 +31,8 @@ import {
     ErrorValidateResponseToJSON,
     NotificationDtoCursorPaginatedFromJSON,
     NotificationDtoCursorPaginatedToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
     SendTestNotificationCommandFromJSON,
     SendTestNotificationCommandToJSON,
 } from '../models/index';
@@ -38,7 +41,7 @@ export interface NotificationSearchRequest {
     cursorId?: number;
     cursorPagedRequestDirection?: CursorPagedRequestDirection;
     newestFirst?: boolean;
-    searchString?: string;
+    searchConditions?: Array<SearchCondition>;
 }
 
 export interface NotificationSendTestNotificationRequest {
@@ -99,8 +102,8 @@ export class NotificationApi extends runtime.BaseAPI {
             queryParameters['NewestFirst'] = requestParameters['newestFirst'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

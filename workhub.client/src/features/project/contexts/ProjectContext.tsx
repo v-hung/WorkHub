@@ -12,7 +12,7 @@ import { ProjectDtoPaginated, ProjectSearchRequest } from "@/generate-api";
 
 type ProjectsContextType = {
   projectPaginated: ProjectDtoPaginated;
-  setRequest: Dispatch<SetStateAction<ProjectSearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<ProjectSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };
@@ -20,12 +20,12 @@ type ProjectsContextType = {
 const ProjectsContext = createContext<ProjectsContextType | null>(null);
 
 export const ProjectProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { projectPaginated, setRequest, loading } = useProjects();
+  const { projectPaginated, updateRequest, loading } = useProjects();
   const { deleteRecord } = useProjectAction();
 
   return (
     <ProjectsContext.Provider
-      value={{ projectPaginated, setRequest, loading, deleteRecord }}
+      value={{ projectPaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </ProjectsContext.Provider>

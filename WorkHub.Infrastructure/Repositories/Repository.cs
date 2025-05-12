@@ -12,6 +12,7 @@ using WorkHub.Domain.Entities.Audit;
 using WorkHub.Infrastructure.Data;
 using WorkHub.Application.Exceptions;
 using System.Reflection;
+using WorkHub.Infrastructure.Extensions;
 
 namespace WorkHub.Infrastructure.Repositories
 {
@@ -69,35 +70,16 @@ namespace WorkHub.Infrastructure.Repositories
 			var projectedQuery = query.ProjectTo<D>(_mapper.ConfigurationProvider);
 
 			// Search
-			if (!string.IsNullOrWhiteSpace(request.SearchString))
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			if (predicate != null)
 			{
-				var parameter = Expression.Parameter(typeof(D), "x");
-				var searchExpression = (Expression?)null;
-
-				foreach (var property in typeof(D).GetProperties().Where(p => p.PropertyType == typeof(string)))
-				{
-					var propertyAccess = Expression.Property(parameter, property);
-					var containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
-
-					if (containsMethod != null)
-					{
-						var searchTerm = Expression.Constant(request.SearchString, typeof(string));
-						var containsCall = Expression.Call(propertyAccess, containsMethod, searchTerm);
-						searchExpression = searchExpression == null ? containsCall : Expression.OrElse(searchExpression, containsCall);
-					}
-				}
-
-				if (searchExpression != null)
-				{
-					var lambda = Expression.Lambda<Func<D, bool>>(searchExpression, parameter);
-					projectedQuery = projectedQuery.Where(lambda);
-				}
+				projectedQuery = projectedQuery.Where(predicate);
 			}
 
 			// Apply Sorting
-			if (request.OrderBy?.Any() == true)
+			if (request.OrderBy != null)
 			{
-				projectedQuery = projectedQuery.OrderBy(request.OrderByString);
+				projectedQuery = projectedQuery.OrderBy(request.OrderBy);
 			}
 			else
 			{
@@ -128,29 +110,10 @@ namespace WorkHub.Infrastructure.Repositories
 			var projectedQuery = query.ProjectTo<D>(_mapper.ConfigurationProvider);
 
 			// Search
-			if (!string.IsNullOrWhiteSpace(request.SearchString))
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			if (predicate != null)
 			{
-				var parameter = Expression.Parameter(typeof(D), "x");
-				var searchExpression = (Expression?)null;
-
-				foreach (var property in typeof(D).GetProperties().Where(p => p.PropertyType == typeof(string)))
-				{
-					var propertyAccess = Expression.Property(parameter, property);
-					var containsMethod = typeof(string).GetMethod("Contains", [typeof(string)]);
-
-					if (containsMethod != null)
-					{
-						var searchTerm = Expression.Constant(request.SearchString, typeof(string));
-						var containsCall = Expression.Call(propertyAccess, containsMethod, searchTerm);
-						searchExpression = searchExpression == null ? containsCall : Expression.OrElse(searchExpression, containsCall);
-					}
-				}
-
-				if (searchExpression != null)
-				{
-					var lambda = Expression.Lambda<Func<D, bool>>(searchExpression, parameter);
-					projectedQuery = projectedQuery.Where(lambda);
-				}
+				projectedQuery = projectedQuery.Where(predicate);
 			}
 
 			if (request.CursorId != null && request.CursorId > 0)

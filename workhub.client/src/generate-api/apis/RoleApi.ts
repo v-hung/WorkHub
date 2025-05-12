@@ -21,6 +21,7 @@ import type {
   RoleDto,
   RoleDtoPaginated,
   RoleFullDto,
+  SearchCondition,
 } from '../models/index';
 import {
     ErrorResponseFromJSON,
@@ -35,6 +36,8 @@ import {
     RoleDtoPaginatedToJSON,
     RoleFullDtoFromJSON,
     RoleFullDtoToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
 } from '../models/index';
 
 export interface RoleCreateRequest {
@@ -64,8 +67,8 @@ export interface RoleGetByNameRequest {
 export interface RoleSearchRequest {
     pageNumber: number;
     pageSize: number;
-    searchString?: string;
-    orderBy?: Array<string>;
+    searchConditions?: Array<SearchCondition>;
+    orderBy?: string;
 }
 
 export interface RoleUpdateRequest {
@@ -304,8 +307,8 @@ export class RoleApi extends runtime.BaseAPI {
             queryParameters['PageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         if (requestParameters['orderBy'] != null) {

@@ -1,22 +1,42 @@
 import MainTable from "@/ui/table/MainTable";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { workTimeTableColumns } from "./constants";
 import { useWorkTimesContext } from "../../contexts/WorkTimeContext";
+import { TablePaginationConfig } from "antd";
+import { FilterValue, SorterResult } from "antd/es/table/interface";
+import { WorkTimeDto } from "@/generate-api";
+import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 
 const WorkTimeTable = () => {
-  const { workTimePaginated, setRequest, loading } = useWorkTimesContext();
+  const { workTimePaginated, updateRequest, loading } = useWorkTimesContext();
 
   useEffect(() => {
-    setRequest((r) => ({ ...r, pageNumber: 1, searchString: "" }));
+    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
   }, []);
 
-  const data = useMemo(() => workTimePaginated.data, [workTimePaginated.data]);
+  const onTableChange = useCallback(
+    async (
+      pagination: TablePaginationConfig,
+      filters: Record<string, FilterValue | null>,
+      sorter: SorterResult<WorkTimeDto> | SorterResult<WorkTimeDto>[]
+    ) => {
+      handleTableChange(pagination, filters, sorter, updateRequest);
+    },
+    [updateRequest]
+  );
+
+  const paginationConfig = useMemo(
+    () => getPaginationConfig(workTimePaginated),
+    [workTimePaginated]
+  );
 
   return (
     <MainTable
       columns={workTimeTableColumns}
-      dataSource={data}
+      dataSource={workTimePaginated.data}
       loading={loading}
+      pagination={paginationConfig}
+      onChange={onTableChange}
     />
   );
 };

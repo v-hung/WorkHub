@@ -12,7 +12,7 @@ import { TeamDtoPaginated, TeamSearchRequest } from "@/generate-api";
 
 type TeamContextType = {
   teamPaginated: TeamDtoPaginated;
-  setRequest: Dispatch<SetStateAction<TeamSearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<TeamSearchRequest>>;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };
@@ -20,12 +20,12 @@ type TeamContextType = {
 const TeamContext = createContext<TeamContextType | null>(null);
 
 export const TeamProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { teamPaginated, setRequest, loading } = useTeams();
+  const { teamPaginated, updateRequest, loading } = useTeams();
   const { deleteRecord } = useTeamAction();
 
   return (
     <TeamContext.Provider
-      value={{ teamPaginated, setRequest, loading, deleteRecord }}
+      value={{ teamPaginated, updateRequest, loading, deleteRecord }}
     >
       {children}
     </TeamContext.Provider>

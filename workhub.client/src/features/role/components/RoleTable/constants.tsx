@@ -41,12 +41,12 @@ export const roleTableColumns: TableProps<RoleDto>["columns"] = [
 ];
 
 const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useRolesContext();
+  const { updateRequest, deleteRecord } = useRolesContext();
 
   const confirm = async () => {
     await deleteRecord(id);
 
-    setRequest((state) => ({
+    updateRequest((state) => ({
       ...state,
       pageNumber: 1,
     }));

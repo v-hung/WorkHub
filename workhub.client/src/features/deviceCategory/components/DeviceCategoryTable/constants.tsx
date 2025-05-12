@@ -55,12 +55,12 @@ export const deviceCategoryTableColumns: TableProps<DeviceCategoryDto>["columns"
   ];
 
 const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useDeviceCategoriesContext();
+  const { updateRequest, deleteRecord } = useDeviceCategoriesContext();
 
   const confirm = async () => {
     await deleteRecord(id);
 
-    setRequest((state) => ({
+    updateRequest((state) => ({
       ...state,
       pageNumber: 1,
     }));

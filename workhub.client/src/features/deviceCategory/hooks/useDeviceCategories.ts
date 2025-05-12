@@ -5,10 +5,9 @@ import {
 } from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useDeviceCategories = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -29,10 +28,12 @@ export const useDeviceCategories = () => {
   const [request, setRequest] = useState<DeviceCategorySearchRequest>({
     pageNumber: deviceCategoryPaginated.currentPage,
     pageSize: deviceCategoryPaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
-  const fetchPaginatedDeviceCategories = useCallback(async () => {
+  const fetchPaginatedDeviceCategories = async (
+    request: DeviceCategorySearchRequest
+  ) => {
     setLoading(true);
     try {
       const data = await deviceCategoryApi.deviceCategorySearch(request);
@@ -44,16 +45,18 @@ export const useDeviceCategories = () => {
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<DeviceCategorySearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedDeviceCategories();
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedDeviceCategories(newRequest);
+    },
+    [request]
+  );
 
   // GET All
   // ==============
@@ -79,5 +82,6 @@ export const useDeviceCategories = () => {
     request,
     setRequest,
     fetchDeviceCategories,
+    updateRequest,
   };
 };

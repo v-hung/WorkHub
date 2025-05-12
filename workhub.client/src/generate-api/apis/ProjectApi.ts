@@ -20,6 +20,7 @@ import type {
   ErrorValidateResponse,
   ProjectDto,
   ProjectDtoPaginated,
+  SearchCondition,
 } from '../models/index';
 import {
     CreateProjectCommandFromJSON,
@@ -32,6 +33,8 @@ import {
     ProjectDtoToJSON,
     ProjectDtoPaginatedFromJSON,
     ProjectDtoPaginatedToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
 } from '../models/index';
 
 export interface ProjectCreateRequest {
@@ -53,8 +56,8 @@ export interface ProjectGetByIdRequest {
 export interface ProjectSearchRequest {
     pageNumber: number;
     pageSize: number;
-    searchString?: string;
-    orderBy?: Array<string>;
+    searchConditions?: Array<SearchCondition>;
+    orderBy?: string;
 }
 
 export interface ProjectUpdateRequest {
@@ -226,8 +229,8 @@ export class ProjectApi extends runtime.BaseAPI {
             queryParameters['PageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         if (requestParameters['orderBy'] != null) {

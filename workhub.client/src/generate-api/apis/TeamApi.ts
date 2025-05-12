@@ -18,6 +18,7 @@ import type {
   CreateTeamCommand,
   ErrorResponse,
   ErrorValidateResponse,
+  SearchCondition,
   TeamDto,
   TeamDtoPaginated,
   TeamFullDto,
@@ -29,6 +30,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
     TeamDtoFromJSON,
     TeamDtoToJSON,
     TeamDtoPaginatedFromJSON,
@@ -56,8 +59,8 @@ export interface TeamGetByIdRequest {
 export interface TeamSearchRequest {
     pageNumber: number;
     pageSize: number;
-    searchString?: string;
-    orderBy?: Array<string>;
+    searchConditions?: Array<SearchCondition>;
+    orderBy?: string;
 }
 
 export interface TeamUpdateRequest {
@@ -229,8 +232,8 @@ export class TeamApi extends runtime.BaseAPI {
             queryParameters['PageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         if (requestParameters['orderBy'] != null) {

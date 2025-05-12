@@ -2,10 +2,9 @@ import { getMessageError } from "@/utils/error.utils";
 import { RoleDtoPaginated, RoleSearchRequest } from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
 import { App } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useRoles = () => {
-  const mounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const { notification } = App.useApp();
 
@@ -25,10 +24,10 @@ export const useRoles = () => {
   const [request, setRequest] = useState<RoleSearchRequest>({
     pageNumber: rolePaginated.currentPage,
     pageSize: rolePaginated.pageSize,
-    searchString: "",
+    searchConditions: [],
   });
 
-  const fetchPaginatedRoles = useCallback(async () => {
+  const fetchPaginatedRoles = async (request: RoleSearchRequest) => {
     setLoading(true);
     try {
       const data = await roleApi.roleSearch(request);
@@ -40,16 +39,18 @@ export const useRoles = () => {
     } finally {
       setLoading(false);
     }
-  }, [request]);
+  };
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+  const updateRequest = useCallback(
+    (updater: SetStateAction<RoleSearchRequest>) => {
+      const newRequest =
+        typeof updater === "function" ? updater(request) : updater;
 
-    fetchPaginatedRoles();
-  }, [request]);
+      setRequest(newRequest);
+      fetchPaginatedRoles(newRequest);
+    },
+    [request]
+  );
 
   // GET All
   // ==============
@@ -75,5 +76,6 @@ export const useRoles = () => {
     request,
     setRequest,
     fetchRoles,
+    updateRequest,
   };
 };

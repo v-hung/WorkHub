@@ -1,20 +1,44 @@
 import MainTable from "@/ui/table/MainTable";
 // import { useRoles } from "../../hooks/useRoles";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { roleTableColumns } from "./constants";
 import { useRolesContext } from "../../contexts/RoleContext";
+import { TablePaginationConfig } from "antd";
+import { FilterValue, SorterResult } from "antd/es/table/interface";
+import { RoleDto } from "@/generate-api";
+import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 
 const RoleTable = () => {
-  const { rolePaginated, setRequest, loading } = useRolesContext();
+  const { rolePaginated, updateRequest, loading } = useRolesContext();
 
   useEffect(() => {
-    setRequest((r) => ({ ...r, pageNumber: 1, searchString: "" }));
+    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
   }, []);
 
-  const data = useMemo(() => rolePaginated.data, [rolePaginated.data]);
+  const onTableChange = useCallback(
+    async (
+      pagination: TablePaginationConfig,
+      filters: Record<string, FilterValue | null>,
+      sorter: SorterResult<RoleDto> | SorterResult<RoleDto>[]
+    ) => {
+      handleTableChange(pagination, filters, sorter, updateRequest);
+    },
+    [updateRequest]
+  );
+
+  const paginationConfig = useMemo(
+    () => getPaginationConfig(rolePaginated),
+    [rolePaginated]
+  );
 
   return (
-    <MainTable columns={roleTableColumns} dataSource={data} loading={loading} />
+    <MainTable
+      columns={roleTableColumns}
+      dataSource={rolePaginated.data}
+      loading={loading}
+      pagination={paginationConfig}
+      onChange={onTableChange}
+    />
   );
 };
 

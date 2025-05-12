@@ -27,7 +27,7 @@ namespace WorkHub.Infrastructure.Repositories
 		{
 			var request = await _context.Requests
 				.Include(r => r.User)
-				.ThenInclude(u => u.WorkTime)
+				.ThenInclude(u => u != null ? u.WorkTime : null)
 				.Include(r => r.Approved)
 				.FirstOrDefaultAsync(r => r.Id == id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 

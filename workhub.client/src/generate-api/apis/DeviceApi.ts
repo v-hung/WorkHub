@@ -20,6 +20,7 @@ import type {
   DeviceDtoPaginated,
   ErrorResponse,
   ErrorValidateResponse,
+  SearchCondition,
 } from '../models/index';
 import {
     CreateDeviceCommandFromJSON,
@@ -32,6 +33,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
 } from '../models/index';
 
 export interface DeviceCreateRequest {
@@ -53,8 +56,8 @@ export interface DeviceGetByIdRequest {
 export interface DeviceSearchRequest {
     pageNumber: number;
     pageSize: number;
-    searchString?: string;
-    orderBy?: Array<string>;
+    searchConditions?: Array<SearchCondition>;
+    orderBy?: string;
 }
 
 export interface DeviceUpdateRequest {
@@ -226,8 +229,8 @@ export class DeviceApi extends runtime.BaseAPI {
             queryParameters['PageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         if (requestParameters['orderBy'] != null) {

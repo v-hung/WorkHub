@@ -17,6 +17,7 @@ import * as runtime from '../runtime';
 import type {
   ErrorResponse,
   ErrorValidateResponse,
+  SearchCondition,
   UserCreateUpdateRequest,
   UserDto,
   UserDtoPaginated,
@@ -27,6 +28,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
     UserCreateUpdateRequestFromJSON,
     UserCreateUpdateRequestToJSON,
     UserDtoFromJSON,
@@ -56,8 +59,8 @@ export interface UserGetByIdRequest {
 export interface UserSearchRequest {
     pageNumber: number;
     pageSize: number;
-    searchString?: string;
-    orderBy?: Array<string>;
+    searchConditions?: Array<SearchCondition>;
+    orderBy?: string;
 }
 
 export interface UserUpdateRequest {
@@ -229,8 +232,8 @@ export class UserApi extends runtime.BaseAPI {
             queryParameters['PageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         if (requestParameters['orderBy'] != null) {

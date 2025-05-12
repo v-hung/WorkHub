@@ -26,27 +26,9 @@ namespace WorkHub.Application.Requests
 			get => _pageSize;
 			set => _pageSize = value < 1 ? 10 : (value > 100 ? 100 : value);
 		}
-		public string? SearchString { get; set; }
+		public List<SearchCondition> SearchConditions { get; set; } = [];
 
 		[SwaggerSchema("of the form fieldname [ascending|descending],fieldname [ascending|descending]...")]
-		public string[]? OrderBy { get; set; }
-
-		public PagedRequest()
-		{
-		}
-
-		public PagedRequest(int pageNumber, int pageSize, string searchString, string orderBy)
-		{
-			PageNumber = pageNumber;
-			PageSize = pageSize;
-			SearchString = searchString;
-			if (!string.IsNullOrWhiteSpace(orderBy))
-			{
-				OrderBy = orderBy.Split(',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
-			}
-		}
-
-		[SwaggerIgnore]
-		public string OrderByString => OrderBy != null && OrderBy.Any() ? string.Join(",", OrderBy) : string.Empty;
+		public string? OrderBy { get; set; }
 	}
 }

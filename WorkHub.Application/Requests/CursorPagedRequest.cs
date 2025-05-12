@@ -15,7 +15,8 @@ namespace WorkHub.Application.Requests
 		[DefaultValue(10)]
 		[Required]
 		public int Limit = 10;
-		public string? SearchString { get; set; }
+
+		public List<SearchCondition> SearchConditions { get; set; } = [];
 
 	}
 

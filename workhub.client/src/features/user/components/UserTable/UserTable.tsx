@@ -1,33 +1,42 @@
 import MainTable from "@/ui/table/MainTable";
 import { userTableColumns } from "./constants";
-import { useUsers } from "../../hooks/useUsers";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
+import { UserDto } from "@/generate-api";
+import { FilterValue, SorterResult } from "antd/es/table/interface";
+import { TablePaginationConfig } from "antd/lib";
+import { useUserContext } from "../../contexts/UserContext";
 
 const UserTable = () => {
-  const { userPaginated, setRequest, loading } = useUsers();
+  const { userPaginated, updateRequest, loading } = useUserContext();
 
   useEffect(() => {
-    setRequest((r) => ({ ...r, pageNumber: 1, searchString: "" }));
+    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
   }, []);
+
+  const onTableChange = useCallback(
+    async (
+      pagination: TablePaginationConfig,
+      filters: Record<string, FilterValue | null>,
+      sorter: SorterResult<UserDto> | SorterResult<UserDto>[]
+    ) => {
+      handleTableChange(pagination, filters, sorter, updateRequest);
+    },
+    [updateRequest]
+  );
+
+  const paginationConfig = useMemo(
+    () => getPaginationConfig(userPaginated),
+    [userPaginated]
+  );
 
   return (
     <MainTable
       columns={userTableColumns}
       dataSource={userPaginated.data}
       loading={loading}
-      pagination={{
-        pageSize: userPaginated.pageSize,
-        current: userPaginated.currentPage,
-        total: userPaginated.totalCount,
-        showSizeChanger: true,
-        pageSizeOptions: ["25", "50", "100"],
-        onChange: (page, pageSize) => {
-          setRequest((r) => {
-            if (r.pageNumber === page && r.pageSize === pageSize) return r;
-            return { ...r, pageNumber: page, pageSize };
-          });
-        },
-      }}
+      pagination={paginationConfig}
+      onChange={onTableChange}
     />
   );
 };

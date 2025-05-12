@@ -6,30 +6,26 @@ import UserCard from "../UserCard/UserCard";
 import { format } from "@/utils/date.utils";
 import { FC } from "react";
 import { useUserContext } from "../../contexts/UserContext";
-import TeamTableItem from "@/features/team/components/TeamTableItem/TeamTableItem";
+import UserTableItem from "../UserTableItem/UserTableItem";
+import { getColumnSearchProps } from "@/utils/table.utils";
 
 export const userTableColumns: TableProps<UserDto>["columns"] = [
   {
     title: "User",
     width: "20rem",
-    render: (_, record) => <UserCard user={record} />,
-  },
-  { title: "Email", dataIndex: "email", key: "email" },
-  {
-    title: "User Position",
-    dataIndex: "userPosition",
-    key: "userPosition",
+    render: (_, record) => <UserCard user={record} showEmail />,
+    dataIndex: "email",
+    sorter: true,
+    ...getColumnSearchProps("email"),
   },
   {
-    title: "User Status",
-    dataIndex: "userStatus",
-    key: "userStatus",
-    // width: "10rem",
+    title: "Supervisor",
+    render: (_, record) => (
+      <UserTableItem members={record.supervisor ? [record.supervisor] : []} />
+    ),
   },
-  {
-    title: "Team",
-    render: (_, record) => <TeamTableItem team={record.team} />,
-  },
+  { title: "User Position", dataIndex: "userPosition", key: "userPosition" },
+  { title: "User Status", dataIndex: "userStatus", key: "userStatus" },
   {
     title: "CreatedAt",
     render: (_, record) => format(record.createdAt, "dd/MM/yyyy"),
@@ -70,12 +66,12 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
 ];
 
 const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useUserContext();
+  const { updateRequest, deleteRecord } = useUserContext();
 
   const confirm = async () => {
     await deleteRecord(id);
 
-    setRequest((state) => ({
+    updateRequest((state) => ({
       ...state,
       pageNumber: 1,
     }));

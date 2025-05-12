@@ -17,6 +17,7 @@ using WorkHub.Domain.Entities.Organization;
 using WorkHub.Domain.Constants.Identity;
 using System.Linq.Expressions;
 using WorkHub.Application.Utils;
+using WorkHub.Infrastructure.Extensions;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -54,18 +55,16 @@ namespace WorkHub.Infrastructure.Services
 			var query = _context.Users.AsQueryable();
 
 			// Filtering
-			if (!string.IsNullOrWhiteSpace(request.SearchString))
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			if (predicate != null)
 			{
-				if (request.SearchString != null)
-				{
-					query = query.Where(u => u.FullName.Contains(request.SearchString) || (!string.IsNullOrEmpty(u.Email) && u.Email.Contains(request.SearchString)));
-				}
+				query = query.Where(predicate);
 			}
 
 			// Sorting
-			if (request.OrderBy?.Any() == true)
+			if (request.OrderBy != null)
 			{
-				query = query.OrderBy(request.OrderByString); // require system.linq.dynamic.core
+				query = query.OrderBy(request.OrderBy); // require system.linq.dynamic.core
 			}
 			else
 			{

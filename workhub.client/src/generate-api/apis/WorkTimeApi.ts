@@ -18,6 +18,7 @@ import type {
   CreateWorkTimeCommand,
   ErrorResponse,
   ErrorValidateResponse,
+  SearchCondition,
   WorkTimeDto,
   WorkTimeDtoPaginated,
 } from '../models/index';
@@ -28,6 +29,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
+    SearchConditionFromJSON,
+    SearchConditionToJSON,
     WorkTimeDtoFromJSON,
     WorkTimeDtoToJSON,
     WorkTimeDtoPaginatedFromJSON,
@@ -53,8 +56,8 @@ export interface WorkTimeGetByIdRequest {
 export interface WorkTimeSearchRequest {
     pageNumber: number;
     pageSize: number;
-    searchString?: string;
-    orderBy?: Array<string>;
+    searchConditions?: Array<SearchCondition>;
+    orderBy?: string;
 }
 
 export interface WorkTimeUpdateRequest {
@@ -226,8 +229,8 @@ export class WorkTimeApi extends runtime.BaseAPI {
             queryParameters['PageSize'] = requestParameters['pageSize'];
         }
 
-        if (requestParameters['searchString'] != null) {
-            queryParameters['SearchString'] = requestParameters['searchString'];
+        if (requestParameters['searchConditions'] != null) {
+            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
         }
 
         if (requestParameters['orderBy'] != null) {

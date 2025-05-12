@@ -61,12 +61,12 @@ export const workTimeTableColumns: TableProps<WorkTimeDto>["columns"] = [
 ];
 
 const ActionDeleteRender: FC<{ id: number }> = ({ id }) => {
-  const { setRequest, deleteRecord } = useWorkTimesContext();
+  const { updateRequest, deleteRecord } = useWorkTimesContext();
 
   const confirm = async () => {
     await deleteRecord(id);
 
-    setRequest((state) => ({
+    updateRequest((state) => ({
       ...state,
       pageNumber: 1,
     }));
