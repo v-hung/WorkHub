@@ -7,12 +7,12 @@ import {
   useContext,
 } from "react";
 import { useRoles } from "../hooks/useRoles";
-import { RoleDtoPaginated, RoleSearchRequest } from "@/generate-api";
+import { RoleDtoPaginated, PagedRequest } from "@/generate-api";
 import { useRoleAction } from "../hooks/useRoleAction";
 
 type RolesContextType = {
   rolePaginated: RoleDtoPaginated;
-  updateRequest: Dispatch<SetStateAction<RoleSearchRequest>>;
+  updateRequest: Dispatch<SetStateAction<PagedRequest>>;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;
 };

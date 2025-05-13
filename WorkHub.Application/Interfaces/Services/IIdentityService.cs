@@ -24,6 +24,7 @@ public interface IIdentityService
 	Task<List<string>> GetRolesAsync(string id);
 
 	Task<List<string>> GetAllPermissionsAsync(ClaimsPrincipal claimsPrincipal);
+
 	Task<List<string>> GetAllPermissionsAsync(User user);
 
 }

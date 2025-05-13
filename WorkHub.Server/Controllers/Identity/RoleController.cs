@@ -20,7 +20,7 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[Authorize(Policy = Permissions.Roles.View)]
-		[HttpGet("all")]
+		[HttpGet]
 		public async Task<ActionResult<List<RoleDto>>> GetAll([FromQuery] List<Guid>? ids = null)
 		{
 			ids ??= [];
@@ -40,8 +40,8 @@ namespace WorkHub.Server.Controllers.Time
 		}
 
 		[Authorize(Policy = Permissions.Roles.View)]
-		[HttpGet]
-		public async Task<ActionResult<Paginated<RoleDto>>> Search([FromQuery] PagedRequest request)
+		[HttpPost("search")]
+		public async Task<ActionResult<Paginated<RoleDto>>> Search(PagedRequest request)
 		{
 			var data = await _roleService.SearchAsync<RoleDto>(request);
 			return Ok(data);

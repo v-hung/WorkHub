@@ -18,7 +18,7 @@ import type {
   CreateTeamCommand,
   ErrorResponse,
   ErrorValidateResponse,
-  SearchCondition,
+  PagedRequest,
   TeamDto,
   TeamDtoPaginated,
   TeamFullDto,
@@ -30,8 +30,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    SearchConditionFromJSON,
-    SearchConditionToJSON,
+    PagedRequestFromJSON,
+    PagedRequestToJSON,
     TeamDtoFromJSON,
     TeamDtoToJSON,
     TeamDtoPaginatedFromJSON,
@@ -57,10 +57,7 @@ export interface TeamGetByIdRequest {
 }
 
 export interface TeamSearchRequest {
-    pageNumber: number;
-    pageSize: number;
-    searchConditions?: Array<SearchCondition>;
-    orderBy?: string;
+    pagedRequest?: PagedRequest;
 }
 
 export interface TeamUpdateRequest {
@@ -154,7 +151,7 @@ export class TeamApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/teams/all`,
+            path: `/api/teams`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -208,49 +205,22 @@ export class TeamApi extends runtime.BaseAPI {
     /**
      */
     async teamSearchRaw(requestParameters: TeamSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDtoPaginated>> {
-        if (requestParameters['pageNumber'] == null) {
-            throw new runtime.RequiredError(
-                'pageNumber',
-                'Required parameter "pageNumber" was null or undefined when calling teamSearch().'
-            );
-        }
-
-        if (requestParameters['pageSize'] == null) {
-            throw new runtime.RequiredError(
-                'pageSize',
-                'Required parameter "pageSize" was null or undefined when calling teamSearch().'
-            );
-        }
-
         const queryParameters: any = {};
 
-        if (requestParameters['pageNumber'] != null) {
-            queryParameters['PageNumber'] = requestParameters['pageNumber'];
-        }
-
-        if (requestParameters['pageSize'] != null) {
-            queryParameters['PageSize'] = requestParameters['pageSize'];
-        }
-
-        if (requestParameters['searchConditions'] != null) {
-            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
-        }
-
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['OrderBy'] = requestParameters['orderBy'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // Bearer authentication
         }
 
         const response = await this.request({
-            path: `/api/teams`,
-            method: 'GET',
+            path: `/api/teams/search`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TeamDtoPaginatedFromJSON(jsonValue));
@@ -258,7 +228,7 @@ export class TeamApi extends runtime.BaseAPI {
 
     /**
      */
-    async teamSearch(requestParameters: TeamSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDtoPaginated> {
+    async teamSearch(requestParameters: TeamSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDtoPaginated> {
         const response = await this.teamSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }

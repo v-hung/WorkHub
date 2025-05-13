@@ -20,7 +20,7 @@ import type {
   DeviceCategoryDtoPaginated,
   ErrorResponse,
   ErrorValidateResponse,
-  SearchCondition,
+  PagedRequest,
 } from '../models/index';
 import {
     CreateDeviceCategoryCommandFromJSON,
@@ -33,8 +33,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    SearchConditionFromJSON,
-    SearchConditionToJSON,
+    PagedRequestFromJSON,
+    PagedRequestToJSON,
 } from '../models/index';
 
 export interface DeviceCategoryCreateRequest {
@@ -54,10 +54,7 @@ export interface DeviceCategoryGetByIdRequest {
 }
 
 export interface DeviceCategorySearchRequest {
-    pageNumber: number;
-    pageSize: number;
-    searchConditions?: Array<SearchCondition>;
-    orderBy?: string;
+    pagedRequest?: PagedRequest;
 }
 
 export interface DeviceCategoryUpdateRequest {
@@ -151,7 +148,7 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/device-categories/all`,
+            path: `/api/device-categories`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -205,49 +202,22 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
     /**
      */
     async deviceCategorySearchRaw(requestParameters: DeviceCategorySearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDtoPaginated>> {
-        if (requestParameters['pageNumber'] == null) {
-            throw new runtime.RequiredError(
-                'pageNumber',
-                'Required parameter "pageNumber" was null or undefined when calling deviceCategorySearch().'
-            );
-        }
-
-        if (requestParameters['pageSize'] == null) {
-            throw new runtime.RequiredError(
-                'pageSize',
-                'Required parameter "pageSize" was null or undefined when calling deviceCategorySearch().'
-            );
-        }
-
         const queryParameters: any = {};
 
-        if (requestParameters['pageNumber'] != null) {
-            queryParameters['PageNumber'] = requestParameters['pageNumber'];
-        }
-
-        if (requestParameters['pageSize'] != null) {
-            queryParameters['PageSize'] = requestParameters['pageSize'];
-        }
-
-        if (requestParameters['searchConditions'] != null) {
-            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
-        }
-
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['OrderBy'] = requestParameters['orderBy'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // Bearer authentication
         }
 
         const response = await this.request({
-            path: `/api/device-categories`,
-            method: 'GET',
+            path: `/api/device-categories/search`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDtoPaginatedFromJSON(jsonValue));
@@ -255,7 +225,7 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
 
     /**
      */
-    async deviceCategorySearch(requestParameters: DeviceCategorySearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDtoPaginated> {
+    async deviceCategorySearch(requestParameters: DeviceCategorySearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDtoPaginated> {
         const response = await this.deviceCategorySearchRaw(requestParameters, initOverrides);
         return await response.value();
     }

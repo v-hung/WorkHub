@@ -70,14 +70,14 @@ namespace WorkHub.Infrastructure.Repositories
 			var projectedQuery = query.ProjectTo<D>(_mapper.ConfigurationProvider);
 
 			// Search
-			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<T>(request.SearchConditions);
 			if (predicate != null)
 			{
 				projectedQuery = projectedQuery.Where(predicate);
 			}
 
 			// Apply Sorting
-			if (request.OrderBy != null)
+			if (!string.IsNullOrEmpty(request.OrderBy))
 			{
 				projectedQuery = projectedQuery.OrderBy(request.OrderBy);
 			}

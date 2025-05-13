@@ -12,7 +12,7 @@ namespace WorkHub.Server.Controllers.Work
 	[Route("api/projects")]
 	public class ProjectController : BaseApiController<ProjectController>
 	{
-		[HttpGet("all")]
+		[HttpGet]
 		[Authorize(Policy = Permissions.Projects.View)]
 		public async Task<ActionResult<List<ProjectDto>>> GetAll([FromQuery] List<int> ids)
 		{
@@ -21,9 +21,9 @@ namespace WorkHub.Server.Controllers.Work
 			return Ok(data);
 		}
 
-		[HttpGet]
+		[HttpPost("search")]
 		[Authorize(Policy = Permissions.Projects.View)]
-		public async Task<ActionResult<Paginated<ProjectDto>>> Search([FromQuery] PagedRequest request)
+		public async Task<ActionResult<Paginated<ProjectDto>>> Search(PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchProjectQuery { Request = request });
 

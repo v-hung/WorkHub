@@ -12,9 +12,9 @@ namespace WorkHub.Server.Controllers.Misc
 	public class NotificationController : BaseApiController<NotificationController>
 	{
 
-		[HttpGet]
+		[HttpPost("search")]
 		[Authorize]
-		public async Task<ActionResult<CursorPaginated<NotificationDto>>> Search([FromQuery] CursorPagedRequest request)
+		public async Task<ActionResult<CursorPaginated<NotificationDto>>> Search(CursorPagedRequest request)
 		{
 			var data = await _mediator.Send(new CursorSearchNotificationQuery { Request = request });
 

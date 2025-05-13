@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Organization
 	{
 
 		[Authorize(Policy = Permissions.Teams.View)]
-		[HttpGet("all")]
+		[HttpGet]
 		public async Task<ActionResult<List<TeamDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var teams = await _mediator.Send(new GetAllTeamQuery { Ids = ids });
@@ -23,8 +23,8 @@ namespace WorkHub.Server.Controllers.Organization
 		}
 
 		[Authorize(Policy = Permissions.Teams.View)]
-		[HttpGet]
-		public async Task<ActionResult<Paginated<TeamDto>>> Search([FromQuery] PagedRequest request)
+		[HttpPost("search")]
+		public async Task<ActionResult<Paginated<TeamDto>>> Search(PagedRequest request)
 		{
 			var teams = await _mediator.Send(new SearchTeamQuery { Request = request });
 

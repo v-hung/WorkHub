@@ -12,6 +12,7 @@ declare global {
   const IIonChevronBack: typeof import('~icons/ion/chevron-back.jsx')['default']
   const IIonChevronForward: typeof import('~icons/ion/chevron-forward.jsx')['default']
   const IIonClock: typeof import('~icons/ion/clock.jsx')['default']
+  const IIonCog: typeof import('~icons/ion/cog.jsx')['default']
   const IIonCubeOutline: typeof import('~icons/ion/cube-outline.jsx')['default']
   const IIonDocumentsOutline: typeof import('~icons/ion/documents-outline.jsx')['default']
   const IIonHelp: typeof import('~icons/ion/help.jsx')['default']

@@ -1,0 +1,43 @@
+.animated-logo {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes intro {
+  0% {
+    transform: scale(0.9);
+    filter: grayscale(100%);
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: grayscale(0%);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+  50% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+}
+
+.logo-animate {
+  width: 50%;
+  max-width: 250px;
+  animation: intro 1.5s ease-out forwards;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+}
+
+.logo-animate.infinite {
+  animation: bounce 1s infinite;
+}

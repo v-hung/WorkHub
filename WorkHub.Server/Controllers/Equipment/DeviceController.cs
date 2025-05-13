@@ -12,7 +12,7 @@ namespace WorkHub.Server.Controllers.Time
 	[Route("api/devices")]
 	public class DeviceController : BaseApiController<DeviceController>
 	{
-		[HttpGet("all")]
+		[HttpGet]
 		[Authorize(Policy = Permissions.Devices.View)]
 		public async Task<ActionResult<List<DeviceDto>>> GetAll([FromQuery] List<int> ids)
 		{
@@ -21,9 +21,9 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
-		[HttpGet]
+		[HttpPost("search")]
 		[Authorize(Policy = Permissions.Devices.View)]
-		public async Task<ActionResult<Paginated<DeviceDto>>> Search([FromQuery] PagedRequest request)
+		public async Task<ActionResult<Paginated<DeviceDto>>> Search(PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchDeviceQuery { Request = request });
 

@@ -186,6 +186,6 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 			}
 		}
 
-		return [.. roleClaims.Select(claim => claim.Value)];
+		return [.. roleClaims.Select(claim => claim.Value).Distinct()];
 	}
 }

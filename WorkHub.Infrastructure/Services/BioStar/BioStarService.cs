@@ -153,7 +153,7 @@ namespace WorkHub.Infrastructure.BioStar.Services
 					NormalizedUserName = b.Email?.ToUpper() ?? $"bioStar_{b.UserId}",
 					NormalizedEmail = b.Email?.ToUpper(),
 					FullName = b.Name ?? $"bioStar_{b.UserId}",
-					UserStatus = UserStatus.INACTIVE,
+					UserStatus = UserStatus.ACTIVE,
 					RemainingLeaveMinutes = 0,
 					BioStarUserId = b.UserId
 				}).ToList();

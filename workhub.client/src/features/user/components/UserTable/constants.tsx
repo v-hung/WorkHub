@@ -1,4 +1,10 @@
-import { Permission, UserDto } from "@/generate-api";
+import {
+  Permission,
+  SearchOperator,
+  UserDto,
+  UserPosition,
+  UserStatus,
+} from "@/generate-api";
 import ButtonLink from "@/ui/elements/ButtonLink";
 import { hasPermission } from "@/utils/hasPermission";
 import { Button, Popconfirm, Space, TableProps } from "antd";
@@ -24,8 +30,26 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
       <UserTableItem members={record.supervisor ? [record.supervisor] : []} />
     ),
   },
-  { title: "User Position", dataIndex: "userPosition", key: "userPosition" },
-  { title: "User Status", dataIndex: "userStatus", key: "userStatus" },
+  {
+    title: "User Position",
+    dataIndex: "userPosition",
+    key: "userPosition",
+    sorter: true,
+    filters: Object.entries(UserPosition).map(([key, value]) => ({
+      value,
+      text: key,
+    })),
+  },
+  {
+    title: "User Status",
+    dataIndex: "userStatus",
+    key: "userStatus",
+    sorter: true,
+    filters: Object.entries(UserStatus).map(([key, value]) => ({
+      value,
+      text: key,
+    })),
+  },
   {
     title: "CreatedAt",
     render: (_, record) => format(record.createdAt, "dd/MM/yyyy"),
@@ -64,6 +88,10 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
     ),
   },
 ];
+
+export const userTableSearchOperatorMap: Record<string, SearchOperator> = {
+  email: SearchOperator.Contains,
+};
 
 const ActionDeleteRender: FC<{ id: string }> = ({ id }) => {
   const { updateRequest, deleteRecord } = useUserContext();

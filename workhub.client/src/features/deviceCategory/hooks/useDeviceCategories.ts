@@ -1,8 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import {
-  DeviceCategoryDtoPaginated,
-  DeviceCategorySearchRequest,
-} from "@/generate-api";
+import { DeviceCategoryDtoPaginated, PagedRequest } from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useState } from "react";
@@ -25,18 +22,18 @@ export const useDeviceCategories = () => {
       hasPreviousPage: false,
     });
 
-  const [request, setRequest] = useState<DeviceCategorySearchRequest>({
+  const [request, setRequest] = useState<PagedRequest>({
     pageNumber: deviceCategoryPaginated.currentPage,
     pageSize: deviceCategoryPaginated.pageSize,
     searchConditions: [],
   });
 
-  const fetchPaginatedDeviceCategories = async (
-    request: DeviceCategorySearchRequest
-  ) => {
+  const fetchPaginatedDeviceCategories = async (request: PagedRequest) => {
     setLoading(true);
     try {
-      const data = await deviceCategoryApi.deviceCategorySearch(request);
+      const data = await deviceCategoryApi.deviceCategorySearch({
+        pagedRequest: request,
+      });
       setDeviceCategoryPaginated(data);
     } catch (e) {
       notification.error({
@@ -48,7 +45,7 @@ export const useDeviceCategories = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<DeviceCategorySearchRequest>) => {
+    (updater: SetStateAction<PagedRequest>) => {
       const newRequest =
         typeof updater === "function" ? updater(request) : updater;
 

@@ -20,7 +20,7 @@ import type {
   DeviceDtoPaginated,
   ErrorResponse,
   ErrorValidateResponse,
-  SearchCondition,
+  PagedRequest,
 } from '../models/index';
 import {
     CreateDeviceCommandFromJSON,
@@ -33,8 +33,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    SearchConditionFromJSON,
-    SearchConditionToJSON,
+    PagedRequestFromJSON,
+    PagedRequestToJSON,
 } from '../models/index';
 
 export interface DeviceCreateRequest {
@@ -54,10 +54,7 @@ export interface DeviceGetByIdRequest {
 }
 
 export interface DeviceSearchRequest {
-    pageNumber: number;
-    pageSize: number;
-    searchConditions?: Array<SearchCondition>;
-    orderBy?: string;
+    pagedRequest?: PagedRequest;
 }
 
 export interface DeviceUpdateRequest {
@@ -151,7 +148,7 @@ export class DeviceApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/devices/all`,
+            path: `/api/devices`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -205,49 +202,22 @@ export class DeviceApi extends runtime.BaseAPI {
     /**
      */
     async deviceSearchRaw(requestParameters: DeviceSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDtoPaginated>> {
-        if (requestParameters['pageNumber'] == null) {
-            throw new runtime.RequiredError(
-                'pageNumber',
-                'Required parameter "pageNumber" was null or undefined when calling deviceSearch().'
-            );
-        }
-
-        if (requestParameters['pageSize'] == null) {
-            throw new runtime.RequiredError(
-                'pageSize',
-                'Required parameter "pageSize" was null or undefined when calling deviceSearch().'
-            );
-        }
-
         const queryParameters: any = {};
 
-        if (requestParameters['pageNumber'] != null) {
-            queryParameters['PageNumber'] = requestParameters['pageNumber'];
-        }
-
-        if (requestParameters['pageSize'] != null) {
-            queryParameters['PageSize'] = requestParameters['pageSize'];
-        }
-
-        if (requestParameters['searchConditions'] != null) {
-            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
-        }
-
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['OrderBy'] = requestParameters['orderBy'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // Bearer authentication
         }
 
         const response = await this.request({
-            path: `/api/devices`,
-            method: 'GET',
+            path: `/api/devices/search`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDtoPaginatedFromJSON(jsonValue));
@@ -255,7 +225,7 @@ export class DeviceApi extends runtime.BaseAPI {
 
     /**
      */
-    async deviceSearch(requestParameters: DeviceSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDtoPaginated> {
+    async deviceSearch(requestParameters: DeviceSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDtoPaginated> {
         const response = await this.deviceSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }

@@ -15,33 +15,27 @@
 
 import * as runtime from '../runtime';
 import type {
-  CursorPagedRequestDirection,
+  CursorPagedRequest,
   ErrorResponse,
   ErrorValidateResponse,
   NotificationDtoCursorPaginated,
-  SearchCondition,
   SendTestNotificationCommand,
 } from '../models/index';
 import {
-    CursorPagedRequestDirectionFromJSON,
-    CursorPagedRequestDirectionToJSON,
+    CursorPagedRequestFromJSON,
+    CursorPagedRequestToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
     NotificationDtoCursorPaginatedFromJSON,
     NotificationDtoCursorPaginatedToJSON,
-    SearchConditionFromJSON,
-    SearchConditionToJSON,
     SendTestNotificationCommandFromJSON,
     SendTestNotificationCommandToJSON,
 } from '../models/index';
 
 export interface NotificationSearchRequest {
-    cursorId?: number;
-    cursorPagedRequestDirection?: CursorPagedRequestDirection;
-    newestFirst?: boolean;
-    searchConditions?: Array<SearchCondition>;
+    cursorPagedRequest?: CursorPagedRequest;
 }
 
 export interface NotificationSendTestNotificationRequest {
@@ -90,33 +84,20 @@ export class NotificationApi extends runtime.BaseAPI {
     async notificationSearchRaw(requestParameters: NotificationSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationDtoCursorPaginated>> {
         const queryParameters: any = {};
 
-        if (requestParameters['cursorId'] != null) {
-            queryParameters['CursorId'] = requestParameters['cursorId'];
-        }
-
-        if (requestParameters['cursorPagedRequestDirection'] != null) {
-            queryParameters['CursorPagedRequestDirection'] = requestParameters['cursorPagedRequestDirection'];
-        }
-
-        if (requestParameters['newestFirst'] != null) {
-            queryParameters['NewestFirst'] = requestParameters['newestFirst'];
-        }
-
-        if (requestParameters['searchConditions'] != null) {
-            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // Bearer authentication
         }
 
         const response = await this.request({
-            path: `/api/notifications`,
-            method: 'GET',
+            path: `/api/notifications/search`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: CursorPagedRequestToJSON(requestParameters['cursorPagedRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => NotificationDtoCursorPaginatedFromJSON(jsonValue));

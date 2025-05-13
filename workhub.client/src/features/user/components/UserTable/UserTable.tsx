@@ -1,5 +1,5 @@
 import MainTable from "@/ui/table/MainTable";
-import { userTableColumns } from "./constants";
+import { userTableColumns, userTableSearchOperatorMap } from "./constants";
 import { useCallback, useEffect, useMemo } from "react";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 import { UserDto } from "@/generate-api";
@@ -20,7 +20,13 @@ const UserTable = () => {
       filters: Record<string, FilterValue | null>,
       sorter: SorterResult<UserDto> | SorterResult<UserDto>[]
     ) => {
-      handleTableChange(pagination, filters, sorter, updateRequest);
+      handleTableChange(
+        pagination,
+        filters,
+        sorter,
+        updateRequest,
+        userTableSearchOperatorMap
+      );
     },
     [updateRequest]
   );

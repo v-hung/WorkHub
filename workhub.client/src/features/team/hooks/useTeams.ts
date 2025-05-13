@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { TeamDtoPaginated, TeamSearchRequest } from "@/generate-api";
+import { TeamDtoPaginated, PagedRequest } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useState } from "react";
@@ -21,16 +21,16 @@ export const useTeams = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState<TeamSearchRequest>({
+  const [request, setRequest] = useState<PagedRequest>({
     pageNumber: teamPaginated.currentPage,
     pageSize: teamPaginated.pageSize,
     searchConditions: [],
   });
 
-  const fetchPaginatedTeams = async (request: TeamSearchRequest) => {
+  const fetchPaginatedTeams = async (request: PagedRequest) => {
     setLoading(true);
     try {
-      const data = await teamApi.teamSearch(request);
+      const data = await teamApi.teamSearch({ pagedRequest: request });
       setTeamPaginated(data);
     } catch (e) {
       notification.error({
@@ -42,7 +42,7 @@ export const useTeams = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<TeamSearchRequest>) => {
+    (updater: SetStateAction<PagedRequest>) => {
       const newRequest =
         typeof updater === "function" ? updater(request) : updater;
 

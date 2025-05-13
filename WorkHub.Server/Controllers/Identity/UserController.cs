@@ -20,15 +20,15 @@ public class UserController : BaseApiController<UserController>
 	}
 
 	[Authorize(Policy = Permissions.Users.View)]
-	[HttpGet]
-	public async Task<ActionResult<Paginated<UserDto>>> Search([FromQuery] PagedRequest request)
+	[HttpPost("search")]
+	public async Task<ActionResult<Paginated<UserDto>>> Search(PagedRequest request)
 	{
 		var users = await _userService.SearchAsync<UserDto>(request);
 		return Ok(users);
 	}
 
 	[Authorize(Policy = Permissions.Users.View)]
-	[HttpGet("all")]
+	[HttpGet]
 	public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] List<Guid>? ids = null)
 	{
 		ids ??= [];

@@ -1,3 +1,4 @@
+.openapi-generator-ignore
 apis/AccountApi.ts
 apis/BioStarApi.ts
 apis/DeviceApi.ts
@@ -23,6 +24,7 @@ models/CreateRequestDto.ts
 models/CreateTeamCommand.ts
 models/CreateTimesheetAdjustmentRequestDto.ts
 models/CreateWorkTimeCommand.ts
+models/CursorPagedRequest.ts
 models/CursorPagedRequestDirection.ts
 models/DeviceCategoryDto.ts
 models/DeviceCategoryDtoPaginated.ts
@@ -39,6 +41,7 @@ models/Nationality.ts
 models/NotificationCategory.ts
 models/NotificationDto.ts
 models/NotificationDtoCursorPaginated.ts
+models/PagedRequest.ts
 models/Permission.ts
 models/ProjectDto.ts
 models/ProjectDtoPaginated.ts

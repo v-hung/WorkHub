@@ -55,14 +55,14 @@ namespace WorkHub.Infrastructure.Services
 			var query = _context.Users.AsQueryable();
 
 			// Filtering
-			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<User>(request.SearchConditions);
 			if (predicate != null)
 			{
 				query = query.Where(predicate);
 			}
 
 			// Sorting
-			if (request.OrderBy != null)
+			if (!string.IsNullOrEmpty(request.OrderBy))
 			{
 				query = query.OrderBy(request.OrderBy); // require system.linq.dynamic.core
 			}

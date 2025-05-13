@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { RoleDtoPaginated, RoleSearchRequest } from "@/generate-api";
+import { RoleDtoPaginated, PagedRequest } from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useState } from "react";
@@ -21,16 +21,16 @@ export const useRoles = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState<RoleSearchRequest>({
+  const [request, setRequest] = useState<PagedRequest>({
     pageNumber: rolePaginated.currentPage,
     pageSize: rolePaginated.pageSize,
     searchConditions: [],
   });
 
-  const fetchPaginatedRoles = async (request: RoleSearchRequest) => {
+  const fetchPaginatedRoles = async (request: PagedRequest) => {
     setLoading(true);
     try {
-      const data = await roleApi.roleSearch(request);
+      const data = await roleApi.roleSearch({ pagedRequest: request });
       setRolePaginated(data);
     } catch (e) {
       notification.error({
@@ -42,7 +42,7 @@ export const useRoles = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<RoleSearchRequest>) => {
+    (updater: SetStateAction<PagedRequest>) => {
       const newRequest =
         typeof updater === "function" ? updater(request) : updater;
 

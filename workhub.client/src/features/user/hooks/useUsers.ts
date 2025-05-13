@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { UserDtoPaginated, UserSearchRequest } from "@/generate-api";
+import { UserDtoPaginated, PagedRequest } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { SetStateAction, useCallback, useState } from "react";
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
@@ -20,16 +20,16 @@ export const useUsers = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState<UserSearchRequest>({
+  const [request, setRequest] = useState<PagedRequest>({
     pageNumber: userPaginated.currentPage,
     pageSize: userPaginated.pageSize,
     searchConditions: [],
   });
 
-  const fetchPaginatedUsers = async (request: UserSearchRequest) => {
+  const fetchPaginatedUsers = async (request: PagedRequest) => {
     try {
       setLoading(true);
-      const data = await userApi.userSearch(request);
+      const data = await userApi.userSearch({ pagedRequest: request });
       setUserPaginated(data);
     } catch (e) {
       getNotification().error({
@@ -41,7 +41,7 @@ export const useUsers = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<UserSearchRequest>) => {
+    (updater: SetStateAction<PagedRequest>) => {
       const newRequest =
         typeof updater === "function" ? updater(request) : updater;
 

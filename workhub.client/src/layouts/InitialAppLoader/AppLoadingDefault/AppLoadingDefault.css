@@ -1,5 +1,5 @@
 /* LoadingScreen.css */
-.loading-container {
+.app-loading-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   background-color: #f8f9fa;
 }
 
-.loader {
+.app-loading-container__loader {
   border: 6px solid #e0e0e0;
   border-top: 6px solid #1890ff;
   border-radius: 50%;

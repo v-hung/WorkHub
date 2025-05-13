@@ -12,7 +12,7 @@ namespace WorkHub.Server.Controllers.Time
 	[Route("api/work-times")]
 	public class WorkTimeController : BaseApiController<WorkTimeController>
 	{
-		[HttpGet("all")]
+		[HttpGet]
 		[Authorize(Policy = Permissions.WorkTimes.View)]
 		public async Task<ActionResult<List<WorkTimeDto>>> GetAll([FromQuery] List<int> ids)
 		{
@@ -21,9 +21,9 @@ namespace WorkHub.Server.Controllers.Time
 			return Ok(data);
 		}
 
-		[HttpGet]
+		[HttpPost("search")]
 		[Authorize(Policy = Permissions.WorkTimes.View)]
-		public async Task<ActionResult<Paginated<WorkTimeDto>>> Search([FromQuery] PagedRequest request)
+		public async Task<ActionResult<Paginated<WorkTimeDto>>> Search(PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchWorkTimeQuery { Request = request });
 

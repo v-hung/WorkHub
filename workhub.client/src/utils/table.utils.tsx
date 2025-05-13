@@ -7,11 +7,7 @@ import type {
   SorterResult,
 } from "antd/es/table/interface";
 import { TablePaginationConfig } from "antd/lib";
-import {
-  SearchCondition,
-  SearchOperator,
-  UserSearchRequest,
-} from "@/generate-api";
+import { PagedRequest, SearchCondition, SearchOperator } from "@/generate-api";
 
 export const getColumnSearchProps = <T extends object>(
   dataIndex: keyof T
@@ -83,11 +79,12 @@ export const getPaginationConfig = <T,>(
   ...extra,
 });
 
-export const handleTableChange = <D extends UserSearchRequest>(
+export const handleTableChange = (
   pagination: TablePaginationConfig,
   filters: Record<string, FilterValue | null>,
   sorter: SorterResult<any> | SorterResult<any>[],
-  setRequest: React.Dispatch<React.SetStateAction<D>>
+  setRequest: React.Dispatch<React.SetStateAction<PagedRequest>>,
+  searchOperatorMap?: Record<string, SearchOperator>
 ) => {
   const { current, pageSize } = pagination;
 
@@ -96,14 +93,15 @@ export const handleTableChange = <D extends UserSearchRequest>(
     .filter((s) => s.order)
     .map(
       (s) => `${s.field} ${s.order === "ascend" ? "ascending" : "descending"}`
-    );
+    )
+    .join(",");
 
   // Convert filters to searchConditions
   const searchConditions: SearchCondition[] = Object.entries(filters)
     .filter(([_, value]) => Array.isArray(value) && value.length > 0)
     .map(([column, value]) => ({
       column: column,
-      operator: SearchOperator.In,
+      operator: searchOperatorMap?.[column] ?? SearchOperator.Contains,
       values: value as string[],
     }));
 

@@ -15,13 +15,14 @@ export const useMenu = () => {
     const filterByPermission = (items: typeof menus): typeof menus => {
       return items
         .map((menu) => {
+          if (menu.permission && !permissions.includes(menu.permission)) {
+            return null;
+          }
+
           if (Array.isArray(menu.children)) {
             const filteredChildren = filterByPermission(menu.children);
 
-            if (
-              filteredChildren.length === 0 ||
-              (menu.permission && !permissions.includes(menu.permission))
-            ) {
+            if (filteredChildren.length === 0) {
               return null;
             }
 
@@ -29,10 +30,6 @@ export const useMenu = () => {
               ...menu,
               children: filteredChildren,
             };
-          }
-
-          if (menu.permission && !permissions.includes(menu.permission)) {
-            return null;
           }
 
           return menu;

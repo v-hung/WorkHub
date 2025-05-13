@@ -133,6 +133,7 @@ const getMenuLogoItems = (t: TFunction, i18n: i18n): MenuProps["items"] => {
     {
       key: "/profile",
       label: "Profile",
+      onClick: () => navigate("/profile"),
     },
     {
       key: "Language",

@@ -8,7 +8,6 @@ import {
   BaseNotificationHubMessage,
   NotificationHubMessageType,
 } from "@/types/signalr.notification";
-import { useNotificationStore } from "@/stores/notification.store";
 
 export const useReceiveMessageHandler = (connection: HubConnection | null) => {
   useEffect(() => {
@@ -32,10 +31,6 @@ export const useReceiveMessageHandler = (connection: HubConnection | null) => {
         }
       }
     );
-
-    connection.on("SendUnReadCount", (unReadCount) => {
-      useNotificationStore.setState({ unReadCount });
-    });
 
     return () => {
       connection?.off("ReceiveMessage");

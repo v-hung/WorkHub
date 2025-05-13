@@ -18,7 +18,7 @@ import type {
   CreateWorkTimeCommand,
   ErrorResponse,
   ErrorValidateResponse,
-  SearchCondition,
+  PagedRequest,
   WorkTimeDto,
   WorkTimeDtoPaginated,
 } from '../models/index';
@@ -29,8 +29,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    SearchConditionFromJSON,
-    SearchConditionToJSON,
+    PagedRequestFromJSON,
+    PagedRequestToJSON,
     WorkTimeDtoFromJSON,
     WorkTimeDtoToJSON,
     WorkTimeDtoPaginatedFromJSON,
@@ -54,10 +54,7 @@ export interface WorkTimeGetByIdRequest {
 }
 
 export interface WorkTimeSearchRequest {
-    pageNumber: number;
-    pageSize: number;
-    searchConditions?: Array<SearchCondition>;
-    orderBy?: string;
+    pagedRequest?: PagedRequest;
 }
 
 export interface WorkTimeUpdateRequest {
@@ -151,7 +148,7 @@ export class WorkTimeApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/api/work-times/all`,
+            path: `/api/work-times`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -205,49 +202,22 @@ export class WorkTimeApi extends runtime.BaseAPI {
     /**
      */
     async workTimeSearchRaw(requestParameters: WorkTimeSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkTimeDtoPaginated>> {
-        if (requestParameters['pageNumber'] == null) {
-            throw new runtime.RequiredError(
-                'pageNumber',
-                'Required parameter "pageNumber" was null or undefined when calling workTimeSearch().'
-            );
-        }
-
-        if (requestParameters['pageSize'] == null) {
-            throw new runtime.RequiredError(
-                'pageSize',
-                'Required parameter "pageSize" was null or undefined when calling workTimeSearch().'
-            );
-        }
-
         const queryParameters: any = {};
 
-        if (requestParameters['pageNumber'] != null) {
-            queryParameters['PageNumber'] = requestParameters['pageNumber'];
-        }
-
-        if (requestParameters['pageSize'] != null) {
-            queryParameters['PageSize'] = requestParameters['pageSize'];
-        }
-
-        if (requestParameters['searchConditions'] != null) {
-            queryParameters['SearchConditions'] = requestParameters['searchConditions'];
-        }
-
-        if (requestParameters['orderBy'] != null) {
-            queryParameters['OrderBy'] = requestParameters['orderBy'];
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // Bearer authentication
         }
 
         const response = await this.request({
-            path: `/api/work-times`,
-            method: 'GET',
+            path: `/api/work-times/search`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => WorkTimeDtoPaginatedFromJSON(jsonValue));
@@ -255,7 +225,7 @@ export class WorkTimeApi extends runtime.BaseAPI {
 
     /**
      */
-    async workTimeSearch(requestParameters: WorkTimeSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkTimeDtoPaginated> {
+    async workTimeSearch(requestParameters: WorkTimeSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkTimeDtoPaginated> {
         const response = await this.workTimeSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }

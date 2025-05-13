@@ -26,6 +26,7 @@ namespace WorkHub.Infrastructure.Extensions
 					Type t when t == typeof(string) => HandleStringCondition(propertyAccess, condition),
 					Type t when t == typeof(int) || t == typeof(int?) => HandleIntCondition(propertyAccess, condition),
 					Type t when t == typeof(DateTime) || t == typeof(DateTime?) => HandleDateTimeCondition(propertyAccess, condition),
+					Type t when t.IsEnum || IsNullableEnum(t) => HandleEnumCondition(propertyAccess, condition),
 					_ => null
 				};
 
@@ -100,6 +101,22 @@ namespace WorkHub.Infrastructure.Extensions
 			};
 		}
 
+		private static Expression HandleEnumCondition(Expression property, SearchCondition condition)
+		{
+			var enumType = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+
+			var values = condition.Values
+					.Select(v => Enum.TryParse(enumType, v, true, out var parsed) ? parsed : null)
+					.Where(v => v != null)
+					.ToList();
+
+			var constant = Expression.Constant(values);
+			var containsMethod = typeof(List<object>).GetMethod("Contains", new[] { typeof(object) });
+
+			var converted = Expression.Convert(property, typeof(object));
+			return Expression.Call(constant, containsMethod!, converted);
+		}
+
 		private static Expression? BuildInExpression<T>(MemberExpression member, List<string> values)
 		{
 			var parsedConstants = values
@@ -132,7 +149,7 @@ namespace WorkHub.Infrastructure.Extensions
 			}
 		}
 
-
+		static bool IsNullableEnum(Type type) => Nullable.GetUnderlyingType(type)?.IsEnum == true;
 	}
 
 }

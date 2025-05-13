@@ -1,11 +1,13 @@
 import { createBrowserRouter } from "react-router";
 import { RootLayout } from "./layouts/RootLayout";
+import InitialAppLoader from "./layouts/InitialAppLoader/InitialAppLoader";
 
 const router = createBrowserRouter(
   [
     {
       errorElement: <div>error</div>,
       Component: RootLayout,
+      hydrateFallbackElement: <InitialAppLoader />,
       children: [
         {
           errorElement: <div>error</div>,
@@ -31,6 +33,10 @@ const router = createBrowserRouter(
               path: "/timesheets",
               lazy: () =>
                 import("./pages/timesheetEmployee/TimesheetEmployeePage"),
+            },
+            {
+              path: "/profile",
+              lazy: () => import("./pages/user/UserProfilePage"),
             },
             {
               path: "/users",
