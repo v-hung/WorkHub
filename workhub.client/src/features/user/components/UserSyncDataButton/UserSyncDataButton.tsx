@@ -11,7 +11,7 @@ type State = HTMLAttributes<HTMLDivElement>;
 
 const UserSyncDataButton: FC<State> = () => {
   const { loading, syncUsers } = useUserAction();
-  const { setRequest } = useUserContext();
+  const { updateRequest } = useUserContext();
 
   const handelSubmit = async () => {
     await syncUsers((data) => {
@@ -19,7 +19,7 @@ const UserSyncDataButton: FC<State> = () => {
         title: "Thông báo",
         content: <ContentInfoSuccess data={data} />,
         onClose: () => {
-          setRequest((state) => ({
+          updateRequest((state) => ({
             ...state,
             pageNumber: 1,
           }));

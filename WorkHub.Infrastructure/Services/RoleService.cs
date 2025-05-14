@@ -16,7 +16,7 @@ using WorkHub.Application.Requests;
 using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using WorkHub.Domain.Constants.Permission;
-using WorkHub.Infrastructure.Extensions;
+using WorkHub.Application.Interfaces.Repositories;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -26,13 +26,15 @@ namespace WorkHub.Infrastructure.Services
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
 		private readonly IStringLocalizer<RoleService> _localizer;
+		private readonly IRepository<Role, Guid> _repository;
 
-		public RoleService(RoleManager<Role> roleManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<RoleService> localizer)
+		public RoleService(RoleManager<Role> roleManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<RoleService> localizer, IRepository<Role, Guid> repository)
 		{
 			_roleManager = roleManager;
 			_context = context;
 			_mapper = mapper;
 			_localizer = localizer;
+			_repository = repository;
 		}
 
 		public async Task<List<D>> GetAllAsync<D>(Expression<Func<Role, bool>>? filter = null)
@@ -47,34 +49,9 @@ namespace WorkHub.Infrastructure.Services
 			return await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
-		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class
+		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class, IEntity<Guid>
 		{
-			var query = _context.Roles.AsQueryable();
-
-			// Filtering
-			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<Role>(request.SearchConditions);
-			if (predicate != null)
-			{
-				query = query.Where(predicate);
-			}
-
-			// Sorting
-			if (!string.IsNullOrEmpty(request.OrderBy))
-			{
-				query = query.OrderBy(request.OrderBy);
-			}
-			else
-			{
-				query = query.OrderBy(u => u.Id);
-			}
-
-			// Pagination
-			query = query.Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize);
-
-			// Mapping to DTO & Return
-			List<D> data = await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
-
-			return new Paginated<D>(data, await query.CountAsync(), request.PageNumber, request.PageSize);
+			return await _repository.SearchAsync<D, Guid>(request);
 		}
 
 		public async Task<D> GetAsync<D, DId>(DId id) where D : IEntity<DId> where DId : notnull

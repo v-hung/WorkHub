@@ -17,7 +17,7 @@ type State = ComponentProps<typeof Select>;
 const TeamSelect: FC<State> = (props) => {
   const { className, value, ...rest } = props;
 
-  const { teamPaginated, loading, request, setRequest, fetchTeams } =
+  const { teamPaginated, loading, request, updateRequest, fetchTeams } =
     useTeams();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
@@ -48,7 +48,7 @@ const TeamSelect: FC<State> = (props) => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: 1,
         searchString: value,
@@ -59,7 +59,7 @@ const TeamSelect: FC<State> = (props) => {
 
   const handlePopupScroll = useCallback(() => {
     if (teamPaginated.hasNextPage) {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: request.pageNumber + 1,
       }));
@@ -67,7 +67,7 @@ const TeamSelect: FC<State> = (props) => {
   }, [request, teamPaginated.hasNextPage]);
 
   const firstOpenDropdown = () => {
-    setRequest((request) => ({
+    updateRequest((request) => ({
       ...request,
       pageNumber: 1,
     }));

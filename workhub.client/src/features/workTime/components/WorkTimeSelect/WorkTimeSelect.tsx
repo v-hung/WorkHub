@@ -17,7 +17,7 @@ type State = ComponentProps<typeof Select>;
 const WorkTimeSelect: FC<State> = (props) => {
   const { className, value, ...rest } = props;
 
-  const { workTimePaginated, loading, request, setRequest, fetchWorkTimes } =
+  const { workTimePaginated, loading, request, updateRequest, fetchWorkTimes } =
     useWorkTimes();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
@@ -48,7 +48,7 @@ const WorkTimeSelect: FC<State> = (props) => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: 1,
         searchString: value,
@@ -59,7 +59,7 @@ const WorkTimeSelect: FC<State> = (props) => {
 
   const handlePopupScroll = useCallback(() => {
     if (workTimePaginated.hasNextPage) {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: request.pageNumber + 1,
       }));
@@ -67,7 +67,7 @@ const WorkTimeSelect: FC<State> = (props) => {
   }, [request, workTimePaginated.hasNextPage]);
 
   const firstOpenDropdown = () => {
-    setRequest((request) => ({
+    updateRequest((request) => ({
       ...request,
       pageNumber: 1,
     }));

@@ -176,11 +176,6 @@ namespace WorkHub.Infrastructure.BioStar.Services
 			};
 		}
 
-		public Task StartRealtimeEvents()
-		{
-			throw new NotImplementedException();
-		}
-
 		public async Task<List<BioStarEvent>> GetHistoricalEvents(GetHistoricalEventsRequest request)
 		{
 			string baseUrl = _bioStarConfig.BioStarApiUrl + BioStarConst.GET_EVENTS_API_URL;
@@ -318,11 +313,11 @@ namespace WorkHub.Infrastructure.BioStar.Services
 				}
 
 				Timesheet? exitingTimesheet = await _context.Timesheets
-					.FirstOrDefaultAsync(t => t.UserId == userId && t.Date.Date == result.Event.Datetime.Date);
+					.FirstOrDefaultAsync(t => t.UserId == userId && t.Date == result.Event.Datetime.Date);
 
 				if (exitingTimesheet != null)
 				{
-					if (exitingTimesheet.StartTime != null)
+					if (exitingTimesheet.StartTime == null)
 					{
 						exitingTimesheet.StartTime = result.Event.Datetime;
 					}

@@ -5,11 +5,10 @@ import { calculateWorkDay } from "../utils/timesheet.util";
 import { useAuthStore } from "@/stores/auth.store";
 
 export const useTimesheet = () => {
-  const { startTime, endTime, timeDifference, isActive, fetchTodayTimesheet } =
+  const { startTime, endTime, timeDifference, isActive, reset } =
     useTimesheetStore();
   const workTime = useAuthStore((state) => state.user?.workTime);
 
-  const [loading, setLoading] = useState(false);
   const intervalId = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const [timeString, setTimeString] = useState("--:-- - --:--:--");
@@ -40,16 +39,6 @@ export const useTimesheet = () => {
   }, [startTime, timeDifference, workTime, endTime, isActive]);
 
   useEffect(() => {
-    if (!startTime) {
-      (async () => {
-        setLoading(true);
-        await fetchTodayTimesheet();
-        setLoading(false);
-      })();
-    }
-  }, [startTime, fetchTodayTimesheet]);
-
-  useEffect(() => {
     if (startTime) {
       updateTimeUI();
 
@@ -66,5 +55,17 @@ export const useTimesheet = () => {
     };
   }, [startTime, updateTimeUI]);
 
-  return { timeString, loading };
+  const scheduleResetAtMidnight = () => {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setHours(24, 0, 0, 0);
+    const msUntilMidnight = tomorrow.getTime() - now.getTime() + 5000;
+
+    return setTimeout(() => {
+      reset();
+      scheduleResetAtMidnight();
+    }, msUntilMidnight);
+  };
+
+  return { timeString, scheduleResetAtMidnight };
 };

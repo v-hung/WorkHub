@@ -27,8 +27,9 @@
 		"makeup_time": "Thời gian làm bù"
 	},
 	"locale": {
-		"vi": "Tiếng việt",
-		"en": "Tiếng anh"
+		"vi-VN": "Tiếng việt",
+		"ja-JP": "Tiếng nhật",
+		"en-US": "Tiếng anh"
 	},
 	"nationality": {
 		"vi-VN": "Việt Nam",

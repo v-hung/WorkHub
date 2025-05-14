@@ -27,8 +27,9 @@
 		"makeup_time": "Makeup Time"
 	},
 	"locale": {
-		"vi": "Vietnamese",
-		"en": "English"
+		"vi-VN": "Vietnamese",
+		"ja-JP": "Japanese",
+		"en-US": "English"
 	},
 	"nationality": {
 		"vi-VN": "Vietnamese",

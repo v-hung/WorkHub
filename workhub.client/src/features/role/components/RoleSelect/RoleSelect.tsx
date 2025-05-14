@@ -17,7 +17,7 @@ type State = ComponentProps<typeof Select>;
 const RoleSelect: FC<State> = (props) => {
   const { className, value, ...rest } = props;
 
-  const { rolePaginated, loading, request, setRequest, fetchRoles } =
+  const { rolePaginated, loading, request, updateRequest, fetchRoles } =
     useRoles();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
@@ -48,7 +48,7 @@ const RoleSelect: FC<State> = (props) => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: 1,
         searchString: value,
@@ -59,7 +59,7 @@ const RoleSelect: FC<State> = (props) => {
 
   const handlePopupScroll = useCallback(() => {
     if (rolePaginated.hasNextPage) {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: request.pageNumber + 1,
       }));
@@ -67,7 +67,7 @@ const RoleSelect: FC<State> = (props) => {
   }, [request, rolePaginated.hasNextPage]);
 
   const firstOpenDropdown = () => {
-    setRequest((request) => ({
+    updateRequest((request) => ({
       ...request,
       pageNumber: 1,
     }));

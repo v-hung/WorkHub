@@ -1,5 +1,6 @@
 import { RefreshTokenResponse } from "@/generate-api";
 import { accountApi } from "./apiClient";
+import i18n from "@/utils/i18n";
 
 let refreshTokenPromise: Promise<RefreshTokenResponse> | null = null;
 
@@ -14,6 +15,10 @@ export const createFetchHttp = (enableRefreshToken: boolean): typeof fetch => {
   ) => {
     const response = await fetch(input, {
       ...init,
+      headers: {
+        ...(init?.headers || {}),
+        "Accept-Language": i18n.language,
+      },
       credentials: "include", // ensure cookies are sent
     });
 
@@ -30,6 +35,10 @@ export const createFetchHttp = (enableRefreshToken: boolean): typeof fetch => {
 
       return fetch(input, {
         ...init,
+        headers: {
+          ...(init?.headers || {}),
+          "Accept-Language": i18n.language,
+        },
         credentials: "include",
       });
     }

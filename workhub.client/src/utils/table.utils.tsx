@@ -83,7 +83,7 @@ export const handleTableChange = (
   pagination: TablePaginationConfig,
   filters: Record<string, FilterValue | null>,
   sorter: SorterResult<any> | SorterResult<any>[],
-  setRequest: React.Dispatch<React.SetStateAction<PagedRequest>>,
+  updateRequest: React.Dispatch<React.SetStateAction<PagedRequest>>,
   searchOperatorMap?: Record<string, SearchOperator>
 ) => {
   const { current, pageSize } = pagination;
@@ -106,7 +106,7 @@ export const handleTableChange = (
     }));
 
   // Update request
-  setRequest((prev) => ({
+  updateRequest((prev) => ({
     ...prev,
     pageNumber: current ?? prev.pageNumber,
     pageSize: pageSize ?? prev.pageSize,

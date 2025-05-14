@@ -1,6 +1,7 @@
 import { LoaderFunction, redirect } from "react-router";
 import { Permission } from "@/generate-api";
 import { LoadResponse, useAuthStore } from "@/stores/auth.store";
+import i18n from "./i18n";
 
 type AuthenticatedLoadResponse = Omit<LoadResponse, "user"> & {
   user: NonNullable<LoadResponse["user"]>;
@@ -14,6 +15,10 @@ export function wrapLoaderWithPermission<T extends LoaderFunction>(
   permission?: Permission
 ): T {
   return (async (...args) => {
+    if (!i18n.isInitialized) {
+      await i18n.init();
+    }
+
     const { user, permissions } = await useAuthStore.getState().load();
     const { request } = args[0];
 

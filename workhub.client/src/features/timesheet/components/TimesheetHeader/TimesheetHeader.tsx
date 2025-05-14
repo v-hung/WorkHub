@@ -8,11 +8,14 @@ import { useTimesheetContext } from "../../context/TimesheetContext";
 import { useRequestContext } from "@/features/request/contexts/RequestContext";
 import { RequestType } from "@/generate-api";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
+import { useEffect, useState } from "react";
 
 const TImesheetHeader = () => {
-  const { loading, timeString } = useTimesheet();
+  const { timeString, scheduleResetAtMidnight } = useTimesheet();
+  const [loading, setLoading] = useState(false);
 
-  const { startTime, isActive, checkIn, checkOut } = useTimesheetStore();
+  const { startTime, isActive, checkIn, checkOut, fetchTodayTimesheet } =
+    useTimesheetStore();
   const { getCurrentTimesheets: getTimesheets, isCurrentMonth } =
     useTimesheetContext();
   const { openRequest } = useRequestContext();
@@ -24,6 +27,20 @@ const TImesheetHeader = () => {
       await getTimesheets();
     }
   };
+
+  useEffect(() => {
+    if (!startTime) {
+      (async () => {
+        setLoading(true);
+        await fetchTodayTimesheet();
+        setLoading(false);
+      })();
+    }
+
+    const timeoutId = scheduleResetAtMidnight();
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
     <DefaultHeader title="Timesheet">

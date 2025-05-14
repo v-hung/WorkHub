@@ -14,8 +14,7 @@ namespace WorkHub.Application.Interfaces.BioStar.Services
 		Task<List<BioStarUser>> GetAllUsersAsync();
 		Task<BioStarSyncAllUsersResponse> SyncAllUsersAsync();
 
-		// 5Event Monitoring
-		Task StartRealtimeEvents();
+		// Event Monitoring
 		Task<List<BioStarEvent>> GetHistoricalEvents(GetHistoricalEventsRequest request);
 		Task<BioStarSyncHistoricalEventsResponse> SyncHistoricalEvents(GetHistoricalEventsRequest request);
 		Task SyncMessageEvent(string message);

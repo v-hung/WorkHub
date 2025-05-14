@@ -11,7 +11,7 @@ namespace WorkHub.Application.Interfaces.Services
 	{
 		Task<List<D>> GetAllAsync<D>(Expression<Func<User, bool>>? filter = null);
 
-		Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class;
+		Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class, IEntity<Guid>;
 
 		Task<int> GetCountAsync();
 

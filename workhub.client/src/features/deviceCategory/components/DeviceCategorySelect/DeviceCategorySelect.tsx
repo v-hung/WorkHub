@@ -21,7 +21,7 @@ const DeviceCategorySelect: FC<State> = (props) => {
     deviceCategoryPaginated,
     loading,
     request,
-    setRequest,
+    updateRequest,
     fetchDeviceCategories,
   } = useDeviceCategories();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
@@ -55,7 +55,7 @@ const DeviceCategorySelect: FC<State> = (props) => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: 1,
         searchString: value,
@@ -66,7 +66,7 @@ const DeviceCategorySelect: FC<State> = (props) => {
 
   const handlePopupScroll = useCallback(() => {
     if (deviceCategoryPaginated.hasNextPage) {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: request.pageNumber + 1,
       }));
@@ -74,7 +74,7 @@ const DeviceCategorySelect: FC<State> = (props) => {
   }, [request, deviceCategoryPaginated.hasNextPage]);
 
   const firstOpenDropdown = () => {
-    setRequest((request) => ({
+    updateRequest((request) => ({
       ...request,
       pageNumber: 1,
     }));

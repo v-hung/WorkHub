@@ -4,7 +4,6 @@ import {
   UserDto,
   UserPosition,
   UserStatus,
-  WorkTimeDto,
   WorkTimeDtoFromJSON,
 } from "@/generate-api";
 import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
@@ -12,7 +11,6 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import {} from "react-router";
 import { wrapPromise } from "@/utils/promise";
-import i18n from "@/utils/i18n";
 
 export type LoadResponse = {
   user: UserDto | null;
@@ -71,10 +69,6 @@ export const useAuthStore = create<AuthStoreState>()(
       try {
         if (get().isFirstLoaded) {
           return { user: get().user, permissions: get().permissions };
-        }
-
-        if (!i18n.isInitialized) {
-          await i18n.init();
         }
 
         const user = await accountApiWithRefreshToken.accountGetCurrentUser();

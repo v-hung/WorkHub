@@ -7,11 +7,12 @@ import {
   FormatDurationOptions,
   Locale,
 } from "date-fns";
-import { enUS, vi } from "date-fns/locale";
+import { enUS, vi, ja } from "date-fns/locale";
 
 const LOCALE_MAP: Record<string, Locale> = {
   "en-US": enUS,
   "vi-VN": vi,
+  "ja-JP": ja,
 };
 
 export function format(date: Date, formatStr: string = "HH:mm:ss"): string {

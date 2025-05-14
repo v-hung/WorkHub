@@ -13,6 +13,7 @@ import SimpleBar from "simplebar-react";
 import "simplebar-react/dist/simplebar.min.css";
 import ViIcon from "@/assets/ViIcon.svg";
 import UsIcon from "@/assets/UsIcon.svg";
+import JpIcon from "@/assets/JpIcon.svg";
 import { i18n, TFunction } from "i18next";
 import { useNavigate, useLocation } from "react-router";
 import { MenuInfo } from "rc-menu/lib/interface";
@@ -140,30 +141,43 @@ const getMenuLogoItems = (t: TFunction, i18n: i18n): MenuProps["items"] => {
       label: "Language",
       children: [
         {
-          icon: <img src={UsIcon} />,
-          key: "en",
-          label: t("locale.en"),
-          extra: i18n.language == "en" && (
+          icon: <img src={UsIcon} style={{ flex: "none" }} />,
+          key: "en-US",
+          label: t("locale.en-US"),
+          extra: i18n.language == "en-US" && (
             <IIonCheckmark
               color="var(--color-primary)"
               width={16}
               height={16}
             />
           ),
-          onClick: () => i18n.changeLanguage("en"),
+          onClick: () => i18n.changeLanguage("en-US"),
         },
         {
-          icon: <img src={ViIcon} />,
-          key: "vi",
-          label: t("locale.vi"),
-          extra: i18n.language == "vi" && (
+          icon: <img src={ViIcon} style={{ flex: "none" }} />,
+          key: "vi-VN",
+          label: t("locale.vi-VN"),
+          extra: i18n.language == "vi-VN" && (
             <IIonCheckmark
               color="var(--color-primary)"
               width={16}
               height={16}
             />
           ),
-          onClick: () => i18n.changeLanguage("vi"),
+          onClick: () => i18n.changeLanguage("vi-VN"),
+        },
+        {
+          icon: <img src={JpIcon} style={{ flex: "none" }} />,
+          key: "ja-JP",
+          label: t("locale.ja-JP"),
+          extra: i18n.language == "ja-JP" && (
+            <IIonCheckmark
+              color="var(--color-primary)"
+              width={16}
+              height={16}
+            />
+          ),
+          onClick: () => i18n.changeLanguage("ja-JP"),
         },
       ],
     },

@@ -12,7 +12,6 @@ export const RootLayout = () => {
           colorBgLayout: "var(--color-bg)",
         },
       }}
-      // locale={viVN}
     >
       <AppTheme
         message={{ maxCount: 1 }}

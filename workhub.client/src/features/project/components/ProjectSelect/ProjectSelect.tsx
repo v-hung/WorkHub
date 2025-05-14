@@ -17,7 +17,7 @@ type State = ComponentProps<typeof Select>;
 const ProjectSelect: FC<State> = (props) => {
   const { className, value, ...rest } = props;
 
-  const { projectPaginated, loading, request, setRequest, fetchProjects } =
+  const { projectPaginated, loading, request, updateRequest, fetchProjects } =
     useProjects();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
@@ -48,7 +48,7 @@ const ProjectSelect: FC<State> = (props) => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: 1,
         searchString: value,
@@ -59,7 +59,7 @@ const ProjectSelect: FC<State> = (props) => {
 
   const handlePopupScroll = useCallback(() => {
     if (projectPaginated.hasNextPage) {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: request.pageNumber + 1,
       }));
@@ -67,7 +67,7 @@ const ProjectSelect: FC<State> = (props) => {
   }, [request, projectPaginated.hasNextPage]);
 
   const firstOpenDropdown = () => {
-    setRequest((request) => ({
+    updateRequest((request) => ({
       ...request,
       pageNumber: 1,
     }));

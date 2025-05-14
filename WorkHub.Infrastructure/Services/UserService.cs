@@ -17,7 +17,7 @@ using WorkHub.Domain.Entities.Organization;
 using WorkHub.Domain.Constants.Identity;
 using System.Linq.Expressions;
 using WorkHub.Application.Utils;
-using WorkHub.Infrastructure.Extensions;
+using WorkHub.Application.Interfaces.Repositories;
 
 namespace WorkHub.Infrastructure.Services
 {
@@ -29,8 +29,9 @@ namespace WorkHub.Infrastructure.Services
 		private readonly IStringLocalizer<UserService> _localizer;
 		private readonly IIdentityService _identityService;
 		private readonly IUploadFile _uploadFile;
+		private readonly IRepository<User, Guid> _repository;
 
-		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer, IIdentityService identityService, IUploadFile uploadFile)
+		public UserService(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager, IStringLocalizer<UserService> localizer, IIdentityService identityService, IUploadFile uploadFile, IRepository<User, Guid> repository)
 		{
 			_context = context;
 			_mapper = mapper;
@@ -38,6 +39,7 @@ namespace WorkHub.Infrastructure.Services
 			_localizer = localizer;
 			_identityService = identityService;
 			_uploadFile = uploadFile;
+			_repository = repository;
 		}
 
 		public async Task<List<D>> GetAllAsync<D>(Expression<Func<User, bool>>? filter = null)
@@ -50,40 +52,9 @@ namespace WorkHub.Infrastructure.Services
 			return await query.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
 		}
 
-		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class
+		public async Task<Paginated<D>> SearchAsync<D>(PagedRequest request) where D : class, IEntity<Guid>
 		{
-			var query = _context.Users.AsQueryable();
-
-			// Filtering
-			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<User>(request.SearchConditions);
-			if (predicate != null)
-			{
-				query = query.Where(predicate);
-			}
-
-			// Sorting
-			if (!string.IsNullOrEmpty(request.OrderBy))
-			{
-				query = query.OrderBy(request.OrderBy); // require system.linq.dynamic.core
-			}
-			else
-			{
-				query = query.OrderBy(u => u.Id);
-			}
-
-			// Navigation
-			query = query.Include(u => u.WorkTime).Include(u => u.Supervisor).Include(u => u.Team);
-
-			// Total Records
-			var totalRecords = await query.CountAsync();
-
-			// Mapping to DTO & Return
-			List<D> users = await query
-				.Skip((request.PageNumber - 1) * request.PageSize)
-				.Take(request.PageSize)
-				.ProjectTo<D>(_mapper.ConfigurationProvider).ToListAsync();
-
-			return new Paginated<D>(users, totalRecords, request.PageNumber, request.PageSize);
+			return await _repository.SearchAsync<D, Guid>(request);
 		}
 
 		public async Task<D> GetAsync<D, DId>(DId userId) where D : IEntity<DId> where DId : notnull

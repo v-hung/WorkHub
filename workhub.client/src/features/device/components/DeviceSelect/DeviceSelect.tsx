@@ -17,7 +17,7 @@ type State = ComponentProps<typeof Select>;
 const DeviceSelect: FC<State> = (props) => {
   const { className, value, ...rest } = props;
 
-  const { devicePaginated, loading, request, setRequest, fetchDevices } =
+  const { devicePaginated, loading, request, updateRequest, fetchDevices } =
     useDevices();
   const [options, setOptions] = useState<SelectProps["options"]>([]);
 
@@ -48,7 +48,7 @@ const DeviceSelect: FC<State> = (props) => {
 
   const handleSearch = useCallback(
     debounce((value: string) => {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: 1,
         searchString: value,
@@ -59,7 +59,7 @@ const DeviceSelect: FC<State> = (props) => {
 
   const handlePopupScroll = useCallback(() => {
     if (devicePaginated.hasNextPage) {
-      setRequest((request) => ({
+      updateRequest((request) => ({
         ...request,
         pageNumber: request.pageNumber + 1,
       }));
@@ -67,7 +67,7 @@ const DeviceSelect: FC<State> = (props) => {
   }, [request, devicePaginated.hasNextPage]);
 
   const firstOpenDropdown = () => {
-    setRequest((request) => ({
+    updateRequest((request) => ({
       ...request,
       pageNumber: 1,
     }));

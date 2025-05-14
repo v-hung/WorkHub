@@ -10,11 +10,11 @@ i18n
   .use(chainedBackend)
   .use(initReactI18next)
   .init({
-    fallbackLng: "en",
+    fallbackLng: "vi-VN",
 
-    load: "languageOnly",
-    supportedLngs: ["en", "vi", "ja"],
-    nonExplicitSupportedLngs: true,
+    // load: "languageOnly",
+    supportedLngs: ["en-US", "vi-VN", "ja-JP"],
+    // nonExplicitSupportedLngs: true,
     // keySeparator: false,
 
     interpolation: {

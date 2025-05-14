@@ -67,29 +67,28 @@ namespace WorkHub.Infrastructure.Repositories
 				query = query.Where(filter);
 			}
 
-			var projectedQuery = query.ProjectTo<D>(_mapper.ConfigurationProvider);
-
 			// Search
 			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<T>(request.SearchConditions);
 			if (predicate != null)
 			{
-				projectedQuery = projectedQuery.Where(predicate);
+				query = query.Where(predicate);
 			}
 
 			// Apply Sorting
 			if (!string.IsNullOrEmpty(request.OrderBy))
 			{
-				projectedQuery = projectedQuery.OrderBy(request.OrderBy);
+				query = query.OrderBy(request.OrderBy);
 			}
 			else
 			{
-				projectedQuery = projectedQuery.OrderBy(v => v.Id);
+				query = query.OrderBy(v => v.Id);
 			}
 
-			var totalRecords = await projectedQuery.CountAsync();
+			var totalRecords = await query.CountAsync();
 
 			// Apply Pagination
-			var pagedData = await projectedQuery
+			var pagedData = await query
+				.ProjectTo<D>(_mapper.ConfigurationProvider)
 				.Skip((request.PageNumber - 1) * request.PageSize)
 				.Take(request.PageSize)
 				.ToListAsync();
