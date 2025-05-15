@@ -4,6 +4,8 @@ import languageDetector from "i18next-browser-languagedetector";
 import chainedBackend from "i18next-chained-backend";
 import httpBackend from "i18next-http-backend";
 import localStorageBackend from "i18next-localstorage-backend";
+import { AppLocale } from "./localeLoader";
+import { localeManager } from "./localeManager";
 
 i18n
   .use(languageDetector)
@@ -38,5 +40,9 @@ i18n
       useSuspense: false, // disable if you want self control
     },
   });
+
+i18n.on("languageChanged", async (lng: AppLocale) => {
+  await localeManager.setLocale(lng);
+});
 
 export default i18n;

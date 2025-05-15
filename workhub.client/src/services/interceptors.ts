@@ -1,6 +1,6 @@
 import { RefreshTokenResponse } from "@/generate-api";
 import { accountApi } from "./apiClient";
-import i18n from "@/utils/i18n";
+import i18n from "@/hooks/locale/i18n";
 
 let refreshTokenPromise: Promise<RefreshTokenResponse> | null = null;
 

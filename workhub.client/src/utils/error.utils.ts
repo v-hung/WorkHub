@@ -3,7 +3,7 @@ import {
   ErrorValidateResponse,
   ResponseError,
 } from "@/generate-api";
-import i18n from "./i18n";
+import i18n from "../hooks/locale/i18n";
 
 export async function getMessageError(e: any): Promise<string> {
   try {

@@ -1,7 +1,7 @@
 import { LoaderFunction, redirect } from "react-router";
 import { Permission } from "@/generate-api";
 import { LoadResponse, useAuthStore } from "@/stores/auth.store";
-import i18n from "./i18n";
+import i18n from "../hooks/locale/i18n";
 
 type AuthenticatedLoadResponse = Omit<LoadResponse, "user"> & {
   user: NonNullable<LoadResponse["user"]>;

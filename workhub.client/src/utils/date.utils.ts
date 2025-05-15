@@ -5,40 +5,86 @@ import {
   formatDuration as formatDurationDate,
   formatDistanceStrict as formatDistanceStrictDate,
   FormatDurationOptions,
-  Locale,
+  DateArg,
+  FormatOptions,
+  FormatDistanceOptions,
+  FormatDistanceStrictOptions,
 } from "date-fns";
-import { enUS, vi, ja } from "date-fns/locale";
+import { localeManager } from "@/hooks/locale/localeManager";
 
-const LOCALE_MAP: Record<string, Locale> = {
-  "en-US": enUS,
-  "vi-VN": vi,
-  "ja-JP": ja,
-};
-
-export function format(date: Date, formatStr: string = "HH:mm:ss"): string {
-  return formatDate(date, formatStr, { locale: getCurrentDateLocale() });
-}
-
-export function formatDistance(startDate: Date, endDate: Date) {
-  return formatDistanceDate(startDate, endDate, {
-    locale: getCurrentDateLocale(),
+export function format(
+  date: DateArg<Date> & {},
+  formatStr: string = "HH:mm:ss",
+  options: FormatOptions = {}
+): string {
+  return formatDate(date, formatStr, {
+    locale: localeManager.locale.dateFnsLocale,
+    ...options,
   });
 }
 
-export function formatDistanceStrict(startDate: Date, endDate: Date) {
-  return formatDistanceStrictDate(startDate, endDate, {
-    locale: getCurrentDateLocale(),
+export function formatDistance(
+  laterDate: DateArg<Date> & {},
+  earlierDate: DateArg<Date> & {},
+  options: FormatDistanceOptions = {}
+) {
+  return formatDistanceDate(laterDate, earlierDate, {
+    locale: localeManager.locale.dateFnsLocale,
+    ...options,
+  });
+}
+
+export function formatDistanceStrict(
+  laterDate: DateArg<Date> & {},
+  earlierDate: DateArg<Date> & {},
+  options: FormatDistanceStrictOptions = {}
+) {
+  return formatDistanceStrictDate(laterDate, earlierDate, {
+    locale: localeManager.locale.dateFnsLocale,
+    ...options,
   });
 }
 
 export function formatDuration(
   duration: Duration,
-  options?: FormatDurationOptions
+  options: FormatDurationOptions = {}
 ) {
   return formatDurationDate(duration, {
+    locale: localeManager.locale.dateFnsLocale,
     ...options,
-    locale: getCurrentDateLocale(),
   });
+}
+export function formatSystem(
+  date: Date | string,
+  options: {
+    format?: "date-time" | "date" | "time";
+    locale?: Intl.LocalesArgument;
+    hour12?: boolean;
+  }
+): string {
+  const { format = "date", locale = undefined, hour12 } = options;
+
+  const d = typeof date === "string" ? new Date(date) : date;
+
+  const baseOptions: Intl.DateTimeFormatOptions = {
+    ...(format === "date" || format === "date-time"
+      ? {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }
+      : {}),
+    ...(format === "time" || format === "date-time"
+      ? {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }
+      : {}),
+    ...(hour12 !== undefined && { hour12 }),
+  };
+
+  return new Intl.DateTimeFormat(locale, baseOptions).format(d);
 }
 
 export function localTimeToDate(localTime: string) {
@@ -56,8 +102,3 @@ export function setTimeToDate(time: Date): Date {
     time.getSeconds()
   );
 }
-
-const getCurrentDateLocale = () => {
-  const storedLocale = localStorage.getItem("locale") ?? "";
-  return LOCALE_MAP[storedLocale] || vi;
-};

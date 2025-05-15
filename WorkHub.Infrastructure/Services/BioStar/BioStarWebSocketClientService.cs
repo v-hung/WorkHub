@@ -19,11 +19,11 @@ namespace WorkHub.Infrastructure.Services.BioStar
 		private readonly IServiceProvider _serviceProvider;
 		private readonly IStringLocalizer<BioStarWebSocketClientService> _localizer;
 		private readonly IBioStarEventProcessingQueue _bioStarEventProcessingQueue;
+		private TaskCompletionSource<bool> _webSocketAuthenticatedTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
 		public BioStarWebSocketClientService(ILogger<BioStarWebSocketClientService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarWebSocketClientService> localizer, IServiceProvider serviceProvider, IBioStarEventProcessingQueue bioStarEventProcessingQueue)
 		{
-			_clientWebSocket = new ClientWebSocket();
-			_clientWebSocket.Options.RemoteCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+			_clientWebSocket = CreateNewWebSocket();
 			_logger = logger;
 			_bioStarConfig = bioStarConfig.Value;
 			_localizer = localizer;
@@ -51,7 +51,7 @@ namespace WorkHub.Infrastructure.Services.BioStar
 
 					await SendMessageAsync($"bs-session-id={sessionId}", cancellationToken);
 
-					await Task.Delay(1000, cancellationToken);
+					await Task.WhenAny(_webSocketAuthenticatedTcs.Task, Task.Delay(TimeSpan.FromSeconds(5), cancellationToken));
 					await WebsocketEventStartAsync(cancellationToken);
 
 					return true;
@@ -79,6 +79,11 @@ namespace WorkHub.Infrastructure.Services.BioStar
 					{
 						string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
 						_logger.LogInformation("Received message: " + message);
+
+						if (BioStarConst.RESPONSE_WEBSOCKET_SUCCESS.Contains(message))
+						{
+							_webSocketAuthenticatedTcs.TrySetResult(true);
+						}
 
 						_bioStarEventProcessingQueue.Enqueue(async token =>
 						{
@@ -125,8 +130,25 @@ namespace WorkHub.Infrastructure.Services.BioStar
 		{
 			if (_clientWebSocket.State == WebSocketState.Closed || _clientWebSocket.State == WebSocketState.Aborted)
 			{
-				await ConnectAsync(cancellationToken);
-				_logger.LogInformation("Reconnected to BioStar WebSocket.");
+
+				try
+				{
+					_clientWebSocket.Dispose();
+				}
+				catch (Exception ex)
+				{
+					_logger.LogWarning(ex, "Error disposing old ClientWebSocket.");
+				}
+
+				_clientWebSocket = CreateNewWebSocket();
+				_webSocketAuthenticatedTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+				var connected = await ConnectAsync(cancellationToken);
+
+				if (connected)
+				{
+					_logger.LogInformation("Reconnected to BioStar WebSocket.");
+				}
 			}
 
 			return _clientWebSocket.State;
@@ -135,6 +157,13 @@ namespace WorkHub.Infrastructure.Services.BioStar
 		public WebSocketState GetWebSocketState()
 		{
 			return _clientWebSocket.State;
+		}
+
+		private ClientWebSocket CreateNewWebSocket()
+		{
+			var ws = new ClientWebSocket();
+			ws.Options.RemoteCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+			return ws;
 		}
 
 		private async Task WebsocketEventStartAsync(CancellationToken cancellationToken)

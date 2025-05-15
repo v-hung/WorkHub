@@ -41,7 +41,7 @@ export const teamTableColumns: TableProps<TeamDto>["columns"] = [
 
           {hasPermission(Permission.PermissionsTeamsEdit) ? (
             <ButtonLink
-              href={`/teams/${record.id}0/edit`}
+              href={`/teams/${record.id}/edit`}
               size="small"
               color="cyan"
               variant="outlined"
