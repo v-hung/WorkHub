@@ -1,11 +1,16 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Localization;
 using WorkHub.Application.Features.Requests.DTOs;
 
 namespace WorkHub.Application.Features.Requests.Validators
 {
-	public class LeaveRequestValidator : IRequestValidator<CreateLeaveRequestDto>
+	public class LeaveRequestValidator : RequestValidator<CreateLeaveRequestDto>
 	{
-		public void Validate(CreateLeaveRequestDto request)
+		public LeaveRequestValidator(IStringLocalizerFactory localizerFactory) : base(localizerFactory)
+		{
+		}
+
+		public override void Validate(CreateLeaveRequestDto request)
 		{
 			if (request.BreakStartDate > request.BreakEndDate)
 			{

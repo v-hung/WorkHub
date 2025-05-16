@@ -12,9 +12,7 @@ using WorkHub.Infrastructure.BioStar.Services;
 using WorkHub.Infrastructure.Messaging;
 using WorkHub.Infrastructure.Repositories;
 using WorkHub.Infrastructure.Services;
-using WorkHub.Infrastructure.Services.Approvals;
 using WorkHub.Infrastructure.Services.BioStar;
-using WorkHub.Infrastructure.Services.Requests;
 
 namespace WorkHub.Infrastructure.Extensions;
 
@@ -25,6 +23,10 @@ public static class ServiceCollectionExtensions
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
+		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
+		services.AddScoped<ITimesheetService, TimesheetService>();
+
 		// biostar
 		services.AddScoped<IBioStarService, BioStarService>();
 		services.AddSingleton<BioStarWebSocketClientService>();
@@ -32,17 +34,24 @@ public static class ServiceCollectionExtensions
 		services.AddHostedService<BioStarWebSocketConnectionHostedService>();
 		services.AddHostedService<BioStarEventProcessingHostedService>();
 
-		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
-		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
-		services.AddScoped<ITimesheetService, TimesheetService>();
-
 		// requests
 		services.AddScoped<IRequestRepository, RequestRepository>();
-		services.AddScoped<IRequestService<CreateLeaveRequestDto>, LeaveRequestService>();
-		services.AddScoped<IRequestService<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestService>();
+		// services.AddScoped<IRequestService<CreateLeaveRequestDto>, LeaveRequestService>();
+		// services.AddScoped<IRequestService<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestService>();
 
-		services.AddScoped<IRequestApprovalService<LeaveRequest>, LeaveRequestApprovalService>();
-		services.AddScoped<IRequestApprovalService<TimesheetAdjustmentRequest>, TimesheetAdjustmentRequestApprovalService>();
+		// services.AddScoped<IRequestApprovalService<LeaveRequest>, LeaveRequestApprovalService>();
+		// services.AddScoped<IRequestApprovalService<TimesheetAdjustmentRequest>, TimesheetAdjustmentRequestApprovalService>();
+		services.Scan(scan => scan
+			.FromAssemblyOf<IRequestService<CreateLeaveRequestDto>>()
+			.AddClasses(c => c.AssignableTo(typeof(IRequestService<>)))
+			.AsImplementedInterfaces()
+			.WithScopedLifetime());
+
+		services.Scan(scan => scan
+			.FromAssemblyOf<IRequestApprovalService<Request>>()
+			.AddClasses(c => c.AssignableTo(typeof(IRequestApprovalService<>)))
+			.AsImplementedInterfaces()
+			.WithScopedLifetime());
 
 	}
 }

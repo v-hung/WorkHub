@@ -1,4 +1,4 @@
-import { localTimeToDate } from "@/utils/date.utils";
+import { localTimeToDate, setTimeToDate } from "@/utils/date.utils";
 import { isEmpty } from "@/utils/validate.utils";
 import { WorkTimeDto } from "@/generate-api";
 import { add } from "date-fns";
@@ -61,8 +61,10 @@ export const requestValidateTime =
       minutes: workTime.allowedLateMinutes,
     });
 
-    const startTime = value[0],
-      endTime = value[1];
+    console.log({ workTime }, localTimeToDate(workTime.endTimeAfternoon));
+
+    const startTime = setTimeToDate(value[0]),
+      endTime = setTimeToDate(value[1]);
 
     const validStartTime =
       startTime >= localTimeToDate(workTime.startTimeMorning) &&

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Reflection;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -14,13 +15,13 @@ namespace WorkHub.Infrastructure.Services.Approvals
 	public abstract class RequestApprovalService<TRequest> : IRequestApprovalService<TRequest> where TRequest : Request
 	{
 		protected readonly ApplicationDbContext _context;
-		protected readonly IStringLocalizer<RequestApprovalService<TRequest>> _localizer;
+		protected readonly IStringLocalizer _localizer;
 		protected readonly IMapper _mapper;
 
-		public RequestApprovalService(ApplicationDbContext context, IStringLocalizer<RequestApprovalService<TRequest>> localizer, IMapper mapper)
+		public RequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper)
 		{
 			_context = context;
-			_localizer = localizer;
+			_localizer = localizerFactory.Create("Repositories.Repository", Assembly.GetExecutingAssembly().GetName().Name ?? ""); ;
 			_mapper = mapper;
 		}
 

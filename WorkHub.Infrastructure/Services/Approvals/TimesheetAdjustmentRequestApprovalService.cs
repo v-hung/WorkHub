@@ -15,7 +15,7 @@ namespace WorkHub.Infrastructure.Services.Approvals
 	{
 		private readonly IUserService _userService;
 
-		public TimesheetAdjustmentRequestApprovalService(ApplicationDbContext context, IStringLocalizer<TimesheetAdjustmentRequestApprovalService> localizer, IMapper mapper, IUserService userService) : base(context, localizer, mapper)
+		public TimesheetAdjustmentRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper, IUserService userService) : base(context, localizerFactory, mapper)
 		{
 			_userService = userService;
 		}

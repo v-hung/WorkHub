@@ -1,8 +1,6 @@
 using MediatR;
 using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Interfaces.Repositories;
-using WorkHub.Domain.Entities.Audit;
-using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Application.Features.Requests.Queries
 {

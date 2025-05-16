@@ -17,7 +17,11 @@ public static class ServiceCollectionExtensions
 	public static void AddApplicationLayer(this IServiceCollection services)
 	{
 		services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
+			Assembly.GetExecutingAssembly(),
+			typeof(CreateRequestCommandHandler<,>).Assembly
+		));
 
 		AddRequestHandlers(services);
 		AddValidators(services);
@@ -40,7 +44,13 @@ public static class ServiceCollectionExtensions
 
 	private static void AddValidators(IServiceCollection services)
 	{
-		services.AddScoped<IRequestValidator<CreateLeaveRequestDto>, LeaveRequestValidator>();
-		services.AddScoped<IRequestValidator<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestValidator>();
+		// services.AddScoped<IRequestValidator<CreateLeaveRequestDto>, LeaveRequestValidator>();
+		// services.AddScoped<IRequestValidator<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestValidator>();
+		services.Scan(scan => scan
+			.FromAssemblyOf<IRequestValidator<CreateRequestDto>>() // hoặc typeof(LeaveRequestValidator) nếu cần chỉ rõ
+			.AddClasses(classes => classes.AssignableTo(typeof(IRequestValidator<>)))
+			.AsImplementedInterfaces()
+			.WithScopedLifetime()
+		);
 	}
 }

@@ -13,7 +13,7 @@ namespace WorkHub.Infrastructure.Services.Approvals
 {
 	public class LeaveRequestApprovalService : RequestApprovalService<LeaveRequest>
 	{
-		public LeaveRequestApprovalService(ApplicationDbContext context, IStringLocalizer<LeaveRequestApprovalService> localizer, IMapper mapper) : base(context, localizer, mapper)
+		public LeaveRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper) : base(context, localizerFactory, mapper)
 		{
 		}
 

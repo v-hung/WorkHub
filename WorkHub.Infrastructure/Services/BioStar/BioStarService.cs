@@ -220,7 +220,7 @@ namespace WorkHub.Infrastructure.BioStar.Services
 			List<string> uniqueBioStarIds = bioStarEvents.Where(e => e.UserId?.UserId != null).Select(e => e.UserId!.UserId!).Distinct().ToList();
 
 			// UserIds map
-			var userIdMap = await GetUserIdByBioStarId(uniqueBioStarIds);
+			var userIdMap = await GetUserIdsByBioStarIds(uniqueBioStarIds);
 
 			// list timesheet find in timekeeping machine
 			List<Timesheet> timesheets = bioStarEvents.Where(e => e.UserId?.UserId != null)
@@ -365,7 +365,7 @@ namespace WorkHub.Infrastructure.BioStar.Services
 			return user?.Id;
 		}
 
-		public async Task<Dictionary<string, Guid>> GetUserIdByBioStarId(List<string> bioStarId)
+		public async Task<Dictionary<string, Guid>> GetUserIdsByBioStarIds(List<string> bioStarId)
 		{
 			var userIdMap = new Dictionary<string, Guid?>();
 
