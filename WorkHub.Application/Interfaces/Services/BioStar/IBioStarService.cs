@@ -7,7 +7,7 @@ namespace WorkHub.Application.Interfaces.BioStar.Services
 	public interface IBioStarService
 	{
 		// Authentication
-		Task<string?> GetAccessTokenAsync();
+		Task<string?> GetAccessTokenAsync(bool forceLogin = false);
 		Task<string?> LoginAsync();
 
 		// Sync Operations

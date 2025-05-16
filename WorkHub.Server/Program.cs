@@ -43,6 +43,6 @@ app.UseAuthorization();
 app.UseEndpoints();
 app.MapFallbackToFile("/index.html");
 
-app.Initialize(builder.Configuration);
+app.Initialize();
 
 app.Run();

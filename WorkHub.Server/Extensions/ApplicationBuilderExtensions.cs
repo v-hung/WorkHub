@@ -39,9 +39,12 @@ static class ApplicationBuilderExtensions
 		return app;
 	}
 
-	public static IApplicationBuilder Initialize(this IApplicationBuilder app, IConfiguration _configuration)
+	public static IApplicationBuilder Initialize(this IApplicationBuilder app)
 	{
 		using var serviceScope = app.ApplicationServices.CreateScope();
+
+		var env = serviceScope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+		if (!env.IsDevelopment()) return app;
 
 		var initializers = serviceScope.ServiceProvider.GetServices<IDatabaseSeeder>();
 

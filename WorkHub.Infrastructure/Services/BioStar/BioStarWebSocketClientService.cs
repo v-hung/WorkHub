@@ -39,7 +39,7 @@ namespace WorkHub.Infrastructure.Services.BioStar
 				{
 					string baseUrl = _bioStarConfig.BioStarWebsocketUrl;
 
-					var sessionId = await GetBioStarService().GetAccessTokenAsync();
+					var sessionId = await GetBioStarService().GetAccessTokenAsync(true);
 					if (string.IsNullOrWhiteSpace(sessionId))
 					{
 						_logger.LogWarning("No session ID available for BioStar API.");

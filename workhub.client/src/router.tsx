@@ -10,7 +10,6 @@ const router = createBrowserRouter(
       hydrateFallbackElement: <InitialAppLoader />,
       children: [
         {
-          errorElement: <div>error</div>,
           lazy: () => import("./layouts/default/DefaultLayout"),
           children: [
             {

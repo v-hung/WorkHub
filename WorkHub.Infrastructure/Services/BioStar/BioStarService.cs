@@ -54,9 +54,9 @@ namespace WorkHub.Infrastructure.BioStar.Services
 			_userManager = userManager;
 		}
 
-		public async Task<string?> GetAccessTokenAsync()
+		public async Task<string?> GetAccessTokenAsync(bool forceLogin = false)
 		{
-			if (_memoryCache.TryGetValue(AccessTokenCacheKey, out var accessToken))
+			if (!forceLogin && _memoryCache.TryGetValue(AccessTokenCacheKey, out var accessToken))
 			{
 				return accessToken as string;
 			}
