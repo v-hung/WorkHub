@@ -36,7 +36,7 @@ const LeaveRequestPanel: FC<State> = (props) => {
           <Tag
             color={
               data.status == "PENDING"
-                ? "default"
+                ? "blue"
                 : data.status == "REJECTED"
                 ? "red"
                 : "green"

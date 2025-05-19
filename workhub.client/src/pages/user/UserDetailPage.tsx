@@ -1,4 +1,4 @@
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
@@ -7,7 +7,7 @@ import { Layout } from "antd";
 import { useParams } from "react-router";
 import { Permission } from "@/generate-api";
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
+export const loader = wrapProtectedLoader(async ({ params }) => {
   console.log({ id: params.id });
 }, Permission.PermissionsUsersView);
 

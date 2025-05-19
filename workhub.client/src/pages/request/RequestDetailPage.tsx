@@ -1,4 +1,4 @@
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
@@ -20,7 +20,7 @@ const TimesheetAdjustmentRequestLazy = lazy(
     )
 );
 
-export const loader = wrapLoaderWithPermission(async ({ params }) => {
+export const loader = wrapProtectedLoader(async ({ params }) => {
   const { id } = params as any;
 
   const data = await wrapPromise(() =>

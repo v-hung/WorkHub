@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import UserTable from "@/features/user/components/UserTable/UserTable";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -11,7 +11,7 @@ import { hasPermission } from "@/utils/hasPermission";
 import { UserProvider } from "@/features/user/contexts/UserContext";
 import UserSyncDataButton from "@/features/user/components/UserSyncDataButton/UserSyncDataButton";
 
-export const loader = wrapLoaderWithPermission(
+export const loader = wrapProtectedLoader(
   undefined,
   Permission.PermissionsUsersView
 );

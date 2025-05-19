@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import TeamTable from "@/features/team/components/TeamTable/TeamTable";
 import { TeamProvider } from "@/features/team/contexts/TeamContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
@@ -10,7 +10,7 @@ import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/De
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(
+export const loader = wrapProtectedLoader(
   undefined,
   Permission.PermissionsTeamsView
 );

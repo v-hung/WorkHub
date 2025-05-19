@@ -1,5 +1,5 @@
 import TimesheetHeader from "@/features/timesheet/components/TimesheetHeader/TimesheetHeader";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import TimesheetTable from "@/features/timesheet/components/TimesheetTable/TimesheetTable";
 import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext";
 import { lazy, Suspense } from "react";
@@ -19,7 +19,7 @@ const LeaveRequestModelLazy = lazy(
     import("@/features/request/components/LeaveRequestModel/LeaveRequestModel")
 );
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapProtectedLoader();
 
 export function Component() {
   return (

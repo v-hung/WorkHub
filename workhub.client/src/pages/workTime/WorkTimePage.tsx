@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import WorkTimeTable from "@/features/workTime/components/WorkTimeTable/WorkTimeTable";
 import { WorkTimeProvider } from "@/features/workTime/contexts/WorkTimeContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
@@ -10,7 +10,7 @@ import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultC
 import { hasPermission } from "@/utils/hasPermission";
 import { Permission } from "@/generate-api";
 
-export const loader = wrapLoaderWithPermission(
+export const loader = wrapProtectedLoader(
   undefined,
   Permission.PermissionsWorkTimesView
 );

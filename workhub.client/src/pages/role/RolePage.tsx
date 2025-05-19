@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import RoleTable from "@/features/role/components/RoleTable/RoleTable";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
@@ -10,7 +10,7 @@ import { RoleProvider } from "@/features/role/contexts/RoleContext";
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(
+export const loader = wrapProtectedLoader(
   undefined,
   Permission.PermissionsRolesView
 );

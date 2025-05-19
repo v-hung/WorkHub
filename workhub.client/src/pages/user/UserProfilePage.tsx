@@ -1,4 +1,4 @@
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
@@ -6,7 +6,7 @@ import { UserProvider } from "@/features/user/contexts/UserContext";
 import { Button } from "antd";
 import { useAuthStore } from "@/stores/auth.store";
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapProtectedLoader();
 
 export function Component() {
   const data = useAuthStore((state) => state.user);

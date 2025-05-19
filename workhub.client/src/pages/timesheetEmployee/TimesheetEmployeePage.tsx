@@ -1,4 +1,4 @@
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
@@ -17,7 +17,7 @@ const TimesheetSyncDataModalLazy = lazy(
     )
 );
 
-export const loader = wrapLoaderWithPermission();
+export const loader = wrapProtectedLoader();
 
 export function Component() {
   const [openSyncModal, setOpenSyncModal] = useState(false);

@@ -13,7 +13,7 @@ type Listener = () => void;
 export class LocaleManager {
   private localeData: LocaleData | null = null;
   private listeners = new Set<Listener>();
-  private isInitialized = false;
+  public isInitialized = false;
   private initPromise: Promise<void> | null = null;
 
   constructor(private defaultLocale: AppLocale = "vi-VN") {}

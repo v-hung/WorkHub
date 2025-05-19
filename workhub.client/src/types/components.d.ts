@@ -16,6 +16,7 @@ declare global {
   const IIonCubeOutline: typeof import('~icons/ion/cube-outline.jsx')['default']
   const IIonDocumentsOutline: typeof import('~icons/ion/documents-outline.jsx')['default']
   const IIonHelp: typeof import('~icons/ion/help.jsx')['default']
+  const IIonHome: typeof import('~icons/ion/home.jsx')['default']
   const IIonHomeOutline: typeof import('~icons/ion/home-outline.jsx')['default']
   const IIonLockClosedOutline: typeof import('~icons/ion/lock-closed-outline.jsx')['default']
   const IIonMailNotificationOutline: typeof import('~icons/ion/mail-notification-outline.jsx')['default']

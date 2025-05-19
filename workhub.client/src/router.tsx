@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import { RootLayout } from "./layouts/RootLayout";
 import InitialAppLoader from "./layouts/InitialAppLoader/InitialAppLoader";
+import ErrorBoundary from "./pages/error/ErrorBoundary";
 
 const router = createBrowserRouter(
   [
     {
-      errorElement: <div>error</div>,
+      errorElement: <ErrorBoundary />,
       Component: RootLayout,
       hydrateFallbackElement: <InitialAppLoader />,
       children: [
@@ -14,7 +15,7 @@ const router = createBrowserRouter(
           children: [
             {
               path: "/",
-              lazy: () => import("./pages/HomePage"),
+              lazy: () => import("./pages/home/HomePage"),
             },
             {
               path: "/notifications",
@@ -182,7 +183,7 @@ const router = createBrowserRouter(
         },
         {
           path: "*",
-          lazy: () => import("./pages/Catchall"),
+          lazy: () => import("./pages/error/NotFoundPage"),
         },
       ],
     },

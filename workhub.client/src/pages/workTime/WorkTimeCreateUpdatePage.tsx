@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { redirect, useLoaderData } from "react-router";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import { useRef, useState } from "react";
 import WorkTimeFormCreate, {
   WorkTimeFormCreateRefState,
@@ -14,7 +14,7 @@ import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/De
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import { ensurePermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(
+export const loader = wrapProtectedLoader(
   async ({ params }, { permissions }) => {
     const { id } = params;
 

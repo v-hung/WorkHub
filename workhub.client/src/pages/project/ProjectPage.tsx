@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import { wrapLoaderWithPermission } from "@/utils/loader";
+import { wrapProtectedLoader } from "@/utils/loader";
 import ProjectTable from "@/features/project/components/ProjectTable/ProjectTable";
 import { ProjectProvider } from "@/features/project/contexts/ProjectContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
@@ -10,7 +10,7 @@ import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultC
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 
-export const loader = wrapLoaderWithPermission(
+export const loader = wrapProtectedLoader(
   undefined,
   Permission.PermissionsProjectsView
 );
