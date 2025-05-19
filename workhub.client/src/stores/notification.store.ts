@@ -6,6 +6,7 @@ type NotificationStoreState = {
   isFirstLoaded: boolean;
   unReadCount: number;
   load: () => Promise<void>;
+  decreaseUnreadCount: () => void;
 };
 
 export const useNotificationStore = create<NotificationStoreState>()(
@@ -22,6 +23,12 @@ export const useNotificationStore = create<NotificationStoreState>()(
         set({ unReadCount, isFirstLoaded: true });
       } catch (error) {
         console.log(error);
+      }
+    },
+    decreaseUnreadCount: () => {
+      const current = get().unReadCount ?? 0;
+      if (current > 0) {
+        set({ unReadCount: current - 1 });
       }
     },
   }))

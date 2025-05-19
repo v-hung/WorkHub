@@ -1,5 +1,3 @@
-
-
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using WorkHub.Application.Features.Requests.DTOs;
@@ -13,6 +11,7 @@ using WorkHub.Infrastructure.Messaging;
 using WorkHub.Infrastructure.Repositories;
 using WorkHub.Infrastructure.Services;
 using WorkHub.Infrastructure.Services.BioStar;
+using WorkHub.Infrastructure.Services.Requests;
 
 namespace WorkHub.Infrastructure.Extensions;
 
@@ -36,19 +35,16 @@ public static class ServiceCollectionExtensions
 
 		// requests
 		services.AddScoped<IRequestRepository, RequestRepository>();
-		// services.AddScoped<IRequestService<CreateLeaveRequestDto>, LeaveRequestService>();
-		// services.AddScoped<IRequestService<CreateTimesheetAdjustmentRequestDto>, TimesheetAdjustmentRequestService>();
 
-		// services.AddScoped<IRequestApprovalService<LeaveRequest>, LeaveRequestApprovalService>();
-		// services.AddScoped<IRequestApprovalService<TimesheetAdjustmentRequest>, TimesheetAdjustmentRequestApprovalService>();
+		services.AddScoped<RequestServiceDependencies>();
 		services.Scan(scan => scan
-			.FromAssemblyOf<IRequestService<CreateLeaveRequestDto>>()
+			.FromAssemblies(Assembly.GetExecutingAssembly())
 			.AddClasses(c => c.AssignableTo(typeof(IRequestService<>)))
 			.AsImplementedInterfaces()
 			.WithScopedLifetime());
 
 		services.Scan(scan => scan
-			.FromAssemblyOf<IRequestApprovalService<Request>>()
+			.FromAssemblies(Assembly.GetExecutingAssembly())
 			.AddClasses(c => c.AssignableTo(typeof(IRequestApprovalService<>)))
 			.AsImplementedInterfaces()
 			.WithScopedLifetime());

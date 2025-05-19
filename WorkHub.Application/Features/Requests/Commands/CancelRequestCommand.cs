@@ -1,29 +1,28 @@
 using MediatR;
+using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Features.Requests.DTOs;
 using WorkHub.Application.Interfaces.Services;
 
 namespace WorkHub.Application.Features.Requests.Commands
 {
-	public class CancelRequestCommand<D, TCreateRequest> : IRequest<D> where D : class where TCreateRequest : CreateRequestDto
+	public class CancelRequestCommand : IRequest<RequestCombinedDto>
 	{
 		public required int Id { get; set; }
 	}
 
-	public class CancelRequestCommandHandler<D, TCreateRequest> : IRequestHandler<CancelRequestCommand<D, TCreateRequest>, D>
-		where D : class
-		where TCreateRequest : CreateRequestDto
+	public class CancelRequestCommandHandler : IRequestHandler<CancelRequestCommand, RequestCombinedDto>
 	{
-		private readonly IRequestService<TCreateRequest> _requestService;
+		private readonly IRequestService<CreateRequestDto> _requestService;
 
-		public CancelRequestCommandHandler(IRequestService<TCreateRequest> requestService)
+		public CancelRequestCommandHandler(IRequestService<CreateRequestDto> requestService)
 		{
 			_requestService = requestService;
 		}
 
-		public async Task<D> Handle(CancelRequestCommand<D, TCreateRequest> command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDto> Handle(CancelRequestCommand command, CancellationToken cancellationToken)
 		{
 
-			return await _requestService.CancelRequestAsync<D>(command.Id);
+			return await _requestService.CancelRequestAsync<RequestCombinedDto>(command.Id);
 		}
 	}
 }

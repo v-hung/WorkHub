@@ -49,11 +49,15 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
       value,
       text: key,
     })),
+    filteredValue: [UserStatus.Active, UserStatus.Onsite],
   },
   {
     title: "CreatedAt",
+    key: "createdAt",
+    dataIndex: "createdAt",
     render: (_, record) => format(record.createdAt, "dd/MM/yyyy"),
-    // width: "10rem",
+    sorter: true,
+    defaultSortOrder: "ascend",
   },
   {
     title: "Action",

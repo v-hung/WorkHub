@@ -17,7 +17,7 @@ export type CreateLeaveRequestDtoCustomType = CreateLeaveRequestDto & {
 
 export const useLeaveRequestAction = () => {
   const [loading, setLoading] = useState(false);
-  const supervisor = useAuthStore((state) => state.user!.supervisor);
+  const supervisor = useAuthStore((state) => state.user?.supervisor);
 
   // Default data
   // =============

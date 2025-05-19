@@ -1,5 +1,10 @@
 import { getMessageError } from "@/utils/error.utils";
-import { UserDtoPaginated, PagedRequest } from "@/generate-api";
+import {
+  UserDtoPaginated,
+  PagedRequest,
+  SearchOperator,
+  UserStatus,
+} from "@/generate-api";
 import { userApi } from "@/services/apiClient";
 import { SetStateAction, useCallback, useState } from "react";
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
@@ -23,7 +28,14 @@ export const useUsers = () => {
   const [request, setRequest] = useState<PagedRequest>({
     pageNumber: userPaginated.currentPage,
     pageSize: userPaginated.pageSize,
-    searchConditions: [],
+    searchConditions: [
+      {
+        column: "userStatus",
+        operator: SearchOperator.Contains,
+        values: [UserStatus.Active, UserStatus.Onsite],
+      },
+    ],
+    orderBy: "createdAt ascending",
   });
 
   const fetchPaginatedUsers = async (request: PagedRequest) => {

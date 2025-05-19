@@ -1,59 +1,51 @@
 using System.Net;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using WorkHub.Application.DTOs.Time;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Features.Requests.DTOs;
-using WorkHub.Application.Interfaces.Messaging;
-using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Domain.Entities.Requests;
 using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Enums;
-using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Services.Requests
 {
-	public class TimesheetAdjustmentRequestService : RequestService<CreateTimesheetAdjustmentRequestDto>
+	public class TimesheetAdjustmentRequestService : BaseRequestService<CreateTimesheetAdjustmentRequestDto>
 	{
 		private readonly IRequestApprovalService<TimesheetAdjustmentRequest> _approvalService;
-		private readonly ITimesheetRepository _timesheetRepository;
 
-		public TimesheetAdjustmentRequestService(ApplicationDbContext context, IMapper mapper, IStringLocalizer<TimesheetAdjustmentRequestService> localizer, ICurrentUserService currentUserService, IRequestApprovalService<TimesheetAdjustmentRequest> approvalService, ITimesheetRepository timesheetRepository, IHttpContextAccessor httpContextAccessor, IEmailService emailService, IEmailSenderQueue emailQueue)
-			: base(context, mapper, localizer, currentUserService, emailService, httpContextAccessor, emailQueue)
+		public TimesheetAdjustmentRequestService(RequestServiceDependencies deps, IStringLocalizerFactory localizerFactory, IRequestApprovalService<TimesheetAdjustmentRequest> approvalService) : base(deps, localizerFactory)
 		{
 			_approvalService = approvalService;
-			_timesheetRepository = timesheetRepository;
 		}
 
 		public override async Task<D> CreateRequestAsync<D>(CreateTimesheetAdjustmentRequestDto request)
 		{
-			if (!await _approvalService.CanApproveRequestAsync(_currentUserService.UserId!, request.ApprovedId.ToString()))
+			if (!await _approvalService.CanApproveRequestAsync(_deps.CurrentUserService.UserId!, request.ApprovedId.ToString()))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["The specified approver is not authorized to approve this request."]);
 			}
 
-			if (_context.Requests.Any(r => r.UserId == Guid.Parse(_currentUserService.UserId!) && r.Date == request.Date && r.Status == RequestStatus.PENDING && r.RequestType == RequestType.TIMESHEET_ADJUSTMENT_REQUEST))
+			if (_deps.Context.Requests.Any(r => r.UserId == Guid.Parse(_deps.CurrentUserService.UserId!) && r.Date == request.Date && r.Status == RequestStatus.PENDING && r.RequestType == RequestType.TIMESHEET_ADJUSTMENT_REQUEST))
 			{
 				throw new BusinessException(HttpStatusCode.Conflict, _localizer["You already have a request for this date."]);
 			}
 
-			var timesheet = await _timesheetRepository.GetTimesheetByDate(_currentUserService.UserId!, request.Date);
+			var timesheet = await _deps.TimesheetRepository.GetTimesheetByDate(_deps.CurrentUserService.UserId!, request.Date);
 
-			timesheet ??= await _timesheetRepository.CreateTimesheetAsync<TimesheetDto>(new Timesheet { Date = request.Date, UserId = Guid.Parse(_currentUserService.UserId!) });
+			timesheet ??= await _deps.TimesheetRepository.CreateTimesheetAsync<TimesheetDto>(new Timesheet { Date = request.Date, UserId = Guid.Parse(_deps.CurrentUserService.UserId!) });
 
-			TimesheetAdjustmentRequest timesheetRequest = _mapper.Map<TimesheetAdjustmentRequest>(request);
+			TimesheetAdjustmentRequest timesheetRequest = _deps.Mapper.Map<TimesheetAdjustmentRequest>(request);
 
 			timesheetRequest.TimesheetId = timesheet.Id;
-			timesheetRequest.UserId = Guid.Parse(_currentUserService.UserId!);
+			timesheetRequest.UserId = Guid.Parse(_deps.CurrentUserService.UserId!);
 
-			await _context.TimesheetAdjustmentRequests.AddAsync(timesheetRequest);
-			await _context.SaveChangesAsync();
+			await _deps.Context.TimesheetAdjustmentRequests.AddAsync(timesheetRequest);
+			await _deps.Context.SaveChangesAsync();
 
 			await base.CreateRequestNotification(timesheetRequest);
 
-			return _mapper.Map<D>(timesheetRequest);
+			return _deps.Mapper.Map<D>(timesheetRequest);
 		}
 	}
 }

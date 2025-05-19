@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkHub.Application.Exceptions;
-using WorkHub.Application.Interfaces.Services;
+using WorkHub.Application.Interfaces.SignalR;
 using WorkHub.Application.Utils;
 using WorkHub.Domain.Entities.Requests;
 using WorkHub.Domain.Entities.Time;
@@ -11,9 +11,9 @@ using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Services.Approvals
 {
-	public class LeaveRequestApprovalService : RequestApprovalService<LeaveRequest>
+	public class LeaveRequestApprovalService : BaseRequestApprovalService<LeaveRequest>
 	{
-		public LeaveRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper) : base(context, localizerFactory, mapper)
+		public LeaveRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper, INotificationSender notificationSender) : base(context, localizerFactory, mapper, notificationSender)
 		{
 		}
 

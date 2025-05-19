@@ -222,7 +222,9 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="Supervisor" name="supervisorId">
-                <UserSelectMemo withoutIds={[currentUser!.id]} />
+                <UserSelectMemo
+                  withoutIds={currentUser ? [currentUser.id] : []}
+                />
               </Form.Item>
             </Col>
 

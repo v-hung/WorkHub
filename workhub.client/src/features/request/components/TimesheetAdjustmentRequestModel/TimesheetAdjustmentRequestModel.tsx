@@ -30,7 +30,7 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
   const { loading, create, formDefault } =
     useTimesheetAdjustmentRequestAction();
 
-  const workTime = useAuthStore((state) => state.user!.workTime);
+  const workTime = useAuthStore((state) => state.user?.workTime);
 
   const [form] = Form.useForm();
   const [formState] = useState<CreateTimesheetAdjustmentRequestDtoCustomType>(

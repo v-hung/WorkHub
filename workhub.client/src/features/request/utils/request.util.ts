@@ -3,7 +3,15 @@ import { isEmpty } from "@/utils/validate.utils";
 import { WorkTimeDto } from "@/generate-api";
 import { add } from "date-fns";
 
-export const requestDisabledTime = (workTime: WorkTimeDto) => {
+export const requestDisabledTime = (workTime?: WorkTimeDto) => {
+  if (!workTime) {
+    return {
+      disabledHours: () => [],
+      disabledMinutes: () => [],
+      disabledSeconds: () => [],
+    };
+  }
+
   const parseTime = (timeStr: string) => {
     const [hours, minutes] = timeStr.split(":").map(Number);
     return { hours, minutes };
@@ -48,8 +56,14 @@ export const requestDisabledTime = (workTime: WorkTimeDto) => {
 };
 
 export const requestValidateTime =
-  (workTime: WorkTimeDto, required: boolean | undefined = false) =>
+  (workTime?: WorkTimeDto, required: boolean | undefined = false) =>
   (_: any, value: [Date, Date]) => {
+    if (!workTime) {
+      return Promise.reject(
+        new Error("No working time information available.")
+      );
+    }
+
     if (isEmpty(value)) {
       if (required) {
         return Promise.reject(new Error("Please input your working time!"));

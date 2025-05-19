@@ -18,7 +18,7 @@ export type CreateTimesheetAdjustmentRequestDtoCustomType =
 
 export const useTimesheetAdjustmentRequestAction = () => {
   const [loading, setLoading] = useState(false);
-  const supervisor = useAuthStore((state) => state.user!.supervisor);
+  const supervisor = useAuthStore((state) => state.user?.supervisor);
 
   // Default data
   // =============

@@ -26,7 +26,7 @@ const LeaveRequestModel: FC<State> = (props) => {
     useTimesheetContext();
   const { loading, create, formDefault } = useLeaveRequestAction();
 
-  const workTime = useAuthStore((state) => state.user!.workTime);
+  const workTime = useAuthStore((state) => state.user?.workTime);
 
   const [form] = Form.useForm<CreateLeaveRequestDtoCustomType>();
   const [formState] = useState<CreateLeaveRequestDtoCustomType>(formDefault());

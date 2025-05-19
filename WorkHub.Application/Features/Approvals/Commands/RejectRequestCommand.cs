@@ -1,26 +1,27 @@
 using MediatR;
+using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Application.Features.Approvals.Commands
 {
-	public class RejectRequestCommand<D, TRequest> : IRequest<D> where D : class where TRequest : Request
+	public class RejectRequestCommand : IRequest<RequestCombinedDto>
 	{
 		public required int RequestId { get; set; }
 	}
 
-	public class RejectRequestCommandHandler<D, TRequest> : IRequestHandler<RejectRequestCommand<D, TRequest>, D> where D : class where TRequest : Request
+	public class RejectRequestCommandHandler : IRequestHandler<RejectRequestCommand, RequestCombinedDto>
 	{
-		private readonly IRequestApprovalService<TRequest> _approvalRequestService;
+		private readonly IRequestApprovalService<Request> _approvalRequestService;
 
-		public RejectRequestCommandHandler(IRequestApprovalService<TRequest> approvalService)
+		public RejectRequestCommandHandler(IRequestApprovalService<Request> approvalService)
 		{
 			_approvalRequestService = approvalService;
 		}
 
-		public async Task<D> Handle(RejectRequestCommand<D, TRequest> command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDto> Handle(RejectRequestCommand command, CancellationToken cancellationToken)
 		{
-			return await _approvalRequestService.RejectRequestAsync<D>(command.RequestId);
+			return await _approvalRequestService.RejectRequestAsync<RequestCombinedDto>(command.RequestId);
 		}
 	}
 }

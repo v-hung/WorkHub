@@ -5,6 +5,7 @@ import { useNotifications } from "../../hooks/useNotifications";
 import NotificationToolbar from "../NotificationToolbar/NotificationToolbar";
 import "./NotificationTable.css";
 import { useNavigate } from "react-router";
+import { useNotificationStore } from "@/stores/notification.store";
 
 const NotificationTable = () => {
   const navigate = useNavigate();
@@ -59,6 +60,10 @@ const NotificationTable = () => {
           onClick: () => {
             if (record.category == "REQUEST" && record.relatedEntityId) {
               navigate(`/requests/${record.relatedEntityId}`);
+            }
+
+            if (!record.isRead) {
+              useNotificationStore.getState().decreaseUnreadCount();
             }
           },
         })}

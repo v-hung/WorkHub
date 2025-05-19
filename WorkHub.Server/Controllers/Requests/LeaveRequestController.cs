@@ -4,7 +4,6 @@ using WorkHub.Application.DTOs.Requests;
 using WorkHub.Application.Features.Approvals.Commands;
 using WorkHub.Application.Features.Requests.Commands;
 using WorkHub.Application.Features.Requests.DTOs;
-using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Server.Controllers.Requests
 {
@@ -14,7 +13,7 @@ namespace WorkHub.Server.Controllers.Requests
 		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> CreateRequest(CreateLeaveRequestDto request)
 		{
-			var data = await _mediator.Send(new CreateRequestCommand<RequestCombinedDto, CreateLeaveRequestDto> { Request = request });
+			var data = await _mediator.Send(new CreateLeaveRequestCommand { Request = request });
 
 			return Ok(data);
 		}
@@ -23,7 +22,7 @@ namespace WorkHub.Server.Controllers.Requests
 		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> CancelRequest(int id)
 		{
-			var data = await _mediator.Send(new CancelRequestCommand<RequestCombinedDto, CreateLeaveRequestDto> { Id = id });
+			var data = await _mediator.Send(new CancelRequestCommand { Id = id });
 
 			return Ok(data);
 		}
@@ -32,7 +31,7 @@ namespace WorkHub.Server.Controllers.Requests
 		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> ApprovalRequest(int id)
 		{
-			var data = await _mediator.Send(new ApproveRequestCommand<RequestCombinedDto, LeaveRequest> { RequestId = id });
+			var data = await _mediator.Send(new ApproveLeaveRequestCommand { RequestId = id });
 
 			return Ok(data);
 		}
@@ -41,7 +40,7 @@ namespace WorkHub.Server.Controllers.Requests
 		[Authorize]
 		public override async Task<ActionResult<RequestCombinedDto>> RejectRequest(int id)
 		{
-			var data = await _mediator.Send(new RejectRequestCommand<RequestCombinedDto, LeaveRequest> { RequestId = id });
+			var data = await _mediator.Send(new RejectRequestCommand { RequestId = id });
 
 			return Ok(data);
 		}
