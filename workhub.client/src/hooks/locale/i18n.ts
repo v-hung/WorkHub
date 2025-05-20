@@ -4,18 +4,22 @@ import languageDetector from "i18next-browser-languagedetector";
 import chainedBackend from "i18next-chained-backend";
 import httpBackend from "i18next-http-backend";
 import localStorageBackend from "i18next-localstorage-backend";
-import { AppLocale } from "./localeLoader";
 import { localeManager } from "./localeManager";
+
+export type AppLocale = "en-US" | "ja-JP" | "vi-VN";
+
+export const SUPPORTED_LANGUAGES: AppLocale[] = ["en-US", "ja-JP", "vi-VN"];
+export const CURRENT_LANGUAGE: AppLocale = "en-US";
 
 i18n
   .use(languageDetector)
   .use(chainedBackend)
   .use(initReactI18next)
   .init({
-    fallbackLng: "vi-VN",
+    fallbackLng: CURRENT_LANGUAGE,
 
     // load: "languageOnly",
-    supportedLngs: ["en-US", "vi-VN", "ja-JP"],
+    supportedLngs: SUPPORTED_LANGUAGES,
     // nonExplicitSupportedLngs: true,
     // keySeparator: false,
 

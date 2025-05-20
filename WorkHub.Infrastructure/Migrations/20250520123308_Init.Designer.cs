@@ -12,8 +12,8 @@ using WorkHub.Infrastructure.Data;
 namespace WorkHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250417104919_Init7")]
-    partial class Init7
+    [Migration("20250520123308_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("DevicesId");
 
-                    b.ToTable("DeviceDeviceCategory");
+                    b.ToTable("device_device_category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -61,7 +61,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("asp_net_role_claims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -85,7 +85,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("asp_net_user_claims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -106,7 +106,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("asp_net_user_logins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -121,7 +121,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("asp_net_user_roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -140,7 +140,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("asp_net_user_tokens", (string)null);
                 });
 
             modelBuilder.Entity("ProjectUser", b =>
@@ -155,7 +155,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("ProjectsId");
 
-                    b.ToTable("ProjectUser");
+                    b.ToTable("project_user");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Equipment.Device", b =>
@@ -203,7 +203,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("AssignedUserId");
 
-                    b.ToTable("Device");
+                    b.ToTable("device");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Equipment.DeviceCategory", b =>
@@ -225,7 +225,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceCategories");
+                    b.ToTable("device_categories");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.RefreshToken", b =>
@@ -257,7 +257,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("refresh_tokens");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.Role", b =>
@@ -275,9 +275,6 @@ namespace WorkHub.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<bool>("IsAdmin")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -292,7 +289,7 @@ namespace WorkHub.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("asp_net_roles", (string)null);
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.User", b =>
@@ -303,6 +300,9 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("BioStarUserId")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -386,7 +386,7 @@ namespace WorkHub.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<int>("UserPosition")
+                    b.Property<int?>("UserPosition")
                         .HasColumnType("int");
 
                     b.Property<int>("UserStatus")
@@ -410,7 +410,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("WorkTimeId");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("asp_net_users", (string)null);
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.UserDetail", b =>
@@ -421,7 +421,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("ContactAddress")
@@ -449,7 +449,7 @@ namespace WorkHub.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("UserDetails");
+                    b.ToTable("user_details");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Misc.Notification", b =>
@@ -459,6 +459,9 @@ namespace WorkHub.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -482,13 +485,13 @@ namespace WorkHub.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
+                    b.Property<string>("RelatedEntityId")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -501,7 +504,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("notifications");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Organization.Team", b =>
@@ -548,7 +551,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Teams");
+                    b.ToTable("teams");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Requests.Request", b =>
@@ -595,7 +598,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Requests");
+                    b.ToTable("requests");
 
                     b.HasDiscriminator<int>("RequestType");
 
@@ -614,6 +617,9 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<DateTime?>("StartTime")
                         .HasColumnType("datetime(6)");
 
@@ -628,7 +634,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Timesheets");
+                    b.ToTable("timesheets");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Time.WorkTime", b =>
@@ -675,7 +681,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkTimes");
+                    b.ToTable("work_times");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Work.Project", b =>
@@ -731,7 +737,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("projects");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Requests.LeaveRequest", b =>
@@ -743,6 +749,8 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.Property<DateTime>("BreakStartDate")
                         .HasColumnType("datetime(6)");
+
+                    b.ToTable("requests");
 
                     b.HasDiscriminator().HasValue(1);
                 });
@@ -763,7 +771,7 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("datetime(6)");
 
-                    b.ToTable("Requests", t =>
+                    b.ToTable("requests", t =>
                         {
                             t.Property("BreakEndDate")
                                 .HasColumnName("TimesheetAdjustmentRequest_BreakEndDate");

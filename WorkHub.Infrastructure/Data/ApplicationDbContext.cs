@@ -11,6 +11,7 @@ using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Entities.Equipment;
 using WorkHub.Domain.Entities.Misc;
+using WorkHub.Application.Utils;
 
 namespace WorkHub.Infrastructure.Data;
 
@@ -85,6 +86,13 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 		}
 
 		base.OnModelCreating(builder);
+
+		foreach (var entity in builder.Model.GetEntityTypes())
+		{
+			var tableName = entity.GetTableName();
+			var snakeCaseName = tableName?.ToSnakeCase();
+			entity.SetTableName(snakeCaseName);
+		}
 	}
 
 	private static LambdaExpression ConvertFilterExpression(Type entityType)

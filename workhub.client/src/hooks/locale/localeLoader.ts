@@ -1,7 +1,6 @@
 import type { Locale as AntdLocale } from "antd/es/locale";
 import type { Locale as DateFnsLocale } from "date-fns";
-
-export type AppLocale = "en-US" | "ja-JP" | "vi-VN";
+import { AppLocale } from "./i18n";
 
 const ANT_LOCALE_MAP: Partial<Record<AppLocale, AntdLocale>> = {};
 const DATE_FNS_LOCALE_MAP: Partial<Record<AppLocale, DateFnsLocale>> = {};

@@ -1,6 +1,7 @@
 import type { Locale as AntdLocale } from "antd/es/locale";
 import type { Locale as DateFnsLocale } from "date-fns";
-import { AppLocale, loadAntdLocale, loadDateFnsLocale } from "./localeLoader";
+import { loadAntdLocale, loadDateFnsLocale } from "./localeLoader";
+import { AppLocale, CURRENT_LANGUAGE } from "./i18n";
 
 type LocaleData = {
   appLocale: AppLocale;
@@ -16,7 +17,7 @@ export class LocaleManager {
   private isInitializedData = false;
   private initPromise: Promise<void> | null = null;
 
-  constructor(private defaultLocale: AppLocale = "vi-VN") {}
+  constructor(private defaultLocale: AppLocale = CURRENT_LANGUAGE) {}
 
   async init(locale?: AppLocale) {
     if (this.isInitializedData) return;
