@@ -18,7 +18,7 @@ const UserSyncDataButton: FC<State> = () => {
       getModal().info({
         title: "Thông báo",
         content: <ContentInfoSuccess data={data} />,
-        onClose: () => {
+        onOk: () => {
           updateRequest((state) => ({
             ...state,
             pageNumber: 1,

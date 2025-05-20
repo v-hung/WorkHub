@@ -13,13 +13,13 @@ type Listener = () => void;
 export class LocaleManager {
   private localeData: LocaleData | null = null;
   private listeners = new Set<Listener>();
-  public isInitialized = false;
+  private isInitializedData = false;
   private initPromise: Promise<void> | null = null;
 
   constructor(private defaultLocale: AppLocale = "vi-VN") {}
 
   async init(locale?: AppLocale) {
-    if (this.isInitialized) return;
+    if (this.isInitializedData) return;
 
     if (!this.initPromise) {
       this.initPromise = (async () => {
@@ -29,7 +29,7 @@ export class LocaleManager {
           loadDateFnsLocale(initLocale),
         ]);
         this.localeData = { appLocale: initLocale, antdLocale, dateFnsLocale };
-        this.isInitialized = true;
+        this.isInitializedData = true;
         this.notifyListeners();
       })();
     }
@@ -38,7 +38,7 @@ export class LocaleManager {
   }
 
   async setLocale(newLocale: AppLocale) {
-    if (!this.isInitialized) {
+    if (!this.isInitializedData) {
       await this.init(newLocale);
       return;
     }
@@ -56,6 +56,10 @@ export class LocaleManager {
   get locale(): LocaleData {
     if (!this.localeData) throw new Error("LocaleManager not initialized");
     return this.localeData;
+  }
+
+  get isInitialized(): boolean {
+    return this.isInitializedData;
   }
 
   subscribe(listener: Listener): () => void {

@@ -49,7 +49,7 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
       value,
       text: key,
     })),
-    filteredValue: [UserStatus.Active, UserStatus.Onsite],
+    defaultFilteredValue: [UserStatus.Active, UserStatus.Onsite],
   },
   {
     title: "CreatedAt",
