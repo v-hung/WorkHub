@@ -6,6 +6,7 @@ using WorkHub.Domain.Enums;
 
 namespace WorkHub.Domain.Entities.Misc
 {
+	[Table("notifications")]
 	public class Notification : AuditEntity<int>
 	{
 		[StringLength(255)]

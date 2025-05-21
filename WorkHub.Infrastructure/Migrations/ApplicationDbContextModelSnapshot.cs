@@ -200,7 +200,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("AssignedUserId");
 
-                    b.ToTable("device");
+                    b.ToTable("devices");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Equipment.DeviceCategory", b =>
@@ -241,6 +241,10 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.Property<bool>("RememberMe")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Token")
                         .IsRequired()

@@ -75,7 +75,7 @@ namespace WorkHub.Infrastructure.Services
 				Directory.CreateDirectory(uploadsFolder);
 			}
 
-			string fileName = GetUniqueFileName(file.FileName, uploadsFolder);
+			string fileName = GetUniqueFileName(file.FileName);
 			string filePath = Path.Combine(uploadsFolder, fileName);
 
 			using (var stream = File.Create(filePath))
@@ -101,7 +101,7 @@ namespace WorkHub.Infrastructure.Services
 			return fileInformation;
 		}
 
-		public async Task<FileInformation> UploadSingleAsync(byte[] bytes, string? path = null)
+		public async Task<FileInformation> UploadSingleAsync(byte[] bytes, string? path = null, string? fileName = null)
 		{
 
 			string uploadsFolderPath = string.IsNullOrEmpty(path) ? UPLOAD_FOLDER_NAME : $"{UPLOAD_FOLDER_NAME}/{path}";
@@ -112,7 +112,7 @@ namespace WorkHub.Infrastructure.Services
 				Directory.CreateDirectory(uploadsFolder);
 			}
 
-			string fileName = GetUniqueFileName("avatar.png", uploadsFolder);
+			fileName ??= GetUniqueFileName("file.png");
 			string filePath = Path.Combine(uploadsFolder, fileName);
 
 			await File.WriteAllBytesAsync(filePath, bytes);
@@ -168,7 +168,7 @@ namespace WorkHub.Infrastructure.Services
 			return ImageExtensions.Contains(extension) || AudioExtensions.Contains(extension) || VideoExtensions.Contains(extension);
 		}
 
-		private string GetUniqueFileName(string fileName, string uploadFolder)
+		private string GetUniqueFileName(string fileName)
 		{
 			string extension = Path.GetExtension(fileName).ToLower();
 			string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);

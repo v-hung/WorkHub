@@ -5,6 +5,7 @@ using WorkHub.Domain.Enums;
 
 namespace WorkHub.Domain.Entities.Identity
 {
+	[Table("user_details")]
 	public class UserDetail : Entity<int>
 	{
 

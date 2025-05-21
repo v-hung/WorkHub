@@ -6,6 +6,7 @@ using WorkHub.Domain.Enums;
 
 namespace WorkHub.Domain.Entities.Equipment
 {
+	[Table("devices")]
 	public class Device : AuditEntity<int>
 	{
 		[Required]

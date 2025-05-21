@@ -10,7 +10,7 @@ import {
 } from "react";
 import { CreateWorkTimeCommand, WorkTimeDto } from "@/generate-api";
 import { useWorkTimeAction } from "../../hooks/useWorkTimeAction";
-import MyTimePicker from "@/ui/form/MyTimePicker";
+import TimePicker from "@/ui/form/TimePicker";
 import { workTimeDisabledTime } from "../../utils/workTime.util";
 import { format, localTimeToDate } from "@/utils/date.utils";
 import { useNavigate } from "react-router";
@@ -85,7 +85,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                   value: v ? localTimeToDate(v) : null,
                 })}
               >
-                <MyTimePicker
+                <TimePicker
                   style={{ width: "100%" }}
                   disabledTime={workTimeDisabledTime}
                   hideDisabledOptions
@@ -105,7 +105,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                   value: v ? localTimeToDate(v) : null,
                 })}
               >
-                <MyTimePicker
+                <TimePicker
                   style={{ width: "100%" }}
                   disabledTime={workTimeDisabledTime}
                   format={"HH:mm:ss"}
@@ -126,7 +126,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                   value: v ? localTimeToDate(v) : null,
                 })}
               >
-                <MyTimePicker
+                <TimePicker
                   style={{ width: "100%" }}
                   disabledTime={workTimeDisabledTime}
                   format={"HH:mm:ss"}
@@ -147,7 +147,7 @@ const WorkTimeFormCreate = forwardRef<WorkTimeFormCreateRefState, State>(
                   value: v ? localTimeToDate(v) : null,
                 })}
               >
-                <MyTimePicker
+                <TimePicker
                   style={{ width: "100%" }}
                   disabledTime={workTimeDisabledTime}
                   format={"HH:mm:ss"}

@@ -1,4 +1,4 @@
-import MyDatePicker from "@/ui/form/MyDatePicker";
+import DatePicker from "@/ui/form/DatePicker";
 import { Form, Modal } from "antd";
 import { useState, type ComponentProps, type FC } from "react";
 import { useTimesheetEmployeeContext } from "../../context/TimesheetEmployeeContext";
@@ -57,7 +57,7 @@ const TimesheetSyncDataModal: FC<State> = (props) => {
         style={{ marginTop: "2rem" }}
       >
         <Form.Item name="month" label="Month" rules={[{ required: true }]}>
-          <MyDatePicker picker="month" />
+          <DatePicker picker="month" />
         </Form.Item>
       </Form>
     </Modal>

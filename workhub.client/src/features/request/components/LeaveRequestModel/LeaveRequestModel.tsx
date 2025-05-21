@@ -7,9 +7,9 @@ import {
   useLeaveRequestAction,
 } from "../../hooks/useLeaveRequestAction";
 import { CreateLeaveRequestDto, RequestType } from "@/generate-api";
-import MyDatePicker from "@/ui/form/MyDatePicker";
+import DatePicker from "@/ui/form/DatePicker";
 import TextArea from "antd/es/input/TextArea";
-import MyRangeTimePicker from "@/ui/form/MyRangeTimePicker";
+import RangeTimePicker from "@/ui/form/RangeTimePicker";
 import {
   requestDisabledTime,
   requestValidateTime,
@@ -116,7 +116,7 @@ const LeaveRequestModel: FC<State> = (props) => {
           name="date"
           rules={[{ required: true, message: "Please input your date!" }]}
         >
-          <MyDatePicker />
+          <DatePicker />
         </Form.Item>
 
         <Form.Item
@@ -125,7 +125,7 @@ const LeaveRequestModel: FC<State> = (props) => {
           required
           rules={[{ validator: requestValidateTime(workTime, true) }]}
         >
-          <MyRangeTimePicker
+          <RangeTimePicker
             disabledTime={() => requestDisabledTime(workTime)}
             hideDisabledOptions
             showSecond={false}

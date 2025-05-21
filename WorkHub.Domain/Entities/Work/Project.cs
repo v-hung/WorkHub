@@ -7,6 +7,7 @@ using WorkHub.Domain.Entities.Organization;
 
 namespace WorkHub.Domain.Entities.Work
 {
+	[Table("projects")]
 	public class Project : AuditEntity<int>
 	{
 		[Required]

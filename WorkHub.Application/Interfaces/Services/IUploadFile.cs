@@ -7,7 +7,7 @@ namespace WorkHub.Application.Interfaces.Services
 	{
 		Task<FileInformation> UploadSingleAsync(IFormFile file, string? path = null);
 
-		Task<FileInformation> UploadSingleAsync(byte[] bytes, string? path = null);
+		Task<FileInformation> UploadSingleAsync(byte[] bytes, string? path = null, string? fileName = null);
 
 		Task<List<FileInformation>> UploadMultipleAsync(List<IFormFile> files, string? path = null);
 

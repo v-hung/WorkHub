@@ -6,6 +6,7 @@ using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Domain.Entities.Time
 {
+	[Table("timesheets")]
 	public class Timesheet : Entity<Guid>
 	{
 		[Required]

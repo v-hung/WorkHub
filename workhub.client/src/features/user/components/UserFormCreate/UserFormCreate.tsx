@@ -26,7 +26,7 @@ import {
   UserPosition,
   UserStatus,
 } from "@/generate-api";
-import MyDatePicker from "@/ui/form/MyDatePicker";
+import DatePicker from "@/ui/form/DatePicker";
 import styles from "./UserFormCreate.module.css";
 import { TeamSelectMemo } from "@/features/team/components/TeamSelect/TeamSelect";
 import { UserSelectMemo } from "../UserSelect/UserSelect";
@@ -134,7 +134,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
 
             <Col xs={24} lg={12} xl={8}>
               <Form.Item label="BirthDate" name={["userDetail", "birthDate"]}>
-                <MyDatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
+                <DatePicker format="YYYY-MM-DD" style={{ width: "100%" }} />
               </Form.Item>
             </Col>
 

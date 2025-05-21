@@ -50,7 +50,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 		// Create JWT token
 		var token = await _jwtTokenService.GenerateJwtToken(user);
 
-		var refreshToken = _jwtTokenService.GenerateRefreshTokenModel(request.RememberMe);
+		var refreshToken = _jwtTokenService.GenerateRefreshTokenModel(user.SecurityStamp ?? "", request.RememberMe);
 		user.RefreshTokens.Add(refreshToken);
 		await _userManager.UpdateAsync(user);
 

@@ -6,6 +6,7 @@ using WorkHub.Domain.Entities.Identity;
 
 namespace WorkHub.Domain.Entities.Organization
 {
+	[Table("teams")]
 	public class Team : AuditEntity<int>
 	{
 		[Required]

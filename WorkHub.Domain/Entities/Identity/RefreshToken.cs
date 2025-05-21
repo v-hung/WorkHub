@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using WorkHub.Domain.Entities.Audit;
 
 namespace WorkHub.Domain.Entities.Identity;
+
+[Table("refresh_tokens")]
 public class RefreshToken : Entity<int>
 {
 
@@ -15,6 +17,9 @@ public class RefreshToken : Entity<int>
 
 	[Required]
 	public required bool RememberMe { get; set; } = false;
+
+	[Required]
+	public required string SecurityStamp { get; set; }
 
 	[Required]
 	public DateTime Created { get; set; }

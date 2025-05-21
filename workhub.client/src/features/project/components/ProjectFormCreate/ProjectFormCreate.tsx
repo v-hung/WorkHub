@@ -20,7 +20,7 @@ import {
 import { useNavigate } from "react-router";
 import { TeamSelectMemo } from "@/features/team/components/TeamSelect/TeamSelect";
 import { UserSelectMemo } from "@/features/user/components/UserSelect/UserSelect";
-import MyRangePicker from "@/ui/form/MyRangePicker";
+import RangePicker from "@/ui/form/RangePicker";
 
 type State = HTMLAttributes<HTMLDivElement> & {
   record?: ProjectDto;
@@ -96,7 +96,7 @@ const ProjectFormCreate = forwardRef<ProjectFormCreateRefState, State>(
 
             <Col xs={24} lg={12}>
               <Form.Item label="Completion Time" name="completionTime">
-                <MyRangePicker />
+                <RangePicker />
               </Form.Item>
             </Col>
 

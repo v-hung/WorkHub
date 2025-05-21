@@ -80,13 +80,13 @@ export const getMenuItems = (
     {
       key: "/projects",
       icon: <IIonDocumentsOutline />,
-      label: t("menus.project"),
+      label: t("menus.project_manager"),
       permission: Permission.PermissionsProjectsView,
     },
     {
       key: "/teams",
       icon: <IIonPeopleOutline />,
-      label: t("menus.team"),
+      label: t("menus.team_manager"),
       permission: Permission.PermissionsTeamsView,
     },
     {

@@ -89,9 +89,17 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 
 		foreach (var entity in builder.Model.GetEntityTypes())
 		{
-			var tableName = entity.GetTableName();
-			var snakeCaseName = tableName?.ToSnakeCase();
-			entity.SetTableName(snakeCaseName);
+			var clrType = entity.ClrType;
+			if (clrType == null) continue;
+
+			var hasTableAttribute = clrType.GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.Schema.TableAttribute), inherit: false).Any();
+
+			if (!hasTableAttribute)
+			{
+				var tableName = entity.GetTableName();
+				var snakeCaseName = tableName?.ToSnakeCase();
+				entity.SetTableName(snakeCaseName);
+			}
 		}
 	}
 

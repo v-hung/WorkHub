@@ -186,9 +186,14 @@ namespace WorkHub.Infrastructure.Services
 
 		public async Task GenerateAvatarForUser(User user)
 		{
+			if (user.Id == Guid.Empty)
+			{
+				user.Id = Guid.NewGuid();
+			}
+
 			var fileData = AvatarGenerator.GenerateAvatar(user.FullName);
 
-			var file = await _uploadFile.UploadSingleAsync(fileData, "users");
+			var file = await _uploadFile.UploadSingleAsync(fileData, "users", $"avatar_{user.Id}.png");
 
 			user.Image = file.Path;
 		}

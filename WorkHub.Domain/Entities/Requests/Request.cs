@@ -7,6 +7,7 @@ using WorkHub.Domain.Entities.Time;
 
 namespace WorkHub.Domain.Entities.Requests
 {
+	[Table("requests")]
 	public abstract class Request : Entity<int>
 	{
 

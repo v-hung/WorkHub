@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WorkHub.Domain.Constants.Timesheet;
 using WorkHub.Domain.Entities.Audit;
 using WorkHub.Domain.Entities.Identity;
 
 namespace WorkHub.Domain.Entities.Time
 {
+	[Table("work_times")]
 	public class WorkTime : AuditEntity<int>
 	{
 		[Required]

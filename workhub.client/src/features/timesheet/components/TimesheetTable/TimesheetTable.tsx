@@ -5,7 +5,7 @@ import { format, formatDuration } from "@/utils/date.utils";
 import "./TimesheetTable.css";
 import { addMonths, intervalToDuration, isWeekend } from "date-fns";
 import { Button, Flex, Table } from "antd";
-import MyDatePicker from "@/ui/form/MyDatePicker";
+import DatePicker from "@/ui/form/DatePicker";
 import { blue } from "@ant-design/colors";
 import { useAuthStore } from "@/stores/auth.store";
 import { useTimesheetContext } from "../../context/TimesheetContext";
@@ -58,7 +58,7 @@ const TimesheetTable = () => {
           icon={<IIonChevronBack style={{ width: 20 }} />}
           onClick={() => setSelectedDate((state) => addMonths(state, -1))}
         ></Button>
-        <MyDatePicker
+        <DatePicker
           picker="month"
           value={selectedDate}
           onChange={(v) => setSelectedDate(v)}

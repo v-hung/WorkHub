@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WorkHub.Domain.Entities.Audit;
 
 namespace WorkHub.Domain.Entities.Equipment
 {
+	[Table("device_categories")]
 	public class DeviceCategory : Entity<int>
 	{
 		[Required]

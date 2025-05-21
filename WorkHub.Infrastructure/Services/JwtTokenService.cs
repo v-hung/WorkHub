@@ -13,7 +13,6 @@ using WorkHub.Domain.Entities.Identity;
 using WorkHub.Infrastructure.Data;
 using WorkHub.Application.Exceptions;
 using WorkHub.Domain.Constants.Permission;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace WorkHub.Infrastructure.Services;
@@ -39,11 +38,10 @@ public class JwtTokenService : IJwtTokenService
 			ValidateIssuer = false,
 			ValidateIssuerSigningKey = true,
 			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
-			ValidateLifetime = false // we want to get the claims from an expired token
+			ValidateLifetime = false
 		};
 
 		var principal = new JwtSecurityTokenHandler().ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
-		// var jwtSecurityToken = securityToken as JwtSecurityToken;
 
 		if (securityToken is not JwtSecurityToken jwtSecurityToken || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
 		{
@@ -62,13 +60,14 @@ public class JwtTokenService : IJwtTokenService
 		return Convert.ToBase64String(randomNumber);
 	}
 
-	public RefreshToken GenerateRefreshTokenModel(bool rememberMe)
+	public RefreshToken GenerateRefreshTokenModel(string securityStamp, bool rememberMe)
 	{
 		return new RefreshToken
 		{
 			Token = GenerateRefreshToken(),
 			Expires = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays)),
 			Created = DateTime.UtcNow,
+			SecurityStamp = securityStamp,
 			RememberMe = rememberMe
 		};
 	}
@@ -102,11 +101,12 @@ public class JwtTokenService : IJwtTokenService
 	public async Task<string> GenerateJwtToken(User user)
 	{
 		var claims = new List<Claim>
-	{
-		new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-		new Claim(ClaimTypes.Name, user.UserName ?? ""),
-		new Claim(ClaimTypes.Email, user.Email ?? "")
-	};
+		{
+			new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+			new Claim(ClaimTypes.Name, user.UserName ?? ""),
+			new Claim(ClaimTypes.Email, user.Email ?? ""),
+			new Claim("security_stamp", user.SecurityStamp ?? "")
+		};
 
 		var permissions = await _identityService.Value.GetAllPermissionsAsync(user);
 		foreach (var permission in permissions)
@@ -170,18 +170,29 @@ public class JwtTokenService : IJwtTokenService
 			throw new BusinessException(HttpStatusCode.BadRequest, "Refresh token is invalid client request");
 		}
 
-		var refreshToken = await _context.RefreshTokens.Include(r => r.User).FirstOrDefaultAsync(rt => rt.Token == oldRefreshToken && DateTime.UtcNow <= rt.Expires && rt.RememberMe);
+		var result = await _context.RefreshTokens.Where(rt => rt.Token == oldRefreshToken && DateTime.UtcNow <= rt.Expires && rt.RememberMe)
+		.Select(r => new
+		{
+			RefreshToken = r,
+			SecurityStamp = r.User != null ? r.User.SecurityStamp : null
+		}).FirstOrDefaultAsync();
 
-		if (refreshToken == null || refreshToken.User == null)
+		if (result == null || result.RefreshToken == null)
 		{
 			throw new BusinessException(HttpStatusCode.Unauthorized, "Refresh token is invalid or expired");
 		}
 
+		if (result.RefreshToken.SecurityStamp != result.SecurityStamp)
+		{
+			throw new BusinessException(HttpStatusCode.Unauthorized, "User credentials have changed. Please re-authenticate.");
+		}
+
+		var refreshToken = result.RefreshToken;
 		refreshToken.Token = GenerateRefreshToken();
 		refreshToken.Expires = DateTime.UtcNow.AddDays(Convert.ToDouble(_jwtSettings.RefreshTokenExpiryDays));
-		_context.RefreshTokens.Update(refreshToken);
 
-		_context.SaveChanges();
+		_context.RefreshTokens.Update(refreshToken);
+		await _context.SaveChangesAsync();
 
 		return refreshToken;
 	}

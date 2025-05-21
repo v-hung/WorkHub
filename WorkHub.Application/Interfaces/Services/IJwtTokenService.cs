@@ -10,7 +10,7 @@ public interface IJwtTokenService
 
 	string GenerateRefreshToken();
 
-	RefreshToken GenerateRefreshTokenModel(bool rememberMe);
+	RefreshToken GenerateRefreshTokenModel(string securityStamp, bool rememberMe);
 
 	CookieOptions GenerateTokenCookieOptions();
 	CookieOptions GenerateRefreshTokenCookieOptions(bool rememberMe = false);
