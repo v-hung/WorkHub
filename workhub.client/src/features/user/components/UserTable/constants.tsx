@@ -55,6 +55,7 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
     title: "CreatedAt",
     key: "createdAt",
     dataIndex: "createdAt",
+    // width: "10rem",
     render: (_, record) => format(record.createdAt, "dd/MM/yyyy"),
     sorter: true,
     defaultSortOrder: "ascend",
@@ -62,7 +63,7 @@ export const userTableColumns: TableProps<UserDto>["columns"] = [
   {
     title: "Action",
     key: "action",
-    width: "10rem",
+    width: "12rem",
     render: (_, record) => (
       <Space size="small">
         <ButtonLink
