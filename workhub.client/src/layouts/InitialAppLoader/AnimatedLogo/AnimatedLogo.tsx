@@ -11,7 +11,7 @@ const AnimatedLogo: FC<State> = (props) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsInfinite(true);
-    }, 1600);
+    }, 2100);
     return () => clearTimeout(timeout);
   }, []);
 

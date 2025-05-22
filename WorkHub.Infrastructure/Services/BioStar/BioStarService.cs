@@ -41,6 +41,12 @@ namespace WorkHub.Infrastructure.BioStar.Services
 		private readonly IMemoryCache _memoryCache;
 		private const string AccessTokenCacheKey = "BioStarAccessToken";
 
+		public HashSet<string> validEventCodes = new HashSet<string>
+		{
+				((int)BioStarEventTypeEnum.IDENTIFY_SUCCESS_FINGERPRINT).ToString(),
+				((int)BioStarEventTypeEnum.VERIFY_SUCCESS_CARD).ToString()
+		};
+
 		public BioStarService(IHttpClientFactory httpClientFactory, ILogger<BioStarService> logger, IOptions<BioStarConfig> bioStarConfig, IStringLocalizer<BioStarService> localizer, IMemoryCache memoryCache, ApplicationDbContext context, INotificationSender notificationSender, IUserService userService, UserManager<User> userManager)
 		{
 			_httpClientFactory = httpClientFactory;
@@ -302,7 +308,7 @@ namespace WorkHub.Infrastructure.BioStar.Services
 			{
 				var result = JsonSerializer.Deserialize<BioStarMessageEventResponse>(message, new JsonSerializerOptions { PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower });
 
-				if (result?.Event?.EventTypeId?.Code != ((int)BioStarEventTypeEnum.IDENTIFY_SUCCESS_FINGERPRINT).ToString() || result.Event.UserId?.UserId == null) return;
+				if (validEventCodes.Contains(result?.Event?.EventTypeId?.Code ?? "") || result?.Event?.UserId?.UserId == null) return;
 
 				var userId = await GetUserIdByBioStarId(result.Event.UserId.UserId);
 
