@@ -90,13 +90,13 @@ export const getMenuItems = (
       permission: Permission.PermissionsTeamsView,
     },
     {
-      key: "/person",
+      key: "/employee",
       icon: <IIonPersonOutline />,
-      label: t("menus.person"),
+      label: t("menus.employee"),
       children: [
         {
           key: "/users",
-          label: t("menus.employee"),
+          label: t("menus.user"),
           permission: Permission.PermissionsUsersView,
         },
         {

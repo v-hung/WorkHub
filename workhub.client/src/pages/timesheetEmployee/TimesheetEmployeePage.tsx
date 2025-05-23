@@ -41,7 +41,7 @@ export function Component() {
         <DefaultBreadcrumb
           items={[
             { title: "Home", path: "/" },
-            { title: "Timesheets Employees" },
+            { title: "Timesheet Employees" },
           ]}
         />
 
