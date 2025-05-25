@@ -1,13 +1,10 @@
 import { format } from "@/utils/date.utils";
-import { useCancelRequest } from "@/features/request/hooks/useCancelRequest";
 import {
   RequestCombinedMinimalDto,
   RequestStatus,
   RequestType,
 } from "@/generate-api";
-import { Badge, Spin, TableProps, Tag } from "antd";
-import { FC } from "react";
-import { useTimesheetContext } from "../../context/TimesheetContext";
+import { Badge, TableProps, Tag } from "antd";
 import { PresetStatusColorType } from "antd/es/_util/colors";
 
 export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["columns"] =
@@ -58,33 +55,4 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
         return <Badge status={statusMap[status]} text={record.status} />;
       },
     },
-    {
-      title: "Action",
-      key: "action",
-      width: "10rem",
-      render: (_, record) => <RequestTableActionRender request={record} />,
-    },
   ];
-
-const RequestTableActionRender: FC<{
-  request: RequestCombinedMinimalDto;
-}> = ({ request }) => {
-  const { loading, cancel } = useCancelRequest();
-  const { getCurrentTimesheets, isCurrentMonth } = useTimesheetContext();
-
-  if (request.status !== RequestStatus.Pending) return null;
-
-  const handelCancel = async () => {
-    await cancel(request.id, request.requestType);
-
-    if (isCurrentMonth) {
-      await getCurrentTimesheets(new Date());
-    }
-  };
-
-  return (
-    <Spin spinning={loading}>
-      <a onClick={handelCancel}>Cancel</a>
-    </Spin>
-  );
-};

@@ -2,7 +2,7 @@ import { getMessageError } from "@/utils/error.utils";
 import { WorkTimeDtoPaginated, PagedRequest } from "@/generate-api";
 import { workTimeApi } from "@/services/apiClient";
 import { App } from "antd";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useRef, useState } from "react";
 
 export const useWorkTimes = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export const useWorkTimes = () => {
       hasPreviousPage: false,
     });
 
-  const [request, setRequest] = useState<PagedRequest>({
+  const request = useRef<PagedRequest>({
     pageNumber: workTimePaginated.currentPage,
     pageSize: workTimePaginated.pageSize,
     searchConditions: [],
@@ -43,14 +43,21 @@ export const useWorkTimes = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<PagedRequest>) => {
-      const newRequest =
-        typeof updater === "function" ? updater(request) : updater;
+    (updater?: SetStateAction<PagedRequest>) => {
+      let newRequest: PagedRequest;
 
-      setRequest(newRequest);
+      if (updater === undefined) {
+        newRequest = request.current;
+      } else {
+        newRequest =
+          typeof updater === "function" ? updater(request.current) : updater;
+
+        request.current = newRequest;
+      }
+
       fetchPaginatedWorkTimes(newRequest);
     },
-    [request]
+    []
   );
 
   // GET All
@@ -75,7 +82,6 @@ export const useWorkTimes = () => {
     loading,
     fetchPaginatedWorkTimes,
     request,
-    setRequest,
     fetchWorkTimes,
     updateRequest,
   };

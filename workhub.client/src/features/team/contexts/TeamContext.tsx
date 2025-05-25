@@ -1,6 +1,5 @@
 import {
   createContext,
-  Dispatch,
   FC,
   PropsWithChildren,
   SetStateAction,
@@ -12,7 +11,7 @@ import { TeamDtoPaginated, PagedRequest } from "@/generate-api";
 
 type TeamContextType = {
   teamPaginated: TeamDtoPaginated;
-  updateRequest: Dispatch<SetStateAction<PagedRequest>>;
+  updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

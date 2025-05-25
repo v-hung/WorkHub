@@ -3,28 +3,37 @@ import { getMessageError } from "@/utils/error.utils";
 import { TimesheetFullDtoPaginated } from "@/generate-api";
 import { timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
+
+type GetMonthlyTimesheetRequest = {
+  date: Date;
+  userIds: string[];
+};
 
 export const useTimesheets = () => {
   const [loading, setLoading] = useState(false);
   const [timesheetPaginated, setTimesheetPaginated] =
     useState<TimesheetFullDtoPaginated>();
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const isCurrentMonth = useMemo(
-    () => isSameMonth(selectedDate, new Date()),
-    [selectedDate]
-  );
+  const [request, setRequest] = useState<GetMonthlyTimesheetRequest>({
+    date: new Date(),
+    userIds: [] as string[],
+  });
+
+  const isCurrentMonth = isSameMonth(request.date, new Date());
 
   // Get timesheets
   // =============
 
-  const getTimesheets = useCallback(async () => {
+  const getTimesheets = async (request: GetMonthlyTimesheetRequest) => {
     setLoading(true);
     try {
       const data = await timesheetApi.timesheetGetMonthlyTimesheets({
-        month: getMonth(selectedDate) + 1,
-        year: getYear(selectedDate),
+        month: getMonth(request.date) + 1,
+        year: getYear(request.date),
+        pageNumber: 1,
+        pageSize: 1000,
+        ids: request.userIds,
       });
       setTimesheetPaginated(data);
     } catch (e) {
@@ -34,18 +43,31 @@ export const useTimesheets = () => {
     } finally {
       setLoading(false);
     }
-  }, [selectedDate]);
+  };
 
-  useEffect(() => {
-    getTimesheets();
-  }, [selectedDate]);
+  const updateRequest = useCallback(
+    (updater?: SetStateAction<GetMonthlyTimesheetRequest>) => {
+      setRequest((prev) => {
+        const newRequest =
+          updater === undefined
+            ? prev
+            : typeof updater === "function"
+            ? updater(prev)
+            : updater;
+
+        getTimesheets(newRequest);
+        return newRequest;
+      });
+    },
+    []
+  );
 
   return {
-    timesheets: timesheetPaginated,
+    timesheetPaginated,
     loading,
-    selectedDate,
     isCurrentMonth,
-    setSelectedDate,
-    getTimesheets: getTimesheets,
+    request,
+    updateRequest,
+    getTimesheets,
   };
 };

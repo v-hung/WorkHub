@@ -276,7 +276,12 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                   <Form.Item
                     label="Password"
                     name="password"
-                    rules={[{ required: true }]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
                   >
                     <Input />
                   </Form.Item>
@@ -287,7 +292,23 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                   <Form.Item
                     label="Re Password"
                     name="rePassword"
-                    rules={[{ required: true }]}
+                    dependencies={["password"]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please confirm your password!",
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("password") === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error("Passwords do not match!")
+                          );
+                        },
+                      }),
+                    ]}
                   >
                     <Input />
                   </Form.Item>

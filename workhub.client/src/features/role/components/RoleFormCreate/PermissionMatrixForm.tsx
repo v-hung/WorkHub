@@ -55,7 +55,6 @@ export const PermissionMatrixForm: React.FC<State> = (props) => {
 
   useEffect(() => {
     form.setFieldsValue({ permissions: value });
-    console.log({ value });
   }, [value, form]);
 
   return (

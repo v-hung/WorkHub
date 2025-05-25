@@ -1,8 +1,8 @@
 import {
   createContext,
-  Dispatch,
   FC,
   PropsWithChildren,
+  RefObject,
   SetStateAction,
   useContext,
 } from "react";
@@ -12,7 +12,8 @@ import { UserDtoPaginated, PagedRequest } from "@/generate-api";
 
 type UserContextType = {
   userPaginated: UserDtoPaginated;
-  updateRequest: Dispatch<SetStateAction<PagedRequest>>;
+  updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
+  request: RefObject<PagedRequest>;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;
 };
@@ -20,12 +21,18 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { userPaginated, updateRequest, loading } = useUsers();
+  const { userPaginated, updateRequest, loading, request } = useUsers();
   const { deleteRecord } = useUserAction();
 
   return (
     <UserContext.Provider
-      value={{ userPaginated, updateRequest, loading, deleteRecord }}
+      value={{
+        userPaginated,
+        updateRequest,
+        loading,
+        deleteRecord,
+        request,
+      }}
     >
       {children}
     </UserContext.Provider>

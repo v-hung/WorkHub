@@ -25,16 +25,13 @@ export const timesheetColumns: TableProps<DataTimesheetTableType>["columns"] = [
     title: "Start Time",
     dataIndex: "startTime",
     key: "startTime",
-    width: "16%",
   },
   { title: "End Time", key: "endTime", dataIndex: "endTime", width: "16%" },
   {
     title: "Total Work",
     key: "workMinutes",
     dataIndex: "workMinutes",
-    width: "16%",
   },
-  { title: "Requests", key: "requests" },
   {
     title: "Action",
     key: "action",

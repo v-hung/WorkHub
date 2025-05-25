@@ -1,6 +1,5 @@
 import {
   createContext,
-  Dispatch,
   FC,
   PropsWithChildren,
   SetStateAction,
@@ -12,7 +11,7 @@ import { DeviceDtoPaginated, PagedRequest } from "@/generate-api";
 
 type DevicesContextType = {
   devicePaginated: DeviceDtoPaginated;
-  updateRequest: Dispatch<SetStateAction<PagedRequest>>;
+  updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

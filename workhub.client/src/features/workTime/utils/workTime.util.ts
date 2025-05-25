@@ -23,8 +23,6 @@ export const workTimeValidateTime = () => (_: any, value: string) => {
 
   const time = localTimeToDate(value);
 
-  console.log({ time }, time.getMinutes());
-
   const validMinutes = allowedMinutes.includes(time.getMinutes());
 
   if (validMinutes) {

@@ -2,7 +2,7 @@ import { getMessageError } from "@/utils/error.utils";
 import { TeamDtoPaginated, PagedRequest } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { App } from "antd";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useRef, useState } from "react";
 
 export const useTeams = () => {
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export const useTeams = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState<PagedRequest>({
+  const request = useRef<PagedRequest>({
     pageNumber: teamPaginated.currentPage,
     pageSize: teamPaginated.pageSize,
     searchConditions: [],
@@ -42,14 +42,21 @@ export const useTeams = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<PagedRequest>) => {
-      const newRequest =
-        typeof updater === "function" ? updater(request) : updater;
+    (updater?: SetStateAction<PagedRequest>) => {
+      let newRequest: PagedRequest;
 
-      setRequest(newRequest);
+      if (updater === undefined) {
+        newRequest = request.current;
+      } else {
+        newRequest =
+          typeof updater === "function" ? updater(request.current) : updater;
+
+        request.current = newRequest;
+      }
+
       fetchPaginatedTeams(newRequest);
     },
-    [request]
+    []
   );
 
   // GET All
@@ -74,7 +81,6 @@ export const useTeams = () => {
     loading,
     fetchPaginatedTeams,
     request,
-    setRequest,
     fetchTeams,
     updateRequest,
   };

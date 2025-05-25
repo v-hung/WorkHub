@@ -7,9 +7,8 @@ import { Layout } from "antd";
 import { useParams } from "react-router";
 import { Permission } from "@/generate-api";
 
-export const loader = wrapProtectedLoader(async ({ params }) => {
-  console.log({ id: params.id });
-}, Permission.PermissionsUsersView);
+export const loader = wrapProtectedLoader(async () => {},
+Permission.PermissionsUsersView);
 
 export function Component() {
   const { id } = useParams();

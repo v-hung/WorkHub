@@ -115,6 +115,11 @@ namespace WorkHub.Infrastructure.Services
 
 			_mapper.Map(request, user);
 
+			if (!string.IsNullOrEmpty(request.Password))
+			{
+				user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, UserConst.DefaultPassword);
+			}
+
 			await MapRequestToUser(request, user, user.Id);
 
 			await _context.SaveChangesAsync();

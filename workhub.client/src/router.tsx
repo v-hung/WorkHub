@@ -40,6 +40,7 @@ const router = createBrowserRouter(
             },
             {
               path: "/users",
+              lazy: () => import("./pages/user/UserLayout"),
               children: [
                 {
                   path: "",

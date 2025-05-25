@@ -1,6 +1,5 @@
 import {
   createContext,
-  Dispatch,
   FC,
   PropsWithChildren,
   SetStateAction,
@@ -12,7 +11,7 @@ import { useRoleAction } from "../hooks/useRoleAction";
 
 type RolesContextType = {
   rolePaginated: RoleDtoPaginated;
-  updateRequest: Dispatch<SetStateAction<PagedRequest>>;
+  updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;
 };

@@ -2,7 +2,7 @@ import { getMessageError } from "@/utils/error.utils";
 import { PagedRequest, ProjectDtoPaginated } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { App } from "antd";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useRef, useState } from "react";
 
 export const useProjects = () => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export const useProjects = () => {
     }
   );
 
-  const [request, setRequest] = useState<PagedRequest>({
+  const request = useRef<PagedRequest>({
     pageNumber: projectPaginated.currentPage,
     pageSize: projectPaginated.pageSize,
     searchConditions: [],
@@ -44,14 +44,21 @@ export const useProjects = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<PagedRequest>) => {
-      const newRequest =
-        typeof updater === "function" ? updater(request) : updater;
+    (updater?: SetStateAction<PagedRequest>) => {
+      let newRequest: PagedRequest;
 
-      setRequest(newRequest);
+      if (updater === undefined) {
+        newRequest = request.current;
+      } else {
+        newRequest =
+          typeof updater === "function" ? updater(request.current) : updater;
+
+        request.current = newRequest;
+      }
+
       fetchPaginatedProjects(newRequest);
     },
-    [request]
+    []
   );
 
   // GET All
@@ -76,7 +83,6 @@ export const useProjects = () => {
     loading,
     fetchPaginatedProjects,
     request,
-    setRequest,
     fetchProjects,
     updateRequest,
   };

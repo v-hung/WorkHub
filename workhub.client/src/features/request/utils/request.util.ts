@@ -75,8 +75,6 @@ export const requestValidateTime =
       minutes: workTime.allowedLateMinutes,
     });
 
-    console.log({ workTime }, localTimeToDate(workTime.endTimeAfternoon));
-
     const startTime = setTimeToDate(value[0]),
       endTime = setTimeToDate(value[1]);
 

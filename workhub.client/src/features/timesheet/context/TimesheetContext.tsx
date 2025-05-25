@@ -13,9 +13,9 @@ type TimesheetContextType = {
   timesheets: TimesheetDto[];
   loading: boolean;
   selectedDate: Date;
-  setSelectedDate: Dispatch<SetStateAction<Date>>;
+  updateSelectedDate: Dispatch<SetStateAction<Date>>;
   isCurrentMonth: boolean;
-  getCurrentTimesheets: () => Promise<void>;
+  getCurrentTimesheets: (selectedDate: Date) => Promise<void>;
 };
 
 const TimesheetContext = createContext<TimesheetContextType | null>(null);
@@ -25,7 +25,7 @@ export const TimesheetProvider: FC<PropsWithChildren> = ({ children }) => {
     timesheets,
     loading,
     selectedDate,
-    setSelectedDate,
+    updateSelectedDate,
     isCurrentMonth,
     getCurrentTimesheets,
   } = useCurrentTimesheets();
@@ -36,7 +36,7 @@ export const TimesheetProvider: FC<PropsWithChildren> = ({ children }) => {
         timesheets,
         loading,
         selectedDate,
-        setSelectedDate,
+        updateSelectedDate,
         isCurrentMonth,
         getCurrentTimesheets,
       }}

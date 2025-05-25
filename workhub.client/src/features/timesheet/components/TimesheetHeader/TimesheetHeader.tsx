@@ -24,7 +24,7 @@ const TImesheetHeader = () => {
     await cb();
 
     if (isCurrentMonth) {
-      await getTimesheets();
+      await getTimesheets(new Date());
     }
   };
 

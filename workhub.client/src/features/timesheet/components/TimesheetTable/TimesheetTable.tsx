@@ -1,6 +1,6 @@
 import MainTable from "@/ui/table/MainTable";
 import { DataTimesheetTableType, timesheetColumns } from "./constants";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { format, formatDuration } from "@/utils/date.utils";
 import "./TimesheetTable.css";
 import { addMonths, intervalToDuration, isWeekend } from "date-fns";
@@ -12,12 +12,21 @@ import { useTimesheetContext } from "../../context/TimesheetContext";
 import { requestTimesheetColumns } from "./nestedConstants";
 
 const TimesheetTable = () => {
-  const { timesheets, loading, selectedDate, setSelectedDate, isCurrentMonth } =
-    useTimesheetContext();
+  const {
+    timesheets,
+    loading,
+    selectedDate,
+    updateSelectedDate,
+    isCurrentMonth,
+  } = useTimesheetContext();
 
   const remainingLeaveMinutes = useAuthStore(
     (state) => state.user?.remainingLeaveMinutes
   );
+
+  useEffect(() => {
+    updateSelectedDate(new Date());
+  }, []);
 
   const data = useMemo(
     () =>
@@ -56,22 +65,22 @@ const TimesheetTable = () => {
         </div>
         <Button
           icon={<IIonChevronBack style={{ width: 20 }} />}
-          onClick={() => setSelectedDate((state) => addMonths(state, -1))}
+          onClick={() => updateSelectedDate((state) => addMonths(state, -1))}
         ></Button>
         <DatePicker
           picker="month"
           value={selectedDate}
-          onChange={(v) => setSelectedDate(v)}
+          onChange={(v) => updateSelectedDate(v)}
           showNow
         />
         <Button
           icon={<IIonChevronForward style={{ width: 20 }} />}
-          onClick={() => setSelectedDate((state) => addMonths(state, 1))}
+          onClick={() => updateSelectedDate((state) => addMonths(state, 1))}
         ></Button>
         <Button
           icon={<IBxCalendarCheck style={{ width: 20 }} />}
           style={{ color: isCurrentMonth ? blue.primary : "inherit" }}
-          onClick={() => setSelectedDate(new Date())}
+          onClick={() => updateSelectedDate(new Date())}
         ></Button>
       </Flex>
 

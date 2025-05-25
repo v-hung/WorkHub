@@ -6,7 +6,7 @@ import {
   UserStatus,
 } from "@/generate-api";
 import { userApi } from "@/services/apiClient";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useRef, useState } from "react";
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 
 export const useUsers = () => {
@@ -25,7 +25,7 @@ export const useUsers = () => {
     hasPreviousPage: false,
   });
 
-  const [request, setRequest] = useState<PagedRequest>({
+  const request = useRef<PagedRequest>({
     pageNumber: userPaginated.currentPage,
     pageSize: userPaginated.pageSize,
     searchConditions: [
@@ -53,14 +53,21 @@ export const useUsers = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<PagedRequest>) => {
-      const newRequest =
-        typeof updater === "function" ? updater(request) : updater;
+    (updater?: SetStateAction<PagedRequest>) => {
+      let newRequest: PagedRequest;
 
-      setRequest(newRequest);
+      if (updater === undefined) {
+        newRequest = request.current;
+      } else {
+        newRequest =
+          typeof updater === "function" ? updater(request.current) : updater;
+
+        request.current = newRequest;
+      }
+
       fetchPaginatedUsers(newRequest);
     },
-    [request]
+    []
   );
 
   // GET All USER
@@ -85,7 +92,6 @@ export const useUsers = () => {
     loading,
     fetchPaginatedUsers,
     request,
-    setRequest,
     fetchUsers,
     updateRequest,
   };

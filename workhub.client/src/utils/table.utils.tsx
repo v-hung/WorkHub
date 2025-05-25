@@ -1,4 +1,4 @@
-import { Input, Button, Space } from "antd";
+import { Input, Button, Space, InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import type { ColumnType } from "antd/es/table";
 import type {
@@ -8,6 +8,7 @@ import type {
 } from "antd/es/table/interface";
 import { TablePaginationConfig } from "antd/lib";
 import { PagedRequest, SearchCondition, SearchOperator } from "@/generate-api";
+import { useEffect, useRef } from "react";
 
 export const getColumnSearchProps = <T extends object>(
   dataIndex: keyof T
@@ -17,44 +18,58 @@ export const getColumnSearchProps = <T extends object>(
     selectedKeys,
     confirm,
     clearFilters,
-  }: FilterDropdownProps) => (
-    <div style={{ padding: 8 }}>
-      <Input
-        placeholder={`Search ${String(dataIndex)}`}
-        value={selectedKeys[0]}
-        onChange={(e) =>
-          setSelectedKeys(e.target.value ? [e.target.value] : [])
-        }
-        onPressEnter={() => confirm()}
-        style={{ width: 188, marginBottom: 8, display: "block" }}
-      />
-      <Space>
-        <Button
-          type="primary"
-          onClick={() => confirm()}
-          icon={<SearchOutlined />}
-          size="small"
-          style={{ width: 90 }}
-        >
-          Search
-        </Button>
-        <Button
-          onClick={() => {
-            clearFilters?.();
-            confirm();
-          }}
-          size="small"
-          style={{ width: 90 }}
-        >
-          Reset
-        </Button>
-      </Space>
-    </div>
-  ),
+    visible,
+  }: FilterDropdownProps) => {
+    const inputRef = useRef<InputRef>(null);
+
+    useEffect(() => {
+      if (visible) {
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 0);
+      }
+    }, [visible]);
+
+    return (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={inputRef}
+          placeholder={`Search ${String(dataIndex)}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => confirm()}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => confirm()}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters?.();
+              confirm();
+            }}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    );
+  },
   filterIcon: (filtered: boolean) => (
     <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
   ),
-  filteredValue: undefined,
+  // filteredValue: undefined,
 });
 
 export interface PaginatedResult<T> {
@@ -113,4 +128,16 @@ export const handleTableChange = (
     orderBy,
     searchConditions,
   }));
+};
+
+export const getDefaultFilteredValue = (
+  searchCondition: SearchCondition[],
+  column: string
+): FilterValue | null => {
+  const condition = searchCondition.find((c) => c.column === column);
+  if (condition && condition.values && condition.values.length > 0) {
+    return condition.values;
+  }
+
+  return null;
 };

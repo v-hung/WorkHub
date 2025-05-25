@@ -3,22 +3,19 @@ import { getMessageError } from "@/utils/error.utils";
 import { TimesheetDto } from "@/generate-api";
 import { timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 
 export const useCurrentTimesheets = () => {
   const [loading, setLoading] = useState(false);
   const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const isCurrentMonth = useMemo(
-    () => isSameMonth(selectedDate, new Date()),
-    [selectedDate]
-  );
+  const isCurrentMonth = isSameMonth(selectedDate, new Date());
 
   // Get timesheets
   // =============
 
-  const getCurrentTimesheets = useCallback(async () => {
+  const getCurrentTimesheets = async (selectedDate: Date) => {
     setLoading(true);
     try {
       const data = await timesheetApi.timesheetGetCurrentUserMonthlyTimesheets({
@@ -33,18 +30,28 @@ export const useCurrentTimesheets = () => {
     } finally {
       setLoading(false);
     }
-  }, [selectedDate]);
+  };
 
-  useEffect(() => {
-    getCurrentTimesheets();
-  }, [selectedDate]);
+  const updateSelectedDate = useCallback((updater?: SetStateAction<Date>) => {
+    setSelectedDate((prev) => {
+      const newRequest =
+        updater === undefined
+          ? prev
+          : typeof updater === "function"
+          ? updater(prev)
+          : updater;
+
+      getCurrentTimesheets(newRequest);
+      return newRequest;
+    });
+  }, []);
 
   return {
     timesheets,
     loading,
     selectedDate,
     isCurrentMonth,
-    setSelectedDate,
+    updateSelectedDate,
     getCurrentTimesheets,
   };
 };

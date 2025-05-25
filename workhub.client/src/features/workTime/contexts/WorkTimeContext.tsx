@@ -11,7 +11,7 @@ import { WorkTimeDtoPaginated, PagedRequest } from "@/generate-api";
 
 type WorkTimesContextType = {
   workTimePaginated: WorkTimeDtoPaginated;
-  updateRequest: (updater: SetStateAction<PagedRequest>) => void;
+  updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;
 };

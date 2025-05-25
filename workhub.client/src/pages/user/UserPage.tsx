@@ -8,7 +8,6 @@ import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/De
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
-import { UserProvider } from "@/features/user/contexts/UserContext";
 import UserSyncDataButton from "@/features/user/components/UserSyncDataButton/UserSyncDataButton";
 
 export const loader = wrapProtectedLoader(
@@ -21,30 +20,28 @@ export function Component() {
 
   return (
     <DefaultPage pageClassName="h-screen">
-      <UserProvider>
-        <DefaultHeader title="User Manager">
-          {hasPermission(Permission.PermissionsBioStarSyncUsers) ? (
-            <UserSyncDataButton />
-          ) : null}
+      <DefaultHeader title="User Manager">
+        {hasPermission(Permission.PermissionsBioStarSyncUsers) ? (
+          <UserSyncDataButton />
+        ) : null}
 
-          {hasPermission(Permission.PermissionsUsersCreate) ? (
-            <Button
-              type="primary"
-              onClick={() => navigate("/users/create")}
-              icon={<IIonPersonAddOutline width={16} height={16} />}
-              style={{ marginLeft: 8 }}
-            >
-              Add user
-            </Button>
-          ) : null}
-        </DefaultHeader>
-        <DefaultBreadcrumb
-          items={[{ title: "Home", path: "/" }, { title: "Users Manager" }]}
-        />
-        <DefaultContent>
-          <UserTable />
-        </DefaultContent>
-      </UserProvider>
+        {hasPermission(Permission.PermissionsUsersCreate) ? (
+          <Button
+            type="primary"
+            onClick={() => navigate("/users/create")}
+            icon={<IIonPersonAddOutline width={16} height={16} />}
+            style={{ marginLeft: 8 }}
+          >
+            Add user
+          </Button>
+        ) : null}
+      </DefaultHeader>
+      <DefaultBreadcrumb
+        items={[{ title: "Home", path: "/" }, { title: "Users Manager" }]}
+      />
+      <DefaultContent>
+        <UserTable />
+      </DefaultContent>
     </DefaultPage>
   );
 }

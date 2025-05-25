@@ -1,5 +1,5 @@
 import MainTable from "@/ui/table/MainTable";
-import { userTableColumns, userTableSearchOperatorMap } from "./constants";
+import { getUserTableColumns, userTableSearchOperatorMap } from "./constants";
 import { useCallback, useEffect, useMemo } from "react";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 import { UserDto } from "@/generate-api";
@@ -8,10 +8,10 @@ import { TablePaginationConfig } from "antd/lib";
 import { useUserContext } from "../../contexts/UserContext";
 
 const UserTable = () => {
-  const { userPaginated, updateRequest, loading } = useUserContext();
+  const { userPaginated, updateRequest, loading, request } = useUserContext();
 
   useEffect(() => {
-    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
+    updateRequest();
   }, []);
 
   const onTableChange = useCallback(
@@ -34,6 +34,11 @@ const UserTable = () => {
   const paginationConfig = useMemo(
     () => getPaginationConfig(userPaginated),
     [userPaginated]
+  );
+
+  const userTableColumns = useMemo(
+    () => getUserTableColumns(request.current),
+    []
   );
 
   return (

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ namespace WorkHub.Application.JsonConverters
 			if (reader.TokenType == JsonTokenType.String)
 			{
 				var str = reader.GetString();
-				if (DateTime.TryParse(str, out var dt))
+				if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out var dt))
 				{
 					return dt;
 				}

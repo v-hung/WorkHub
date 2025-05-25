@@ -2,7 +2,7 @@ import { getMessageError } from "@/utils/error.utils";
 import { DeviceCategoryDtoPaginated, PagedRequest } from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { App } from "antd";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useRef, useState } from "react";
 
 export const useDeviceCategories = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export const useDeviceCategories = () => {
       hasPreviousPage: false,
     });
 
-  const [request, setRequest] = useState<PagedRequest>({
+  const request = useRef<PagedRequest>({
     pageNumber: deviceCategoryPaginated.currentPage,
     pageSize: deviceCategoryPaginated.pageSize,
     searchConditions: [],
@@ -45,14 +45,21 @@ export const useDeviceCategories = () => {
   };
 
   const updateRequest = useCallback(
-    (updater: SetStateAction<PagedRequest>) => {
-      const newRequest =
-        typeof updater === "function" ? updater(request) : updater;
+    (updater?: SetStateAction<PagedRequest>) => {
+      let newRequest: PagedRequest;
 
-      setRequest(newRequest);
+      if (updater === undefined) {
+        newRequest = request.current;
+      } else {
+        newRequest =
+          typeof updater === "function" ? updater(request.current) : updater;
+
+        request.current = newRequest;
+      }
+
       fetchPaginatedDeviceCategories(newRequest);
     },
-    [request]
+    []
   );
 
   // GET All
@@ -77,7 +84,6 @@ export const useDeviceCategories = () => {
     loading,
     fetchPaginatedDeviceCategories,
     request,
-    setRequest,
     fetchDeviceCategories,
     updateRequest,
   };

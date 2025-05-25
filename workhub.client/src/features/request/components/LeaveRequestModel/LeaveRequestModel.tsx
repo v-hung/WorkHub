@@ -22,8 +22,7 @@ const LeaveRequestModel: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
   const { isOpen, closeRequest, date } = useRequestContext();
-  const { getCurrentTimesheets: getTimesheets, isCurrentMonth } =
-    useTimesheetContext();
+  const { getCurrentTimesheets, isCurrentMonth } = useTimesheetContext();
   const { loading, create, formDefault } = useLeaveRequestAction();
 
   const workTime = useAuthStore((state) => state.user?.workTime);
@@ -46,7 +45,7 @@ const LeaveRequestModel: FC<State> = (props) => {
       });
 
       if (isCurrentMonth) {
-        await getTimesheets();
+        await getCurrentTimesheets(new Date());
       }
     });
   };
