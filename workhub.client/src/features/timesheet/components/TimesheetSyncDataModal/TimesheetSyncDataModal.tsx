@@ -5,6 +5,8 @@ import { useTimesheetEmployeeContext } from "../../context/TimesheetEmployeeCont
 import { getModal } from "@/contexts/feedback/FeedbackProvider";
 import { BioStarSyncHistoricalEventsResponse } from "@/generate-api";
 import { endOfMonth, startOfMonth } from "date-fns";
+import { createPortal } from "react-dom";
+import PageLoading from "@/ui/elements/PageLoading/PageLoading";
 
 type State = ComponentProps<typeof Modal>;
 
@@ -42,25 +44,28 @@ const TimesheetSyncDataModal: FC<State> = (props) => {
   };
 
   return (
-    <Modal
-      className={`${className}`}
-      title="Sync timesheet from timekeeping machine"
-      onOk={handleOk}
-      confirmLoading={loading}
-      maskClosable={false}
-      {...rest}
-    >
-      <Form
-        form={form}
-        initialValues={formState}
-        validateTrigger="onSubmit"
-        style={{ marginTop: "2rem" }}
+    <>
+      <Modal
+        className={`${className}`}
+        title="Sync timesheet from timekeeping machine"
+        onOk={handleOk}
+        confirmLoading={loading}
+        maskClosable={false}
+        {...rest}
       >
-        <Form.Item name="month" label="Month" rules={[{ required: true }]}>
-          <DatePicker picker="month" />
-        </Form.Item>
-      </Form>
-    </Modal>
+        <Form
+          form={form}
+          initialValues={formState}
+          validateTrigger="onSubmit"
+          style={{ marginTop: "2rem" }}
+        >
+          <Form.Item name="month" label="Month" rules={[{ required: true }]}>
+            <DatePicker picker="month" />
+          </Form.Item>
+        </Form>
+      </Modal>
+      {loading ? createPortal(<PageLoading />, document.body) : null}
+    </>
   );
 };
 
