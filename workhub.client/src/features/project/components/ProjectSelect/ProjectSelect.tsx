@@ -51,7 +51,13 @@ const ProjectSelect: FC<State> = (props) => {
       updateRequest((request) => ({
         ...request,
         pageNumber: 1,
-        searchString: value,
+        searchConditions: [
+          {
+            column: "name",
+            operator: "Contains",
+            values: [value],
+          },
+        ],
       }));
     }, 300),
     [request]

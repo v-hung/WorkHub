@@ -51,7 +51,13 @@ const WorkTimeSelect: FC<State> = (props) => {
       updateRequest((request) => ({
         ...request,
         pageNumber: 1,
-        searchString: value,
+        searchConditions: [
+          {
+            column: "title",
+            operator: "Contains",
+            values: [value],
+          },
+        ],
       }));
     }, 300),
     [request]

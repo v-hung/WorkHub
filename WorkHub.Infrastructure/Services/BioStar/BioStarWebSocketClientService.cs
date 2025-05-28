@@ -98,11 +98,14 @@ namespace WorkHub.Infrastructure.Services.BioStar
 					{
 						_logger.LogInformation("WebSocket closing.");
 						await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar websocket Closing", cancellationToken);
+						break;
 					}
 				}
 				catch (Exception ex)
 				{
 					_logger.LogError($"Error while receiving message: {ex.Message}");
+					await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar websocket Closing", cancellationToken);
+					break;
 				}
 			}
 		}
