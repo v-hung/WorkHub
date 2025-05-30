@@ -1,0 +1,1 @@
+import{j as o}from"./index--uR3bosk.js";import{g as e}from"./color.utils-T8-ET6hG.js";import{T as t}from"./index-BCYX8c6P.js";const s=({team:r})=>r?o.jsx(t,{color:e("team-"+r.id),children:r.name}):"No team";export{s as T};

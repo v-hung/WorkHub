@@ -76,7 +76,24 @@ namespace WorkHub.Infrastructure.Services
 
 		}
 
-		public int CalculateWorked(string userId, DateTime startTime, DateTime endTime)
+		public async Task<TimesheetDto> RecalculateWorkedMinutes(string userId, DateTime date)
+		{
+			Timesheet timesheet = _context.Timesheets.Include(t => t.User).FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date == date.Date) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
+
+			if (timesheet.StartTime == null || timesheet.EndTime == null)
+			{
+				throw new BusinessException(HttpStatusCode.Conflict, _localizer["CheckInOrCheckOutNotPerformed"]);
+			}
+
+			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime.Value, timesheet.EndTime.Value);
+
+			_context.Timesheets.Update(timesheet);
+			await _context.SaveChangesAsync();
+
+			return _mapper.Map<TimesheetDto>(timesheet);
+		}
+
+		private int CalculateWorked(string userId, DateTime startTime, DateTime endTime)
 		{
 			WorkTime workTime = _context.WorkTimes.FirstOrDefault(w => w.Users.Any(u => u.Id == new Guid(userId))) ?? new WorkTime();
 

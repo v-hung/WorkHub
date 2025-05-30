@@ -1,0 +1,1 @@
+import{j as s}from"./index--uR3bosk.js";import{S as t}from"./index-D5u-G5-S.js";const i="_loading_13q46_1",r={loading:i},c=o=>{const{className:a="",...n}=o;return s.jsx("div",{...n,className:`${r.loading} ${a}`,children:s.jsx(t,{})})};export{c as P};

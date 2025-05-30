@@ -9,9 +9,5 @@ namespace WorkHub.Application.Features.Requests.DTOs
 
 		[Required]
 		public DateTime CheckOut { get; set; }
-
-		public DateTime? BreakStartDate { get; set; }
-
-		public DateTime? BreakEndDate { get; set; }
 	}
 }

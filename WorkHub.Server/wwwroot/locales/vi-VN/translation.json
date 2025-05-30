@@ -1,0 +1,45 @@
+{
+	"menus": {
+		"menu": "Danh mục",
+		"home": "Trang chủ",
+		"notification": "Thông báo",
+		"timesheet": "Chấm công",
+		"calendar": "Lịch trình",
+		"meeting": "Phòng họp",
+		"manager": "Quản trị",
+		"project": "Dự án",
+		"team": "Nhóm",
+		"person": "Tài khoản",
+		"employee": "Nhân viên",
+		"work-time": "Thời gian làm việc",
+		"permission": "Phân quyền",
+		"members": "Thành viên",
+		"equipment": "Thiết bị",
+		"device": "Thiết bị",
+		"deviceCategory": "Danh mục thiết bị",
+		"system": "Hệ thống",
+		"help": "Trợ giúp",
+		"send-mail": "Gửi mail",
+		"report": "Báo cáo",
+		"timesheet_manager": "Quản lý chấm công",
+		"timesheet_employee": "Chấm công nhân viên",
+		"holidays": "Ngày nghỉ",
+		"makeup_time": "Thời gian làm bù"
+	},
+	"locale": {
+		"vi-VN": "Tiếng việt",
+		"ja-JP": "Tiếng nhật",
+		"en-US": "Tiếng anh"
+	},
+	"nationality": {
+		"vi-VN": "Việt Nam",
+		"ja-JP": "Nhật bản",
+		"en-US": "Mỹ"
+	},
+	"auth": {
+		"sessionExpired": "Phiên của bạn đã hết hạn. Vui lòng đăng nhập lại."
+	},
+	"message": {
+		"error": "Oh no! Có gì đó đã sai!"
+	}
+}

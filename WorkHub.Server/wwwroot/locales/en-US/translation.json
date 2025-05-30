@@ -1,0 +1,47 @@
+{
+	"menus": {
+		"menu": "Menu",
+		"home": "Home",
+		"notification": "Notification",
+		"timesheet": "Timesheet",
+		"calendar": "Calendar",
+		"meeting": "Meeting",
+		"manager": "Manager",
+		"project": "Project",
+		"project_manager": "Project Manager",
+		"team": "Team",
+		"team_manager": "Team Manager",
+		"user": "User",
+		"employee": "Employee",
+		"work-time": "Work Time",
+		"permission": "Permission",
+		"members": "Members",
+		"equipment": "Equipment",
+		"device": "Device",
+		"deviceCategory": "Device Category",
+		"system": "System",
+		"help": "help",
+		"send-mail": "Send mail",
+		"report": "Report",
+		"timesheet_manager": "Timesheet Manager",
+		"timesheet_employee": "Timesheet Employee",
+		"holidays": "Holidays",
+		"makeup_time": "Makeup Time"
+	},
+	"locale": {
+		"vi-VN": "Vietnamese",
+		"ja-JP": "Japanese",
+		"en-US": "English"
+	},
+	"nationality": {
+		"vi-VN": "Vietnamese",
+		"ja-JP": "Japanese",
+		"en-US": "American"
+	},
+	"auth": {
+		"sessionExpired": "Your session has expired. Please log in again."
+	},
+	"message": {
+		"error": "Oups! Something went wrong!"
+	}
+}

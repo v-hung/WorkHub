@@ -9,9 +9,5 @@ namespace WorkHub.Domain.Entities.Requests
 
 		[Required]
 		public DateTime CheckOut { get; set; }
-
-		public DateTime BreakStartDate { get; set; }
-
-		public DateTime BreakEndDate { get; set; }
 	}
 }

@@ -7,5 +7,7 @@ namespace WorkHub.Application.Interfaces.Services
 		Task<TimesheetDto> PerformCheckIn(string userId);
 
 		Task<TimesheetDto> PerformCheckOut(string userId);
+
+		Task<TimesheetDto> RecalculateWorkedMinutes(string userId, DateTime date);
 	}
 }

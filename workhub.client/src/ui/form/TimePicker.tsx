@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { PickerProps } from "antd/es/date-picker/generatePicker";
-import styles from "./MyTimePicker.module.css";
+import styles from "./TimePicker.module.css";
 
 import DatePicker from "./DatePicker";
 
@@ -19,6 +19,6 @@ const TimePicker = React.forwardRef<any, TimePickerProps>((props, ref) => {
   );
 });
 
-TimePicker.displayName = "MyTimePicker";
+TimePicker.displayName = "TimePicker";
 
 export default TimePicker;
