@@ -14,33 +14,25 @@ namespace WorkHub.Infrastructure.Services.Approvals
 {
 	public class TimesheetAdjustmentRequestApprovalService : BaseRequestApprovalService<TimesheetAdjustmentRequest>
 	{
-		private readonly IUserService _userService;
 
-		public TimesheetAdjustmentRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper, IUserService userService, INotificationSender notificationSender) : base(context, localizerFactory, mapper, notificationSender)
+		public TimesheetAdjustmentRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper, INotificationSender notificationSender, ITimesheetService timesheetService) : base(context, localizerFactory, mapper, notificationSender, timesheetService)
 		{
-			_userService = userService;
 		}
 
 		public override async Task<D> ApproveRequestAsync<D>(int requestId) where D : class
 		{
 			TimesheetAdjustmentRequest request = await base.ApproveRequestAsync<TimesheetAdjustmentRequest>(requestId);
 
-			Timesheet timesheet = await _context.Timesheets.FindAsync(request.TimesheetId) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Timesheet not found."]);
+			var workTime = request.User?.WorkTime ?? new WorkTime();
 
-			if (timesheet.EndTime != null)
+			request.DurationMinutes = (int)TimesheetUtils.CalculateWorkTime(request.CheckIn, request.CheckOut, workTime).TotalMinutes;
+
+			_context.Requests.Update(request);
+			await _context.SaveChangesAsync();
+
+			if (request.User?.Id != null)
 			{
-				var workTime = (await _context.Users.Select(u => new { Id = u.Id, WorkTime = u.WorkTime }).FirstOrDefaultAsync(u => u.Id == timesheet.UserId))?.WorkTime ?? new WorkTime();
-
-				int breakMinutes = (int)TimesheetUtils.CalculateWorkTime(request.BreakStartDate, request.BreakEndDate, workTime).TotalMinutes;
-
-				int workMinutes = (int)TimesheetUtils.CalculateWorkTime(request.CheckIn, request.CheckOut, workTime).TotalMinutes;
-
-				timesheet.StartTime = request.CheckIn;
-				timesheet.EndTime = request.CheckOut;
-				timesheet.WorkedMinutes = workMinutes > breakMinutes ? workMinutes - breakMinutes : 0;
-
-				_context.Timesheets.Update(timesheet);
-				await _context.SaveChangesAsync();
+				await _timesheetService.RecalculateWorkedMinutes(request.User.Id.ToString()!, request.Date);
 			}
 
 			await base.CreateRequestNotification(request);

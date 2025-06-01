@@ -10,7 +10,8 @@ using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Domain.Entities.Identity;
-public class User : IdentityUser<Guid>, IAuditEntity<Guid>, ISoftDeleteEntity
+
+public class User : IdentityUser<Guid>, IAuditEntity<Guid>
 {
 
 	[Required]

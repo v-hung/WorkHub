@@ -15,11 +15,14 @@ namespace WorkHub.Domain.Entities.Requests
 		public required DateTime Date { get; set; }
 
 		[Required]
-		public RequestType RequestType { get; set; }
+		public required RequestType RequestType { get; set; }
+
+		[Required]
+		public required int DurationMinutes { get; set; } = 0;
 
 		[Required]
 		[MaxLength(500)]
-		public string Reason { get; set; } = string.Empty;
+		public required string Reason { get; set; } = string.Empty;
 
 		public RequestStatus Status { get; set; } = RequestStatus.PENDING;
 

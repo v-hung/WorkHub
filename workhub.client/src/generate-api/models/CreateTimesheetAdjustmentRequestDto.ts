@@ -63,18 +63,6 @@ export interface CreateTimesheetAdjustmentRequestDto {
      * @memberof CreateTimesheetAdjustmentRequestDto
      */
     checkOut: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof CreateTimesheetAdjustmentRequestDto
-     */
-    breakStartDate?: Date | null;
-    /**
-     * 
-     * @type {Date}
-     * @memberof CreateTimesheetAdjustmentRequestDto
-     */
-    breakEndDate?: Date | null;
 }
 
 
@@ -107,8 +95,6 @@ export function CreateTimesheetAdjustmentRequestDtoFromJSONTyped(json: any, igno
         'approvedId': json['approvedId'] == null ? undefined : json['approvedId'],
         'checkIn': (new Date(json['checkIn'])),
         'checkOut': (new Date(json['checkOut'])),
-        'breakStartDate': json['breakStartDate'] == null ? undefined : (new Date(json['breakStartDate'])),
-        'breakEndDate': json['breakEndDate'] == null ? undefined : (new Date(json['breakEndDate'])),
     };
 }
 
@@ -129,8 +115,6 @@ export function CreateTimesheetAdjustmentRequestDtoToJSONTyped(value?: CreateTim
         'approvedId': value['approvedId'],
         'checkIn': ((value['checkIn']).toISOString()),
         'checkOut': ((value['checkOut']).toISOString()),
-        'breakStartDate': value['breakStartDate'] == null ? undefined : ((value['breakStartDate'] as any).toISOString()),
-        'breakEndDate': value['breakEndDate'] == null ? undefined : ((value['breakEndDate'] as any).toISOString()),
     };
 }
 

@@ -23,13 +23,15 @@ namespace WorkHub.Infrastructure.Services.Approvals
 		protected readonly IStringLocalizer _localizer;
 		protected readonly IMapper _mapper;
 		protected readonly INotificationSender _notificationSender;
+		protected readonly ITimesheetService _timesheetService;
 
-		public BaseRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper, INotificationSender notificationSender)
+		public BaseRequestApprovalService(ApplicationDbContext context, IStringLocalizerFactory localizerFactory, IMapper mapper, INotificationSender notificationSender, ITimesheetService timesheetService)
 		{
 			_context = context;
 			_localizer = localizerFactory.Create("Services.Approvals.RequestApprovalService", Assembly.GetExecutingAssembly().GetName().Name ?? "");
 			_mapper = mapper;
 			_notificationSender = notificationSender;
+			_timesheetService = timesheetService;
 		}
 
 		public async Task<bool> CanApproveRequestAsync(string userId, string approverId)

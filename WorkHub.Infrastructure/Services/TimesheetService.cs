@@ -2,11 +2,14 @@ using System.Net;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.ObjectPool;
 using WorkHub.Application.DTOs.Time;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Utils;
+using WorkHub.Domain.Entities.Requests;
 using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Services
@@ -30,6 +33,12 @@ namespace WorkHub.Infrastructure.Services
 
 			if (timesheetDb != null)
 			{
+				if (timesheetDb.StartTime != null)
+				{
+					timesheetDb.StartTime = DateTime.UtcNow;
+					await _context.SaveChangesAsync();
+				}
+
 				return _mapper.Map<TimesheetDto>(timesheetDb);
 
 				// Bỏ kiểm tra chấm công thủ công để ưu tiên ghi nhận tự động từ thiết bị sinh trắc học
@@ -66,7 +75,7 @@ namespace WorkHub.Infrastructure.Services
 
 			timesheet.EndTime = DateTime.UtcNow;
 			timesheet.IsActive = false;
-			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime!.Value, timesheet.EndTime.Value);
+			timesheet.WorkedMinutes = await GetWorkedMinutesAsync(timesheet);
 
 			_context.Timesheets.Update(timesheet);
 
@@ -76,16 +85,21 @@ namespace WorkHub.Infrastructure.Services
 
 		}
 
-		public async Task<TimesheetDto> RecalculateWorkedMinutes(string userId, DateTime date)
+		public async Task<TimesheetDto?> RecalculateWorkedMinutes(string userId, DateTime date)
 		{
-			Timesheet timesheet = _context.Timesheets.Include(t => t.User).FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date == date.Date) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
+			if (!Guid.TryParse(userId, out Guid userGuid))
+				throw new BusinessException(HttpStatusCode.BadRequest, "Invalid user ID format.");
+
+			var timesheet = await _context.Timesheets
+				.Include(t => t.User)
+				.ThenInclude(u => u != null ? u.WorkTime : null)
+				.FirstOrDefaultAsync(t => t.UserId == userGuid && t.Date == date.Date)
+				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
 
 			if (timesheet.StartTime == null || timesheet.EndTime == null)
-			{
-				throw new BusinessException(HttpStatusCode.Conflict, _localizer["CheckInOrCheckOutNotPerformed"]);
-			}
+				return null;
 
-			timesheet.WorkedMinutes = CalculateWorked(userId, timesheet.StartTime.Value, timesheet.EndTime.Value);
+			timesheet.WorkedMinutes = await GetWorkedMinutesAsync(timesheet);
 
 			_context.Timesheets.Update(timesheet);
 			await _context.SaveChangesAsync();
@@ -93,13 +107,32 @@ namespace WorkHub.Infrastructure.Services
 			return _mapper.Map<TimesheetDto>(timesheet);
 		}
 
-		private int CalculateWorked(string userId, DateTime startTime, DateTime endTime)
+		private async Task<int> GetWorkedMinutesAsync(Timesheet timesheet)
 		{
-			WorkTime workTime = _context.WorkTimes.FirstOrDefault(w => w.Users.Any(u => u.Id == new Guid(userId))) ?? new WorkTime();
+			if (timesheet.StartTime == null || timesheet.EndTime == null)
+				return 0;
 
-			TimeSpan workedHours = TimesheetUtils.CalculateWorkTime(startTime, endTime);
+			var workTime = timesheet.User?.WorkTime
+				?? await _context.Users
+					.Where(u => u.Id == timesheet.UserId)
+					.Select(u => u.WorkTime)
+					.FirstOrDefaultAsync() ?? new WorkTime();
 
-			return workedHours.Minutes;
+			var requests = await _context.Requests
+				.Where(r => r.TimesheetId == timesheet.Id && r.Status == RequestStatus.APPROVED)
+				.ToListAsync();
+
+			return CalculateWorkedMinutes(timesheet, requests, workTime);
+		}
+
+		private int CalculateWorkedMinutes(Timesheet timesheet, List<Request> requests, WorkTime workTime)
+		{
+			int actualWorkMinutes = (int)TimesheetUtils.CalculateWorkTime(timesheet.StartTime!.Value, timesheet.EndTime!.Value, workTime).TotalMinutes;
+
+			int leaveMinutes = requests.Where(r => r.RequestType == RequestType.LEAVE_REQUEST).Sum(r => r.DurationMinutes);
+			int adjustmentMinutes = requests.Where(r => r.RequestType == RequestType.TIMESHEET_ADJUSTMENT_REQUEST).Sum(r => r.DurationMinutes);
+			int workedMinutes = (adjustmentMinutes != 0 ? adjustmentMinutes : actualWorkMinutes) - leaveMinutes;
+			return Math.Max(0, workedMinutes);
 		}
 	}
 }

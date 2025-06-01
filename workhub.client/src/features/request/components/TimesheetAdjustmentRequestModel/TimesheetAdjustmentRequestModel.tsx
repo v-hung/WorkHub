@@ -43,8 +43,6 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
 
       const body: CreateTimesheetAdjustmentRequestDto = {
         ...formValues,
-        breakStartDate: formValues.breakTime[0]!,
-        breakEndDate: formValues.breakTime[1]!,
         checkIn: formValues.workingTime[0]!,
         checkOut: formValues.workingTime[1]!,
       };
@@ -75,7 +73,7 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
       open={isOpen(RequestType.TimesheetAdjustmentRequest)}
       {...rest}
       className={`${className}`}
-      title="Leave Request"
+      title="Timesheet AdjustmentRequest Request"
       onOk={handleOk}
       confirmLoading={loading}
       onCancel={handleCancel}
@@ -132,18 +130,6 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
           name="workingTime"
           required
           rules={[{ validator: requestValidateTime(workTime, true) }]}
-        >
-          <RangeTimePicker
-            disabledTime={() => requestDisabledTime(workTime)}
-            hideDisabledOptions
-            showSecond={false}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Break Time"
-          name="breakTime"
-          rules={[{ validator: requestValidateTime(workTime) }]}
         >
           <RangeTimePicker
             disabledTime={() => requestDisabledTime(workTime)}
