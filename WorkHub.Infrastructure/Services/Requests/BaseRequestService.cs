@@ -52,7 +52,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["You are not allowed to cancel this request."]);
 			}
 
-			_deps.Context.Requests.Remove(request);
+			request.Status = RequestStatus.CANCELED;
 
 			await _deps.Context.SaveChangesAsync();
 

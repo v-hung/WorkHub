@@ -53,9 +53,24 @@ namespace WorkHub.Infrastructure.Services.Approvals
 			}
 
 			request.Status = RequestStatus.APPROVED;
-			_context.Requests.Update(request);
+
+			var otherRequests = await _context.Set<TRequest>()
+				.Where(r => r.UserId == request.UserId && r.Id != request.Id &&
+					(r.Status == RequestStatus.PENDING || r.Status == RequestStatus.APPROVED))
+				.ToListAsync();
+
+			foreach (var req in otherRequests)
+			{
+				req.Status = req.Status switch
+				{
+					RequestStatus.APPROVED => RequestStatus.SUPERSEDED,
+					RequestStatus.PENDING => RequestStatus.CANCELED,
+					_ => req.Status
+				};
+			}
 
 			await _context.SaveChangesAsync();
+
 			return _mapper.Map<D>(request);
 		}
 

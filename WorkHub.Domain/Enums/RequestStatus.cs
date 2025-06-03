@@ -2,6 +2,6 @@ namespace WorkHub.Domain.Enums
 {
 	public enum RequestStatus
 	{
-		PENDING, APPROVED, REJECTED
+		PENDING, APPROVED, REJECTED, CANCELED, SUPERSEDED
 	}
 }
