@@ -84,7 +84,7 @@ const DefaultMenu: FC<State> = (props) => {
       className={`${className} ${showIndicator ? "scrolled" : ""} default-menu`}
     >
       <SimpleBar
-        style={{ height: "100%" }}
+        style={{ height: "100%", paddingRight: 4 }}
         scrollableNodeProps={{ ref: scrollRef }}
       >
         <Dropdown

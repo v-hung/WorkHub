@@ -6,6 +6,7 @@ import NotificationToolbar from "../NotificationToolbar/NotificationToolbar";
 import "./NotificationTable.css";
 import { useNavigate } from "react-router";
 import { useNotificationStore } from "@/stores/notification.store";
+import { Flex } from "antd";
 
 const NotificationTable = () => {
   const navigate = useNavigate();
@@ -24,9 +25,9 @@ const NotificationTable = () => {
   );
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <NotificationToolbar
-        style={{ paddingLeft: 0 }}
+        style={{ paddingLeft: 0, flex: "none" }}
         selected={selectedRowKeys}
         onCheckAllChange={(checked) => {
           if (checked) {
@@ -39,36 +40,37 @@ const NotificationTable = () => {
         isCheckAll={selectedRowKeys.length === data.length && data.length > 0}
       />
 
-      <MainTable
-        scroll={{ y: "auto" }}
-        pagination={false}
-        showHeader={false}
-        columns={notificationTableColumns}
-        dataSource={data}
-        loading={loading}
-        rowSelection={{
-          selectedRowKeys,
-          onChange: (newSelectedRowKeys) => {
-            setSelectedRowKeys(newSelectedRowKeys);
-          },
-        }}
-        className="notification-table"
-        rowClassName={(record) =>
-          `notification-table__row ${record.isRead ? "" : "unread"}`
-        }
-        onRow={(record) => ({
-          onClick: () => {
-            if (record.category == "REQUEST" && record.relatedEntityId) {
-              navigate(`/requests/${record.relatedEntityId}`);
-            }
-
-            if (!record.isRead) {
-              useNotificationStore.getState().decreaseUnreadCount();
-            }
-          },
-        })}
-      />
-    </>
+      <div style={{ flexGrow: 1, minHeight: 0 }}>
+        <MainTable
+          scroll={{ y: "auto" }}
+          pagination={false}
+          showHeader={false}
+          columns={notificationTableColumns}
+          dataSource={data}
+          loading={loading}
+          rowSelection={{
+            selectedRowKeys,
+            onChange: (newSelectedRowKeys) => {
+              setSelectedRowKeys(newSelectedRowKeys);
+            },
+          }}
+          className="notification-table"
+          rowClassName={(record) =>
+            `notification-table__row ${record.isRead ? "" : "unread"}`
+          }
+          onRow={(record) => ({
+            onClick: () => {
+              if (record.category == "REQUEST" && record.relatedEntityId) {
+                navigate(`/requests/${record.relatedEntityId}`);
+              }
+              if (!record.isRead) {
+                useNotificationStore.getState().decreaseUnreadCount();
+              }
+            },
+          })}
+        />
+      </div>
+    </div>
   );
 };
 

@@ -50,7 +50,7 @@ const TimesheetSyncDataModal: FC<State> = (props) => {
         title="Sync timesheet from timekeeping machine"
         onOk={handleOk}
         confirmLoading={loading}
-        maskClosable={false}
+        // maskClosable={false}
         {...rest}
       >
         <Form

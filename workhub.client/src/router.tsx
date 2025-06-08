@@ -36,7 +36,7 @@ const router = createBrowserRouter(
             },
             {
               path: "/profile",
-              lazy: () => import("./pages/user/UserProfilePage"),
+              lazy: () => import("./pages/profile/ProfilePage"),
             },
             {
               path: "/users",

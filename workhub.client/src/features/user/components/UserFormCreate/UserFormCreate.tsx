@@ -283,7 +283,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                       },
                     ]}
                   >
-                    <Input />
+                    <Input.Password />
                   </Form.Item>
                 </Col>
                 <Col span={24} />
@@ -310,7 +310,7 @@ const UserFormCreate = forwardRef<UserFormCreateRefState, State>(
                       }),
                     ]}
                   >
-                    <Input />
+                    <Input.Password />
                   </Form.Item>
                 </Col>
               </>

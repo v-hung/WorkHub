@@ -15,6 +15,9 @@ export const useTimesheetAction = () => {
     cb?: (data: BioStarSyncHistoricalEventsResponse) => void
   ) => {
     try {
+      if (loading) return;
+
+      setLoading(true);
       let data = await bioStarApi.bioStarSyncTimesheets({
         getHistoricalEventsRequest: request,
       });

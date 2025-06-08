@@ -27,6 +27,8 @@ const DefaultPage: FC<State> = (props) => {
   const [showIndicator, setShowIndicator] = useState(false);
 
   useEffect(() => {
+    if (!showScrollIndicator) return;
+
     const el = layoutRef.current;
     if (!el) return;
 
@@ -36,11 +38,12 @@ const DefaultPage: FC<State> = (props) => {
     }, 100);
 
     el.addEventListener("scroll", onScroll);
+
     return () => {
       el.removeEventListener("scroll", onScroll);
       onScroll.cancel();
     };
-  }, []);
+  }, [showScrollIndicator]);
 
   return (
     <Layout
