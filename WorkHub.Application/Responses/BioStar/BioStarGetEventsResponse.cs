@@ -13,7 +13,7 @@ namespace WorkHub.Application.Responses.BioStar
 
 	public class BioStarGetEventsResponseData
 	{
-		[JsonConverter(typeof(EmptyStringOrArrayConverter<BioStarEvent>))]
+		[JsonConverter(typeof(StringToArrayConverter<BioStarEvent>))]
 		public List<BioStarEvent>? Rows { get; set; }
 	}
 }

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace WorkHub.Application.JsonConverters
 {
-	public class EmptyStringOrArrayConverter<T> : JsonConverter<List<T>>
+	public class StringToArrayConverter<T> : JsonConverter<List<T>>
 	{
 		public override List<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
