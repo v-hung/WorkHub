@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from "node:url";
-
 import { defineConfig } from "vite";
 import plugin from "@vitejs/plugin-react";
 import fs from "fs";
@@ -11,38 +10,49 @@ import Icons from "unplugin-icons/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import IconsResolver from "unplugin-icons/resolver";
 
-const baseFolder =
-  env.APPDATA !== undefined && env.APPDATA !== ""
-    ? `${env.APPDATA}/ASP.NET/https`
-    : `${env.HOME}/.aspnet/https`;
+const isBuild = env.BUILD_ENV === "build";
 
-const certificateName = "workhub.client";
-const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
-const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
+let httpsOptions = undefined;
 
-if (!fs.existsSync(baseFolder)) {
-  fs.mkdirSync(baseFolder, { recursive: true });
-}
+if (!isBuild) {
+  const baseFolder =
+    env.APPDATA !== undefined && env.APPDATA !== ""
+      ? `${env.APPDATA}/ASP.NET/https`
+      : `${env.HOME}/.aspnet/https`;
 
-if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
-  if (
-    0 !==
-    child_process.spawnSync(
-      "dotnet",
-      [
-        "dev-certs",
-        "https",
-        "--export-path",
-        certFilePath,
-        "--format",
-        "Pem",
-        "--no-password",
-      ],
-      { stdio: "inherit" }
-    ).status
-  ) {
-    throw new Error("Could not create certificate.");
+  const certificateName = "workhub.client";
+  const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
+  const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
+
+  if (!fs.existsSync(baseFolder)) {
+    fs.mkdirSync(baseFolder, { recursive: true });
   }
+
+  if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
+    if (
+      0 !==
+      child_process.spawnSync(
+        "dotnet",
+        [
+          "dev-certs",
+          "https",
+          "--export-path",
+          certFilePath,
+          "--format",
+          "Pem",
+          "--no-password",
+        ],
+        { stdio: "inherit" }
+      ).status
+    ) {
+      throw new Error("Could not create certificate.");
+    }
+  }
+
+  httpsOptions = {
+    key: fs.readFileSync(keyFilePath),
+    cert: fs.readFileSync(certFilePath),
+  };
 }
 
 const target = env.ASPNETCORE_HTTPS_PORT
@@ -51,7 +61,6 @@ const target = env.ASPNETCORE_HTTPS_PORT
   ? env.ASPNETCORE_URLS.split(";")[0]
   : "http://localhost:5240";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     plugin(),
@@ -80,25 +89,12 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: {
-      "^/api": {
-        target,
-        secure: false,
-      },
-      "^/uploads": {
-        target,
-        secure: false,
-      },
-      "^/hubs": {
-        target,
-        secure: false,
-        ws: true,
-      },
-    },
+    https: httpsOptions,
     port: parseInt(env.DEV_SERVER_PORT || "52045"),
-    https: {
-      key: fs.readFileSync(keyFilePath),
-      cert: fs.readFileSync(certFilePath),
+    proxy: {
+      "^/api": { target, secure: false },
+      "^/uploads": { target, secure: false },
+      "^/hubs": { target, secure: false, ws: true },
     },
   },
 });

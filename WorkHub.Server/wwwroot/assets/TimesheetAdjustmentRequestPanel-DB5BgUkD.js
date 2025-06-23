@@ -1,1 +1,0 @@
-import{j as s}from"./index--uR3bosk.js";import{U as m}from"./UserCard--pzmK6Kc.js";import"./person-BiwMtXjz.js";import"./index-f1v-kFPc.js";import"./useBreakpoint-CJq1a_UD.js";import"./index-CWAu2eCQ.js";const c=t=>{const{className:e="",data:r,...a}=t;return s.jsx("div",{...a,className:`${e}`,children:s.jsx(m,{user:r.approved})})};export{c as default};

@@ -1,1 +1,0 @@
-import{u as t}from"./auth.store-DCyo43Do.js";import{f as i}from"./index--uR3bosk.js";const u=e=>{const{user:r,permissions:s}=t.getState();return r?e?s.includes(e):!0:!1},a=(e,r)=>{if(!e.includes(r))throw i("/")};export{a as e,u as h};

@@ -7,7 +7,7 @@ import { onUnreadNotificationCount } from "./handlers/onUnreadNotificationCount"
 import {
   BaseNotificationHubMessage,
   NotificationHubMessageType,
-} from "@/types/signalr.notification";
+} from "@/types/signalr-notification";
 
 export const useReceiveMessageHandler = (connection: HubConnection | null) => {
   useEffect(() => {

@@ -1,1 +1,0 @@
-const n=r=>r==null?!0:typeof r=="string"?r.trim().length===0:typeof r=="number"?isNaN(r):typeof r=="boolean"?!1:Array.isArray(r)?r.length===0||r.every(t=>t==null):r instanceof Map||r instanceof Set?r.size===0:typeof r=="object"?Object.keys(r).length===0:!1;export{n as i};

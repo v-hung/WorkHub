@@ -4,6 +4,8 @@ using WorkHub.Domain.Constants.Localization;
 using WorkHub.Application.Interfaces.Data;
 using WorkHub.Server.Middlewares;
 using WorkHub.Server.Hubs;
+using WorkHub.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 namespace WorkHub.Server.Extensions;
 
 static class ApplicationBuilderExtensions
@@ -45,6 +47,9 @@ static class ApplicationBuilderExtensions
 
 		var env = serviceScope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 		if (!env.IsDevelopment()) return app;
+
+		var db = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+		db.Database.MigrateAsync().GetAwaiter().GetResult();
 
 		var initializers = serviceScope.ServiceProvider.GetServices<IDatabaseSeeder>();
 

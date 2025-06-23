@@ -1,0 +1,8 @@
+**/node_modules
+**/bin
+**/obj
+**/.git
+**/.vscode
+**/*.log
+**/*.md
+**/test-data

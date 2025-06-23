@@ -14,7 +14,7 @@ const UserCard: FC<State> = (props) => {
     className = "",
     showEmail = false,
     user,
-    size = showEmail && user.email ? 40 : 30,
+    size = showEmail ? 40 : 30,
     ...rest
   } = props;
   return (

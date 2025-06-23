@@ -1,1 +1,0 @@
-import{j as r,O as o}from"./index--uR3bosk.js";import{U as t}from"./UserContext-BgoV8X3I.js";import"./useUsers-DFLz3FjB.js";import"./error.utils-BlwQgnKf.js";import"./useUserAction-eJtgLnYp.js";function n(){return r.jsx(t,{children:r.jsx(o,{})})}export{n as Component};

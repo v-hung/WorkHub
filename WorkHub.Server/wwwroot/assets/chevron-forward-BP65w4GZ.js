@@ -1,1 +1,0 @@
-import{r as t,j as r}from"./index--uR3bosk.js";const s=(o,e)=>r.jsx("svg",{viewBox:"0 0 512 512",width:"24px",height:"24px",ref:e,...o,children:r.jsx("path",{fill:"none",stroke:"currentColor",strokeLinecap:"round",strokeLinejoin:"round",strokeWidth:48,d:"m184 112l144 144l-144 144"})}),i=t.forwardRef(s);export{i as F};
