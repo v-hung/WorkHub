@@ -22,7 +22,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 
 		public override async Task<D> CreateRequestAsync<D>(CreateLeaveRequestDto request)
 		{
-			if (!await _approvalService.CanApproveRequestAsync(_deps.CurrentUserService.UserId!, request.ApprovedId.ToString()))
+			if (!await _approvalService.CanApproveRequestAsync(_deps.CurrentUserService.UserId!, request.ApproverId.ToString()))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["The specified approver is not authorized to approve this request."]);
 			}

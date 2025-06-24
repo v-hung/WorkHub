@@ -47,7 +47,7 @@ namespace WorkHub.Infrastructure.Services.BioStar
 
 		public override async Task StopAsync(CancellationToken cancellationToken)
 		{
-			await _webSocketClientService.CloseConnectionAsync(cancellationToken);
+			await _webSocketClientService.SafeCloseConnectionAsync(cancellationToken);
 			await base.StopAsync(cancellationToken);
 		}
 	}

@@ -88,8 +88,8 @@ const LeaveRequestModel: FC<State> = (props) => {
         </Form.Item>
 
         <Form.Item
-          name="approvedId"
-          rules={[{ required: true, message: "Please input your Approved!" }]}
+          name="approverId"
+          rules={[{ required: true, message: "Please input your Approver!" }]}
           hidden
         >
           <Input disabled />
@@ -98,12 +98,12 @@ const LeaveRequestModel: FC<State> = (props) => {
         <Form.Item shouldUpdate noStyle>
           {({ getFieldError }) => (
             <Form.Item
-              label="Approved User"
-              name="approvedName"
+              label="Approver User"
+              name="approverName"
               validateStatus={
-                getFieldError("approvedId")?.length ? "error" : ""
+                getFieldError("approverId")?.length ? "error" : ""
               }
-              help={getFieldError("approvedId")?.[0]}
+              help={getFieldError("approverId")?.[0]}
             >
               <Input disabled />
             </Form.Item>

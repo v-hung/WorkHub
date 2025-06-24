@@ -63,17 +63,17 @@ namespace WorkHub.Infrastructure.Services.Requests
 
 		protected async Task CreateRequestNotification(Request request)
 		{
-			var user = await _deps.Context.Users.Select(u => new
+			var approver = await _deps.Context.Users.Select(u => new
 			{
 				u.Id,
 				u.Email,
 				LanguageCode = u.UserDetail != null ? u.UserDetail.Nationality : Nationality.vi_VN
 			}
-			).FirstOrDefaultAsync(u => u.Id == request.ApprovedId)
+			).FirstOrDefaultAsync(u => u.Id == request.ApproverId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Approver not found."]);
 
 			var originalCulture = CultureInfo.CurrentUICulture;
-			CultureInfo.CurrentUICulture = new CultureInfo(user.LanguageCode.ToString().ReplaceUnderscoreToDash());
+			CultureInfo.CurrentUICulture = new CultureInfo(approver.LanguageCode.ToString().ReplaceUnderscoreToDash());
 
 			try
 			{
@@ -84,7 +84,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 					Message = _localizer["You have a new request to approve."].Value,
 					Category = NotificationCategory.REQUEST,
 					RelatedEntityId = request.Id.ToString(),
-					UserId = request.ApprovedId,
+					UserId = request.ApproverId,
 				};
 				_deps.Context.Notifications.Add(notification);
 				await _deps.Context.SaveChangesAsync();
@@ -94,7 +94,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 
 				RequestSubmittedToApproverTemplate templateModel = new RequestSubmittedToApproverTemplate
 				{
-					ApproverName = user.Email!,
+					ApproverName = approver.Email!,
 					RequesterName = _deps.CurrentUserService.UserName!,
 					RequestType = request.RequestType.ToString(),
 					SubmittedDate = request.Date.ToString("yyyy/MM/dd"),
@@ -105,14 +105,14 @@ namespace WorkHub.Infrastructure.Services.Requests
 				_deps.EmailQueue.QueueEmail(async token =>
 				{
 					await _deps.EmailService.SendEmailWithTemplateAsync(
-						user.Email!,
+						approver.Email!,
 						_localizer["New Request Submitted"].Value,
 						"RequestSubmittedToApprover",
 						templateModel,
-						user.LanguageCode);
+						approver.LanguageCode);
 				});
 
-				await _deps.NotificationSender.SendToUserAsync(request.ApprovedId!.Value.ToString(), new BaseNotificationHubMessage
+				await _deps.NotificationSender.SendToUserAsync(request.ApproverId!.Value.ToString(), new BaseNotificationHubMessage
 				{
 					Data = new SystemNotificationMessageDto
 					{

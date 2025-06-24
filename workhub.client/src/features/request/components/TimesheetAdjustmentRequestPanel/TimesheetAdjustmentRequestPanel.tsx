@@ -10,7 +10,7 @@ const TimesheetAdjustmentRequestPanel: FC<State> = (props) => {
   const { className = "", data, ...rest } = props;
   return (
     <div {...rest} className={`${className}`}>
-      <UserCard user={data.approved} />
+      <UserCard user={data.approver} />
     </div>
   );
 };

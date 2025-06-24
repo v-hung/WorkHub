@@ -44,10 +44,10 @@ namespace WorkHub.Infrastructure.Services.Approvals
 		{
 			TRequest request = await _context.Set<TRequest>().Include(r => r.User)
 				.ThenInclude(u => u != null ? u.WorkTime : null)
-				.Include(r => r.Approved).FirstOrDefaultAsync(r => r.Id == requestId)
+				.Include(r => r.Approver).FirstOrDefaultAsync(r => r.Id == requestId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
-			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedId.ToString()!))
+			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApproverId.ToString()!))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["You are not allowed to approve this request."]);
 			}
@@ -78,10 +78,10 @@ namespace WorkHub.Infrastructure.Services.Approvals
 		{
 			TRequest request = await _context.Set<TRequest>().Include(r => r.User)
 				.ThenInclude(u => u != null ? u.WorkTime : null)
-				.Include(r => r.Approved).FirstOrDefaultAsync(r => r.Id == requestId)
+				.Include(r => r.Approver).FirstOrDefaultAsync(r => r.Id == requestId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
-			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApprovedId.ToString()!))
+			if (!await CanApproveRequestAsync(request.UserId.ToString()!, request.ApproverId.ToString()!))
 			{
 				throw new BusinessException(HttpStatusCode.Forbidden, _localizer["You are not allowed to approve this request."]);
 			}

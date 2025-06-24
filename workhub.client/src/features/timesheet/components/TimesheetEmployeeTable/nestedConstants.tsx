@@ -48,9 +48,11 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
         const { status } = record;
 
         const statusMap: Record<RequestStatus, PresetStatusColorType> = {
-          [RequestStatus.Pending]: "default",
+          [RequestStatus.Pending]: "processing",
           [RequestStatus.Approved]: "success",
           [RequestStatus.Rejected]: "error",
+          [RequestStatus.Canceled]: "default",
+          [RequestStatus.Superseded]: "warning",
         };
         return <Badge status={statusMap[status]} text={record.status} />;
       },

@@ -6,3 +6,4 @@
 **/*.log
 **/*.md
 **/test-data
+WorkHub.Server/wwwroot/uploads

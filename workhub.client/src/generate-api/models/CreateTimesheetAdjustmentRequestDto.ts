@@ -50,7 +50,7 @@ export interface CreateTimesheetAdjustmentRequestDto {
      * @type {string}
      * @memberof CreateTimesheetAdjustmentRequestDto
      */
-    approvedId?: string;
+    approverId?: string;
     /**
      * 
      * @type {Date}
@@ -92,7 +92,7 @@ export function CreateTimesheetAdjustmentRequestDtoFromJSONTyped(json: any, igno
         'date': (new Date(json['date'])),
         'requestType': RequestTypeFromJSON(json['requestType']),
         'reason': json['reason'],
-        'approvedId': json['approvedId'] == null ? undefined : json['approvedId'],
+        'approverId': json['approverId'] == null ? undefined : json['approverId'],
         'checkIn': (new Date(json['checkIn'])),
         'checkOut': (new Date(json['checkOut'])),
     };
@@ -112,7 +112,7 @@ export function CreateTimesheetAdjustmentRequestDtoToJSONTyped(value?: CreateTim
         'date': ((value['date']).toISOString()),
         'requestType': RequestTypeToJSON(value['requestType']),
         'reason': value['reason'],
-        'approvedId': value['approvedId'],
+        'approverId': value['approverId'],
         'checkIn': ((value['checkIn']).toISOString()),
         'checkOut': ((value['checkOut']).toISOString()),
     };

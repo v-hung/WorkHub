@@ -72,7 +72,7 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>
 
 	// Request
 	public IList<Request> Requests { get; set; } = [];
-	public IList<Request> ApprovedRequests { get; set; } = [];
+	public IList<Request> AssignedRequests { get; set; } = [];
 
 	// Team
 	[ForeignKey("Team")]

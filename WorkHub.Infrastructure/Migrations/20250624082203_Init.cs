@@ -53,6 +53,25 @@ namespace WorkHub.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "translations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Key = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Culture = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_translations", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "work_times",
                 columns: table => new
                 {
@@ -317,6 +336,8 @@ namespace WorkHub.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Expires = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     RememberMe = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    SecurityStamp = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Created = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
@@ -486,26 +507,25 @@ namespace WorkHub.Infrastructure.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     RequestType = table.Column<int>(type: "int", nullable: false),
+                    DurationMinutes = table.Column<int>(type: "int", nullable: false),
                     Reason = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    ApprovedId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ApproverId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     TimesheetId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     BreakStartDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     BreakEndDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CheckIn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CheckOut = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    TimesheetAdjustmentRequest_BreakStartDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    TimesheetAdjustmentRequest_BreakEndDate = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CheckOut = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_requests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_requests_asp_net_users_ApprovedId",
-                        column: x => x.ApprovedId,
+                        name: "FK_requests_asp_net_users_ApproverId",
+                        column: x => x.ApproverId,
                         principalTable: "asp_net_users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -636,9 +656,9 @@ namespace WorkHub.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_requests_ApprovedId",
+                name: "IX_requests_ApproverId",
                 table: "requests",
-                column: "ApprovedId");
+                column: "ApproverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_requests_TimesheetId",
@@ -743,6 +763,9 @@ namespace WorkHub.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "requests");
+
+            migrationBuilder.DropTable(
+                name: "translations");
 
             migrationBuilder.DropTable(
                 name: "user_details");

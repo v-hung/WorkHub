@@ -119,7 +119,7 @@ export interface RequestCombinedDto {
      * @type {UserMinimalDto}
      * @memberof RequestCombinedDto
      */
-    approved: UserMinimalDto;
+    approver: UserMinimalDto;
 }
 
 
@@ -139,7 +139,7 @@ export function instanceOfRequestCombinedDto(value: object): value is RequestCom
     if (!('checkIn' in value) || value['checkIn'] === undefined) return false;
     if (!('checkOut' in value) || value['checkOut'] === undefined) return false;
     if (!('user' in value) || value['user'] === undefined) return false;
-    if (!('approved' in value) || value['approved'] === undefined) return false;
+    if (!('approver' in value) || value['approver'] === undefined) return false;
     return true;
 }
 
@@ -164,7 +164,7 @@ export function RequestCombinedDtoFromJSONTyped(json: any, ignoreDiscriminator: 
         'checkIn': (new Date(json['checkIn'])),
         'checkOut': (new Date(json['checkOut'])),
         'user': UserMinimalWithWorkTimeDtoFromJSON(json['user']),
-        'approved': UserMinimalDtoFromJSON(json['approved']),
+        'approver': UserMinimalDtoFromJSON(json['approver']),
     };
 }
 
@@ -190,7 +190,7 @@ export function RequestCombinedDtoToJSONTyped(value?: RequestCombinedDto | null,
         'checkIn': ((value['checkIn']).toISOString()),
         'checkOut': ((value['checkOut']).toISOString()),
         'user': UserMinimalWithWorkTimeDtoToJSON(value['user']),
-        'approved': UserMinimalDtoToJSON(value['approved']),
+        'approver': UserMinimalDtoToJSON(value['approver']),
     };
 }
 

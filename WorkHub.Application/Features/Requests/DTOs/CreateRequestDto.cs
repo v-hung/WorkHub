@@ -17,6 +17,6 @@ namespace WorkHub.Application.Features.Requests.DTOs
 
 		// Navigation properties
 
-		public Guid ApprovedId { get; set; }
+		public Guid ApproverId { get; set; }
 	}
 }

@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using WorkHub.Application.Attributes;
 using WorkHub.Domain.Entities.Audit;
 using WorkHub.Domain.Enums;
 
 namespace WorkHub.Application.DTOs.Work
 {
+	[LocalizePrefix("Project")]
 	public class ProjectMinimalDto : IEntity<int>
 	{
 
@@ -13,6 +15,7 @@ namespace WorkHub.Application.DTOs.Work
 		[Required]
 		public required string Name { get; set; }
 
+		[Localize]
 		public string? Description { get; set; }
 
 		public DateTime? StartDate { get; set; }

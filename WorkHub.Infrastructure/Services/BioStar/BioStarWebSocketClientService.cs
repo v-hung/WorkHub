@@ -97,15 +97,16 @@ namespace WorkHub.Infrastructure.Services.BioStar
 					else if (result.MessageType == WebSocketMessageType.Close)
 					{
 						_logger.LogInformation("WebSocket closing.");
-						await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar websocket Closing", cancellationToken);
 						break;
 					}
 				}
 				catch (Exception ex)
 				{
 					_logger.LogError($"Error while receiving message: {ex.Message}");
-					await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar websocket Closing", cancellationToken);
-					break;
+				}
+				finally
+				{
+					await SafeCloseConnectionAsync(cancellationToken);
 				}
 			}
 		}
@@ -121,11 +122,24 @@ namespace WorkHub.Infrastructure.Services.BioStar
 			}
 		}
 
-		public async Task CloseConnectionAsync(CancellationToken cancellationToken)
+		public async Task SafeCloseConnectionAsync(CancellationToken cancellationToken)
 		{
-			if (_clientWebSocket.State == WebSocketState.Open)
+
+			if (_clientWebSocket != null && (_clientWebSocket.State == WebSocketState.Open || _clientWebSocket.State == WebSocketState.CloseReceived))
 			{
-				await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar websocket Closing", cancellationToken);
+				try
+				{
+					_logger.LogInformation("Closing WebSocket connection...");
+					await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar websocket Closing", cancellationToken);
+				}
+				catch (Exception ex)
+				{
+					_logger.LogWarning(ex, "Error occurred while closing WebSocket.");
+				}
+			}
+			else
+			{
+				_logger.LogInformation("WebSocket is already closed or not in a closable state.");
 			}
 		}
 
@@ -133,7 +147,6 @@ namespace WorkHub.Infrastructure.Services.BioStar
 		{
 			if (_clientWebSocket.State == WebSocketState.Closed || _clientWebSocket.State == WebSocketState.Aborted)
 			{
-
 				try
 				{
 					_clientWebSocket.Dispose();
@@ -179,8 +192,8 @@ namespace WorkHub.Infrastructure.Services.BioStar
 			}
 			catch (Exception ex)
 			{
-				await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "BioStar Cant not call event start api", cancellationToken);
-				_logger.LogError($"Error in WebSocket event starting: {ex.Message}");
+				_logger.LogError($"Error while receiving message: {ex.Message}");
+				await SafeCloseConnectionAsync(cancellationToken);
 			}
 		}
 

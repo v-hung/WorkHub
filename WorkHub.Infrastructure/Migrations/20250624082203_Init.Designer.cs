@@ -12,7 +12,7 @@ using WorkHub.Infrastructure.Data;
 namespace WorkHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250521062906_Init")]
+    [Migration("20250624082203_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -244,6 +244,10 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.Property<bool>("RememberMe")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("SecurityStamp")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Token")
                         .IsRequired()
@@ -507,6 +511,32 @@ namespace WorkHub.Infrastructure.Migrations
                     b.ToTable("notifications");
                 });
 
+            modelBuilder.Entity("WorkHub.Domain.Entities.Misc.Translation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Culture")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("translations");
+                });
+
             modelBuilder.Entity("WorkHub.Domain.Entities.Organization.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -562,7 +592,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid?>("ApprovedId")
+                    b.Property<Guid?>("ApproverId")
                         .IsRequired()
                         .HasColumnType("char(36)");
 
@@ -571,6 +601,9 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
 
                     b.Property<string>("Reason")
                         .IsRequired()
@@ -592,7 +625,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApprovedId");
+                    b.HasIndex("ApproverId");
 
                     b.HasIndex("TimesheetId");
 
@@ -759,26 +792,13 @@ namespace WorkHub.Infrastructure.Migrations
                 {
                     b.HasBaseType("WorkHub.Domain.Entities.Requests.Request");
 
-                    b.Property<DateTime>("BreakEndDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("BreakStartDate")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<DateTime>("CheckIn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("CheckOut")
                         .HasColumnType("datetime(6)");
 
-                    b.ToTable("requests", t =>
-                        {
-                            t.Property("BreakEndDate")
-                                .HasColumnName("TimesheetAdjustmentRequest_BreakEndDate");
-
-                            t.Property("BreakStartDate")
-                                .HasColumnName("TimesheetAdjustmentRequest_BreakStartDate");
-                        });
+                    b.ToTable("requests");
 
                     b.HasDiscriminator().HasValue(0);
                 });
@@ -938,9 +958,9 @@ namespace WorkHub.Infrastructure.Migrations
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Requests.Request", b =>
                 {
-                    b.HasOne("WorkHub.Domain.Entities.Identity.User", "Approved")
-                        .WithMany("ApprovedRequests")
-                        .HasForeignKey("ApprovedId")
+                    b.HasOne("WorkHub.Domain.Entities.Identity.User", "Approver")
+                        .WithMany("AssignedRequests")
+                        .HasForeignKey("ApproverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -954,7 +974,7 @@ namespace WorkHub.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Approved");
+                    b.Navigation("Approver");
 
                     b.Navigation("Timesheet");
 
@@ -991,7 +1011,7 @@ namespace WorkHub.Infrastructure.Migrations
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.User", b =>
                 {
-                    b.Navigation("ApprovedRequests");
+                    b.Navigation("AssignedRequests");
 
                     b.Navigation("ManagerProjects");
 

@@ -37,12 +37,12 @@ namespace WorkHub.Domain.Entities.Requests
 		[InverseProperty("Requests")]
 		public User? User { get; set; }
 
-		[ForeignKey("Approved")]
-		public Guid? ApprovedId { get; set; }
+		[ForeignKey("Approver")]
+		public Guid? ApproverId { get; set; }
 
 		[Required]
-		[InverseProperty("ApprovedRequests")]
-		public User? Approved { get; set; }
+		[InverseProperty("AssignedRequests")]
+		public User? Approver { get; set; }
 
 		[ForeignKey("Timesheet")]
 		public Guid? TimesheetId { get; set; }

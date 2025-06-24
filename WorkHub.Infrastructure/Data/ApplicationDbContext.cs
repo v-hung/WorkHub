@@ -31,6 +31,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 	public DbSet<Device> Device { get; set; }
 	public DbSet<DeviceCategory> DeviceCategories { get; set; }
 	public DbSet<Notification> Notifications { get; set; }
+	public DbSet<Translation> Translations { get; set; }
 
 	public ApplicationDbContext(DbContextOptions options, ICurrentUserService currentUserService) : base(options)
 	{

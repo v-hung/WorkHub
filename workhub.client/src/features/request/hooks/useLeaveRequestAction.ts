@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export type CreateLeaveRequestDtoCustomType = CreateLeaveRequestDto & {
   breakTime: [Date | null, Date | null];
-  approvedName: string;
+  approverName: string;
 };
 
 export const useLeaveRequestAction = () => {
@@ -26,8 +26,8 @@ export const useLeaveRequestAction = () => {
     const form = CreateLeaveRequestDtoFromJSON({});
     return {
       ...form,
-      approvedId: supervisor?.id,
-      approvedName: supervisor?.fullName || "No supervisor",
+      approverId: supervisor?.id,
+      approverName: supervisor?.fullName || "No supervisor",
       requestType: RequestType.LeaveRequest,
       date: date || new Date(),
       breakTime: [null, null],

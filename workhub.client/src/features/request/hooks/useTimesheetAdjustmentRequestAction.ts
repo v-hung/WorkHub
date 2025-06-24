@@ -13,7 +13,7 @@ export type CreateTimesheetAdjustmentRequestDtoCustomType =
   CreateTimesheetAdjustmentRequestDto & {
     breakTime: [Date | null, Date | null];
     workingTime: [Date | null, Date | null];
-    approvedName: string;
+    approverName: string;
   };
 
 export const useTimesheetAdjustmentRequestAction = () => {
@@ -30,8 +30,8 @@ export const useTimesheetAdjustmentRequestAction = () => {
 
     return {
       ...form,
-      approvedId: supervisor?.id,
-      approvedName: supervisor?.fullName || "No supervisor",
+      approverId: supervisor?.id,
+      approverName: supervisor?.fullName || "No supervisor",
       requestType: RequestType.TimesheetAdjustmentRequest,
       date: date || new Date(),
       breakTime: [null, null],

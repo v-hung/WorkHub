@@ -11,6 +11,6 @@ namespace WorkHub.Application.DTOs.Requests
 		public required UserMinimalWithWorkTimeDto User { get; set; }
 
 		[Required]
-		public required UserMinimalDto Approved { get; set; }
+		public required UserMinimalDto Approver { get; set; }
 	}
 }

@@ -2,7 +2,6 @@ using System.Net;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.ObjectPool;
 using WorkHub.Application.DTOs.Time;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Services;
@@ -33,7 +32,7 @@ namespace WorkHub.Infrastructure.Services
 
 			if (timesheetDb != null)
 			{
-				if (timesheetDb.StartTime != null)
+				if (timesheetDb.StartTime == null)
 				{
 					timesheetDb.StartTime = DateTime.UtcNow;
 					await _context.SaveChangesAsync();
@@ -41,7 +40,6 @@ namespace WorkHub.Infrastructure.Services
 
 				return _mapper.Map<TimesheetDto>(timesheetDb);
 
-				// Bỏ kiểm tra chấm công thủ công để ưu tiên ghi nhận tự động từ thiết bị sinh trắc học
 				// throw new BusinessException(HttpStatusCode.BadRequest, _localizer["CheckInAlreadyPerformed"]);
 			}
 

@@ -50,7 +50,7 @@ export interface CreateLeaveRequestDto {
      * @type {string}
      * @memberof CreateLeaveRequestDto
      */
-    approvedId?: string;
+    approverId?: string;
     /**
      * 
      * @type {Date}
@@ -92,7 +92,7 @@ export function CreateLeaveRequestDtoFromJSONTyped(json: any, ignoreDiscriminato
         'date': (new Date(json['date'])),
         'requestType': RequestTypeFromJSON(json['requestType']),
         'reason': json['reason'],
-        'approvedId': json['approvedId'] == null ? undefined : json['approvedId'],
+        'approverId': json['approverId'] == null ? undefined : json['approverId'],
         'breakStartDate': (new Date(json['breakStartDate'])),
         'breakEndDate': (new Date(json['breakEndDate'])),
     };
@@ -112,7 +112,7 @@ export function CreateLeaveRequestDtoToJSONTyped(value?: CreateLeaveRequestDto |
         'date': ((value['date']).toISOString()),
         'requestType': RequestTypeToJSON(value['requestType']),
         'reason': value['reason'],
-        'approvedId': value['approvedId'],
+        'approverId': value['approverId'],
         'breakStartDate': ((value['breakStartDate']).toISOString()),
         'breakEndDate': ((value['breakEndDate']).toISOString()),
     };

@@ -50,7 +50,7 @@ export interface CreateRequestDto {
      * @type {string}
      * @memberof CreateRequestDto
      */
-    approvedId?: string;
+    approverId?: string;
 }
 
 
@@ -78,7 +78,7 @@ export function CreateRequestDtoFromJSONTyped(json: any, ignoreDiscriminator: bo
         'date': (new Date(json['date'])),
         'requestType': RequestTypeFromJSON(json['requestType']),
         'reason': json['reason'],
-        'approvedId': json['approvedId'] == null ? undefined : json['approvedId'],
+        'approverId': json['approverId'] == null ? undefined : json['approverId'],
     };
 }
 
@@ -96,7 +96,7 @@ export function CreateRequestDtoToJSONTyped(value?: CreateRequestDto | null, ign
         'date': ((value['date']).toISOString()),
         'requestType': RequestTypeToJSON(value['requestType']),
         'reason': value['reason'],
-        'approvedId': value['approvedId'],
+        'approverId': value['approverId'],
     };
 }
 
