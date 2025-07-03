@@ -34,7 +34,7 @@ namespace WorkHub.Infrastructure.Services.Approvals
 			_timesheetService = timesheetService;
 		}
 
-		public async Task<bool> CanApproveRequestAsync(string userId, string approverId)
+		public virtual async Task<bool> CanApproveRequestAsync(string userId, string approverId)
 		{
 			return await _context.Users
 				.AnyAsync(u => u.SupervisorId == Guid.Parse(approverId) && u.Id == Guid.Parse(userId));

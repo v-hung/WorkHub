@@ -4,7 +4,7 @@ import { RequestType } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
 import { useState } from "react";
 
-export const useCancelRequest = () => {
+export const useRequest = () => {
   const [loading, setLoading] = useState(false);
 
   // Cancel

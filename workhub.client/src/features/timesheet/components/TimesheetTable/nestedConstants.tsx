@@ -1,5 +1,5 @@
 import { format } from "@/utils/date.utils";
-import { useCancelRequest } from "@/features/request/hooks/useCancelRequest";
+import { useRequest } from "@/features/request/hooks/useRequest";
 import {
   RequestCombinedMinimalDto,
   RequestStatus,
@@ -71,7 +71,7 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
 const RequestTableActionRender: FC<{
   request: RequestCombinedMinimalDto;
 }> = ({ request }) => {
-  const { loading, cancel } = useCancelRequest();
+  const { loading, cancel } = useRequest();
   const { getCurrentTimesheets, isCurrentMonth } = useTimesheetContext();
 
   if (request.status !== RequestStatus.Pending) return null;
