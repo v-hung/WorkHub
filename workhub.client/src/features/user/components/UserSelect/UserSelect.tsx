@@ -26,7 +26,7 @@ const UserSelect: FC<State> = (props) => {
   useEffect(() => {
     if (!isEmpty(value)) {
       fetchUsers(Array.isArray(value) ? value : [value]).then((data) => {
-        setOptions(data.map((v) => ({ label: v.email, value: v.id })));
+        setOptions(data.map((v) => ({ label: v.fullName, value: v.id })));
       });
     }
   }, []);
@@ -34,7 +34,7 @@ const UserSelect: FC<State> = (props) => {
   useEffect(() => {
     setOptions((prev) => {
       const newOptions = userPaginated.data.map((item) => ({
-        label: item.email,
+        label: item.fullName,
         value: item.id,
       }));
 
