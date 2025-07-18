@@ -12,7 +12,7 @@ const RoleTable = () => {
   const { rolePaginated, updateRequest, loading } = useRolesContext();
 
   useEffect(() => {
-    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
+    updateRequest();
   }, []);
 
   const onTableChange = useCallback(
@@ -21,7 +21,21 @@ const RoleTable = () => {
       filters: Record<string, FilterValue | null>,
       sorter: SorterResult<RoleDto> | SorterResult<RoleDto>[]
     ) => {
-      handleTableChange(pagination, filters, sorter, updateRequest);
+      const { current, pageSize, orderBy, conditions } = handleTableChange(
+        pagination,
+        filters,
+        sorter
+      );
+
+      updateRequest((prev) => ({
+        ...prev,
+        pageNumber: current ?? prev.pageNumber,
+        pageSize: pageSize ?? prev.pageSize,
+        orderBy,
+        where: {
+          conditions: conditions,
+        },
+      }));
     },
     [updateRequest]
   );

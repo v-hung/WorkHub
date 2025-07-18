@@ -24,7 +24,6 @@ export const useRoles = () => {
   const request = useRef<PagedRequest>({
     pageNumber: rolePaginated.currentPage,
     pageSize: rolePaginated.pageSize,
-    searchConditions: [],
   });
 
   const fetchPaginatedRoles = async (request: PagedRequest) => {

@@ -13,7 +13,7 @@ const DeviceCategoryTable = () => {
     useDeviceCategoriesContext();
 
   useEffect(() => {
-    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
+    updateRequest();
   }, []);
 
   const onTableChange = useCallback(
@@ -24,7 +24,21 @@ const DeviceCategoryTable = () => {
         | SorterResult<DeviceCategoryDto>
         | SorterResult<DeviceCategoryDto>[]
     ) => {
-      handleTableChange(pagination, filters, sorter, updateRequest);
+      const { current, pageSize, orderBy, conditions } = handleTableChange(
+        pagination,
+        filters,
+        sorter
+      );
+
+      updateRequest((prev) => ({
+        ...prev,
+        pageNumber: current ?? prev.pageNumber,
+        pageSize: pageSize ?? prev.pageSize,
+        orderBy,
+        where: {
+          conditions: conditions,
+        },
+      }));
     },
     [updateRequest]
   );

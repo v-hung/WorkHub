@@ -16,7 +16,7 @@ namespace WorkHub.Application.Requests
 		[Required]
 		public int Limit = 10;
 
-		public List<SearchCondition> SearchConditions { get; set; } = [];
+		public SearchConditionGroup? Where { get; set; }
 
 	}
 

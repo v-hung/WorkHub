@@ -22,7 +22,8 @@ export const RequestStatus = {
     Approved: 'APPROVED',
     Rejected: 'REJECTED',
     Canceled: 'CANCELED',
-    Superseded: 'SUPERSEDED'
+    Superseded: 'SUPERSEDED',
+    Used: 'USED'
 } as const;
 export type RequestStatus = typeof RequestStatus[keyof typeof RequestStatus];
 

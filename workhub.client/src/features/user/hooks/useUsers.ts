@@ -28,13 +28,15 @@ export const useUsers = () => {
   const request = useRef<PagedRequest>({
     pageNumber: userPaginated.currentPage,
     pageSize: userPaginated.pageSize,
-    searchConditions: [
-      {
-        column: "userStatus",
-        operator: SearchOperator.Contains,
-        values: [UserStatus.Active, UserStatus.Onsite],
-      },
-    ],
+    where: {
+      conditions: [
+        {
+          column: "userStatus",
+          operator: SearchOperator.Contains,
+          values: [UserStatus.Active, UserStatus.Onsite],
+        },
+      ],
+    },
     orderBy: "createdAt ascending",
   });
 

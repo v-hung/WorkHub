@@ -1,6 +1,6 @@
 import {
-  PagedRequest,
   Permission,
+  SearchCondition,
   SearchOperator,
   UserDto,
   UserPosition,
@@ -20,7 +20,7 @@ import {
 } from "@/utils/table.utils";
 
 export const getUserTableColumns = (
-  request: PagedRequest
+  searchConditions: SearchCondition[]
 ): TableProps<UserDto>["columns"] => {
   return [
     {
@@ -30,10 +30,7 @@ export const getUserTableColumns = (
       dataIndex: "email",
       sorter: true,
       ...getColumnSearchProps("email"),
-      defaultFilteredValue: getDefaultFilteredValue(
-        request.searchConditions ?? [],
-        "email"
-      ),
+      defaultFilteredValue: getDefaultFilteredValue(searchConditions, "email"),
     },
     {
       title: "Supervisor",

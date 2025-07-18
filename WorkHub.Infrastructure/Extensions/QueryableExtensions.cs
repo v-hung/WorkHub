@@ -6,41 +6,61 @@ namespace WorkHub.Infrastructure.Extensions
 {
 	public static class QueryableExtensions
 	{
-		public static Expression<Func<T, bool>>? BuildPredicateFromSearchConditions<T>(List<SearchCondition>? conditions)
+		public static Expression<Func<T, bool>>? BuildPredicateFromSearchConditionGroup<T>(SearchConditionGroup? group)
 		{
-			if (conditions == null || !conditions.Any()) return null;
+			if (group == null) return null;
 
 			var parameter = Expression.Parameter(typeof(T), "x");
-			Expression? combinedExpression = null;
+			var expression = BuildGroupExpression<T>(group, parameter);
 
-			foreach (var condition in conditions)
+			if (expression == null) return null;
+
+			return Expression.Lambda<Func<T, bool>>(expression, parameter);
+		}
+
+		private static Expression? BuildGroupExpression<T>(SearchConditionGroup group, ParameterExpression parameter)
+		{
+			List<Expression> expressions = [];
+
+			if (group.Conditions != null)
 			{
-				if (string.IsNullOrWhiteSpace(condition.Column) || condition.Values == null || condition.Values.Count == 0) continue;
-
-				var property = typeof(T).GetProperty(condition.Column, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-				if (property == null) continue;
-
-				var propertyAccess = Expression.Property(parameter, property);
-				Expression? predicate = property.PropertyType switch
+				foreach (var condition in group.Conditions)
 				{
-					Type t when t == typeof(string) => HandleStringCondition(propertyAccess, condition),
-					Type t when t == typeof(int) || t == typeof(int?) => HandleIntCondition(propertyAccess, condition),
-					Type t when t == typeof(DateTime) || t == typeof(DateTime?) => HandleDateTimeCondition(propertyAccess, condition),
-					Type t when t.IsEnum || IsNullableEnum(t) => HandleEnumCondition(propertyAccess, condition),
-					_ => null
-				};
+					if (string.IsNullOrWhiteSpace(condition.Column) || condition.Values == null || !condition.Values.Any())
+						continue;
 
-				if (predicate != null)
-				{
-					combinedExpression = combinedExpression == null
-						? predicate
-						: Expression.AndAlso(combinedExpression, predicate);
+					var property = typeof(T).GetProperty(condition.Column, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+					if (property == null) continue;
+
+					var member = Expression.Property(parameter, property);
+
+					Expression? predicate = property.PropertyType switch
+					{
+						Type t when t == typeof(string) => HandleStringCondition(member, condition),
+						Type t when t == typeof(int) || t == typeof(int?) => HandleIntCondition(member, condition),
+						Type t when t == typeof(DateTime) || t == typeof(DateTime?) => HandleDateTimeCondition(member, condition),
+						Type t when t.IsEnum || IsNullableEnum(t) => HandleEnumCondition(member, condition),
+						_ => null
+					};
+
+					if (predicate != null) expressions.Add(predicate);
 				}
 			}
 
-			if (combinedExpression == null) return null;
+			if (group.Groups != null)
+			{
+				foreach (var subgroup in group.Groups)
+				{
+					var subExpr = BuildGroupExpression<T>(subgroup, parameter);
+					if (subExpr != null) expressions.Add(subExpr);
+				}
+			}
 
-			return Expression.Lambda<Func<T, bool>>(combinedExpression, parameter);
+			if (!expressions.Any()) return null;
+
+			return group.Operator == LogicalOperator.And
+				? expressions.Aggregate(Expression.AndAlso)
+				: expressions.Aggregate(Expression.OrElse);
 		}
 
 		private static Expression? HandleStringCondition(MemberExpression member, SearchCondition condition)

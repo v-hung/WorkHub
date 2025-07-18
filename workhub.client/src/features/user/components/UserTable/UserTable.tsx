@@ -20,13 +20,22 @@ const UserTable = () => {
       filters: Record<string, FilterValue | null>,
       sorter: SorterResult<UserDto> | SorterResult<UserDto>[]
     ) => {
-      handleTableChange(
+      const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,
         filters,
         sorter,
-        updateRequest,
         userTableSearchOperatorMap
       );
+
+      updateRequest((prev) => ({
+        ...prev,
+        pageNumber: current ?? prev.pageNumber,
+        pageSize: pageSize ?? prev.pageSize,
+        orderBy,
+        where: {
+          conditions: conditions,
+        },
+      }));
     },
     [updateRequest]
   );
@@ -37,7 +46,7 @@ const UserTable = () => {
   );
 
   const userTableColumns = useMemo(
-    () => getUserTableColumns(request.current),
+    () => getUserTableColumns(request.current.where?.conditions ?? []),
     []
   );
 

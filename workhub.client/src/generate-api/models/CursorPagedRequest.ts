@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { SearchCondition } from './SearchCondition';
-import {
-    SearchConditionFromJSON,
-    SearchConditionFromJSONTyped,
-    SearchConditionToJSON,
-    SearchConditionToJSONTyped,
-} from './SearchCondition';
 import type { CursorPagedRequestDirection } from './CursorPagedRequestDirection';
 import {
     CursorPagedRequestDirectionFromJSON,
@@ -27,6 +20,13 @@ import {
     CursorPagedRequestDirectionToJSON,
     CursorPagedRequestDirectionToJSONTyped,
 } from './CursorPagedRequestDirection';
+import type { SearchConditionGroup } from './SearchConditionGroup';
+import {
+    SearchConditionGroupFromJSON,
+    SearchConditionGroupFromJSONTyped,
+    SearchConditionGroupToJSON,
+    SearchConditionGroupToJSONTyped,
+} from './SearchConditionGroup';
 
 /**
  * 
@@ -54,10 +54,10 @@ export interface CursorPagedRequest {
     newestFirst?: boolean;
     /**
      * 
-     * @type {Array<SearchCondition>}
+     * @type {SearchConditionGroup}
      * @memberof CursorPagedRequest
      */
-    searchConditions?: Array<SearchCondition> | null;
+    where?: SearchConditionGroup;
 }
 
 
@@ -82,7 +82,7 @@ export function CursorPagedRequestFromJSONTyped(json: any, ignoreDiscriminator: 
         'cursorId': json['cursorId'] == null ? undefined : json['cursorId'],
         'cursorPagedRequestDirection': json['cursorPagedRequestDirection'] == null ? undefined : CursorPagedRequestDirectionFromJSON(json['cursorPagedRequestDirection']),
         'newestFirst': json['newestFirst'] == null ? undefined : json['newestFirst'],
-        'searchConditions': json['searchConditions'] == null ? undefined : ((json['searchConditions'] as Array<any>).map(SearchConditionFromJSON)),
+        'where': json['where'] == null ? undefined : SearchConditionGroupFromJSON(json['where']),
     };
 }
 
@@ -100,7 +100,7 @@ export function CursorPagedRequestToJSONTyped(value?: CursorPagedRequest | null,
         'cursorId': value['cursorId'],
         'cursorPagedRequestDirection': CursorPagedRequestDirectionToJSON(value['cursorPagedRequestDirection']),
         'newestFirst': value['newestFirst'],
-        'searchConditions': value['searchConditions'] == null ? undefined : ((value['searchConditions'] as Array<any>).map(SearchConditionToJSON)),
+        'where': SearchConditionGroupToJSON(value['where']),
     };
 }
 

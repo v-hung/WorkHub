@@ -58,13 +58,15 @@ const DeviceCategorySelect: FC<State> = (props) => {
       updateRequest((request) => ({
         ...request,
         pageNumber: 1,
-        searchConditions: [
-          {
-            column: "name",
-            operator: "Contains",
-            values: [value],
-          },
-        ],
+        where: {
+          conditions: [
+            {
+              column: "name",
+              operator: "Contains",
+              values: [value],
+            },
+          ],
+        },
       }));
     }, 300),
     [request]

@@ -26,7 +26,7 @@ namespace WorkHub.Application.Requests
 			get => _pageSize;
 			set => _pageSize = value < 1 ? 10 : (value > 100 ? 100 : value);
 		}
-		public List<SearchCondition> SearchConditions { get; set; } = [];
+		public SearchConditionGroup? Where { get; set; }
 
 		[SwaggerSchema("of the form fieldname [ascending|descending],fieldname [ascending|descending]...")]
 		public string? OrderBy { get; set; }

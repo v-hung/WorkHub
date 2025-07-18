@@ -35,6 +35,7 @@ models/DeviceStatus.ts
 models/ErrorResponse.ts
 models/ErrorValidateResponse.ts
 models/GetHistoricalEventsRequest.ts
+models/LogicalOperator.ts
 models/LoginRequest.ts
 models/Nationality.ts
 models/NotificationCategory.ts
@@ -56,6 +57,7 @@ models/RoleDto.ts
 models/RoleDtoPaginated.ts
 models/RoleFullDto.ts
 models/SearchCondition.ts
+models/SearchConditionGroup.ts
 models/SearchOperator.ts
 models/SendTestNotificationCommand.ts
 models/SystemNotificationMessageDto.ts

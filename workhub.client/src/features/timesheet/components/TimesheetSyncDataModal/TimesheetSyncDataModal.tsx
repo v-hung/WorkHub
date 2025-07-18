@@ -13,6 +13,7 @@ type State = ComponentProps<typeof Modal>;
 const TimesheetSyncDataModal: FC<State> = (props) => {
   const { className = "", ...rest } = props;
 
+  const [open, setOpen] = useState(false);
   const { loading, syncTimesheet } = useTimesheetEmployeeContext();
 
   const [form] = Form.useForm<{ month: Date }>();
@@ -40,6 +41,8 @@ const TimesheetSyncDataModal: FC<State> = (props) => {
           });
         }
       );
+
+      setOpen(false);
     });
   };
 
@@ -49,6 +52,8 @@ const TimesheetSyncDataModal: FC<State> = (props) => {
         className={`${className}`}
         title="Sync timesheet from timekeeping machine"
         onOk={handleOk}
+        open={open}
+        onCancel={() => setOpen(false)}
         confirmLoading={loading}
         // maskClosable={false}
         {...rest}

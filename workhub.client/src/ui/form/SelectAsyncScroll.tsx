@@ -37,7 +37,7 @@ const SelectAsyncScroll: FC<State> = ({
 
   return (
     <Select
-      onDropdownVisibleChange={handleDropdownChange}
+      onOpenChange={handleDropdownChange}
       notFoundContent={loading ? <Spin size="small" /> : "No data"}
       className={className}
       options={options}

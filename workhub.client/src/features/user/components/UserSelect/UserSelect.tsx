@@ -55,13 +55,26 @@ const UserSelect: FC<State> = (props) => {
       updateRequest((request) => ({
         ...request,
         pageNumber: 1,
-        searchConditions: [
-          {
-            column: "email",
-            operator: "Contains",
-            values: [value],
-          },
-        ],
+        where: {
+          conditions: request.where?.conditions,
+          groups: [
+            {
+              operator: "Or",
+              conditions: [
+                {
+                  column: "email",
+                  operator: "Contains",
+                  values: [value],
+                },
+                {
+                  column: "fullName",
+                  operator: "Contains",
+                  values: [value],
+                },
+              ],
+            },
+          ],
+        },
       }));
     }, 300),
     [request]

@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { SearchCondition } from './SearchCondition';
+import type { SearchConditionGroup } from './SearchConditionGroup';
 import {
-    SearchConditionFromJSON,
-    SearchConditionFromJSONTyped,
-    SearchConditionToJSON,
-    SearchConditionToJSONTyped,
-} from './SearchCondition';
+    SearchConditionGroupFromJSON,
+    SearchConditionGroupFromJSONTyped,
+    SearchConditionGroupToJSON,
+    SearchConditionGroupToJSONTyped,
+} from './SearchConditionGroup';
 
 /**
  * 
@@ -41,10 +41,10 @@ export interface PagedRequest {
     pageSize: number;
     /**
      * 
-     * @type {Array<SearchCondition>}
+     * @type {SearchConditionGroup}
      * @memberof PagedRequest
      */
-    searchConditions?: Array<SearchCondition> | null;
+    where?: SearchConditionGroup;
     /**
      * of the form fieldname [ascending|descending],fieldname [ascending|descending]...
      * @type {string}
@@ -74,7 +74,7 @@ export function PagedRequestFromJSONTyped(json: any, ignoreDiscriminator: boolea
         
         'pageNumber': json['pageNumber'],
         'pageSize': json['pageSize'],
-        'searchConditions': json['searchConditions'] == null ? undefined : ((json['searchConditions'] as Array<any>).map(SearchConditionFromJSON)),
+        'where': json['where'] == null ? undefined : SearchConditionGroupFromJSON(json['where']),
         'orderBy': json['orderBy'] == null ? undefined : json['orderBy'],
     };
 }
@@ -92,7 +92,7 @@ export function PagedRequestToJSONTyped(value?: PagedRequest | null, ignoreDiscr
         
         'pageNumber': value['pageNumber'],
         'pageSize': value['pageSize'],
-        'searchConditions': value['searchConditions'] == null ? undefined : ((value['searchConditions'] as Array<any>).map(SearchConditionToJSON)),
+        'where': SearchConditionGroupToJSON(value['where']),
         'orderBy': value['orderBy'],
     };
 }

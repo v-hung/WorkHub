@@ -1,3 +1,5 @@
+`cs WorkHub.Server`
+
 ### migrations
 
 ```

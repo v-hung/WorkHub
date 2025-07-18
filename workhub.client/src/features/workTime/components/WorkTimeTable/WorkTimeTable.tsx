@@ -11,7 +11,7 @@ const WorkTimeTable = () => {
   const { workTimePaginated, updateRequest, loading } = useWorkTimesContext();
 
   useEffect(() => {
-    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
+    updateRequest();
   }, []);
 
   const onTableChange = useCallback(
@@ -20,7 +20,21 @@ const WorkTimeTable = () => {
       filters: Record<string, FilterValue | null>,
       sorter: SorterResult<WorkTimeDto> | SorterResult<WorkTimeDto>[]
     ) => {
-      handleTableChange(pagination, filters, sorter, updateRequest);
+      const { current, pageSize, orderBy, conditions } = handleTableChange(
+        pagination,
+        filters,
+        sorter
+      );
+
+      updateRequest((prev) => ({
+        ...prev,
+        pageNumber: current ?? prev.pageNumber,
+        pageSize: pageSize ?? prev.pageSize,
+        orderBy,
+        where: {
+          conditions: conditions,
+        },
+      }));
     },
     [updateRequest]
   );

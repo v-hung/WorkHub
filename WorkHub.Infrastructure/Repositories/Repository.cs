@@ -68,7 +68,7 @@ namespace WorkHub.Infrastructure.Repositories
 			}
 
 			// Search
-			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<T>(request.SearchConditions);
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditionGroup<T>(request.Where);
 			if (predicate != null)
 			{
 				query = query.Where(predicate);
@@ -109,7 +109,7 @@ namespace WorkHub.Infrastructure.Repositories
 			var projectedQuery = query.ProjectTo<D>(_mapper.ConfigurationProvider);
 
 			// Search
-			var predicate = QueryableExtensions.BuildPredicateFromSearchConditions<D>(request.SearchConditions);
+			var predicate = QueryableExtensions.BuildPredicateFromSearchConditionGroup<D>(request.Where);
 			if (predicate != null)
 			{
 				projectedQuery = projectedQuery.Where(predicate);

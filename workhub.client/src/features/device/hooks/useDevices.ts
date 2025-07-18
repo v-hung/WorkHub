@@ -24,7 +24,6 @@ export const useDevices = () => {
   const request = useRef<PagedRequest>({
     pageNumber: devicePaginated.currentPage,
     pageSize: devicePaginated.pageSize,
-    searchConditions: [],
   });
 
   const fetchPaginatedDevices = async (request: PagedRequest) => {

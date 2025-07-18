@@ -12,7 +12,7 @@ const ProjectTable = () => {
   const { projectPaginated, updateRequest, loading } = useProjectsContext();
 
   useEffect(() => {
-    updateRequest((r) => ({ ...r, pageNumber: 1, searchConditions: [] }));
+    updateRequest();
   }, []);
 
   const onTableChange = useCallback(
@@ -21,7 +21,21 @@ const ProjectTable = () => {
       filters: Record<string, FilterValue | null>,
       sorter: SorterResult<ProjectDto> | SorterResult<ProjectDto>[]
     ) => {
-      handleTableChange(pagination, filters, sorter, updateRequest);
+      const { current, pageSize, orderBy, conditions } = handleTableChange(
+        pagination,
+        filters,
+        sorter
+      );
+
+      updateRequest((prev) => ({
+        ...prev,
+        pageNumber: current ?? prev.pageNumber,
+        pageSize: pageSize ?? prev.pageSize,
+        orderBy,
+        where: {
+          conditions: conditions,
+        },
+      }));
     },
     [updateRequest]
   );

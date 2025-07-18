@@ -4,6 +4,7 @@ import { TimesheetFullDtoPaginated } from "@/generate-api";
 import { timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
 import { SetStateAction, useCallback, useState } from "react";
+import { isEmpty } from "@/utils/validate.utils";
 
 type GetMonthlyTimesheetRequest = {
   date: Date;
@@ -28,6 +29,12 @@ export const useTimesheets = () => {
   const getTimesheets = async (request: GetMonthlyTimesheetRequest) => {
     setLoading(true);
     try {
+      if (loading) return;
+
+      if (isEmpty(request.userIds)) {
+        return setTimesheetPaginated(undefined);
+      }
+
       const data = await timesheetApi.timesheetGetMonthlyTimesheets({
         month: getMonth(request.date) + 1,
         year: getYear(request.date),

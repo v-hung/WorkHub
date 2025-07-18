@@ -10,6 +10,7 @@ import UserSelect from "@/features/user/components/UserSelect/UserSelect";
 import { DataTimesheetTableType } from "../TimesheetTable/constants";
 import { format } from "@/utils/date.utils";
 import { requestTimesheetColumns } from "./nestedConstants";
+import "./TimesheetEmployeeTable.css";
 
 type State = HTMLAttributes<HTMLDivElement>;
 

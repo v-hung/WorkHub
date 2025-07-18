@@ -98,7 +98,6 @@ export const handleTableChange = (
   pagination: TablePaginationConfig,
   filters: Record<string, FilterValue | null>,
   sorter: SorterResult<any> | SorterResult<any>[],
-  updateRequest: React.Dispatch<React.SetStateAction<PagedRequest>>,
   searchOperatorMap?: Record<string, SearchOperator>
 ) => {
   const { current, pageSize } = pagination;
@@ -112,7 +111,7 @@ export const handleTableChange = (
     .join(",");
 
   // Convert filters to searchConditions
-  const searchConditions: SearchCondition[] = Object.entries(filters)
+  const conditions: SearchCondition[] = Object.entries(filters)
     .filter(([_, value]) => Array.isArray(value) && value.length > 0)
     .map(([column, value]) => ({
       column: column,
@@ -120,14 +119,7 @@ export const handleTableChange = (
       values: value as string[],
     }));
 
-  // Update request
-  updateRequest((prev) => ({
-    ...prev,
-    pageNumber: current ?? prev.pageNumber,
-    pageSize: pageSize ?? prev.pageSize,
-    orderBy,
-    searchConditions,
-  }));
+  return { current, pageSize, orderBy, conditions };
 };
 
 export const getDefaultFilteredValue = (

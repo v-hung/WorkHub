@@ -25,7 +25,6 @@ export const useWorkTimes = () => {
   const request = useRef<PagedRequest>({
     pageNumber: workTimePaginated.currentPage,
     pageSize: workTimePaginated.pageSize,
-    searchConditions: [],
   });
 
   const fetchPaginatedWorkTimes = async (request: PagedRequest) => {

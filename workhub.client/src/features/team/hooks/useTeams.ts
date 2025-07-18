@@ -24,7 +24,6 @@ export const useTeams = () => {
   const request = useRef<PagedRequest>({
     pageNumber: teamPaginated.currentPage,
     pageSize: teamPaginated.pageSize,
-    searchConditions: [],
   });
 
   const fetchPaginatedTeams = async (request: PagedRequest) => {

@@ -26,7 +26,6 @@ export const useProjects = () => {
   const request = useRef<PagedRequest>({
     pageNumber: projectPaginated.currentPage,
     pageSize: projectPaginated.pageSize,
-    searchConditions: [],
   });
 
   const fetchPaginatedProjects = async (request: PagedRequest) => {

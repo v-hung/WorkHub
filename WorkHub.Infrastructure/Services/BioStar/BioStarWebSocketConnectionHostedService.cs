@@ -32,7 +32,7 @@ namespace WorkHub.Infrastructure.Services.BioStar
 						}
 						else
 						{
-							_logger.LogInformation("WebSocket is not open. Waiting...");
+							// _logger.LogInformation("WebSocket is not open. Waiting...");
 							await Task.Delay(1000, stoppingToken);
 						}
 					}
