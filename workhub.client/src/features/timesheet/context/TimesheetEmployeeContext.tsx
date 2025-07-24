@@ -1,9 +1,19 @@
-import { createContext, FC, PropsWithChildren, useContext } from "react";
-import { useTimesheetAction } from "../hooks/useTimesheetAction";
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  SetStateAction,
+  useContext,
+} from "react";
 import {
   BioStarSyncHistoricalEventsResponse,
   GetHistoricalEventsRequest,
+  TimesheetFullDtoPaginated,
 } from "@/generate-api";
+import {
+  GetMonthlyTimesheetRequest,
+  useTimesheets,
+} from "../hooks/useTimesheets";
 
 type TimesheetEmployeeContextType = {
   loading: boolean;
@@ -11,6 +21,10 @@ type TimesheetEmployeeContextType = {
     request: GetHistoricalEventsRequest,
     cb?: (data: BioStarSyncHistoricalEventsResponse) => void
   ) => Promise<void>;
+  request: GetMonthlyTimesheetRequest;
+  timesheetPaginated: TimesheetFullDtoPaginated | undefined;
+  updateRequest: (updater?: SetStateAction<GetMonthlyTimesheetRequest>) => void;
+  isCurrentMonth: boolean;
 };
 
 const TimesheetEmployeeContext =
@@ -19,10 +33,26 @@ const TimesheetEmployeeContext =
 export const TimesheetEmployeeProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const { loading, syncTimesheet } = useTimesheetAction();
+  const {
+    request,
+    timesheetPaginated,
+    updateRequest,
+    isCurrentMonth,
+    loading,
+    syncTimesheet,
+  } = useTimesheets();
 
   return (
-    <TimesheetEmployeeContext.Provider value={{ loading, syncTimesheet }}>
+    <TimesheetEmployeeContext.Provider
+      value={{
+        request,
+        timesheetPaginated,
+        updateRequest,
+        isCurrentMonth,
+        loading,
+        syncTimesheet,
+      }}
+    >
       {children}
     </TimesheetEmployeeContext.Provider>
   );

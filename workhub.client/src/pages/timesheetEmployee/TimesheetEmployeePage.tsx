@@ -8,7 +8,8 @@ import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHea
 import TimesheetEmployeeTable from "@/features/timesheet/components/TimesheetEmployeeTable/TimesheetEmployeeTable";
 import { TimesheetEmployeeProvider } from "@/features/timesheet/context/TimesheetEmployeeContext";
 import { Button } from "antd";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
+import { TimesheetSyncDataModalHandle } from "@/features/timesheet/components/TimesheetSyncDataModal/TimesheetSyncDataModal";
 
 const TimesheetSyncDataModalLazy = lazy(
   () =>
@@ -20,7 +21,7 @@ const TimesheetSyncDataModalLazy = lazy(
 export const loader = wrapProtectedLoader();
 
 export function Component() {
-  const [openSyncModal, setOpenSyncModal] = useState(false);
+  const modalRef = useRef<TimesheetSyncDataModalHandle>(null);
 
   return (
     <DefaultPage pageClassName="h-screen">
@@ -31,7 +32,7 @@ export function Component() {
               color="cyan"
               variant="solid"
               icon={<IIonSync width={16} height={16} />}
-              onClick={() => setOpenSyncModal(true)}
+              onClick={() => modalRef.current?.open()}
             >
               Load timesheet form timekeeping machine
             </Button>
@@ -50,10 +51,7 @@ export function Component() {
         </DefaultContent>
 
         <Suspense fallback={null}>
-          <TimesheetSyncDataModalLazy
-            open={openSyncModal}
-            onCancel={() => setOpenSyncModal(false)}
-          />
+          <TimesheetSyncDataModalLazy ref={modalRef} />
         </Suspense>
       </TimesheetEmployeeProvider>
     </DefaultPage>

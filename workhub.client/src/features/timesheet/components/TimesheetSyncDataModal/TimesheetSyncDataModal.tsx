@@ -1,6 +1,12 @@
 import DatePicker from "@/ui/form/DatePicker";
 import { Form, Modal } from "antd";
-import { useState, type ComponentProps, type FC } from "react";
+import {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  type ComponentProps,
+  type FC,
+} from "react";
 import { useTimesheetEmployeeContext } from "../../context/TimesheetEmployeeContext";
 import { getModal } from "@/contexts/feedback/FeedbackProvider";
 import { BioStarSyncHistoricalEventsResponse } from "@/generate-api";
@@ -10,69 +16,83 @@ import PageLoading from "@/ui/elements/PageLoading/PageLoading";
 
 type State = ComponentProps<typeof Modal>;
 
-const TimesheetSyncDataModal: FC<State> = (props) => {
-  const { className = "", ...rest } = props;
-
-  const [open, setOpen] = useState(false);
-  const { loading, syncTimesheet } = useTimesheetEmployeeContext();
-
-  const [form] = Form.useForm<{ month: Date }>();
-  const [formState] = useState<{ month: Date }>({ month: new Date() });
-
-  const handleOk = () => {
-    form.validateFields().then(async () => {
-      const formValues = form.getFieldsValue();
-
-      await syncTimesheet(
-        {
-          from: startOfMonth(formValues.month),
-          to: endOfMonth(formValues.month),
-        },
-        (data) => {
-          getModal().info({
-            title: "Thông báo",
-            content: <ContentInfoSuccess data={data} />,
-            onOk: () => {
-              // setRequest((state) => ({
-              //   ...state,
-              //   pageNumber: 1,
-              // }));
-            },
-          });
-        }
-      );
-
-      setOpen(false);
-    });
-  };
-
-  return (
-    <>
-      <Modal
-        className={`${className}`}
-        title="Sync timesheet from timekeeping machine"
-        onOk={handleOk}
-        open={open}
-        onCancel={() => setOpen(false)}
-        confirmLoading={loading}
-        // maskClosable={false}
-        {...rest}
-      >
-        <Form
-          form={form}
-          initialValues={formState}
-          validateTrigger="onSubmit"
-          style={{ marginTop: "2rem" }}
-        >
-          <Form.Item name="month" label="Month" rules={[{ required: true }]}>
-            <DatePicker picker="month" />
-          </Form.Item>
-        </Form>
-      </Modal>
-      {loading ? createPortal(<PageLoading />, document.body) : null}
-    </>
-  );
+export type TimesheetSyncDataModalHandle = {
+  open: () => void;
+  close: () => void;
+  isOpen: () => boolean;
 };
+
+const TimesheetSyncDataModal = forwardRef<TimesheetSyncDataModalHandle, State>(
+  (props, ref) => {
+    const { className = "", ...rest } = props;
+
+    const [open, setOpen] = useState(false);
+    const { loading, syncTimesheet, updateRequest } =
+      useTimesheetEmployeeContext();
+
+    const [form] = Form.useForm<{ month: Date }>();
+    const [formState] = useState<{ month: Date }>({ month: new Date() });
+
+    const handleOk = () => {
+      form.validateFields().then(async () => {
+        const formValues = form.getFieldsValue();
+
+        await syncTimesheet(
+          {
+            from: startOfMonth(formValues.month),
+            to: endOfMonth(formValues.month),
+          },
+          (data) => {
+            setOpen(false);
+
+            getModal().info({
+              title: "Thông báo",
+              content: <ContentInfoSuccess data={data} />,
+              onOk: () => {
+                updateRequest((state) => ({
+                  ...state,
+                }));
+              },
+            });
+          }
+        );
+      });
+    };
+
+    useImperativeHandle(ref, () => ({
+      open: () => setOpen(true),
+      close: () => setOpen(false),
+      isOpen: () => open,
+    }));
+
+    return (
+      <>
+        <Modal
+          className={`${className}`}
+          title="Sync timesheet from timekeeping machine"
+          onOk={handleOk}
+          open={open}
+          onCancel={() => setOpen(false)}
+          confirmLoading={loading}
+          // maskClosable={false}
+          {...rest}
+        >
+          <Form
+            form={form}
+            initialValues={formState}
+            validateTrigger="onSubmit"
+            style={{ marginTop: "2rem" }}
+          >
+            <Form.Item name="month" label="Month" rules={[{ required: true }]}>
+              <DatePicker picker="month" />
+            </Form.Item>
+          </Form>
+        </Modal>
+        {loading ? createPortal(<PageLoading />, document.body) : null}
+      </>
+    );
+  }
+);
 
 export default TimesheetSyncDataModal;
 

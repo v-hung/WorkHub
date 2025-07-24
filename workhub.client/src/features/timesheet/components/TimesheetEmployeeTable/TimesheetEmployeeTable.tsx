@@ -11,6 +11,7 @@ import { DataTimesheetTableType } from "../TimesheetTable/constants";
 import { format } from "@/utils/date.utils";
 import { requestTimesheetColumns } from "./nestedConstants";
 import "./TimesheetEmployeeTable.css";
+import { useTimesheetEmployeeContext } from "../../context/TimesheetEmployeeContext";
 
 type State = HTMLAttributes<HTMLDivElement>;
 
@@ -21,7 +22,7 @@ const TimesheetEmployeeTable: FC<State> = () => {
     updateRequest,
     isCurrentMonth,
     loading,
-  } = useTimesheets();
+  } = useTimesheetEmployeeContext();
 
   const [selectUserId, setSelectUserId] = useState<string | null>(null);
 

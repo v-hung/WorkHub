@@ -1,12 +1,16 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { TimesheetFullDtoPaginated } from "@/generate-api";
-import { timesheetApi } from "@/services/apiClient";
+import {
+  BioStarSyncHistoricalEventsResponse,
+  GetHistoricalEventsRequest,
+  TimesheetFullDtoPaginated,
+} from "@/generate-api";
+import { bioStarApi, timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
 import { SetStateAction, useCallback, useState } from "react";
 import { isEmpty } from "@/utils/validate.utils";
 
-type GetMonthlyTimesheetRequest = {
+export type GetMonthlyTimesheetRequest = {
   date: Date;
   userIds: string[];
 };
@@ -69,6 +73,28 @@ export const useTimesheets = () => {
     []
   );
 
+  const syncTimesheet = async (
+    request: GetHistoricalEventsRequest,
+    cb?: (data: BioStarSyncHistoricalEventsResponse) => void
+  ) => {
+    try {
+      if (loading) return;
+
+      setLoading(true);
+      let data = await bioStarApi.bioStarSyncTimesheets({
+        getHistoricalEventsRequest: request,
+      });
+
+      cb?.(data);
+    } catch (e) {
+      getNotification().error({
+        message: await getMessageError(e),
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     timesheetPaginated,
     loading,
@@ -76,5 +102,6 @@ export const useTimesheets = () => {
     request,
     updateRequest,
     getTimesheets,
+    syncTimesheet,
   };
 };
