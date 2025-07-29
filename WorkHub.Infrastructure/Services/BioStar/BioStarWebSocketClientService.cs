@@ -97,15 +97,13 @@ namespace WorkHub.Infrastructure.Services.BioStar
 					else if (result.MessageType == WebSocketMessageType.Close)
 					{
 						_logger.LogInformation("WebSocket closing.");
+						await SafeCloseConnectionAsync(cancellationToken);
 						break;
 					}
 				}
 				catch (Exception ex)
 				{
 					_logger.LogError($"Error while receiving message: {ex.Message}");
-				}
-				finally
-				{
 					await SafeCloseConnectionAsync(cancellationToken);
 				}
 			}
