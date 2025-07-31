@@ -44,6 +44,7 @@ export function Component() {
     ),
     [RequestType.OvertimeRequest]: <LeaveRequestPanelLazy data={data} />,
     [RequestType.WorkFromHomeRequest]: <LeaveRequestPanelLazy data={data} />,
+    [RequestType.CancelRequest]: <LeaveRequestPanelLazy data={data} />,
   };
 
   const renderPage = requestTypePages[data.requestType] || (

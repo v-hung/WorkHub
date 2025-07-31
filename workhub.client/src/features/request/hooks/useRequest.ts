@@ -19,6 +19,7 @@ export const useRequest = () => {
     },
     [RequestType.OvertimeRequest]: async () => {},
     [RequestType.WorkFromHomeRequest]: async () => {},
+    [RequestType.CancelRequest]: async () => {},
   };
 
   const cancel = async (requestId: number, requestType: RequestType) => {

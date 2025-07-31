@@ -20,7 +20,7 @@
 export const RequestType = {
     TimesheetAdjustmentRequest: 'TIMESHEET_ADJUSTMENT_REQUEST',
     LeaveRequest: 'LEAVE_REQUEST',
-    CanCelRequest: 'CAnCEL_REQUEST',
+    CancelRequest: 'CANCEL_REQUEST',
     OvertimeRequest: 'OVERTIME_REQUEST',
     WorkFromHomeRequest: 'WORK_FROM_HOME_REQUEST'
 } as const;

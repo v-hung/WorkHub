@@ -28,6 +28,7 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
           [RequestType.TimesheetAdjustmentRequest]: "orange",
           [RequestType.OvertimeRequest]: "purple",
           [RequestType.WorkFromHomeRequest]: "blue",
+          [RequestType.CancelRequest]: "blue",
         };
 
         return <Tag color={colorMap[requestType]}>{record.requestType}</Tag>;
@@ -56,6 +57,7 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
           [RequestStatus.Rejected]: "error",
           [RequestStatus.Canceled]: "default",
           [RequestStatus.Superseded]: "warning",
+          [RequestStatus.Used]: "default",
         };
         return <Badge status={statusMap[status]} text={record.status} />;
       },
