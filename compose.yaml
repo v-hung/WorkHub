@@ -16,7 +16,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=mydb;User=root;Password=Admin123!"
-    restart: on-failure
+    # restart: on-failure
     volumes:
       - upload_data:/app/wwwroot/uploads
 
@@ -42,7 +42,7 @@ services:
       MYSQL_ROOT_PASSWORD: Admin123!
     ports:
       - "18080:80"
-    restart: unless-stopped
+    # restart: unless-stopped
 
 volumes:
   mysql_data:
