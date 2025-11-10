@@ -30,12 +30,12 @@ public static class Permissions
 		public const string Delete = "Permissions.Teams.Delete";
 	}
 
-	public static class WorkTimes
+	public static class WorkSchedules
 	{
-		public const string View = "Permissions.WorkTimes.View";
-		public const string Create = "Permissions.WorkTimes.Create";
-		public const string Edit = "Permissions.WorkTimes.Edit";
-		public const string Delete = "Permissions.WorkTimes.Delete";
+		public const string View = "Permissions.WorkSchedules.View";
+		public const string Create = "Permissions.WorkSchedules.Create";
+		public const string Edit = "Permissions.WorkSchedules.Edit";
+		public const string Delete = "Permissions.WorkSchedules.Delete";
 	}
 
 	public static class Projects

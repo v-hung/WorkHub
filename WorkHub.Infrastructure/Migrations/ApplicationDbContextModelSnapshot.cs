@@ -393,7 +393,7 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Property<int>("UserStatus")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkTimeId")
+                    b.Property<int?>("WorkScheduleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -409,7 +409,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.HasIndex("WorkTimeId");
+                    b.HasIndex("WorkScheduleId");
 
                     b.ToTable("asp_net_users", (string)null);
                 });
@@ -635,85 +635,6 @@ namespace WorkHub.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("WorkHub.Domain.Entities.Time.Timesheet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("EndTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime?>("StartTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid?>("UserId")
-                        .IsRequired()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("WorkedMinutes")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("timesheets");
-                });
-
-            modelBuilder.Entity("WorkHub.Domain.Entities.Time.WorkTime", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AllowedLateMinutes")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<TimeSpan>("EndTimeAfternoon")
-                        .HasColumnType("time(6)");
-
-                    b.Property<TimeSpan>("EndTimeMorning")
-                        .HasColumnType("time(6)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<TimeSpan>("StartTimeAfternoon")
-                        .HasColumnType("time(6)");
-
-                    b.Property<TimeSpan>("StartTimeMorning")
-                        .HasColumnType("time(6)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("work_times");
-                });
-
             modelBuilder.Entity("WorkHub.Domain.Entities.Work.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -768,6 +689,85 @@ namespace WorkHub.Infrastructure.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("projects");
+                });
+
+            modelBuilder.Entity("WorkHub.Domain.Entities.Work.Timesheet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("StartTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("WorkedMinutes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("timesheets");
+                });
+
+            modelBuilder.Entity("WorkHub.Domain.Entities.Work.WorkSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AllowedLateMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<TimeSpan>("EndTimeAfternoon")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan>("EndTimeMorning")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<TimeSpan>("StartTimeAfternoon")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan>("StartTimeMorning")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("work_times");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Requests.LeaveRequest", b =>
@@ -913,15 +913,15 @@ namespace WorkHub.Infrastructure.Migrations
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("WorkHub.Domain.Entities.Time.WorkTime", "WorkTime")
+                    b.HasOne("WorkHub.Domain.Entities.Work.WorkSchedule", "WorkSchedule")
                         .WithMany("Users")
-                        .HasForeignKey("WorkTimeId");
+                        .HasForeignKey("WorkScheduleId");
 
                     b.Navigation("Supervisor");
 
                     b.Navigation("Team");
 
-                    b.Navigation("WorkTime");
+                    b.Navigation("WorkSchedule");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.UserDetail", b =>
@@ -961,7 +961,7 @@ namespace WorkHub.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkHub.Domain.Entities.Time.Timesheet", "Timesheet")
+                    b.HasOne("WorkHub.Domain.Entities.Work.Timesheet", "Timesheet")
                         .WithMany("Requests")
                         .HasForeignKey("TimesheetId");
 
@@ -974,17 +974,6 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Navigation("Approver");
 
                     b.Navigation("Timesheet");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WorkHub.Domain.Entities.Time.Timesheet", b =>
-                {
-                    b.HasOne("WorkHub.Domain.Entities.Identity.User", "User")
-                        .WithMany("Timesheets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -1004,6 +993,17 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("WorkHub.Domain.Entities.Work.Timesheet", b =>
+                {
+                    b.HasOne("WorkHub.Domain.Entities.Identity.User", "User")
+                        .WithMany("Timesheets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Identity.User", b =>
@@ -1032,12 +1032,12 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Navigation("Projects");
                 });
 
-            modelBuilder.Entity("WorkHub.Domain.Entities.Time.Timesheet", b =>
+            modelBuilder.Entity("WorkHub.Domain.Entities.Work.Timesheet", b =>
                 {
                     b.Navigation("Requests");
                 });
 
-            modelBuilder.Entity("WorkHub.Domain.Entities.Time.WorkTime", b =>
+            modelBuilder.Entity("WorkHub.Domain.Entities.Work.WorkSchedule", b =>
                 {
                     b.Navigation("Users");
                 });

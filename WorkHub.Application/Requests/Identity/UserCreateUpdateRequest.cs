@@ -28,7 +28,7 @@ namespace WorkHub.Application.Requests.Identity
 
 		// Navigation properties
 
-		public int? WorkTimeId { get; set; }
+		public int? WorkScheduleId { get; set; }
 
 		public UserDetailDto? UserDetail { get; set; }
 

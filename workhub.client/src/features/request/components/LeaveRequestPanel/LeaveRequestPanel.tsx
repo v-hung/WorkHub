@@ -1,10 +1,10 @@
-import UserCard from "@/features/user/components/UserCard/UserCard";
+import UserCard from "@/features/organization/user/components/UserCard/UserCard";
 import { RequestCombinedDto } from "@/generate-api";
 import { format, formatDistanceStrict } from "@/utils/date.utils";
 import { Button, Card, Flex, Tag } from "antd";
 import { useState, type FC, type HTMLAttributes } from "react";
 import "./LeaveRequestPanel.css";
-import { calculateWorkDay } from "@/features/timesheet/utils/timesheet.util";
+import { calculateWorkDay } from "@/features/work/timesheet/utils/timesheet.util";
 import { useLeaveRequestAction } from "../../hooks/useLeaveRequestAction";
 
 type State = HTMLAttributes<HTMLDivElement> & {
@@ -61,7 +61,7 @@ const LeaveRequestPanel: FC<State> = (props) => {
               calculateWorkDay(
                 data.breakStartDate,
                 data.breakEndDate,
-                data.user.workTime
+                data.user.workSchedule
               ) * 3600000
             )
           )}

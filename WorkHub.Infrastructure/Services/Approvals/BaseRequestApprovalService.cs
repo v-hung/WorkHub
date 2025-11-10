@@ -43,7 +43,7 @@ namespace WorkHub.Infrastructure.Services.Approvals
 		public virtual async Task<D> ApproveRequestAsync<D>(int requestId) where D : class
 		{
 			TRequest request = await _context.Set<TRequest>().Include(r => r.User)
-				.ThenInclude(u => u != null ? u.WorkTime : null)
+				.ThenInclude(u => u != null ? u.WorkSchedule : null)
 				.Include(r => r.Approver).FirstOrDefaultAsync(r => r.Id == requestId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 
@@ -77,7 +77,7 @@ namespace WorkHub.Infrastructure.Services.Approvals
 		public virtual async Task<D> RejectRequestAsync<D>(int requestId) where D : class
 		{
 			TRequest request = await _context.Set<TRequest>().Include(r => r.User)
-				.ThenInclude(u => u != null ? u.WorkTime : null)
+				.ThenInclude(u => u != null ? u.WorkSchedule : null)
 				.Include(r => r.Approver).FirstOrDefaultAsync(r => r.Id == requestId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Request not found."]);
 

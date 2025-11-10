@@ -88,7 +88,7 @@ export interface UserCreateUpdateRequest {
      * @type {number}
      * @memberof UserCreateUpdateRequest
      */
-    workTimeId?: number | null;
+    workScheduleId?: number | null;
     /**
      * 
      * @type {UserDetailDto}
@@ -156,7 +156,7 @@ export function UserCreateUpdateRequestFromJSONTyped(json: any, ignoreDiscrimina
         'userPosition': json['userPosition'] == null ? undefined : UserPositionFromJSON(json['userPosition']),
         'leaveHours': json['leaveHours'] == null ? undefined : json['leaveHours'],
         'userStatus': json['userStatus'] == null ? undefined : UserStatusFromJSON(json['userStatus']),
-        'workTimeId': json['workTimeId'] == null ? undefined : json['workTimeId'],
+        'workScheduleId': json['workScheduleId'] == null ? undefined : json['workScheduleId'],
         'userDetail': json['userDetail'] == null ? undefined : UserDetailDtoFromJSON(json['userDetail']),
         'supervisorId': json['supervisorId'] == null ? undefined : json['supervisorId'],
         'teamId': json['teamId'] == null ? undefined : json['teamId'],
@@ -184,7 +184,7 @@ export function UserCreateUpdateRequestToJSONTyped(value?: UserCreateUpdateReque
         'userPosition': UserPositionToJSON(value['userPosition']),
         'leaveHours': value['leaveHours'],
         'userStatus': UserStatusToJSON(value['userStatus']),
-        'workTimeId': value['workTimeId'],
+        'workScheduleId': value['workScheduleId'],
         'userDetail': UserDetailDtoToJSON(value['userDetail']),
         'supervisorId': value['supervisorId'],
         'teamId': value['teamId'],

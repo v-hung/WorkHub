@@ -1,7 +1,7 @@
-import TimesheetHeader from "@/features/timesheet/components/TimesheetHeader/TimesheetHeader";
+import TimesheetHeader from "@/features/work/timesheet/components/TimesheetHeader/TimesheetHeader";
 import { wrapProtectedLoader } from "@/utils/loader";
-import TimesheetTable from "@/features/timesheet/components/TimesheetTable/TimesheetTable";
-import { TimesheetProvider } from "@/features/timesheet/context/TimesheetContext";
+import TimesheetTable from "@/features/work/timesheet/components/TimesheetTable/TimesheetTable";
+import { TimesheetProvider } from "@/features/work/timesheet/context/TimesheetContext";
 import { lazy, Suspense } from "react";
 import { RequestProvider } from "@/features/request/contexts/RequestContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";

@@ -4,7 +4,7 @@ import {
   UserDto,
   UserPosition,
   UserStatus,
-  WorkTimeDtoFromJSON,
+  WorkScheduleDtoFromJSON,
 } from "@/generate-api";
 import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
@@ -101,5 +101,5 @@ const USER: UserDto = {
   userPosition: UserPosition.Developer,
   userStatus: UserStatus.Active,
   remainingLeaveMinutes: 480,
-  workTime: WorkTimeDtoFromJSON({}),
+  workSchedule: WorkScheduleDtoFromJSON({}),
 };

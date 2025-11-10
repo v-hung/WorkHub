@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using WorkHub.Domain.Entities.Audit;
 using WorkHub.Domain.Enums;
 using WorkHub.Domain.Entities.Identity;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Domain.Entities.Requests
 {

@@ -4,7 +4,7 @@ import { wrapProtectedLoader } from "@/utils/loader";
 import { useRef, useState } from "react";
 import RoleFormCreate, {
   RoleFormCreateRefState,
-} from "@/features/role/components/RoleFormCreate/RoleFormCreate";
+} from "@/features/organization/role/components/RoleFormCreate/RoleFormCreate";
 import { roleApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
 import { Permission, RoleDto } from "@/generate-api";

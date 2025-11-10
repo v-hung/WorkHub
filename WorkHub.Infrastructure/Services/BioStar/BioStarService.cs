@@ -22,7 +22,7 @@ using WorkHub.Application.Responses.BioStar;
 using WorkHub.Domain.Constants.BioStar;
 using WorkHub.Domain.Constants.Identity;
 using WorkHub.Domain.Entities.Identity;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
 

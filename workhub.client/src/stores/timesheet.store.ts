@@ -8,7 +8,6 @@ type TimesheetStoreState = {
   startTime: Date | null;
   timeDifference: number;
   endTime: Date | null;
-  isActive: boolean;
   checkIn: () => Promise<void>;
   checkOut: () => Promise<void>;
   fetchTodayTimesheet: () => Promise<void>;
@@ -29,7 +28,6 @@ export const useTimesheetStore = create<TimesheetStoreState>()(
           set({
             startTime: data.timesheet.startTime,
             timeDifference,
-            isActive: true,
           });
         })
       );
@@ -37,7 +35,7 @@ export const useTimesheetStore = create<TimesheetStoreState>()(
     checkOut: async () => {
       wrapPromise(() =>
         timesheetApi.timesheetCheckOut().then((data) => {
-          set({ endTime: data.timesheet.endTime, isActive: false });
+          set({ endTime: data.timesheet.endTime });
         })
       );
     },
@@ -49,7 +47,6 @@ export const useTimesheetStore = create<TimesheetStoreState>()(
           startTime: data.timesheet.startTime,
           endTime: data.timesheet.endTime,
           timeDifference,
-          isActive: data.timesheet.isActive,
         });
       });
     },
@@ -62,7 +59,6 @@ export const useTimesheetStore = create<TimesheetStoreState>()(
           startTime: null,
           endTime: null,
           timeDifference: 0,
-          isActive: true,
         });
       }
     },

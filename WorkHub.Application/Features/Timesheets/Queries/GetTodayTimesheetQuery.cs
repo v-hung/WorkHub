@@ -1,10 +1,10 @@
 using System.Net;
 using MediatR;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Interfaces.Services;
-using WorkHub.Application.Responses.Time;
+using WorkHub.Application.Responses.Work;
 
 namespace WorkHub.Application.Features.Timesheets.Queries
 {
@@ -34,10 +34,10 @@ namespace WorkHub.Application.Features.Timesheets.Queries
 
 			var timesheet = await _timesheetRepository.GetTodayTimesheet(_currentUserService.UserId);
 
-			return timesheet != null ? new TimesheetResponse<TimesheetDto>
+			return new TimesheetResponse<TimesheetDto>
 			{
 				Timesheet = timesheet
-			} : null;
+			};
 
 		}
 

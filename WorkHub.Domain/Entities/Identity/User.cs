@@ -6,7 +6,6 @@ using WorkHub.Domain.Entities.Audit;
 using WorkHub.Domain.Enums;
 using WorkHub.Domain.Entities.Organization;
 using WorkHub.Domain.Entities.Requests;
-using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Domain.Entities.Identity;
@@ -52,10 +51,10 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>
 	[Required]
 	public IList<RefreshToken> RefreshTokens { get; set; } = [];
 
-	[ForeignKey("WorkTime")]
-	public int? WorkTimeId { get; set; }
+	[ForeignKey("WorkSchedule")]
+	public int? WorkScheduleId { get; set; }
 
-	public WorkTime? WorkTime { get; set; }
+	public WorkSchedule? WorkSchedule { get; set; }
 
 	public UserDetail? UserDetail { get; set; }
 

@@ -2,10 +2,10 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Wrapper;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Repositories

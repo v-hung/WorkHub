@@ -11,4 +11,4 @@ export * from './RoleApi';
 export * from './TeamApi';
 export * from './TimesheetApi';
 export * from './UserApi';
-export * from './WorkTimeApi';
+export * from './WorkScheduleApi';

@@ -4,7 +4,7 @@ import { wrapProtectedLoader } from "@/utils/loader";
 import { useRef, useState } from "react";
 import ProjectFormCreate, {
   ProjectFormCreateRefState,
-} from "@/features/project/components/ProjectFormCreate/ProjectFormCreate";
+} from "@/features/work/project/components/ProjectFormCreate/ProjectFormCreate";
 import { projectApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
 import { Permission, ProjectDto } from "@/generate-api";

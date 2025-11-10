@@ -7,7 +7,7 @@ using WorkHub.Domain.Enums;
 using WorkHub.Domain.Entities.Identity;
 using WorkHub.Domain.Entities.Organization;
 using Microsoft.Extensions.Logging;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 using WorkHub.Application.Interfaces.Services;
 
 namespace WorkHub.Infrastructure.Data;
@@ -32,7 +32,7 @@ public class DatabaseSeeder : IDatabaseSeeder
 	public async Task Initialize()
 	{
 		var teams = await SeedTeams();
-		await SeedWorkTimes();
+		await SeedWorkSchedules();
 		await SeedAdminUser();
 	}
 
@@ -109,19 +109,19 @@ public class DatabaseSeeder : IDatabaseSeeder
 		}
 	}
 
-	private async Task SeedWorkTimes()
+	private async Task SeedWorkSchedules()
 	{
-		var workTimes = new[]
+		var workSchedules = new[]
 		{
-			new WorkTime{Title = "Basic"},
-			new WorkTime{Title = "Early", StartTimeAfternoon = new TimeSpan(13, 0, 0), EndTimeAfternoon = new TimeSpan(17, 0, 0)},
+			new WorkSchedule{Title = "Basic"},
+			new WorkSchedule{Title = "Early", StartTimeAfternoon = new TimeSpan(13, 0, 0), EndTimeAfternoon = new TimeSpan(17, 0, 0)},
 		};
 
-		var data = workTimes.Where(item => !_context.WorkTimes.Any(t => t.Title == item.Title)).ToList();
+		var data = workSchedules.Where(item => !_context.WorkSchedules.Any(t => t.Title == item.Title)).ToList();
 
 		if (data.Count != 0)
 		{
-			await _context.WorkTimes.AddRangeAsync(data);
+			await _context.WorkSchedules.AddRangeAsync(data);
 			await _context.SaveChangesAsync();
 		}
 	}

@@ -1,46 +1,46 @@
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Utils
 {
 	public static class TimesheetUtils
 	{
-		public static TimeSpan CalculateWorkTime(DateTime startTime, DateTime endTime)
+		public static TimeSpan CalculateWorkSchedule(DateTime startTime, DateTime endTime)
 		{
-			return CalculateWorkTime(startTime, endTime, new WorkTime());
+			return CalculateWorkSchedule(startTime, endTime, new WorkSchedule());
 		}
 
-		public static TimeSpan CalculateWorkTime(DateTime startTime, DateTime endTime, WorkTime workTime)
+		public static TimeSpan CalculateWorkSchedule(DateTime startTime, DateTime endTime, WorkSchedule workSchedule)
 		{
-			if (IsInvalidTimeRange(startTime, endTime, workTime))
+			if (IsInvalidTimeRange(startTime, endTime, workSchedule))
 			{
 				return TimeSpan.Zero;
 			}
 
-			TimeSpan adjustedEndTimeAfternoon = CalculateAdjustedEndTimeAfternoon(startTime.TimeOfDay, workTime);
-			TimeSpan morningTime = CalculateMorningTime(startTime.TimeOfDay, endTime.TimeOfDay, workTime);
-			TimeSpan afternoonTime = CalculateAfternoonTime(startTime.TimeOfDay, endTime.TimeOfDay, adjustedEndTimeAfternoon, workTime);
+			TimeSpan adjustedEndTimeAfternoon = CalculateAdjustedEndTimeAfternoon(startTime.TimeOfDay, workSchedule);
+			TimeSpan morningTime = CalculateMorningTime(startTime.TimeOfDay, endTime.TimeOfDay, workSchedule);
+			TimeSpan afternoonTime = CalculateAfternoonTime(startTime.TimeOfDay, endTime.TimeOfDay, adjustedEndTimeAfternoon, workSchedule);
 
 			return morningTime + afternoonTime;
 		}
 
-		private static TimeSpan CalculateAdjustedEndTimeAfternoon(TimeSpan startTime, WorkTime workTime)
+		private static TimeSpan CalculateAdjustedEndTimeAfternoon(TimeSpan startTime, WorkSchedule workSchedule)
 		{
-			if (startTime > workTime.StartTimeMorning)
+			if (startTime > workSchedule.StartTimeMorning)
 			{
-				var lateTime = startTime - workTime.StartTimeMorning;
-				var adjustedTime = TimeSpan.FromMinutes(Math.Min(workTime.AllowedLateMinutes * 60, lateTime.TotalMinutes));
-				return workTime.EndTimeAfternoon + adjustedTime;
+				var lateTime = startTime - workSchedule.StartTimeMorning;
+				var adjustedTime = TimeSpan.FromMinutes(Math.Min(workSchedule.AllowedLateMinutes * 60, lateTime.TotalMinutes));
+				return workSchedule.EndTimeAfternoon + adjustedTime;
 			}
 
-			return workTime.EndTimeAfternoon;
+			return workSchedule.EndTimeAfternoon;
 		}
 
-		private static TimeSpan CalculateMorningTime(TimeSpan startTime, TimeSpan endTime, WorkTime workTime)
+		private static TimeSpan CalculateMorningTime(TimeSpan startTime, TimeSpan endTime, WorkSchedule workSchedule)
 		{
-			if (startTime < workTime.EndTimeMorning)
+			if (startTime < workSchedule.EndTimeMorning)
 			{
-				var validMorningStart = startTime < workTime.StartTimeMorning ? workTime.StartTimeMorning : startTime;
-				var validMorningEnd = endTime > workTime.EndTimeMorning ? workTime.EndTimeMorning : endTime;
+				var validMorningStart = startTime < workSchedule.StartTimeMorning ? workSchedule.StartTimeMorning : startTime;
+				var validMorningEnd = endTime > workSchedule.EndTimeMorning ? workSchedule.EndTimeMorning : endTime;
 
 				if (validMorningStart < validMorningEnd)
 				{
@@ -51,11 +51,11 @@ namespace WorkHub.Application.Utils
 			return TimeSpan.Zero;
 		}
 
-		private static TimeSpan CalculateAfternoonTime(TimeSpan startTime, TimeSpan endTime, TimeSpan adjustedEndTimeAfternoon, WorkTime workTime)
+		private static TimeSpan CalculateAfternoonTime(TimeSpan startTime, TimeSpan endTime, TimeSpan adjustedEndTimeAfternoon, WorkSchedule workSchedule)
 		{
-			if (endTime > workTime.StartTimeAfternoon)
+			if (endTime > workSchedule.StartTimeAfternoon)
 			{
-				var validAfternoonStart = startTime > workTime.StartTimeAfternoon ? startTime : workTime.StartTimeAfternoon;
+				var validAfternoonStart = startTime > workSchedule.StartTimeAfternoon ? startTime : workSchedule.StartTimeAfternoon;
 				var validAfternoonEnd = endTime > adjustedEndTimeAfternoon ? adjustedEndTimeAfternoon : endTime;
 
 				if (validAfternoonStart < validAfternoonEnd)
@@ -67,10 +67,10 @@ namespace WorkHub.Application.Utils
 			return TimeSpan.Zero;
 		}
 
-		private static bool IsInvalidTimeRange(DateTime startTime, DateTime endTime, WorkTime workTime)
+		private static bool IsInvalidTimeRange(DateTime startTime, DateTime endTime, WorkSchedule workSchedule)
 		{
 			return startTime == default || endTime == default || startTime > endTime
-				|| startTime.TimeOfDay > workTime.EndTimeAfternoon || endTime.TimeOfDay < workTime.StartTimeMorning;
+				|| startTime.TimeOfDay > workSchedule.EndTimeAfternoon || endTime.TimeOfDay < workSchedule.StartTimeMorning;
 		}
 	}
 }

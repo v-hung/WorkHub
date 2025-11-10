@@ -1,10 +1,10 @@
 import { localTimeToDate, setTimeToDate } from "@/utils/date.utils";
 import { isEmpty } from "@/utils/validate.utils";
-import { WorkTimeDto } from "@/generate-api";
+import { WorkScheduleDto } from "@/generate-api";
 import { add } from "date-fns";
 
-export const requestDisabledTime = (workTime?: WorkTimeDto) => {
-  if (!workTime) {
+export const requestDisabledTime = (workSchedule?: WorkScheduleDto) => {
+  if (!workSchedule) {
     return {
       disabledHours: () => [],
       disabledMinutes: () => [],
@@ -17,11 +17,11 @@ export const requestDisabledTime = (workTime?: WorkTimeDto) => {
     return { hours, minutes };
   };
 
-  const morningStart = parseTime(workTime.startTimeMorning);
-  const morningEnd = parseTime(workTime.endTimeMorning);
-  const afternoonStart = parseTime(workTime.startTimeAfternoon);
-  const afternoonEnd = add(localTimeToDate(workTime.endTimeAfternoon), {
-    minutes: workTime.allowedLateMinutes,
+  const morningStart = parseTime(workSchedule.startTimeMorning);
+  const morningEnd = parseTime(workSchedule.endTimeMorning);
+  const afternoonStart = parseTime(workSchedule.startTimeAfternoon);
+  const afternoonEnd = add(localTimeToDate(workSchedule.endTimeAfternoon), {
+    minutes: workSchedule.allowedLateMinutes,
   });
 
   return {
@@ -56,9 +56,9 @@ export const requestDisabledTime = (workTime?: WorkTimeDto) => {
 };
 
 export const requestValidateTime =
-  (workTime?: WorkTimeDto, required: boolean | undefined = false) =>
+  (workSchedule?: WorkScheduleDto, required: boolean | undefined = false) =>
   (_: any, value: [Date, Date]) => {
-    if (!workTime) {
+    if (!workSchedule) {
       return Promise.reject(
         new Error("No working time information available.")
       );
@@ -71,19 +71,19 @@ export const requestValidateTime =
       return Promise.resolve();
     }
 
-    const afternoonEnd = add(localTimeToDate(workTime.endTimeAfternoon), {
-      minutes: workTime.allowedLateMinutes,
+    const afternoonEnd = add(localTimeToDate(workSchedule.endTimeAfternoon), {
+      minutes: workSchedule.allowedLateMinutes,
     });
 
     const startTime = setTimeToDate(value[0]),
       endTime = setTimeToDate(value[1]);
 
     const validStartTime =
-      startTime >= localTimeToDate(workTime.startTimeMorning) &&
+      startTime >= localTimeToDate(workSchedule.startTimeMorning) &&
       afternoonEnd >= startTime;
 
     const validEndTime =
-      endTime >= localTimeToDate(workTime.startTimeMorning) &&
+      endTime >= localTimeToDate(workSchedule.startTimeMorning) &&
       afternoonEnd >= endTime;
 
     const valid = validStartTime && validEndTime && endTime > startTime;

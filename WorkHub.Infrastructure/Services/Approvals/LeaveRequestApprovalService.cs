@@ -4,7 +4,7 @@ using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Interfaces.SignalR;
 using WorkHub.Application.Utils;
 using WorkHub.Domain.Entities.Requests;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Services.Approvals
@@ -19,9 +19,9 @@ namespace WorkHub.Infrastructure.Services.Approvals
 		{
 			LeaveRequest request = await base.ApproveRequestAsync<LeaveRequest>(requestId);
 
-			var workTime = request.User?.WorkTime ?? new WorkTime();
+			var workSchedule = request.User?.WorkSchedule ?? new WorkSchedule();
 
-			request.DurationMinutes = (int)TimesheetUtils.CalculateWorkTime(request.BreakStartDate, request.BreakEndDate, workTime).TotalMinutes;
+			request.DurationMinutes = (int)TimesheetUtils.CalculateWorkSchedule(request.BreakStartDate, request.BreakEndDate, workSchedule).TotalMinutes;
 
 			_context.Requests.Update(request);
 			await _context.SaveChangesAsync();

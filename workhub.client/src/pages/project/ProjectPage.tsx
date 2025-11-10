@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapProtectedLoader } from "@/utils/loader";
-import ProjectTable from "@/features/project/components/ProjectTable/ProjectTable";
-import { ProjectProvider } from "@/features/project/contexts/ProjectContext";
+import ProjectTable from "@/features/work/project/components/ProjectTable/ProjectTable";
+import { ProjectProvider } from "@/features/work/project/contexts/ProjectContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";

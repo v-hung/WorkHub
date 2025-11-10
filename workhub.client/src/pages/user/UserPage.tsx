@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
-import UserTable from "@/features/user/components/UserTable/UserTable";
+import UserTable from "@/features/organization/user/components/UserTable/UserTable";
 import { wrapProtectedLoader } from "@/utils/loader";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
@@ -8,7 +8,7 @@ import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/De
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
-import UserSyncDataButton from "@/features/user/components/UserSyncDataButton/UserSyncDataButton";
+import UserSyncDataButton from "@/features/organization/user/components/UserSyncDataButton/UserSyncDataButton";
 
 export const loader = wrapProtectedLoader(
   undefined,

@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapProtectedLoader } from "@/utils/loader";
-import DeviceTable from "@/features/device/components/DeviceTable/DeviceTable";
-import { DeviceProvider } from "@/features/device/contexts/DeviceContext";
+import DeviceTable from "@/features/equipment/components/DeviceTable/DeviceTable";
+import { DeviceProvider } from "@/features/equipment/contexts/DeviceContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";

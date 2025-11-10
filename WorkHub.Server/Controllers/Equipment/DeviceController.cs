@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using WorkHub.Application.Requests;
 using WorkHub.Application.Wrapper;
 using WorkHub.Application.DTOs.Equipment;
-using WorkHub.Application.Features.Devices.Queries;
-using WorkHub.Application.Features.Devices.Commands;
+using WorkHub.Application.Features.Equipment.Queries;
+using WorkHub.Application.Features.Equipment.Commands;
 using Microsoft.AspNetCore.Authorization;
 using WorkHub.Domain.Constants.Permission;
 

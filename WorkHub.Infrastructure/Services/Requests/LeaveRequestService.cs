@@ -1,11 +1,11 @@
 using System.Net;
 using Microsoft.Extensions.Localization;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Features.Requests.DTOs;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Domain.Entities.Requests;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Enums;
 
 namespace WorkHub.Infrastructure.Services.Requests

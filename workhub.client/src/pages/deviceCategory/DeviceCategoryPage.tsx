@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapProtectedLoader } from "@/utils/loader";
 import DeviceCategoryTable from "@/features/deviceCategory/components/DeviceCategoryTable/DeviceCategoryTable";
-import { DeviceCategoryProvider } from "@/features/deviceCategory/contexts/DeviceCategoryContext";
+import { DeviceCategoryProvider } from "@/features/equipment/contexts/DeviceCategoryContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";

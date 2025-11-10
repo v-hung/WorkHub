@@ -5,16 +5,16 @@ import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultC
 import { hasPermission } from "@/utils/hasPermission";
 import { Permission } from "@/generate-api";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
-import TimesheetEmployeeTable from "@/features/timesheet/components/TimesheetEmployeeTable/TimesheetEmployeeTable";
-import { TimesheetEmployeeProvider } from "@/features/timesheet/context/TimesheetEmployeeContext";
+import TimesheetEmployeeTable from "@/features/work/timesheet/components/TimesheetEmployeeTable/TimesheetEmployeeTable";
+import { TimesheetEmployeeProvider } from "@/features/work/timesheet/context/TimesheetEmployeeContext";
 import { Button } from "antd";
 import { lazy, Suspense, useRef, useState } from "react";
-import { TimesheetSyncDataModalHandle } from "@/features/timesheet/components/TimesheetSyncDataModal/TimesheetSyncDataModal";
+import { TimesheetSyncDataModalHandle } from "@/features/work/timesheet/components/TimesheetSyncDataModal/TimesheetSyncDataModal";
 
 const TimesheetSyncDataModalLazy = lazy(
   () =>
     import(
-      "@/features/timesheet/components/TimesheetSyncDataModal/TimesheetSyncDataModal"
+      "@/features/work/timesheet/components/TimesheetSyncDataModal/TimesheetSyncDataModal"
     )
 );
 

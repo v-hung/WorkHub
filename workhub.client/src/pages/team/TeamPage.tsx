@@ -1,8 +1,8 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapProtectedLoader } from "@/utils/loader";
-import TeamTable from "@/features/team/components/TeamTable/TeamTable";
-import { TeamProvider } from "@/features/team/contexts/TeamContext";
+import TeamTable from "@/features/organization/team/components/TeamTable/TeamTable";
+import { TeamProvider } from "@/features/organization/team/contexts/TeamContext";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";

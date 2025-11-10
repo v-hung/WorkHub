@@ -1,4 +1,4 @@
-`cs WorkHub.Server`
+`cd WorkHub.Server`
 
 ### migrations
 

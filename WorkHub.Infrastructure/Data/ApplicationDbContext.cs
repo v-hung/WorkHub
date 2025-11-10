@@ -7,7 +7,6 @@ using WorkHub.Domain.Enums;
 using WorkHub.Domain.Entities.Identity;
 using WorkHub.Domain.Entities.Organization;
 using WorkHub.Domain.Entities.Requests;
-using WorkHub.Domain.Entities.Time;
 using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Entities.Equipment;
 using WorkHub.Domain.Entities.Misc;
@@ -22,7 +21,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 	public DbSet<UserDetail> UserDetails { get; set; }
 	public DbSet<Team> Teams { get; set; }
 	public DbSet<Timesheet> Timesheets { get; set; }
-	public DbSet<WorkTime> WorkTimes { get; set; }
+	public DbSet<WorkSchedule> WorkSchedules { get; set; }
 	public DbSet<Project> Projects { get; set; }
 	public DbSet<RefreshToken> RefreshTokens { get; set; }
 	public DbSet<Request> Requests { get; set; }

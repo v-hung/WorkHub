@@ -11,7 +11,7 @@ import {
   TeamApi,
   TimesheetApi,
   UserApi,
-  WorkTimeApi,
+  WorkScheduleApi,
 } from "@/generate-api";
 import { createFetchHttp } from "./interceptors";
 
@@ -30,7 +30,7 @@ const accountApiWithRefreshToken = new AccountApi(configWithRefreshToken);
 const userApi = new UserApi(configWithRefreshToken);
 const teamApi = new TeamApi(configWithRefreshToken);
 const projectApi = new ProjectApi(configWithRefreshToken);
-const workTimeApi = new WorkTimeApi(configWithRefreshToken);
+const workScheduleApi = new WorkScheduleApi(configWithRefreshToken);
 const roleApi = new RoleApi(configWithRefreshToken);
 const timesheetApi = new TimesheetApi(configWithRefreshToken);
 const deviceApi = new DeviceApi(configWithRefreshToken);
@@ -45,7 +45,7 @@ export {
   userApi,
   teamApi,
   projectApi,
-  workTimeApi,
+  workScheduleApi,
   roleApi,
   timesheetApi,
   deviceApi,

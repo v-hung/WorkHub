@@ -1,4 +1,4 @@
-import UserCard from "@/features/user/components/UserCard/UserCard";
+import UserCard from "@/features/organization/user/components/UserCard/UserCard";
 import { RequestCombinedDto } from "@/generate-api";
 import type { FC, HTMLAttributes } from "react";
 

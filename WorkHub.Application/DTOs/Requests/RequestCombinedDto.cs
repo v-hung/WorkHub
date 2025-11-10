@@ -8,7 +8,7 @@ namespace WorkHub.Application.DTOs.Requests
 		// Navigation properties
 
 		[Required]
-		public required UserMinimalWithWorkTimeDto User { get; set; }
+		public required UserMinimalWithWorkScheduleDto User { get; set; }
 
 		[Required]
 		public required UserMinimalDto Approver { get; set; }

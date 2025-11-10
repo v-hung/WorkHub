@@ -1,4 +1,4 @@
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 
 namespace WorkHub.Application.Interfaces.Services
 {

@@ -2,8 +2,7 @@ using AutoMapper;
 using WorkHub.Application.DTOs.Identity;
 using WorkHub.Domain.Entities.Identity;
 using WorkHub.Application.Requests.Identity;
-using WorkHub.Application.DTOs.Time;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Mappings
 {
@@ -12,9 +11,9 @@ namespace WorkHub.Application.Mappings
 		public UserProfile()
 		{
 			CreateMap<User, UserMinimalDto>().ReverseMap();
-			CreateMap<User, UserMinimalWithWorkTimeDto>().ForMember(dest => dest.WorkTime, opt => opt.NullSubstitute(new WorkTime()));
+			CreateMap<User, UserMinimalWithWorkScheduleDto>().ForMember(dest => dest.WorkSchedule, opt => opt.NullSubstitute(new WorkSchedule()));
 			CreateMap<User, UserDto>()
-				.ForMember(dest => dest.WorkTime, opt => opt.NullSubstitute(new WorkTime()))
+				.ForMember(dest => dest.WorkSchedule, opt => opt.NullSubstitute(new WorkSchedule()))
 				.ReverseMap();
 
 			CreateMap<User, UserFullDto>().ReverseMap();

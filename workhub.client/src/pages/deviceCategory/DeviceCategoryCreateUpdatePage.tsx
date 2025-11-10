@@ -4,7 +4,7 @@ import { wrapProtectedLoader } from "@/utils/loader";
 import { useRef, useState } from "react";
 import DeviceCategoryFormCreate, {
   DeviceCategoryFormCreateRefState,
-} from "@/features/deviceCategory/components/DeviceCategoryFormCreate/DeviceCategoryFormCreate";
+} from "@/features/equipment/components/DeviceCategoryFormCreate/DeviceCategoryFormCreate";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
 import { DeviceCategoryDto, Permission } from "@/generate-api";

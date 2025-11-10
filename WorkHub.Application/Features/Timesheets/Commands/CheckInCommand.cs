@@ -1,9 +1,9 @@
 using System.Net;
 using MediatR;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Services;
-using WorkHub.Application.Responses.Time;
+using WorkHub.Application.Responses.Work;
 
 namespace WorkHub.Application.Features.Timesheets.Commands
 {

@@ -34,6 +34,13 @@ import {
     UserDetailDtoToJSON,
     UserDetailDtoToJSONTyped,
 } from './UserDetailDto';
+import type { WorkScheduleDto } from './WorkScheduleDto';
+import {
+    WorkScheduleDtoFromJSON,
+    WorkScheduleDtoFromJSONTyped,
+    WorkScheduleDtoToJSON,
+    WorkScheduleDtoToJSONTyped,
+} from './WorkScheduleDto';
 import type { UserPosition } from './UserPosition';
 import {
     UserPositionFromJSON,
@@ -48,13 +55,6 @@ import {
     UserStatusToJSON,
     UserStatusToJSONTyped,
 } from './UserStatus';
-import type { WorkTimeDto } from './WorkTimeDto';
-import {
-    WorkTimeDtoFromJSON,
-    WorkTimeDtoFromJSONTyped,
-    WorkTimeDtoToJSON,
-    WorkTimeDtoToJSONTyped,
-} from './WorkTimeDto';
 
 /**
  * 
@@ -154,10 +154,10 @@ export interface UserFullDto {
     roles?: Array<string> | null;
     /**
      * 
-     * @type {WorkTimeDto}
+     * @type {WorkScheduleDto}
      * @memberof UserFullDto
      */
-    workTime: WorkTimeDto;
+    workSchedule: WorkScheduleDto;
     /**
      * 
      * @type {UserMinimalDto}
@@ -196,7 +196,7 @@ export function instanceOfUserFullDto(value: object): value is UserFullDto {
     if (!('isFirstLogin' in value) || value['isFirstLogin'] === undefined) return false;
     if (!('remainingLeaveMinutes' in value) || value['remainingLeaveMinutes'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('workTime' in value) || value['workTime'] === undefined) return false;
+    if (!('workSchedule' in value) || value['workSchedule'] === undefined) return false;
     return true;
 }
 
@@ -225,7 +225,7 @@ export function UserFullDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'createdBy': json['createdBy'] == null ? undefined : json['createdBy'],
         'lastModifiedBy': json['lastModifiedBy'] == null ? undefined : json['lastModifiedBy'],
         'roles': json['roles'] == null ? undefined : json['roles'],
-        'workTime': WorkTimeDtoFromJSON(json['workTime']),
+        'workSchedule': WorkScheduleDtoFromJSON(json['workSchedule']),
         'supervisor': json['supervisor'] == null ? undefined : UserMinimalDtoFromJSON(json['supervisor']),
         'team': json['team'] == null ? undefined : TeamMinimalDtoFromJSON(json['team']),
         'userDetail': json['userDetail'] == null ? undefined : UserDetailDtoFromJSON(json['userDetail']),
@@ -259,7 +259,7 @@ export function UserFullDtoToJSONTyped(value?: UserFullDto | null, ignoreDiscrim
         'createdBy': value['createdBy'],
         'lastModifiedBy': value['lastModifiedBy'],
         'roles': value['roles'],
-        'workTime': WorkTimeDtoToJSON(value['workTime']),
+        'workSchedule': WorkScheduleDtoToJSON(value['workSchedule']),
         'supervisor': UserMinimalDtoToJSON(value['supervisor']),
         'team': TeamMinimalDtoToJSON(value['team']),
         'userDetail': UserDetailDtoToJSON(value['userDetail']),

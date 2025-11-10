@@ -14,7 +14,7 @@ import {
   requestDisabledTime,
   requestValidateTime,
 } from "../../utils/request.util";
-import { useTimesheetContext } from "@/features/timesheet/context/TimesheetContext";
+import { useTimesheetContext } from "@/features/work/timesheet/context/TimesheetContext";
 
 type State = ComponentProps<typeof Modal>;
 
@@ -25,7 +25,7 @@ const LeaveRequestModel: FC<State> = (props) => {
   const { getCurrentTimesheets, isCurrentMonth } = useTimesheetContext();
   const { loading, create, formDefault } = useLeaveRequestAction();
 
-  const workTime = useAuthStore((state) => state.user?.workTime);
+  const workSchedule = useAuthStore((state) => state.user?.workSchedule);
 
   const [form] = Form.useForm<CreateLeaveRequestDtoCustomType>();
   const [formState] = useState<CreateLeaveRequestDtoCustomType>(formDefault());
@@ -122,10 +122,10 @@ const LeaveRequestModel: FC<State> = (props) => {
           label="Break Time"
           name="breakTime"
           required
-          rules={[{ validator: requestValidateTime(workTime, true) }]}
+          rules={[{ validator: requestValidateTime(workSchedule, true) }]}
         >
           <RangeTimePicker
-            disabledTime={() => requestDisabledTime(workTime)}
+            disabledTime={() => requestDisabledTime(workSchedule)}
             hideDisabledOptions
             showSecond={false}
           />

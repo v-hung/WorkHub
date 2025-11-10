@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { UserMinimalWithWorkTimeDto } from './UserMinimalWithWorkTimeDto';
+import type { UserMinimalWithWorkScheduleDto } from './UserMinimalWithWorkScheduleDto';
 import {
-    UserMinimalWithWorkTimeDtoFromJSON,
-    UserMinimalWithWorkTimeDtoFromJSONTyped,
-    UserMinimalWithWorkTimeDtoToJSON,
-    UserMinimalWithWorkTimeDtoToJSONTyped,
-} from './UserMinimalWithWorkTimeDto';
+    UserMinimalWithWorkScheduleDtoFromJSON,
+    UserMinimalWithWorkScheduleDtoFromJSONTyped,
+    UserMinimalWithWorkScheduleDtoToJSON,
+    UserMinimalWithWorkScheduleDtoToJSONTyped,
+} from './UserMinimalWithWorkScheduleDto';
 import type { UserMinimalDto } from './UserMinimalDto';
 import {
     UserMinimalDtoFromJSON,
@@ -110,10 +110,10 @@ export interface RequestCombinedDto {
     checkOut: Date;
     /**
      * 
-     * @type {UserMinimalWithWorkTimeDto}
+     * @type {UserMinimalWithWorkScheduleDto}
      * @memberof RequestCombinedDto
      */
-    user: UserMinimalWithWorkTimeDto;
+    user: UserMinimalWithWorkScheduleDto;
     /**
      * 
      * @type {UserMinimalDto}
@@ -163,7 +163,7 @@ export function RequestCombinedDtoFromJSONTyped(json: any, ignoreDiscriminator: 
         'breakEndDate': (new Date(json['breakEndDate'])),
         'checkIn': (new Date(json['checkIn'])),
         'checkOut': (new Date(json['checkOut'])),
-        'user': UserMinimalWithWorkTimeDtoFromJSON(json['user']),
+        'user': UserMinimalWithWorkScheduleDtoFromJSON(json['user']),
         'approver': UserMinimalDtoFromJSON(json['approver']),
     };
 }
@@ -189,7 +189,7 @@ export function RequestCombinedDtoToJSONTyped(value?: RequestCombinedDto | null,
         'breakEndDate': ((value['breakEndDate']).toISOString()),
         'checkIn': ((value['checkIn']).toISOString()),
         'checkOut': ((value['checkOut']).toISOString()),
-        'user': UserMinimalWithWorkTimeDtoToJSON(value['user']),
+        'user': UserMinimalWithWorkScheduleDtoToJSON(value['user']),
         'approver': UserMinimalDtoToJSON(value['approver']),
     };
 }

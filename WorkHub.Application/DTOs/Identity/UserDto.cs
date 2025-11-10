@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using WorkHub.Application.DTOs.Organization;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Domain.Entities.Audit;
 
 namespace WorkHub.Application.DTOs.Identity;
@@ -29,7 +29,7 @@ public class UserDto : UserMinimalDto, IRoleAudit<string>
 	public List<string> Roles { get; set; } = [];
 
 	[Required]
-	public WorkTimeDto WorkTime { get; set; } = new WorkTimeDto();
+	public WorkScheduleDto WorkSchedule { get; set; } = new WorkScheduleDto();
 
 	public UserMinimalDto? Supervisor { get; set; }
 

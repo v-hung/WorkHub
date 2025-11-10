@@ -4,7 +4,7 @@ import { wrapProtectedLoader } from "@/utils/loader";
 import { useRef, useState } from "react";
 import TeamFormCreate, {
   TeamFormCreateRefState,
-} from "@/features/team/components/TeamFormCreate/TeamFormCreate";
+} from "@/features/organization/team/components/TeamFormCreate/TeamFormCreate";
 import { teamApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
 import { Permission, TeamFullDto } from "@/generate-api";

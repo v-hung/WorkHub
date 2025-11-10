@@ -107,7 +107,7 @@ export const getMenuItems = (
         {
           key: "/work-times",
           label: t("menus.work-time"),
-          permission: Permission.PermissionsWorkTimesView,
+          permission: Permission.PermissionsWorkSchedulesView,
         },
       ],
     },

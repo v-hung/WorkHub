@@ -1,6 +1,6 @@
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Wrapper;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Interfaces.Repositories
 {

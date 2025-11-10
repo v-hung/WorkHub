@@ -82,17 +82,17 @@ const router = createBrowserRouter(
               children: [
                 {
                   path: "",
-                  lazy: () => import("./pages/workTime/WorkTimePage"),
+                  lazy: () => import("./pages/workSchedule/WorkSchedulePage"),
                 },
                 {
                   path: "create",
                   lazy: () =>
-                    import("./pages/workTime/WorkTimeCreateUpdatePage"),
+                    import("./pages/workSchedule/WorkScheduleCreateUpdatePage"),
                 },
                 {
                   path: ":id/edit",
                   lazy: () =>
-                    import("./pages/workTime/WorkTimeCreateUpdatePage"),
+                    import("./pages/workSchedule/WorkScheduleCreateUpdatePage"),
                 },
               ],
             },

@@ -17,7 +17,7 @@ import {
   requestDisabledTime,
   requestValidateTime,
 } from "../../utils/request.util";
-import { useTimesheetContext } from "@/features/timesheet/context/TimesheetContext";
+import { useTimesheetContext } from "@/features/work/timesheet/context/TimesheetContext";
 
 type State = ComponentProps<typeof Modal>;
 
@@ -29,7 +29,7 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
   const { loading, create, formDefault } =
     useTimesheetAdjustmentRequestAction();
 
-  const workTime = useAuthStore((state) => state.user?.workTime);
+  const workSchedule = useAuthStore((state) => state.user?.workSchedule);
 
   const [form] = Form.useForm();
   const [formState] = useState<CreateTimesheetAdjustmentRequestDtoCustomType>(
@@ -129,10 +129,10 @@ const TimesheetAdjustmentRequestModel: FC<State> = (props) => {
           label="Working Time"
           name="workingTime"
           required
-          rules={[{ validator: requestValidateTime(workTime, true) }]}
+          rules={[{ validator: requestValidateTime(workSchedule, true) }]}
         >
           <RangeTimePicker
-            disabledTime={() => requestDisabledTime(workTime)}
+            disabledTime={() => requestDisabledTime(workSchedule)}
             hideDisabledOptions
             showSecond={false}
           />

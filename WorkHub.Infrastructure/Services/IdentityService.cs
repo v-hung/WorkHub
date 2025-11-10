@@ -151,7 +151,7 @@ public class IdentityService(SignInManager<User> signInManager, UserManager<User
 	public async Task<D> GetUserDataAsync<D>(string userId) where D : class, IRoleAudit<string>
 	{
 		var user = await _userManager.Users.AsNoTracking()
-			.Include(u => u.WorkTime)
+			.Include(u => u.WorkSchedule)
 			.Include(u => u.Supervisor)
 			.Include(u => u.Team).FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId))
 			?? throw new BusinessException(HttpStatusCode.NotFound, "Account is not exist");

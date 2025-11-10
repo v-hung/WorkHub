@@ -1,6 +1,6 @@
 using AutoMapper;
 using WorkHub.Application.DTOs.Equipment;
-using WorkHub.Application.Features.Devices.Commands;
+using WorkHub.Application.Features.Equipment.Commands;
 using WorkHub.Domain.Entities.Equipment;
 
 namespace WorkHub.Application.Mappings

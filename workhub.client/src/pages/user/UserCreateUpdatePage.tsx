@@ -3,7 +3,7 @@ import { redirect, useLoaderData } from "react-router";
 import { wrapProtectedLoader } from "@/utils/loader";
 import UserFormCreate, {
   UserFormCreateRefState,
-} from "@/features/user/components/UserFormCreate/UserFormCreate";
+} from "@/features/organization/user/components/UserFormCreate/UserFormCreate";
 import { useRef, useState } from "react";
 import { wrapPromise } from "@/utils/promise";
 import { userApi } from "@/services/apiClient";

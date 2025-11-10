@@ -9,7 +9,7 @@ apis/RoleApi.ts
 apis/TeamApi.ts
 apis/TimesheetApi.ts
 apis/UserApi.ts
-apis/WorkTimeApi.ts
+apis/WorkScheduleApi.ts
 apis/index.ts
 index.ts
 models/BioStarSyncAllUsersResponse.ts
@@ -22,7 +22,7 @@ models/CreateProjectCommand.ts
 models/CreateRequestDto.ts
 models/CreateTeamCommand.ts
 models/CreateTimesheetAdjustmentRequestDto.ts
-models/CreateWorkTimeCommand.ts
+models/CreateWorkScheduleCommand.ts
 models/CursorPagedRequest.ts
 models/CursorPagedRequestDirection.ts
 models/DeviceCategoryDto.ts
@@ -77,11 +77,11 @@ models/UserDtoLoginResponse.ts
 models/UserDtoPaginated.ts
 models/UserFullDto.ts
 models/UserMinimalDto.ts
-models/UserMinimalWithWorkTimeDto.ts
+models/UserMinimalWithWorkScheduleDto.ts
 models/UserPosition.ts
 models/UserStatus.ts
 models/WebSocketState.ts
-models/WorkTimeDto.ts
-models/WorkTimeDtoPaginated.ts
+models/WorkScheduleDto.ts
+models/WorkScheduleDtoPaginated.ts
 models/index.ts
 runtime.ts

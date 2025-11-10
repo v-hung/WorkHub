@@ -1,12 +1,12 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router";
 import { wrapProtectedLoader } from "@/utils/loader";
-import RoleTable from "@/features/role/components/RoleTable/RoleTable";
+import RoleTable from "@/features/organization/role/components/RoleTable/RoleTable";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
 import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultContent";
-import { RoleProvider } from "@/features/role/contexts/RoleContext";
+import { RoleProvider } from "@/features/organization/role/contexts/RoleContext";
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 

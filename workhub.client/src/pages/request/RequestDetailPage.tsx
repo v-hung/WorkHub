@@ -7,7 +7,7 @@ import { requestApi } from "@/services/apiClient";
 import { redirect, useLoaderData } from "react-router";
 import { RequestCombinedDto, RequestType } from "@/generate-api";
 import { JSX, lazy, Suspense } from "react";
-import NotificationSubHeader from "@/features/notification/components/NotificationSubHeader/NotificationSubHeader";
+import NotificationSubHeader from "@/features/system/notification/components/NotificationSubHeader/NotificationSubHeader";
 
 const LeaveRequestPanelLazy = lazy(
   () =>

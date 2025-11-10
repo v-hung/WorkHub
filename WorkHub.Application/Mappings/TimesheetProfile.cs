@@ -1,6 +1,6 @@
 using AutoMapper;
-using WorkHub.Application.DTOs.Time;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Application.DTOs.Work;
+using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Mappings
 {

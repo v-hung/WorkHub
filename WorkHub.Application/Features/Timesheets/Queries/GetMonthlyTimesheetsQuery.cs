@@ -1,5 +1,5 @@
 using MediatR;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Wrapper;
 

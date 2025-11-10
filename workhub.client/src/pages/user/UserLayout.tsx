@@ -1,4 +1,4 @@
-import { UserProvider } from "@/features/user/contexts/UserContext";
+import { UserProvider } from "@/features/organization/user/contexts/UserContext";
 import { Outlet } from "react-router";
 
 export function Component() {

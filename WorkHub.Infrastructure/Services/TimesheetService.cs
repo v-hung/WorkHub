@@ -2,12 +2,12 @@ using System.Net;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using WorkHub.Application.DTOs.Time;
+using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Utils;
 using WorkHub.Domain.Entities.Requests;
-using WorkHub.Domain.Entities.Time;
+using WorkHub.Domain.Entities.Work;
 using WorkHub.Domain.Enums;
 using WorkHub.Infrastructure.Data;
 
@@ -90,7 +90,7 @@ namespace WorkHub.Infrastructure.Services
 
 			var timesheet = await _context.Timesheets
 				.Include(t => t.User)
-				.ThenInclude(u => u != null ? u.WorkTime : null)
+				.ThenInclude(u => u != null ? u.WorkSchedule : null)
 				.FirstOrDefaultAsync(t => t.UserId == userGuid && t.Date == date.Date)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
 
@@ -110,22 +110,22 @@ namespace WorkHub.Infrastructure.Services
 			if (timesheet.StartTime == null || timesheet.EndTime == null)
 				return 0;
 
-			var workTime = timesheet.User?.WorkTime
+			var workSchedule = timesheet.User?.WorkSchedule
 				?? await _context.Users
 					.Where(u => u.Id == timesheet.UserId)
-					.Select(u => u.WorkTime)
-					.FirstOrDefaultAsync() ?? new WorkTime();
+					.Select(u => u.WorkSchedule)
+					.FirstOrDefaultAsync() ?? new WorkSchedule();
 
 			var requests = await _context.Requests
 				.Where(r => r.TimesheetId == timesheet.Id && r.Status == RequestStatus.APPROVED)
 				.ToListAsync();
 
-			return CalculateWorkedMinutes(timesheet, requests, workTime);
+			return CalculateWorkedMinutes(timesheet, requests, workSchedule);
 		}
 
-		private int CalculateWorkedMinutes(Timesheet timesheet, List<Request> requests, WorkTime workTime)
+		private int CalculateWorkedMinutes(Timesheet timesheet, List<Request> requests, WorkSchedule workSchedule)
 		{
-			int actualWorkMinutes = (int)TimesheetUtils.CalculateWorkTime(timesheet.StartTime!.Value, timesheet.EndTime!.Value, workTime).TotalMinutes;
+			int actualWorkMinutes = (int)TimesheetUtils.CalculateWorkSchedule(timesheet.StartTime!.Value, timesheet.EndTime!.Value, workSchedule).TotalMinutes;
 
 			int leaveMinutes = requests.Where(r => r.RequestType == RequestType.LEAVE_REQUEST).Sum(r => r.DurationMinutes);
 			int adjustmentMinutes = requests.Where(r => r.RequestType == RequestType.TIMESHEET_ADJUSTMENT_REQUEST).Sum(r => r.DurationMinutes);

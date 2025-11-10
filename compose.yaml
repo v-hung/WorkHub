@@ -10,12 +10,12 @@ services:
       - "8888:8080"
     extra_hosts:
       - "biostar2:192.168.11.89"
-    command: dotnet ef database update
+    command: ["/wait-for-db.sh", "mysql", "dotnet", "ef", "database", "update"]
     depends_on:
       - mysql
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=mydb;User=root;Password=Admin123!"
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=mydb;User=root;Password=Admin@123"
     # restart: on-failure
     volumes:
       - upload_data:/app/wwwroot/uploads
@@ -24,7 +24,7 @@ services:
     image: mysql:8
     container_name: workhub-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: Admin123!
+      MYSQL_ROOT_PASSWORD: Admin@123
       MYSQL_DATABASE: mydb
     ports:
       - "13306:3306"
@@ -39,7 +39,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: Admin123!
+      MYSQL_ROOT_PASSWORD: Admin@123
     ports:
       - "18080:80"
     # restart: unless-stopped
