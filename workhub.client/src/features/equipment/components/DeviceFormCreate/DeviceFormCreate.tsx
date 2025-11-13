@@ -12,7 +12,7 @@ import { CreateDeviceCommand, DeviceDto, DeviceStatus } from "@/generate-api";
 import { useDeviceAction } from "../../hooks/useDeviceAction";
 import { useNavigate } from "react-router";
 import { UserSelectMemo } from "@/features/organization/user/components/UserSelect/UserSelect";
-import { DeviceCategorySelectMemo } from "@/features/deviceCategory/components/DeviceCategorySelect/DeviceCategorySelect";
+import { DeviceCategorySelectMemo } from "@/features/equipment/components/DeviceCategorySelect/DeviceCategorySelect";
 
 type State = HTMLAttributes<HTMLDivElement> & {
   record?: DeviceDto;

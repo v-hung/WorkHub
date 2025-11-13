@@ -35,14 +35,15 @@ COPY --from=build /app/publish .
 COPY --from=client-build /app/dist ./wwwroot
 
 RUN apt-get update && apt-get install -y \
-  libfontconfig1 \
-  libfreetype6 \
-  libjpeg62-turbo \
-  libpng16-16 \
-  libgif7 \
-  libglib2.0-0 \
+	libfontconfig1 \
+	libfreetype6 \
+	libjpeg62-turbo \
+	libpng16-16 \
+	libgif7 \
+	libglib2.0-0 \
 	curl \
-  && rm -rf /var/lib/apt/lists/*
+	netcat-openbsd \
+	&& rm -rf /var/lib/apt/lists/*
 
 COPY wait-for-db.sh /wait-for-db.sh
 RUN chmod +x /wait-for-db.sh

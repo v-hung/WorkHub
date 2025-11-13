@@ -10,7 +10,6 @@ services:
       - "8888:8080"
     extra_hosts:
       - "biostar2:192.168.11.89"
-    command: ["/wait-for-db.sh", "mysql", "dotnet", "ef", "database", "update"]
     depends_on:
       - mysql
     environment:
