@@ -99,7 +99,7 @@ namespace WorkHub.Infrastructure.Services.Approvals
 			{
 				u.Id,
 				u.Email,
-				LanguageCode = u.UserDetail != null ? u.UserDetail.Nationality : Nationality.vi_VN
+				LanguageCode = u.UserProfile != null ? u.UserProfile.Nationality : Nationality.vi_VN
 			}
 			).FirstOrDefaultAsync(u => u.Id == request.UserId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Approver not found."]);

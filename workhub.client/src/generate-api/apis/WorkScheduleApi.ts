@@ -19,8 +19,8 @@ import type {
   ErrorResponse,
   ErrorValidateResponse,
   PagedRequest,
-  WorkScheduleDto,
-  WorkScheduleDtoPaginated,
+  WorkScheduleDetailsDto,
+  WorkScheduleDetailsDtoPaginated,
 } from '../models/index';
 import {
     CreateWorkScheduleCommandFromJSON,
@@ -31,10 +31,10 @@ import {
     ErrorValidateResponseToJSON,
     PagedRequestFromJSON,
     PagedRequestToJSON,
-    WorkScheduleDtoFromJSON,
-    WorkScheduleDtoToJSON,
-    WorkScheduleDtoPaginatedFromJSON,
-    WorkScheduleDtoPaginatedToJSON,
+    WorkScheduleDetailsDtoFromJSON,
+    WorkScheduleDetailsDtoToJSON,
+    WorkScheduleDetailsDtoPaginatedFromJSON,
+    WorkScheduleDetailsDtoPaginatedToJSON,
 } from '../models/index';
 
 export interface WorkScheduleCreateRequest {
@@ -69,7 +69,7 @@ export class WorkScheduleApi extends runtime.BaseAPI {
 
     /**
      */
-    async workScheduleCreateRaw(requestParameters: WorkScheduleCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDto>> {
+    async workScheduleCreateRaw(requestParameters: WorkScheduleCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -88,12 +88,12 @@ export class WorkScheduleApi extends runtime.BaseAPI {
             body: CreateWorkScheduleCommandToJSON(requestParameters['createWorkScheduleCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async workScheduleCreate(requestParameters: WorkScheduleCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDto> {
+    async workScheduleCreate(requestParameters: WorkScheduleCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDetailsDto> {
         const response = await this.workScheduleCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -134,7 +134,7 @@ export class WorkScheduleApi extends runtime.BaseAPI {
 
     /**
      */
-    async workScheduleGetAllRaw(requestParameters: WorkScheduleGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WorkScheduleDto>>> {
+    async workScheduleGetAllRaw(requestParameters: WorkScheduleGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WorkScheduleDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -154,19 +154,19 @@ export class WorkScheduleApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(WorkScheduleDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(WorkScheduleDetailsDtoFromJSON));
     }
 
     /**
      */
-    async workScheduleGetAll(requestParameters: WorkScheduleGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<WorkScheduleDto>> {
+    async workScheduleGetAll(requestParameters: WorkScheduleGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<WorkScheduleDetailsDto>> {
         const response = await this.workScheduleGetAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async workScheduleGetByIdRaw(requestParameters: WorkScheduleGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDto>> {
+    async workScheduleGetByIdRaw(requestParameters: WorkScheduleGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -189,19 +189,19 @@ export class WorkScheduleApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async workScheduleGetById(requestParameters: WorkScheduleGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDto> {
+    async workScheduleGetById(requestParameters: WorkScheduleGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDetailsDto> {
         const response = await this.workScheduleGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async workScheduleSearchRaw(requestParameters: WorkScheduleSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDtoPaginated>> {
+    async workScheduleSearchRaw(requestParameters: WorkScheduleSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -220,19 +220,19 @@ export class WorkScheduleApi extends runtime.BaseAPI {
             body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async workScheduleSearch(requestParameters: WorkScheduleSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDtoPaginated> {
+    async workScheduleSearch(requestParameters: WorkScheduleSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDetailsDtoPaginated> {
         const response = await this.workScheduleSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async workScheduleUpdateRaw(requestParameters: WorkScheduleUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDto>> {
+    async workScheduleUpdateRaw(requestParameters: WorkScheduleUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WorkScheduleDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -258,12 +258,12 @@ export class WorkScheduleApi extends runtime.BaseAPI {
             body: CreateWorkScheduleCommandToJSON(requestParameters['createWorkScheduleCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => WorkScheduleDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async workScheduleUpdate(requestParameters: WorkScheduleUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDto> {
+    async workScheduleUpdate(requestParameters: WorkScheduleUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleDetailsDto> {
         const response = await this.workScheduleUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

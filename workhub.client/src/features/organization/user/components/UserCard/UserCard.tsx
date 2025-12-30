@@ -1,10 +1,10 @@
-import { UserMinimalDto } from "@/generate-api";
+import { UserReferenceDto } from "@/generate-api";
 import { Avatar } from "antd";
 import type { FC, HTMLAttributes } from "react";
 import "./UserCard.css";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  user: UserMinimalDto;
+  user: UserReferenceDto;
   size?: number;
   showEmail?: boolean;
 };

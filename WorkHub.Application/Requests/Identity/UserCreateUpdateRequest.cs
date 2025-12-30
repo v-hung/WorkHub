@@ -30,7 +30,7 @@ namespace WorkHub.Application.Requests.Identity
 
 		public int? WorkScheduleId { get; set; }
 
-		public UserDetailDto? UserDetail { get; set; }
+		public UserProfileDto? UserProfile { get; set; }
 
 		public Guid? SupervisorId { get; set; }
 

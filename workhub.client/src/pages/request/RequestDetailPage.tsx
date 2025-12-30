@@ -5,7 +5,7 @@ import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import { wrapPromise } from "@/utils/promise";
 import { requestApi } from "@/services/apiClient";
 import { redirect, useLoaderData } from "react-router";
-import { RequestCombinedDto, RequestType } from "@/generate-api";
+import { RequestCombinedDetailsDto, RequestType } from "@/generate-api";
 import { JSX, lazy, Suspense } from "react";
 import NotificationSubHeader from "@/features/system/notification/components/NotificationSubHeader/NotificationSubHeader";
 
@@ -35,7 +35,7 @@ export const loader = wrapProtectedLoader(async ({ params }) => {
 });
 
 export function Component() {
-  const data = useLoaderData() as RequestCombinedDto;
+  const data = useLoaderData() as RequestCombinedDetailsDto;
 
   const requestTypePages: Record<RequestType, JSX.Element> = {
     [RequestType.LeaveRequest]: <LeaveRequestPanelLazy data={data} />,

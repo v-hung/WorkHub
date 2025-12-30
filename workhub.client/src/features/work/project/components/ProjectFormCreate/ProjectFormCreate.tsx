@@ -10,7 +10,7 @@ import {
 } from "react";
 import {
   CreateProjectCommand,
-  ProjectDto,
+  ProjectDetailsDto,
   ProjectStatus,
 } from "@/generate-api";
 import {
@@ -23,7 +23,7 @@ import { UserSelectMemo } from "@/features/organization/user/components/UserSele
 import RangePicker from "@/ui/form/RangePicker";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: ProjectDto;
+  record?: ProjectDetailsDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 

@@ -2,7 +2,7 @@ import {
   Permission,
   SearchCondition,
   SearchOperator,
-  UserDto,
+  UserDetailsDto,
   UserPosition,
   UserStatus,
 } from "@/generate-api";
@@ -21,7 +21,7 @@ import {
 
 export const getUserTableColumns = (
   searchConditions: SearchCondition[]
-): TableProps<UserDto>["columns"] => {
+): TableProps<UserDetailsDto>["columns"] => {
   return [
     {
       title: "User",

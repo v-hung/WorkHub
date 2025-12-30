@@ -4,7 +4,7 @@ import { workScheduleTableColumns } from "./constants";
 import { useWorkSchedulesContext } from "../../contexts/WorkScheduleContext";
 import { TablePaginationConfig } from "antd";
 import { FilterValue, SorterResult } from "antd/es/table/interface";
-import { WorkScheduleDto } from "@/generate-api";
+import { WorkScheduleDetailsDto } from "@/generate-api";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 
 const WorkScheduleTable = () => {
@@ -19,7 +19,9 @@ const WorkScheduleTable = () => {
     async (
       pagination: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
-      sorter: SorterResult<WorkScheduleDto> | SorterResult<WorkScheduleDto>[]
+      sorter:
+        | SorterResult<WorkScheduleDetailsDto>
+        | SorterResult<WorkScheduleDetailsDto>[]
     ) => {
       const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,

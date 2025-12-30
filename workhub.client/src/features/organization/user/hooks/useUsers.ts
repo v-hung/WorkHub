@@ -1,6 +1,6 @@
 import { getMessageError } from "@/utils/error.utils";
 import {
-  UserDtoPaginated,
+  UserDetailsDtoPaginated,
   PagedRequest,
   SearchOperator,
   UserStatus,
@@ -15,7 +15,7 @@ export const useUsers = () => {
   // GET LIST USER
   // =============
 
-  const [userPaginated, setUserPaginated] = useState<UserDtoPaginated>({
+  const [userPaginated, setUserPaginated] = useState<UserDetailsDtoPaginated>({
     data: [],
     currentPage: 1,
     pageSize: 25,

@@ -9,9 +9,9 @@ namespace WorkHub.Application.Mappings
 	{
 		public TeamProfile()
 		{
-			CreateMap<Team, TeamMinimalDto>().ReverseMap();
-			CreateMap<Team, TeamDto>().ReverseMap();
-			CreateMap<Team, TeamFullDto>().ReverseMap();
+			CreateMap<Team, TeamReferenceDto>().ReverseMap();
+			CreateMap<Team, TeamDetailsDto>().ReverseMap();
+			CreateMap<Team, TeamFormDto>().ReverseMap();
 			CreateMap<CreateTeamCommand, Team>().ReverseMap();
 		}
 	}

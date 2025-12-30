@@ -5,7 +5,7 @@ import { teamTableColumns } from "./constants";
 import { useTeamContext } from "../../contexts/TeamContext";
 import { TablePaginationConfig } from "antd";
 import { FilterValue, SorterResult } from "antd/es/table/interface";
-import { TeamDto } from "@/generate-api";
+import { TeamDetailsDto } from "@/generate-api";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 
 const TeamTable = () => {
@@ -19,7 +19,7 @@ const TeamTable = () => {
     async (
       pagination: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
-      sorter: SorterResult<TeamDto> | SorterResult<TeamDto>[]
+      sorter: SorterResult<TeamDetailsDto> | SorterResult<TeamDetailsDto>[]
     ) => {
       const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,

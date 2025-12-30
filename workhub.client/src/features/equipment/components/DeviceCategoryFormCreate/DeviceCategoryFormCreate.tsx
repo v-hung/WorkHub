@@ -8,13 +8,16 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateDeviceCategoryCommand, DeviceCategoryDto } from "@/generate-api";
+import {
+  CreateDeviceCategoryCommand,
+  DeviceCategoryDetailsDto,
+} from "@/generate-api";
 import { useNavigate } from "react-router";
 import { useDeviceCategoryAction } from "@/features/equipment/hooks/useDeviceCategoryAction";
 import { DeviceSelectMemo } from "@/features/equipment/components/DeviceSelect/DeviceSelect";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: DeviceCategoryDto;
+  record?: DeviceCategoryDetailsDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 

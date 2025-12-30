@@ -6,7 +6,7 @@ using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Features.WorkSchedules.Queries
 {
-	public class GetWorkScheduleByIdQuery : IRequest<WorkScheduleDto>
+	public class GetWorkScheduleByIdQuery : IRequest<WorkScheduleDetailsDto>
 	{
 		public int Id;
 
@@ -16,7 +16,7 @@ namespace WorkHub.Application.Features.WorkSchedules.Queries
 		}
 	}
 
-	public class GetWorkScheduleByIdQueryHandler : IRequestHandler<GetWorkScheduleByIdQuery, WorkScheduleDto>
+	public class GetWorkScheduleByIdQueryHandler : IRequestHandler<GetWorkScheduleByIdQuery, WorkScheduleDetailsDto>
 	{
 		private readonly IRepository<WorkSchedule, int> _repositoryService;
 
@@ -28,9 +28,9 @@ namespace WorkHub.Application.Features.WorkSchedules.Queries
 			_localizer = localizer;
 		}
 
-		public async Task<WorkScheduleDto> Handle(GetWorkScheduleByIdQuery query, CancellationToken cancellationToken)
+		public async Task<WorkScheduleDetailsDto> Handle(GetWorkScheduleByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.GetByIdAsync<WorkScheduleDto, int>(query.Id);
+			return await _repositoryService.GetByIdAsync<WorkScheduleDetailsDto, int>(query.Id);
 		}
 	}
 }

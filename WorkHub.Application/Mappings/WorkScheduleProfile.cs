@@ -9,7 +9,7 @@ namespace WorkHub.Application.Mappings
 	{
 		public WorkScheduleProfile()
 		{
-			CreateMap<WorkSchedule, WorkScheduleDto>().ReverseMap();
+			CreateMap<WorkSchedule, WorkScheduleDetailsDto>().ReverseMap();
 			CreateMap<CreateWorkScheduleCommand, WorkSchedule>().ReverseMap();
 		}
 	}

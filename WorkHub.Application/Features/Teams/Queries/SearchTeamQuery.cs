@@ -7,12 +7,12 @@ using WorkHub.Domain.Entities.Organization;
 
 namespace WorkHub.Application.Features.Teams.Queries
 {
-	public class SearchTeamQuery : IRequest<Paginated<TeamDto>>
+	public class SearchTeamQuery : IRequest<Paginated<TeamDetailsDto>>
 	{
 		public required PagedRequest Request { get; set; }
 	}
 
-	public class SearchTeamQueryHandler : IRequestHandler<SearchTeamQuery, Paginated<TeamDto>>
+	public class SearchTeamQueryHandler : IRequestHandler<SearchTeamQuery, Paginated<TeamDetailsDto>>
 	{
 		private readonly IRepository<Team, int> _repository;
 
@@ -21,9 +21,9 @@ namespace WorkHub.Application.Features.Teams.Queries
 			_repository = repository;
 		}
 
-		public async Task<Paginated<TeamDto>> Handle(SearchTeamQuery query, CancellationToken cancellationToken)
+		public async Task<Paginated<TeamDetailsDto>> Handle(SearchTeamQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<TeamDto, int>(query.Request);
+			return await _repository.SearchAsync<TeamDetailsDto, int>(query.Request);
 		}
 	}
 }

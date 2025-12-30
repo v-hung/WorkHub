@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateWorkScheduleCommand,
   CreateWorkScheduleCommandFromJSON,
-  WorkScheduleDto,
+  WorkScheduleDetailsDto,
 } from "@/generate-api";
 import { workScheduleApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -14,7 +14,9 @@ export const useWorkScheduleAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: WorkScheduleDto): CreateWorkScheduleCommand => {
+  const formDefault = (
+    data?: WorkScheduleDetailsDto
+  ): CreateWorkScheduleCommand => {
     if (!data) {
       return CreateWorkScheduleCommandFromJSON({});
     }

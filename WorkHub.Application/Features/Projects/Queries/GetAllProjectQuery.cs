@@ -7,12 +7,12 @@ using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Features.Projects.Queries
 {
-	public class GetAllProjectQuery : IRequest<List<ProjectDto>>
+	public class GetAllProjectQuery : IRequest<List<ProjectDetailsDto>>
 	{
 		public List<int> Ids { get; set; } = [];
 	}
 
-	public class GetAllProjectQueryHandler : IRequestHandler<GetAllProjectQuery, List<ProjectDto>>
+	public class GetAllProjectQueryHandler : IRequestHandler<GetAllProjectQuery, List<ProjectDetailsDto>>
 	{
 		private readonly IRepository<Project, int> _repository;
 
@@ -21,9 +21,9 @@ namespace WorkHub.Application.Features.Projects.Queries
 			_repository = repository;
 		}
 
-		public async Task<List<ProjectDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
+		public async Task<List<ProjectDetailsDto>> Handle(GetAllProjectQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.GetAllAsync<ProjectDto>(v => query.Ids.Contains(v.Id));
+			return await _repository.GetAllAsync<ProjectDetailsDto>(v => query.Ids.Contains(v.Id));
 		}
 	}
 }

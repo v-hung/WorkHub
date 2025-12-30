@@ -6,11 +6,11 @@ import {
   useContext,
 } from "react";
 import { useRoles } from "../hooks/useRoles";
-import { RoleDtoPaginated, PagedRequest } from "@/generate-api";
+import { RoleDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 import { useRoleAction } from "../hooks/useRoleAction";
 
 type RolesContextType = {
-  rolePaginated: RoleDtoPaginated;
+  rolePaginated: RoleDetailsDtoPaginated;
   updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: string) => Promise<void>;

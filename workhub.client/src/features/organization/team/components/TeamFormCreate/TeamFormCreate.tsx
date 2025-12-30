@@ -8,14 +8,14 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateTeamCommand, TeamFullDto } from "@/generate-api";
+import { CreateTeamCommand, TeamFormDto } from "@/generate-api";
 import { useTeamAction } from "../../hooks/useTeamAction";
 import { useNavigate } from "react-router";
 import { UserSelectMemo } from "@/features/organization/user/components/UserSelect/UserSelect";
 import { ProjectSelectMemo } from "@/features/work/project/components/ProjectSelect/ProjectSelect";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: TeamFullDto;
+  record?: TeamFormDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 

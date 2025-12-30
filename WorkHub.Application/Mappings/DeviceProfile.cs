@@ -9,11 +9,11 @@ namespace WorkHub.Application.Mappings
 	{
 		public DeviceProfile()
 		{
-			CreateMap<Device, DeviceDto>().ReverseMap();
-			CreateMap<Device, DeviceMinimalDto>().ReverseMap();
+			CreateMap<Device, DeviceDetailsDto>().ReverseMap();
+			CreateMap<Device, DeviceReferenceDto>().ReverseMap();
 			CreateMap<Device, CreateDeviceCommand>().ReverseMap();
-			CreateMap<DeviceCategory, DeviceCategoryDto>().ReverseMap();
-			CreateMap<DeviceCategory, DeviceCategoryMinimalDto>().ReverseMap();
+			CreateMap<DeviceCategory, DeviceCategoryDetailsDto>().ReverseMap();
+			CreateMap<DeviceCategory, DeviceCategoryReferenceDto>().ReverseMap();
 			CreateMap<DeviceCategory, CreateDeviceCategoryCommand>().ReverseMap();
 		}
 	}

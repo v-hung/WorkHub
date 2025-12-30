@@ -5,7 +5,7 @@ import { useDevicesContext } from "../../contexts/DeviceContext";
 import { TablePaginationConfig } from "antd";
 import { FilterValue, SorterResult } from "antd/es/table/interface";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
-import { DeviceDto } from "@/generate-api";
+import { DeviceDetailsDto } from "@/generate-api";
 
 const DeviceTable = () => {
   const { devicePaginated, updateRequest, loading } = useDevicesContext();
@@ -18,7 +18,7 @@ const DeviceTable = () => {
     async (
       pagination: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
-      sorter: SorterResult<DeviceDto> | SorterResult<DeviceDto>[]
+      sorter: SorterResult<DeviceDetailsDto> | SorterResult<DeviceDetailsDto>[]
     ) => {
       const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,

@@ -1,5 +1,5 @@
 import { useRequestContext } from "@/features/request/contexts/RequestContext";
-import { RequestType, RequestCombinedMinimalDto } from "@/generate-api";
+import { RequestType, RequestCombinedReferenceDto } from "@/generate-api";
 import { Button, Space, TableProps } from "antd";
 import { isBefore, isWeekend } from "date-fns";
 import { FC } from "react";
@@ -10,8 +10,8 @@ export type DataTimesheetTableType = {
   dateString: string;
   startTime?: string;
   endTime?: string;
-  workMinutes?: number | null;
-  requests?: Array<RequestCombinedMinimalDto> | null;
+  workedMinutes?: number | null;
+  requests?: Array<RequestCombinedReferenceDto> | null;
 };
 
 export const timesheetColumns: TableProps<DataTimesheetTableType>["columns"] = [

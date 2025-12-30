@@ -5,7 +5,7 @@ using WorkHub.Domain.Entities.Equipment;
 
 namespace WorkHub.Application.Features.Equipment.Queries
 {
-	public class GetDeviceCategoryByIdQuery : IRequest<DeviceCategoryDto>
+	public class GetDeviceCategoryByIdQuery : IRequest<DeviceCategoryDetailsDto>
 	{
 		public int Id;
 
@@ -15,7 +15,7 @@ namespace WorkHub.Application.Features.Equipment.Queries
 		}
 	}
 
-	public class GetDeviceCategoryByIdQueryHandler : IRequestHandler<GetDeviceCategoryByIdQuery, DeviceCategoryDto>
+	public class GetDeviceCategoryByIdQueryHandler : IRequestHandler<GetDeviceCategoryByIdQuery, DeviceCategoryDetailsDto>
 	{
 		private readonly IRepository<DeviceCategory, int> _repository;
 
@@ -24,9 +24,9 @@ namespace WorkHub.Application.Features.Equipment.Queries
 			_repository = repository;
 		}
 
-		public async Task<DeviceCategoryDto> Handle(GetDeviceCategoryByIdQuery query, CancellationToken cancellationToken)
+		public async Task<DeviceCategoryDetailsDto> Handle(GetDeviceCategoryByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.GetByIdAsync<DeviceCategoryDto, int>(query.Id);
+			return await _repository.GetByIdAsync<DeviceCategoryDetailsDto, int>(query.Id);
 		}
 	}
 }

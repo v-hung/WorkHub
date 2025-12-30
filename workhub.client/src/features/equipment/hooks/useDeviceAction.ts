@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateDeviceCommand,
   CreateDeviceCommandFromJSON,
-  DeviceDto,
+  DeviceDetailsDto,
 } from "@/generate-api";
 import { deviceApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export const useDeviceAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: DeviceDto): CreateDeviceCommand => {
+  const formDefault = (data?: DeviceDetailsDto): CreateDeviceCommand => {
     if (!data) {
       return CreateDeviceCommandFromJSON({});
     }

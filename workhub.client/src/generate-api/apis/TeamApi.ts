@@ -19,9 +19,9 @@ import type {
   ErrorResponse,
   ErrorValidateResponse,
   PagedRequest,
-  TeamDto,
-  TeamDtoPaginated,
-  TeamFullDto,
+  TeamDetailsDto,
+  TeamDetailsDtoPaginated,
+  TeamFormDto,
 } from '../models/index';
 import {
     CreateTeamCommandFromJSON,
@@ -32,12 +32,12 @@ import {
     ErrorValidateResponseToJSON,
     PagedRequestFromJSON,
     PagedRequestToJSON,
-    TeamDtoFromJSON,
-    TeamDtoToJSON,
-    TeamDtoPaginatedFromJSON,
-    TeamDtoPaginatedToJSON,
-    TeamFullDtoFromJSON,
-    TeamFullDtoToJSON,
+    TeamDetailsDtoFromJSON,
+    TeamDetailsDtoToJSON,
+    TeamDetailsDtoPaginatedFromJSON,
+    TeamDetailsDtoPaginatedToJSON,
+    TeamFormDtoFromJSON,
+    TeamFormDtoToJSON,
 } from '../models/index';
 
 export interface TeamCreateRequest {
@@ -72,7 +72,7 @@ export class TeamApi extends runtime.BaseAPI {
 
     /**
      */
-    async teamCreateRaw(requestParameters: TeamCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDto>> {
+    async teamCreateRaw(requestParameters: TeamCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -91,12 +91,12 @@ export class TeamApi extends runtime.BaseAPI {
             body: CreateTeamCommandToJSON(requestParameters['createTeamCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TeamDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TeamDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async teamCreate(requestParameters: TeamCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDto> {
+    async teamCreate(requestParameters: TeamCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDetailsDto> {
         const response = await this.teamCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -137,7 +137,7 @@ export class TeamApi extends runtime.BaseAPI {
 
     /**
      */
-    async teamGetAllRaw(requestParameters: TeamGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TeamDto>>> {
+    async teamGetAllRaw(requestParameters: TeamGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TeamDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -157,19 +157,19 @@ export class TeamApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TeamDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TeamDetailsDtoFromJSON));
     }
 
     /**
      */
-    async teamGetAll(requestParameters: TeamGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TeamDto>> {
+    async teamGetAll(requestParameters: TeamGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TeamDetailsDto>> {
         const response = await this.teamGetAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async teamGetByIdRaw(requestParameters: TeamGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamFullDto>> {
+    async teamGetByIdRaw(requestParameters: TeamGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamFormDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -192,19 +192,19 @@ export class TeamApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TeamFullDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TeamFormDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async teamGetById(requestParameters: TeamGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamFullDto> {
+    async teamGetById(requestParameters: TeamGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamFormDto> {
         const response = await this.teamGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async teamSearchRaw(requestParameters: TeamSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDtoPaginated>> {
+    async teamSearchRaw(requestParameters: TeamSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -223,19 +223,19 @@ export class TeamApi extends runtime.BaseAPI {
             body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TeamDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TeamDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async teamSearch(requestParameters: TeamSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDtoPaginated> {
+    async teamSearch(requestParameters: TeamSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDetailsDtoPaginated> {
         const response = await this.teamSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async teamUpdateRaw(requestParameters: TeamUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDto>> {
+    async teamUpdateRaw(requestParameters: TeamUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TeamDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -261,12 +261,12 @@ export class TeamApi extends runtime.BaseAPI {
             body: CreateTeamCommandToJSON(requestParameters['createTeamCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TeamDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TeamDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async teamUpdate(requestParameters: TeamUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDto> {
+    async teamUpdate(requestParameters: TeamUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamDetailsDto> {
         const response = await this.teamUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

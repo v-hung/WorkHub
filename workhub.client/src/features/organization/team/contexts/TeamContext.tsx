@@ -7,10 +7,10 @@ import {
 } from "react";
 import { useTeams } from "../hooks/useTeams";
 import { useTeamAction } from "../hooks/useTeamAction";
-import { TeamDtoPaginated, PagedRequest } from "@/generate-api";
+import { TeamDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 
 type TeamContextType = {
-  teamPaginated: TeamDtoPaginated;
+  teamPaginated: TeamDetailsDtoPaginated;
   updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;

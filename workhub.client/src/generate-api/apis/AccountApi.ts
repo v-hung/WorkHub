@@ -20,8 +20,8 @@ import type {
   ErrorValidateResponse,
   LoginRequest,
   RefreshTokenResponse,
-  UserDto,
-  UserDtoLoginResponse,
+  UserDetailsDto,
+  UserDetailsDtoLoginResponse,
 } from '../models/index';
 import {
     ChangePasswordRequestFromJSON,
@@ -34,10 +34,10 @@ import {
     LoginRequestToJSON,
     RefreshTokenResponseFromJSON,
     RefreshTokenResponseToJSON,
-    UserDtoFromJSON,
-    UserDtoToJSON,
-    UserDtoLoginResponseFromJSON,
-    UserDtoLoginResponseToJSON,
+    UserDetailsDtoFromJSON,
+    UserDetailsDtoToJSON,
+    UserDetailsDtoLoginResponseFromJSON,
+    UserDetailsDtoLoginResponseToJSON,
 } from '../models/index';
 
 export interface AccountChangePasswordRequest {
@@ -85,7 +85,7 @@ export class AccountApi extends runtime.BaseAPI {
 
     /**
      */
-    async accountGetCurrentUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDto>> {
+    async accountGetCurrentUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -101,12 +101,12 @@ export class AccountApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async accountGetCurrentUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDto> {
+    async accountGetCurrentUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetailsDto> {
         const response = await this.accountGetCurrentUserRaw(initOverrides);
         return await response.value();
     }
@@ -141,7 +141,7 @@ export class AccountApi extends runtime.BaseAPI {
 
     /**
      */
-    async accountLoginRaw(requestParameters: AccountLoginRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDtoLoginResponse>> {
+    async accountLoginRaw(requestParameters: AccountLoginRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetailsDtoLoginResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -160,12 +160,12 @@ export class AccountApi extends runtime.BaseAPI {
             body: LoginRequestToJSON(requestParameters['loginRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserDtoLoginResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserDetailsDtoLoginResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async accountLogin(requestParameters: AccountLoginRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDtoLoginResponse> {
+    async accountLogin(requestParameters: AccountLoginRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetailsDtoLoginResponse> {
         const response = await this.accountLoginRaw(requestParameters, initOverrides);
         return await response.value();
     }

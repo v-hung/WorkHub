@@ -8,9 +8,8 @@ namespace WorkHub.Application.Mappings
 	{
 		public TimesheetProfile()
 		{
-			CreateMap<Timesheet, TimesheetMinimalDto>().ReverseMap();
-			CreateMap<Timesheet, TimesheetDto>().ReverseMap();
-			CreateMap<Timesheet, TimesheetFullDto>().ReverseMap();
+			CreateMap<Timesheet, TimesheetReferenceDto>().ReverseMap();
+			CreateMap<Timesheet, TimesheetDetailsDto>().ReverseMap();
 		}
 	}
 }

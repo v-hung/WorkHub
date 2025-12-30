@@ -26,7 +26,7 @@ namespace WorkHub.Infrastructure.Services
 			_localizer = localizer;
 		}
 
-		public async Task<TimesheetDto> PerformCheckIn(string userId)
+		public async Task<TimesheetDetailsDto> PerformCheckIn(string userId)
 		{
 			Timesheet? timesheetDb = _context.Timesheets.FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date.Date == DateTime.Today);
 
@@ -38,7 +38,7 @@ namespace WorkHub.Infrastructure.Services
 					await _context.SaveChangesAsync();
 				}
 
-				return _mapper.Map<TimesheetDto>(timesheetDb);
+				return _mapper.Map<TimesheetDetailsDto>(timesheetDb);
 
 				// throw new BusinessException(HttpStatusCode.BadRequest, _localizer["CheckInAlreadyPerformed"]);
 			}
@@ -53,11 +53,11 @@ namespace WorkHub.Infrastructure.Services
 			_context.Timesheets.Add(timesheet);
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<TimesheetDto>(timesheet);
+			return _mapper.Map<TimesheetDetailsDto>(timesheet);
 
 		}
 
-		public async Task<TimesheetDto> PerformCheckOut(string userId)
+		public async Task<TimesheetDetailsDto> PerformCheckOut(string userId)
 		{
 			Timesheet timesheet = _context.Timesheets.Include(t => t.User).FirstOrDefault(t => t.UserId == new Guid(userId) && t.Date.Date == DateTime.Today) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound"]);
 
@@ -79,11 +79,11 @@ namespace WorkHub.Infrastructure.Services
 
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<TimesheetDto>(timesheet);
+			return _mapper.Map<TimesheetDetailsDto>(timesheet);
 
 		}
 
-		public async Task<TimesheetDto?> RecalculateWorkedMinutes(string userId, DateTime date)
+		public async Task<TimesheetDetailsDto?> RecalculateWorkedMinutes(string userId, DateTime date)
 		{
 			if (!Guid.TryParse(userId, out Guid userGuid))
 				throw new BusinessException(HttpStatusCode.BadRequest, "Invalid user ID format.");
@@ -102,7 +102,7 @@ namespace WorkHub.Infrastructure.Services
 			_context.Timesheets.Update(timesheet);
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<TimesheetDto>(timesheet);
+			return _mapper.Map<TimesheetDetailsDto>(timesheet);
 		}
 
 		private async Task<int> GetWorkedMinutesAsync(Timesheet timesheet)

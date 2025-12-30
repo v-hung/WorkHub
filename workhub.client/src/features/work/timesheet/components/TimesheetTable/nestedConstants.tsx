@@ -1,7 +1,7 @@
 import { format } from "@/utils/date.utils";
 import { useRequest } from "@/features/request/hooks/useRequest";
 import {
-  RequestCombinedMinimalDto,
+  RequestCombinedReferenceDto,
   RequestStatus,
   RequestType,
 } from "@/generate-api";
@@ -10,7 +10,7 @@ import { FC } from "react";
 import { useTimesheetContext } from "../../context/TimesheetContext";
 import { PresetStatusColorType } from "antd/es/_util/colors";
 
-export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["columns"] =
+export const requestTimesheetColumns: TableProps<RequestCombinedReferenceDto>["columns"] =
   [
     {
       title: "Date",
@@ -71,7 +71,7 @@ export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["col
   ];
 
 const RequestTableActionRender: FC<{
-  request: RequestCombinedMinimalDto;
+  request: RequestCombinedReferenceDto;
 }> = ({ request }) => {
   const { loading, cancel } = useRequest();
   const { getCurrentTimesheets, isCurrentMonth } = useTimesheetContext();

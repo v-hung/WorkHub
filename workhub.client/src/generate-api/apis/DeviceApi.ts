@@ -16,8 +16,8 @@
 import * as runtime from '../runtime';
 import type {
   CreateDeviceCommand,
-  DeviceDto,
-  DeviceDtoPaginated,
+  DeviceDetailsDto,
+  DeviceDetailsDtoPaginated,
   ErrorResponse,
   ErrorValidateResponse,
   PagedRequest,
@@ -25,10 +25,10 @@ import type {
 import {
     CreateDeviceCommandFromJSON,
     CreateDeviceCommandToJSON,
-    DeviceDtoFromJSON,
-    DeviceDtoToJSON,
-    DeviceDtoPaginatedFromJSON,
-    DeviceDtoPaginatedToJSON,
+    DeviceDetailsDtoFromJSON,
+    DeviceDetailsDtoToJSON,
+    DeviceDetailsDtoPaginatedFromJSON,
+    DeviceDetailsDtoPaginatedToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
@@ -69,7 +69,7 @@ export class DeviceApi extends runtime.BaseAPI {
 
     /**
      */
-    async deviceCreateRaw(requestParameters: DeviceCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDto>> {
+    async deviceCreateRaw(requestParameters: DeviceCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -88,12 +88,12 @@ export class DeviceApi extends runtime.BaseAPI {
             body: CreateDeviceCommandToJSON(requestParameters['createDeviceCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceCreate(requestParameters: DeviceCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDto> {
+    async deviceCreate(requestParameters: DeviceCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDetailsDto> {
         const response = await this.deviceCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -134,7 +134,7 @@ export class DeviceApi extends runtime.BaseAPI {
 
     /**
      */
-    async deviceGetAllRaw(requestParameters: DeviceGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DeviceDto>>> {
+    async deviceGetAllRaw(requestParameters: DeviceGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DeviceDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -154,19 +154,19 @@ export class DeviceApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(DeviceDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(DeviceDetailsDtoFromJSON));
     }
 
     /**
      */
-    async deviceGetAll(requestParameters: DeviceGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<DeviceDto>> {
+    async deviceGetAll(requestParameters: DeviceGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<DeviceDetailsDto>> {
         const response = await this.deviceGetAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deviceGetByIdRaw(requestParameters: DeviceGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDto>> {
+    async deviceGetByIdRaw(requestParameters: DeviceGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -189,19 +189,19 @@ export class DeviceApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceGetById(requestParameters: DeviceGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDto> {
+    async deviceGetById(requestParameters: DeviceGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDetailsDto> {
         const response = await this.deviceGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deviceSearchRaw(requestParameters: DeviceSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDtoPaginated>> {
+    async deviceSearchRaw(requestParameters: DeviceSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -220,19 +220,19 @@ export class DeviceApi extends runtime.BaseAPI {
             body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceSearch(requestParameters: DeviceSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDtoPaginated> {
+    async deviceSearch(requestParameters: DeviceSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDetailsDtoPaginated> {
         const response = await this.deviceSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deviceUpdateRaw(requestParameters: DeviceUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDto>> {
+    async deviceUpdateRaw(requestParameters: DeviceUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -258,12 +258,12 @@ export class DeviceApi extends runtime.BaseAPI {
             body: CreateDeviceCommandToJSON(requestParameters['createDeviceCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceUpdate(requestParameters: DeviceUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDto> {
+    async deviceUpdate(requestParameters: DeviceUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceDetailsDto> {
         const response = await this.deviceUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

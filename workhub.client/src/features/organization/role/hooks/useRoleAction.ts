@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   RoleCreateUpdateRequest,
   RoleCreateUpdateRequestFromJSON,
-  RoleDto,
+  RoleDetailsDto,
 } from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export const useRoleAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: RoleDto): RoleCreateUpdateRequest => {
+  const formDefault = (data?: RoleDetailsDto): RoleCreateUpdateRequest => {
     if (!data) {
       const form = RoleCreateUpdateRequestFromJSON({});
       return {

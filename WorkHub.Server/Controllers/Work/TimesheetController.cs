@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpGet("today")]
 		[Authorize]
-		public async Task<ActionResult<TimesheetResponse<TimesheetDto>>> GetTodayTimesheet()
+		public async Task<ActionResult<TimesheetResponse<TimesheetDetailsDto>>> GetTodayTimesheet()
 		{
 			var data = await _mediator.Send(new GetTodayTimesheetQuery());
 
@@ -23,7 +23,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpGet("monthly")]
 		[Authorize]
-		public async Task<ActionResult<List<TimesheetDto>>> GetCurrentUserMonthlyTimesheets(int month, int year)
+		public async Task<ActionResult<List<TimesheetDetailsDto>>> GetCurrentUserMonthlyTimesheets(int month, int year)
 		{
 			var data = await _mediator.Send(new GetCurrentUserMonthlyTimesheetsQuery { Month = month, Year = year });
 
@@ -32,7 +32,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpGet("monthly/all")]
 		[Authorize(Policy = "Permissions.Timesheets.View")]
-		public async Task<ActionResult<Paginated<TimesheetFullDto>>> GetMonthlyTimesheets([FromQuery] GetMonthlyTimesheetsQuery query)
+		public async Task<ActionResult<Paginated<TimesheetDetailsDto>>> GetMonthlyTimesheets([FromQuery] GetMonthlyTimesheetsQuery query)
 		{
 			var data = await _mediator.Send(query);
 
@@ -41,7 +41,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPost("checkin")]
 		[Authorize]
-		public async Task<ActionResult<TimesheetResponse<TimesheetDto>>> CheckIn()
+		public async Task<ActionResult<TimesheetResponse<TimesheetDetailsDto>>> CheckIn()
 		{
 			var data = await _mediator.Send(new CheckInCommand());
 
@@ -50,7 +50,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPost("checkout")]
 		[Authorize]
-		public async Task<ActionResult<TimesheetResponse<TimesheetDto>>> CheckOut()
+		public async Task<ActionResult<TimesheetResponse<TimesheetDetailsDto>>> CheckOut()
 		{
 			var data = await _mediator.Send(new CheckOutCommand());
 

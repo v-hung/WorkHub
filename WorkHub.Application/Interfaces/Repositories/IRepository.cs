@@ -20,13 +20,21 @@ namespace WorkHub.Application.Interfaces.Repositories
 
 		Task<D> GetByIdAsync<D, DId>(TId id, bool asNoTracking = true) where D : IEntity<DId> where DId : notnull;
 
-		Task<D> CreateAsync<D>(object request, List<Func<T, Task>>? updateRelations = null) where D : class;
+		Task<T> CreateAsync(object request);
 
-		Task<D> UpdateAsync<D, DId>(TId id, object request, List<Func<T, Task>>? updateRelations = null) where D : class, IEntity<DId>;
-
-		Task UpdateRelatedEntitiesAsync<D, DId>(T entity, Expression<Func<T, ICollection<D>>> navigationProperty, IList<DId> relatedEntityIds, TId? id = default) where D : class, IEntity<DId>;
+		Task<T> UpdateAsync(TId id, object request);
 
 		Task DeleteAsync(TId id);
+
+		// heper methods for entity operations
+
+		Task<TResult> AddAsync<TResult>(TResult entity) where TResult : class;
+
+		Task<TResult> GetEntityByIdAsync<TResult, TResultId>(TResultId id, bool asNoTracking = false) where TResult : class, IEntity<TResultId>;
+
+		Task<List<TResult>> GetEntityByIdsAsync<TResult, TResultId>(List<TResultId> ids, bool asNoTracking = false) where TResult : class, IEntity<TResultId>;
+
+		Task LoadCollectionAsync<TResult, TResultTProperty>(TResult entity, Expression<Func<TResult, IEnumerable<TResultTProperty>>> navigationProperty) where TResultTProperty : class where TResult : class;
 
 	}
 }

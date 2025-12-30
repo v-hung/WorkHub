@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { RoleDtoPaginated, PagedRequest } from "@/generate-api";
+import { RoleDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 import { roleApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useRef, useState } from "react";
@@ -11,7 +11,7 @@ export const useRoles = () => {
   // GET LIST role
   // =============
 
-  const [rolePaginated, setRolePaginated] = useState<RoleDtoPaginated>({
+  const [rolePaginated, setRolePaginated] = useState<RoleDetailsDtoPaginated>({
     data: [],
     currentPage: 1,
     pageSize: 25,

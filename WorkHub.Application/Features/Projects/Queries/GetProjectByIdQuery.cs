@@ -5,7 +5,7 @@ using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Features.Projects.Queries
 {
-	public class GetProjectByIdQuery : IRequest<ProjectDto>
+	public class GetProjectByIdQuery : IRequest<ProjectDetailsDto>
 	{
 		public int Id;
 
@@ -15,7 +15,7 @@ namespace WorkHub.Application.Features.Projects.Queries
 		}
 	}
 
-	public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDto>
+	public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProjectDetailsDto>
 	{
 		private readonly IRepository<Project, int> _repositoryService;
 
@@ -24,9 +24,9 @@ namespace WorkHub.Application.Features.Projects.Queries
 			_repositoryService = repositoryService;
 		}
 
-		public async Task<ProjectDto> Handle(GetProjectByIdQuery query, CancellationToken cancellationToken)
+		public async Task<ProjectDetailsDto> Handle(GetProjectByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.GetByIdAsync<ProjectDto, int>(query.Id);
+			return await _repositoryService.GetByIdAsync<ProjectDetailsDto, int>(query.Id);
 		}
 	}
 }

@@ -1,11 +1,11 @@
 import { localTimeToDate, setTimeToDate } from "@/utils/date.utils";
-import { WorkScheduleDto } from "@/generate-api";
+import { WorkScheduleDetailsDto } from "@/generate-api";
 import { isAfter, differenceInSeconds, add, isBefore } from "date-fns";
 
 export function calculateWorkDay(
   startTime: Date,
   endTime: Date,
-  workSchedule: WorkScheduleDto
+  workSchedule: WorkScheduleDetailsDto
 ): number {
   let totalWorkingSeconds = 0;
 

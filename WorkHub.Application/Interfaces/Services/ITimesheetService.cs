@@ -4,10 +4,10 @@ namespace WorkHub.Application.Interfaces.Services
 {
 	public interface ITimesheetService
 	{
-		Task<TimesheetDto> PerformCheckIn(string userId);
+		Task<TimesheetDetailsDto> PerformCheckIn(string userId);
 
-		Task<TimesheetDto> PerformCheckOut(string userId);
+		Task<TimesheetDetailsDto> PerformCheckOut(string userId);
 
-		Task<TimesheetDto?> RecalculateWorkedMinutes(string userId, DateTime date);
+		Task<TimesheetDetailsDto?> RecalculateWorkedMinutes(string userId, DateTime date);
 	}
 }

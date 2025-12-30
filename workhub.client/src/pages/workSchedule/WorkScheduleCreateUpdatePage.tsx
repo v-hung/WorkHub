@@ -7,7 +7,7 @@ import WorkScheduleFormCreate, {
 } from "@/features/organization/workSchedule/components/WorkScheduleFormCreate/WorkScheduleFormCreate";
 import { workScheduleApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { Permission, WorkScheduleDto } from "@/generate-api";
+import { Permission, WorkScheduleDetailsDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -38,7 +38,7 @@ export const loader = wrapProtectedLoader(
 );
 
 export function Component() {
-  const data = useLoaderData() as WorkScheduleDto;
+  const data = useLoaderData() as WorkScheduleDetailsDto;
 
   const [loading, setLoading] = useState(false);
   const formRef = useRef<WorkScheduleFormCreateRefState | null>(null);

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using MediatR;
 using WorkHub.Application.DTOs.Work;
 using WorkHub.Application.Interfaces.Repositories;
@@ -7,7 +8,7 @@ using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Features.WorkSchedules.Commands
 {
-	public class CreateWorkScheduleCommand : IRequest<WorkScheduleDto>
+	public class CreateWorkScheduleCommand : IRequest<WorkScheduleDetailsDto>
 	{
 		[Required]
 		public string Title { get; set; } = string.Empty;
@@ -23,19 +24,29 @@ namespace WorkHub.Application.Features.WorkSchedules.Commands
 		public int AllowedLateMinutes { get; set; } = TimesheetConst.ALLOWED_LATE_MINUTES;
 	}
 
-	public class CreateWorkScheduleCommandHandler : IRequestHandler<CreateWorkScheduleCommand, WorkScheduleDto>
+	public class CreateWorkScheduleCommandHandler : IRequestHandler<CreateWorkScheduleCommand, WorkScheduleDetailsDto>
 	{
 
 		private readonly IRepository<WorkSchedule, int> _repository;
+		private readonly IUnitOfWork _unitOfWork;
+		private readonly IMapper _mapper;
 
-		public CreateWorkScheduleCommandHandler(IRepository<WorkSchedule, int> repository)
+		public CreateWorkScheduleCommandHandler(IRepository<WorkSchedule, int> repository, IUnitOfWork unitOfWork, IMapper mapper)
 		{
 			_repository = repository;
+			_unitOfWork = unitOfWork;
+			_mapper = mapper;
 		}
 
-		public async Task<WorkScheduleDto> Handle(CreateWorkScheduleCommand command, CancellationToken cancellationToken)
+		public async Task<WorkScheduleDetailsDto> Handle(CreateWorkScheduleCommand command, CancellationToken cancellationToken)
 		{
-			return await _repository.CreateAsync<WorkScheduleDto>(command);
+			var entity = _mapper.Map<WorkSchedule>(command);
+
+			await _repository.AddAsync(entity);
+
+			await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+			return _mapper.Map<WorkScheduleDetailsDto>(entity);
 		}
 	}
 }

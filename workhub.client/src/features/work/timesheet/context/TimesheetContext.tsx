@@ -7,10 +7,10 @@ import {
   useContext,
 } from "react";
 import { useCurrentTimesheets } from "../hooks/useCurrentTimesheets";
-import { TimesheetDto } from "@/generate-api";
+import { TimesheetDetailsDto } from "@/generate-api";
 
 type TimesheetContextType = {
-  timesheets: TimesheetDto[];
+  timesheets: TimesheetDetailsDto[];
   loading: boolean;
   selectedDate: Date;
   updateSelectedDate: Dispatch<SetStateAction<Date>>;

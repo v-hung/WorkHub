@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateDeviceCategoryCommand,
   CreateDeviceCategoryCommandFromJSON,
-  DeviceCategoryDto,
+  DeviceCategoryDetailsDto,
 } from "@/generate-api";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -15,7 +15,7 @@ export const useDeviceCategoryAction = () => {
   // =============
 
   const formDefault = (
-    data?: DeviceCategoryDto
+    data?: DeviceCategoryDetailsDto
   ): CreateDeviceCategoryCommand => {
     if (!data) {
       return CreateDeviceCategoryCommandFromJSON({});

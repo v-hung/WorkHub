@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { DeviceDtoPaginated, PagedRequest } from "@/generate-api";
+import { DeviceDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 import { deviceApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useRef, useState } from "react";
@@ -11,15 +11,16 @@ export const useDevices = () => {
   // GET LIST device
   // =============
 
-  const [devicePaginated, setDevicePaginated] = useState<DeviceDtoPaginated>({
-    data: [],
-    currentPage: 1,
-    pageSize: 25,
-    totalCount: 0,
-    totalPages: 0,
-    hasNextPage: false,
-    hasPreviousPage: false,
-  });
+  const [devicePaginated, setDevicePaginated] =
+    useState<DeviceDetailsDtoPaginated>({
+      data: [],
+      currentPage: 1,
+      pageSize: 25,
+      totalCount: 0,
+      totalPages: 0,
+      hasNextPage: false,
+      hasPreviousPage: false,
+    });
 
   const request = useRef<PagedRequest>({
     pageNumber: devicePaginated.currentPage,

@@ -5,7 +5,7 @@ import { roleTableColumns } from "./constants";
 import { useRolesContext } from "../../contexts/RoleContext";
 import { TablePaginationConfig } from "antd";
 import { FilterValue, SorterResult } from "antd/es/table/interface";
-import { RoleDto } from "@/generate-api";
+import { RoleDetailsDto } from "@/generate-api";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 
 const RoleTable = () => {
@@ -19,7 +19,7 @@ const RoleTable = () => {
     async (
       pagination: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
-      sorter: SorterResult<RoleDto> | SorterResult<RoleDto>[]
+      sorter: SorterResult<RoleDetailsDto> | SorterResult<RoleDetailsDto>[]
     ) => {
       const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,

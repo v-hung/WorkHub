@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateLeaveRequestDto,
   CreateLeaveRequestDtoFromJSON,
-  RequestCombinedDto,
+  RequestCombinedDetailsDto,
   RequestType,
 } from "@/generate-api";
 import { requestApi } from "@/services/apiClient";
@@ -63,7 +63,7 @@ export const useLeaveRequestAction = () => {
 
   const approval = async (
     id: number,
-    cb?: (data: RequestCombinedDto) => void
+    cb?: (data: RequestCombinedDetailsDto) => void
   ) => {
     setLoading(true);
     try {
@@ -90,7 +90,7 @@ export const useLeaveRequestAction = () => {
 
   const reject = async (
     id: number,
-    cb?: (data: RequestCombinedDto) => void
+    cb?: (data: RequestCombinedDetailsDto) => void
   ) => {
     setLoading(true);
     try {

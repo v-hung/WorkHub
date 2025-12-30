@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   BioStarSyncHistoricalEventsResponse,
   GetHistoricalEventsRequest,
-  TimesheetFullDtoPaginated,
+  TimesheetDetailsDtoPaginated,
 } from "@/generate-api";
 import { bioStarApi, timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
@@ -18,7 +18,7 @@ export type GetMonthlyTimesheetRequest = {
 export const useTimesheets = () => {
   const [loading, setLoading] = useState(false);
   const [timesheetPaginated, setTimesheetPaginated] =
-    useState<TimesheetFullDtoPaginated>();
+    useState<TimesheetDetailsDtoPaginated>();
 
   const [request, setRequest] = useState<GetMonthlyTimesheetRequest>({
     date: new Date(),

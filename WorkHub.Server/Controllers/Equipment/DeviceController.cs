@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Time
 	{
 		[HttpGet]
 		[Authorize(Policy = Permissions.Devices.View)]
-		public async Task<ActionResult<List<DeviceDto>>> GetAll([FromQuery] List<int> ids)
+		public async Task<ActionResult<List<DeviceDetailsDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var data = await _mediator.Send(new GetAllDeviceQuery { Ids = ids });
 
@@ -23,7 +23,7 @@ namespace WorkHub.Server.Controllers.Time
 
 		[HttpPost("search")]
 		[Authorize(Policy = Permissions.Devices.View)]
-		public async Task<ActionResult<Paginated<DeviceDto>>> Search(PagedRequest request)
+		public async Task<ActionResult<Paginated<DeviceDetailsDto>>> Search(PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchDeviceQuery { Request = request });
 
@@ -32,7 +32,7 @@ namespace WorkHub.Server.Controllers.Time
 
 		[HttpGet("{id}")]
 		[Authorize(Policy = Permissions.Devices.View)]
-		public async Task<ActionResult<DeviceDto>> GetById(int id)
+		public async Task<ActionResult<DeviceDetailsDto>> GetById(int id)
 		{
 			var data = await _mediator.Send(new GetDeviceByIdQuery(id));
 
@@ -41,7 +41,7 @@ namespace WorkHub.Server.Controllers.Time
 
 		[HttpPost]
 		[Authorize(Policy = Permissions.Devices.Create)]
-		public async Task<ActionResult<DeviceDto>> Create(CreateDeviceCommand request)
+		public async Task<ActionResult<DeviceDetailsDto>> Create(CreateDeviceCommand request)
 		{
 			var data = await _mediator.Send(request);
 
@@ -50,7 +50,7 @@ namespace WorkHub.Server.Controllers.Time
 
 		[HttpPut("{id}")]
 		[Authorize(Policy = Permissions.Devices.Edit)]
-		public async Task<ActionResult<DeviceDto>> Update(int id, CreateDeviceCommand request)
+		public async Task<ActionResult<DeviceDetailsDto>> Update(int id, CreateDeviceCommand request)
 		{
 			var data = await _mediator.Send(new UpdateDeviceCommand { Id = id, Request = request });
 

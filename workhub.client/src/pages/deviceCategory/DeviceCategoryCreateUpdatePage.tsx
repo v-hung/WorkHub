@@ -7,7 +7,7 @@ import DeviceCategoryFormCreate, {
 } from "@/features/equipment/components/DeviceCategoryFormCreate/DeviceCategoryFormCreate";
 import { deviceCategoryApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { DeviceCategoryDto, Permission } from "@/generate-api";
+import { DeviceCategoryDetailsDto, Permission } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -38,7 +38,7 @@ export const loader = wrapProtectedLoader(
 );
 
 export function Component() {
-  const data = useLoaderData() as DeviceCategoryDto;
+  const data = useLoaderData() as DeviceCategoryDetailsDto;
 
   const [loading, setLoading] = useState(false);
   const formRef = useRef<DeviceCategoryFormCreateRefState | null>(null);

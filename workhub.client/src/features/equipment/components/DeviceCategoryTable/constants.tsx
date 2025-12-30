@@ -2,11 +2,11 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps, Tag } from "antd";
 import { FC } from "react";
 import { useDeviceCategoriesContext } from "../../../equipment/contexts/DeviceCategoryContext";
-import { DeviceCategoryDto, Permission } from "@/generate-api";
+import { DeviceCategoryDetailsDto, Permission } from "@/generate-api";
 import { getUniqueColor } from "@/utils/color.utils";
 import { hasPermission } from "@/utils/hasPermission";
 
-export const deviceCategoryTableColumns: TableProps<DeviceCategoryDto>["columns"] =
+export const deviceCategoryTableColumns: TableProps<DeviceCategoryDetailsDto>["columns"] =
   [
     { title: "Name", dataIndex: "name", key: "name" },
     {

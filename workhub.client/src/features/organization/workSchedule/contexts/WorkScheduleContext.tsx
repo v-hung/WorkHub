@@ -7,10 +7,10 @@ import {
 } from "react";
 import { useWorkSchedules } from "../hooks/useWorkSchedules";
 import { useWorkScheduleAction } from "../hooks/useWorkScheduleAction";
-import { WorkScheduleDtoPaginated, PagedRequest } from "@/generate-api";
+import { WorkScheduleDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 
 type WorkSchedulesContextType = {
-  workSchedulePaginated: WorkScheduleDtoPaginated;
+  workSchedulePaginated: WorkScheduleDetailsDtoPaginated;
   updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;

@@ -1,5 +1,5 @@
 import UserCard from "@/features/organization/user/components/UserCard/UserCard";
-import { RequestCombinedDto } from "@/generate-api";
+import { RequestCombinedDetailsDto } from "@/generate-api";
 import { format, formatDistanceStrict } from "@/utils/date.utils";
 import { Button, Card, Flex, Tag } from "antd";
 import { useState, type FC, type HTMLAttributes } from "react";
@@ -8,7 +8,7 @@ import { calculateWorkDay } from "@/features/work/timesheet/utils/timesheet.util
 import { useLeaveRequestAction } from "../../hooks/useLeaveRequestAction";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  data: RequestCombinedDto;
+  data: RequestCombinedDetailsDto;
 };
 
 const LeaveRequestPanel: FC<State> = (props) => {

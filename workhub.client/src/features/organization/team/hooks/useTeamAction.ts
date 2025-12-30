@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateTeamCommand,
   CreateTeamCommandFromJSON,
-  TeamFullDto,
+  TeamFormDto,
 } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export const useTeamAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: TeamFullDto): CreateTeamCommand => {
+  const formDefault = (data?: TeamFormDto): CreateTeamCommand => {
     if (!data) {
       return CreateTeamCommandFromJSON({});
     }

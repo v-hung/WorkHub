@@ -1,17 +1,17 @@
-import { UserMinimalDto } from "@/generate-api";
+import { UserReferenceDto } from "@/generate-api";
 import { getUniqueColor } from "@/utils/color.utils";
 import { Avatar, Tooltip } from "antd";
 import type { ComponentProps, FC } from "react";
 
 type State = ComponentProps<typeof Avatar.Group> & {
-  manager?: UserMinimalDto | undefined;
-  members?: UserMinimalDto[] | null | undefined;
+  manager?: UserReferenceDto | undefined;
+  members?: UserReferenceDto[] | null | undefined;
 };
 
 const UserTableItem: FC<State> = (props) => {
   const { manager, members, ...rest } = props;
 
-  const users: UserMinimalDto[] = [
+  const users: UserReferenceDto[] = [
     ...(manager ? [manager] : []),
     ...(members ?? []),
   ];

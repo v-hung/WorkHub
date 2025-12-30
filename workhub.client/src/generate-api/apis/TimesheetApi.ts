@@ -17,21 +17,21 @@ import * as runtime from '../runtime';
 import type {
   ErrorResponse,
   ErrorValidateResponse,
-  TimesheetDto,
-  TimesheetDtoTimesheetResponse,
-  TimesheetFullDtoPaginated,
+  TimesheetDetailsDto,
+  TimesheetDetailsDtoPaginated,
+  TimesheetDetailsDtoTimesheetResponse,
 } from '../models/index';
 import {
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    TimesheetDtoFromJSON,
-    TimesheetDtoToJSON,
-    TimesheetDtoTimesheetResponseFromJSON,
-    TimesheetDtoTimesheetResponseToJSON,
-    TimesheetFullDtoPaginatedFromJSON,
-    TimesheetFullDtoPaginatedToJSON,
+    TimesheetDetailsDtoFromJSON,
+    TimesheetDetailsDtoToJSON,
+    TimesheetDetailsDtoPaginatedFromJSON,
+    TimesheetDetailsDtoPaginatedToJSON,
+    TimesheetDetailsDtoTimesheetResponseFromJSON,
+    TimesheetDetailsDtoTimesheetResponseToJSON,
 } from '../models/index';
 
 export interface TimesheetGetCurrentUserMonthlyTimesheetsRequest {
@@ -54,7 +54,7 @@ export class TimesheetApi extends runtime.BaseAPI {
 
     /**
      */
-    async timesheetCheckInRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDtoTimesheetResponse>> {
+    async timesheetCheckInRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDetailsDtoTimesheetResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -70,19 +70,19 @@ export class TimesheetApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDtoTimesheetResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDetailsDtoTimesheetResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetCheckIn(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDtoTimesheetResponse> {
+    async timesheetCheckIn(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDetailsDtoTimesheetResponse> {
         const response = await this.timesheetCheckInRaw(initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetCheckOutRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDtoTimesheetResponse>> {
+    async timesheetCheckOutRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDetailsDtoTimesheetResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -98,19 +98,19 @@ export class TimesheetApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDtoTimesheetResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDetailsDtoTimesheetResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetCheckOut(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDtoTimesheetResponse> {
+    async timesheetCheckOut(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDetailsDtoTimesheetResponse> {
         const response = await this.timesheetCheckOutRaw(initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetGetCurrentUserMonthlyTimesheetsRaw(requestParameters: TimesheetGetCurrentUserMonthlyTimesheetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TimesheetDto>>> {
+    async timesheetGetCurrentUserMonthlyTimesheetsRaw(requestParameters: TimesheetGetCurrentUserMonthlyTimesheetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TimesheetDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['month'] != null) {
@@ -134,19 +134,19 @@ export class TimesheetApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TimesheetDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TimesheetDetailsDtoFromJSON));
     }
 
     /**
      */
-    async timesheetGetCurrentUserMonthlyTimesheets(requestParameters: TimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TimesheetDto>> {
+    async timesheetGetCurrentUserMonthlyTimesheets(requestParameters: TimesheetGetCurrentUserMonthlyTimesheetsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TimesheetDetailsDto>> {
         const response = await this.timesheetGetCurrentUserMonthlyTimesheetsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetGetMonthlyTimesheetsRaw(requestParameters: TimesheetGetMonthlyTimesheetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetFullDtoPaginated>> {
+    async timesheetGetMonthlyTimesheetsRaw(requestParameters: TimesheetGetMonthlyTimesheetsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         if (requestParameters['month'] != null) {
@@ -182,19 +182,19 @@ export class TimesheetApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetFullDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetGetMonthlyTimesheets(requestParameters: TimesheetGetMonthlyTimesheetsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetFullDtoPaginated> {
+    async timesheetGetMonthlyTimesheets(requestParameters: TimesheetGetMonthlyTimesheetsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDetailsDtoPaginated> {
         const response = await this.timesheetGetMonthlyTimesheetsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetGetTodayTimesheetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDtoTimesheetResponse>> {
+    async timesheetGetTodayTimesheetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TimesheetDetailsDtoTimesheetResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -210,12 +210,12 @@ export class TimesheetApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDtoTimesheetResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TimesheetDetailsDtoTimesheetResponseFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetGetTodayTimesheet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDtoTimesheetResponse> {
+    async timesheetGetTodayTimesheet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TimesheetDetailsDtoTimesheetResponse> {
         const response = await this.timesheetGetTodayTimesheetRaw(initOverrides);
         return await response.value();
     }

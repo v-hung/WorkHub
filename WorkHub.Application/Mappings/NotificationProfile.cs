@@ -8,7 +8,7 @@ namespace WorkHub.Application.Mappings
 	{
 		public NotificationProfile()
 		{
-			CreateMap<Notification, NotificationDto>().ReverseMap();
+			CreateMap<Notification, NotificationDetailsDto>().ReverseMap();
 		}
 
 	}

@@ -10,21 +10,21 @@ namespace WorkHub.Application.Mappings
 		public RequestProfile()
 		{
 			// Base mapping
-			CreateMap<Request, RequestCombinedMinimalDto>()
-				.Include<LeaveRequest, RequestCombinedMinimalDto>()
-				.Include<TimesheetAdjustmentRequest, RequestCombinedMinimalDto>();
+			CreateMap<Request, RequestCombinedReferenceDto>()
+				.Include<LeaveRequest, RequestCombinedReferenceDto>()
+				.Include<TimesheetAdjustmentRequest, RequestCombinedReferenceDto>();
 
 			// Derived type mappings
-			CreateMap<LeaveRequest, RequestCombinedMinimalDto>();
-			CreateMap<TimesheetAdjustmentRequest, RequestCombinedMinimalDto>();
+			CreateMap<LeaveRequest, RequestCombinedReferenceDto>();
+			CreateMap<TimesheetAdjustmentRequest, RequestCombinedReferenceDto>();
 
 			// Same for the detailed DTO
-			CreateMap<Request, RequestCombinedDto>()
-				.Include<LeaveRequest, RequestCombinedDto>()
-				.Include<TimesheetAdjustmentRequest, RequestCombinedDto>();
+			CreateMap<Request, RequestCombinedDetailsDto>()
+				.Include<LeaveRequest, RequestCombinedDetailsDto>()
+				.Include<TimesheetAdjustmentRequest, RequestCombinedDetailsDto>();
 
-			CreateMap<LeaveRequest, RequestCombinedDto>();
-			CreateMap<TimesheetAdjustmentRequest, RequestCombinedDto>();
+			CreateMap<LeaveRequest, RequestCombinedDetailsDto>();
+			CreateMap<TimesheetAdjustmentRequest, RequestCombinedDetailsDto>();
 
 			// Create API DTOs
 			CreateMap<CreateRequestDto, Request>()

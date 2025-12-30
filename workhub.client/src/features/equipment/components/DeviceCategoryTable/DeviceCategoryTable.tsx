@@ -6,7 +6,7 @@ import { useDeviceCategoriesContext } from "../../../equipment/contexts/DeviceCa
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 import { TablePaginationConfig } from "antd";
 import { FilterValue, SorterResult } from "antd/es/table/interface";
-import { DeviceCategoryDto } from "@/generate-api";
+import { DeviceCategoryDetailsDto } from "@/generate-api";
 
 const DeviceCategoryTable = () => {
   const { deviceCategoryPaginated, updateRequest, loading } =
@@ -21,8 +21,8 @@ const DeviceCategoryTable = () => {
       pagination: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
       sorter:
-        | SorterResult<DeviceCategoryDto>
-        | SorterResult<DeviceCategoryDto>[]
+        | SorterResult<DeviceCategoryDetailsDto>
+        | SorterResult<DeviceCategoryDetailsDto>[]
     ) => {
       const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,

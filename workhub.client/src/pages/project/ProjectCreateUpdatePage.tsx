@@ -7,7 +7,7 @@ import ProjectFormCreate, {
 } from "@/features/work/project/components/ProjectFormCreate/ProjectFormCreate";
 import { projectApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { Permission, ProjectDto } from "@/generate-api";
+import { Permission, ProjectDetailsDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -38,7 +38,7 @@ export const loader = wrapProtectedLoader(
 );
 
 export function Component() {
-  const data = useLoaderData() as ProjectDto;
+  const data = useLoaderData() as ProjectDetailsDto;
 
   const [loading, setLoading] = useState(false);
   const formRef = useRef<ProjectFormCreateRefState | null>(null);

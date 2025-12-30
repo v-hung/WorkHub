@@ -8,11 +8,11 @@ using WorkHub.Application.Features.Requests.DTOs;
 namespace WorkHub.Server.Controllers.Requests
 {
 
-	public class TimesheetAdjustmentRequestController : BaseRequestController<RequestCombinedDto, CreateTimesheetAdjustmentRequestDto>
+	public class TimesheetAdjustmentRequestController : BaseRequestController<RequestCombinedDetailsDto, CreateTimesheetAdjustmentRequestDto>
 	{
 		[HttpPost("timesheet-adjustment")]
 		[Authorize]
-		public override async Task<ActionResult<RequestCombinedDto>> CreateRequest(CreateTimesheetAdjustmentRequestDto request)
+		public override async Task<ActionResult<RequestCombinedDetailsDto>> CreateRequest(CreateTimesheetAdjustmentRequestDto request)
 		{
 			var data = await _mediator.Send(new CreateTimesheetAdjustmentRequestCommand { Request = request });
 
@@ -21,7 +21,7 @@ namespace WorkHub.Server.Controllers.Requests
 
 		[HttpPost("{id}/timesheet-adjustment-cancel")]
 		[Authorize]
-		public override async Task<ActionResult<RequestCombinedDto>> CancelRequest(int id)
+		public override async Task<ActionResult<RequestCombinedDetailsDto>> CancelRequest(int id)
 		{
 			var data = await _mediator.Send(new CancelRequestCommand { Id = id });
 
@@ -30,7 +30,7 @@ namespace WorkHub.Server.Controllers.Requests
 
 		[HttpPost("{id}/timesheet-adjustment-approval")]
 		[Authorize]
-		public override async Task<ActionResult<RequestCombinedDto>> ApprovalRequest(int id)
+		public override async Task<ActionResult<RequestCombinedDetailsDto>> ApprovalRequest(int id)
 		{
 			var data = await _mediator.Send(new ApproveTimesheetAdjustmentRequestCommand { RequestId = id });
 
@@ -39,7 +39,7 @@ namespace WorkHub.Server.Controllers.Requests
 
 		[HttpPost("{id}/timesheet-adjustment-reject")]
 		[Authorize]
-		public override async Task<ActionResult<RequestCombinedDto>> RejectRequest(int id)
+		public override async Task<ActionResult<RequestCombinedDetailsDto>> RejectRequest(int id)
 		{
 			var data = await _mediator.Send(new RejectRequestCommand { RequestId = id });
 

@@ -8,7 +8,10 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { CreateWorkScheduleCommand, WorkScheduleDto } from "@/generate-api";
+import {
+  CreateWorkScheduleCommand,
+  WorkScheduleDetailsDto,
+} from "@/generate-api";
 import { useWorkScheduleAction } from "../../hooks/useWorkScheduleAction";
 import TimePicker from "@/ui/form/TimePicker";
 import { workScheduleDisabledTime } from "../../utils/workSchedule.util";
@@ -16,7 +19,7 @@ import { format, localTimeToDate } from "@/utils/date.utils";
 import { useNavigate } from "react-router";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: WorkScheduleDto;
+  record?: WorkScheduleDetailsDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 

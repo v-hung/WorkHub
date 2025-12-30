@@ -10,14 +10,14 @@ namespace WorkHub.Application.Mappings
 	{
 		public UserProfile()
 		{
-			CreateMap<User, UserMinimalDto>().ReverseMap();
-			CreateMap<User, UserMinimalWithWorkScheduleDto>().ForMember(dest => dest.WorkSchedule, opt => opt.NullSubstitute(new WorkSchedule()));
-			CreateMap<User, UserDto>()
+			CreateMap<User, UserReferenceDto>().ReverseMap();
+			CreateMap<User, UserWorkScheduleDto>().ForMember(dest => dest.WorkSchedule, opt => opt.NullSubstitute(new WorkSchedule()));
+			CreateMap<User, UserDetailsDto>()
 				.ForMember(dest => dest.WorkSchedule, opt => opt.NullSubstitute(new WorkSchedule()))
 				.ReverseMap();
 
-			CreateMap<User, UserFullDto>().ReverseMap();
-			CreateMap<UserDetail, UserDetailDto>().ReverseMap();
+			CreateMap<User, UserFormDto>().ReverseMap();
+			CreateMap<Domain.Entities.Identity.UserProfile, UserProfileDto>().ReverseMap();
 			CreateMap<UserCreateUpdateRequest, User>().ReverseMap();
 		}
 	}

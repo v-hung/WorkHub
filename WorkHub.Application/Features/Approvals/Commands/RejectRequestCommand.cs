@@ -5,12 +5,12 @@ using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Application.Features.Approvals.Commands
 {
-	public class RejectRequestCommand : IRequest<RequestCombinedDto>
+	public class RejectRequestCommand : IRequest<RequestCombinedDetailsDto>
 	{
 		public required int RequestId { get; set; }
 	}
 
-	public class RejectRequestCommandHandler : IRequestHandler<RejectRequestCommand, RequestCombinedDto>
+	public class RejectRequestCommandHandler : IRequestHandler<RejectRequestCommand, RequestCombinedDetailsDto>
 	{
 		private readonly IRequestApprovalService<Request> _approvalRequestService;
 
@@ -19,9 +19,9 @@ namespace WorkHub.Application.Features.Approvals.Commands
 			_approvalRequestService = approvalService;
 		}
 
-		public async Task<RequestCombinedDto> Handle(RejectRequestCommand command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDetailsDto> Handle(RejectRequestCommand command, CancellationToken cancellationToken)
 		{
-			return await _approvalRequestService.RejectRequestAsync<RequestCombinedDto>(command.RequestId);
+			return await _approvalRequestService.RejectRequestAsync<RequestCombinedDetailsDto>(command.RequestId);
 		}
 	}
 }

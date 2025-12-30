@@ -8,13 +8,13 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { RoleCreateUpdateRequest, RoleDto } from "@/generate-api";
+import { RoleCreateUpdateRequest, RoleDetailsDto } from "@/generate-api";
 import { useRoleAction } from "../../hooks/useRoleAction";
 import { useNavigate } from "react-router";
 import { PermissionMatrixForm } from "./PermissionMatrixForm";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  record?: RoleDto;
+  record?: RoleDetailsDto;
   setLoading?: Dispatch<SetStateAction<boolean>>;
 };
 

@@ -1,11 +1,10 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using WorkHub.Application.Features.Requests.DTOs;
 using WorkHub.Application.Interfaces.BioStar.Services;
 using WorkHub.Application.Interfaces.Messaging;
 using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Interfaces.Services;
-using WorkHub.Domain.Entities.Requests;
+using WorkHub.Domain.Repositories;
 using WorkHub.Infrastructure.BioStar.Services;
 using WorkHub.Infrastructure.Messaging;
 using WorkHub.Infrastructure.Repositories;
@@ -19,9 +18,10 @@ public static class ServiceCollectionExtensions
 {
 	public static void AddInfrastructureLayer(this IServiceCollection services)
 	{
-		services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
+		services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		services.AddScoped<ITimesheetRepository, TimesheetRepository>();
 		services.AddScoped<ITimesheetService, TimesheetService>();

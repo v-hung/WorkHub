@@ -19,9 +19,9 @@ import type {
   ErrorValidateResponse,
   PagedRequest,
   UserCreateUpdateRequest,
-  UserDto,
-  UserDtoPaginated,
-  UserFullDto,
+  UserDetailsDto,
+  UserDetailsDtoPaginated,
+  UserFormDto,
 } from '../models/index';
 import {
     ErrorResponseFromJSON,
@@ -32,12 +32,12 @@ import {
     PagedRequestToJSON,
     UserCreateUpdateRequestFromJSON,
     UserCreateUpdateRequestToJSON,
-    UserDtoFromJSON,
-    UserDtoToJSON,
-    UserDtoPaginatedFromJSON,
-    UserDtoPaginatedToJSON,
-    UserFullDtoFromJSON,
-    UserFullDtoToJSON,
+    UserDetailsDtoFromJSON,
+    UserDetailsDtoToJSON,
+    UserDetailsDtoPaginatedFromJSON,
+    UserDetailsDtoPaginatedToJSON,
+    UserFormDtoFromJSON,
+    UserFormDtoToJSON,
 } from '../models/index';
 
 export interface UserCreateRequest {
@@ -72,7 +72,7 @@ export class UserApi extends runtime.BaseAPI {
 
     /**
      */
-    async userCreateRaw(requestParameters: UserCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDto>> {
+    async userCreateRaw(requestParameters: UserCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -91,12 +91,12 @@ export class UserApi extends runtime.BaseAPI {
             body: UserCreateUpdateRequestToJSON(requestParameters['userCreateUpdateRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async userCreate(requestParameters: UserCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDto> {
+    async userCreate(requestParameters: UserCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetailsDto> {
         const response = await this.userCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -137,7 +137,7 @@ export class UserApi extends runtime.BaseAPI {
 
     /**
      */
-    async userGetAllRaw(requestParameters: UserGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserDto>>> {
+    async userGetAllRaw(requestParameters: UserGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<UserDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -157,19 +157,19 @@ export class UserApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(UserDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(UserDetailsDtoFromJSON));
     }
 
     /**
      */
-    async userGetAll(requestParameters: UserGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<UserDto>> {
+    async userGetAll(requestParameters: UserGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<UserDetailsDto>> {
         const response = await this.userGetAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async userGetByIdRaw(requestParameters: UserGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserFullDto>> {
+    async userGetByIdRaw(requestParameters: UserGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserFormDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -192,19 +192,19 @@ export class UserApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserFullDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserFormDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async userGetById(requestParameters: UserGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserFullDto> {
+    async userGetById(requestParameters: UserGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserFormDto> {
         const response = await this.userGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async userSearchRaw(requestParameters: UserSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDtoPaginated>> {
+    async userSearchRaw(requestParameters: UserSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -223,19 +223,19 @@ export class UserApi extends runtime.BaseAPI {
             body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async userSearch(requestParameters: UserSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDtoPaginated> {
+    async userSearch(requestParameters: UserSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetailsDtoPaginated> {
         const response = await this.userSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async userUpdateRaw(requestParameters: UserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserFullDto>> {
+    async userUpdateRaw(requestParameters: UserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserFormDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -261,12 +261,12 @@ export class UserApi extends runtime.BaseAPI {
             body: UserCreateUpdateRequestToJSON(requestParameters['userCreateUpdateRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserFullDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserFormDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async userUpdate(requestParameters: UserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserFullDto> {
+    async userUpdate(requestParameters: UserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserFormDto> {
         const response = await this.userUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

@@ -8,10 +8,10 @@ import {
 } from "react";
 import { useUsers } from "../hooks/useUsers";
 import { useUserAction } from "../hooks/useUserAction";
-import { UserDtoPaginated, PagedRequest } from "@/generate-api";
+import { UserDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 
 type UserContextType = {
-  userPaginated: UserDtoPaginated;
+  userPaginated: UserDetailsDtoPaginated;
   updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   request: RefObject<PagedRequest>;
   loading: boolean;

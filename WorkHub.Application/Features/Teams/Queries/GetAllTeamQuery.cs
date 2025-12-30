@@ -7,12 +7,12 @@ using WorkHub.Domain.Entities.Organization;
 
 namespace WorkHub.Application.Features.Teams.Queries
 {
-	public class GetAllTeamQuery : IRequest<List<TeamDto>>
+	public class GetAllTeamQuery : IRequest<List<TeamDetailsDto>>
 	{
 		public List<int> Ids { get; set; } = [];
 	}
 
-	public class GetAllTeamQueryHandler : IRequestHandler<GetAllTeamQuery, List<TeamDto>>
+	public class GetAllTeamQueryHandler : IRequestHandler<GetAllTeamQuery, List<TeamDetailsDto>>
 	{
 		private readonly IRepository<Team, int> _repository;
 
@@ -21,9 +21,9 @@ namespace WorkHub.Application.Features.Teams.Queries
 			_repository = repository;
 		}
 
-		public async Task<List<TeamDto>> Handle(GetAllTeamQuery query, CancellationToken cancellationToken)
+		public async Task<List<TeamDetailsDto>> Handle(GetAllTeamQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.GetAllAsync<TeamDto>(v => query.Ids.Contains(v.Id));
+			return await _repository.GetAllAsync<TeamDetailsDto>(v => query.Ids.Contains(v.Id));
 		}
 	}
 }

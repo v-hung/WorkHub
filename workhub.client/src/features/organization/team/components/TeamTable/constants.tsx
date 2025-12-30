@@ -2,12 +2,12 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useTeamContext } from "../../contexts/TeamContext";
-import { Permission, TeamDto } from "@/generate-api";
+import { Permission, TeamDetailsDto } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 import UserTableItem from "@/features/organization/user/components/UserTableItem/UserTableItem";
 import TeamTableItem from "../TeamTableItem/TeamTableItem";
 
-export const teamTableColumns: TableProps<TeamDto>["columns"] = [
+export const teamTableColumns: TableProps<TeamDetailsDto>["columns"] = [
   { title: "Name", render: (_, record) => <TeamTableItem team={record} /> },
   { title: "Description", dataIndex: "description", key: "description" },
   {

@@ -3,8 +3,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using WorkHub.Application.Exceptions;
-using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Domain.Enums;
+using WorkHub.Domain.Repositories;
 using WorkHub.Infrastructure.Data;
 
 namespace WorkHub.Infrastructure.Repositories

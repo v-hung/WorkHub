@@ -1,7 +1,7 @@
 import { getMessageError } from "@/utils/error.utils";
 import {
   CursorPagedRequestDirection,
-  NotificationDtoCursorPaginated,
+  NotificationDetailsDtoCursorPaginated,
 } from "@/generate-api";
 import { notificationApi } from "@/services/apiClient";
 import { App } from "antd";
@@ -12,7 +12,7 @@ export const useNotifications = () => {
   const { notification } = App.useApp();
 
   const [notificationCursorPaginated, setNotificationCursorPaginated] =
-    useState<NotificationDtoCursorPaginated>({
+    useState<NotificationDetailsDtoCursorPaginated>({
       data: [],
       limit: 50,
       totalCount: 0,

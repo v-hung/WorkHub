@@ -4,8 +4,8 @@ import {
   BioStarSyncAllUsersResponse,
   UserCreateUpdateRequest,
   UserCreateUpdateRequestFromJSON,
-  UserDto,
-  UserFullDto,
+  UserDetailsDto,
+  UserFormDto,
 } from "@/generate-api";
 import { bioStarApi, userApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export const useUserAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: UserFullDto): UserCreateUpdateRequest => {
+  const formDefault = (data?: UserFormDto): UserCreateUpdateRequest => {
     if (!data) {
       return UserCreateUpdateRequestFromJSON({});
     }
@@ -63,7 +63,7 @@ export const useUserAction = () => {
   const updateUser = async (
     id: string,
     request: UserCreateUpdateRequest,
-    cb?: (data: UserDto) => void
+    cb?: (data: UserDetailsDto) => void
   ) => {
     setLoading(true);
     try {

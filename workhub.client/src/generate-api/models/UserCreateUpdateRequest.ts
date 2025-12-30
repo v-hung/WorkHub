@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { UserDetailDto } from './UserDetailDto';
+import type { UserProfileDto } from './UserProfileDto';
 import {
-    UserDetailDtoFromJSON,
-    UserDetailDtoFromJSONTyped,
-    UserDetailDtoToJSON,
-    UserDetailDtoToJSONTyped,
-} from './UserDetailDto';
+    UserProfileDtoFromJSON,
+    UserProfileDtoFromJSONTyped,
+    UserProfileDtoToJSON,
+    UserProfileDtoToJSONTyped,
+} from './UserProfileDto';
 import type { UserPosition } from './UserPosition';
 import {
     UserPositionFromJSON,
@@ -91,10 +91,10 @@ export interface UserCreateUpdateRequest {
     workScheduleId?: number | null;
     /**
      * 
-     * @type {UserDetailDto}
+     * @type {UserProfileDto}
      * @memberof UserCreateUpdateRequest
      */
-    userDetail?: UserDetailDto;
+    userProfile?: UserProfileDto;
     /**
      * 
      * @type {string}
@@ -157,7 +157,7 @@ export function UserCreateUpdateRequestFromJSONTyped(json: any, ignoreDiscrimina
         'leaveHours': json['leaveHours'] == null ? undefined : json['leaveHours'],
         'userStatus': json['userStatus'] == null ? undefined : UserStatusFromJSON(json['userStatus']),
         'workScheduleId': json['workScheduleId'] == null ? undefined : json['workScheduleId'],
-        'userDetail': json['userDetail'] == null ? undefined : UserDetailDtoFromJSON(json['userDetail']),
+        'userProfile': json['userProfile'] == null ? undefined : UserProfileDtoFromJSON(json['userProfile']),
         'supervisorId': json['supervisorId'] == null ? undefined : json['supervisorId'],
         'teamId': json['teamId'] == null ? undefined : json['teamId'],
         'managerTeamIds': json['managerTeamIds'] == null ? undefined : json['managerTeamIds'],
@@ -185,7 +185,7 @@ export function UserCreateUpdateRequestToJSONTyped(value?: UserCreateUpdateReque
         'leaveHours': value['leaveHours'],
         'userStatus': UserStatusToJSON(value['userStatus']),
         'workScheduleId': value['workScheduleId'],
-        'userDetail': UserDetailDtoToJSON(value['userDetail']),
+        'userProfile': UserProfileDtoToJSON(value['userProfile']),
         'supervisorId': value['supervisorId'],
         'teamId': value['teamId'],
         'managerTeamIds': value['managerTeamIds'],

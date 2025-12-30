@@ -2,10 +2,10 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useRolesContext } from "../../contexts/RoleContext";
-import { Permission, RoleDto } from "@/generate-api";
+import { Permission, RoleDetailsDto } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 
-export const roleTableColumns: TableProps<RoleDto>["columns"] = [
+export const roleTableColumns: TableProps<RoleDetailsDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
   {
     title: "Description",

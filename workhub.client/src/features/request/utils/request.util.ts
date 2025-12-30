@@ -1,9 +1,9 @@
 import { localTimeToDate, setTimeToDate } from "@/utils/date.utils";
 import { isEmpty } from "@/utils/validate.utils";
-import { WorkScheduleDto } from "@/generate-api";
+import { WorkScheduleDetailsDto } from "@/generate-api";
 import { add } from "date-fns";
 
-export const requestDisabledTime = (workSchedule?: WorkScheduleDto) => {
+export const requestDisabledTime = (workSchedule?: WorkScheduleDetailsDto) => {
   if (!workSchedule) {
     return {
       disabledHours: () => [],
@@ -56,7 +56,10 @@ export const requestDisabledTime = (workSchedule?: WorkScheduleDto) => {
 };
 
 export const requestValidateTime =
-  (workSchedule?: WorkScheduleDto, required: boolean | undefined = false) =>
+  (
+    workSchedule?: WorkScheduleDetailsDto,
+    required: boolean | undefined = false
+  ) =>
   (_: any, value: [Date, Date]) => {
     if (!workSchedule) {
       return Promise.reject(

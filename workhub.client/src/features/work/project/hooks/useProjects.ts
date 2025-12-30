@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { PagedRequest, ProjectDtoPaginated } from "@/generate-api";
+import { PagedRequest, ProjectDetailsDtoPaginated } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useRef, useState } from "react";
@@ -11,8 +11,8 @@ export const useProjects = () => {
   // GET LIST project
   // =============
 
-  const [projectPaginated, setProjectPaginated] = useState<ProjectDtoPaginated>(
-    {
+  const [projectPaginated, setProjectPaginated] =
+    useState<ProjectDetailsDtoPaginated>({
       data: [],
       currentPage: 1,
       pageSize: 25,
@@ -20,8 +20,7 @@ export const useProjects = () => {
       totalPages: 0,
       hasNextPage: false,
       hasPreviousPage: false,
-    }
-  );
+    });
 
   const request = useRef<PagedRequest>({
     pageNumber: projectPaginated.currentPage,

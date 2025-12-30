@@ -18,7 +18,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid>
 {
 	private readonly ICurrentUserService _currentUserService;
 
-	public DbSet<UserDetail> UserDetails { get; set; }
+	public DbSet<UserProfile> UserProfiles { get; set; }
 	public DbSet<Team> Teams { get; set; }
 	public DbSet<Timesheet> Timesheets { get; set; }
 	public DbSet<WorkSchedule> WorkSchedules { get; set; }

@@ -4,7 +4,7 @@ using WorkHub.Domain.Entities.Audit;
 
 namespace WorkHub.Application.DTOs.Work
 {
-	public class WorkScheduleDto : IEntity<int>
+	public class WorkScheduleDetailsDto : IEntity<int>
 	{
 		[Required]
 		public int Id { get; set; }

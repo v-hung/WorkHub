@@ -1,15 +1,15 @@
 using MediatR;
 using WorkHub.Application.DTOs.Requests;
-using WorkHub.Application.Interfaces.Repositories;
+using WorkHub.Domain.Repositories;
 
 namespace WorkHub.Application.Features.Requests.Queries
 {
-	public class GetRequestByIdQuery : IRequest<RequestCombinedDto>
+	public class GetRequestByIdQuery : IRequest<RequestCombinedDetailsDto>
 	{
 		public int Id { get; set; }
 	}
 
-	public class GetRequestByIdQueryHandler : IRequestHandler<GetRequestByIdQuery, RequestCombinedDto>
+	public class GetRequestByIdQueryHandler : IRequestHandler<GetRequestByIdQuery, RequestCombinedDetailsDto>
 	{
 		private readonly IRequestRepository _requestRepository;
 
@@ -18,9 +18,9 @@ namespace WorkHub.Application.Features.Requests.Queries
 			_requestRepository = requestRepository;
 		}
 
-		public async Task<RequestCombinedDto> Handle(GetRequestByIdQuery query, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDetailsDto> Handle(GetRequestByIdQuery query, CancellationToken cancellationToken)
 		{
-			var data = await _requestRepository.GetByIdAsync<RequestCombinedDto>(query.Id);
+			var data = await _requestRepository.GetByIdAsync<RequestCombinedDetailsDto>(query.Id);
 
 			return data;
 		}

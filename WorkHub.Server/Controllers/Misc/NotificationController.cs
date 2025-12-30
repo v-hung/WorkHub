@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Misc
 
 		[HttpPost("search")]
 		[Authorize]
-		public async Task<ActionResult<CursorPaginated<NotificationDto>>> Search(CursorPagedRequest request)
+		public async Task<ActionResult<CursorPaginated<NotificationDetailsDto>>> Search(CursorPagedRequest request)
 		{
 			var data = await _mediator.Send(new CursorSearchNotificationQuery { Request = request });
 

@@ -1,10 +1,10 @@
 import {
   LoginRequest,
   Permission,
-  UserDto,
+  UserDetailsDto,
   UserPosition,
   UserStatus,
-  WorkScheduleDtoFromJSON,
+  WorkScheduleDetailsDtoFromJSON,
 } from "@/generate-api";
 import { accountApi, accountApiWithRefreshToken } from "@/services/apiClient";
 import { create } from "zustand";
@@ -13,13 +13,13 @@ import {} from "react-router";
 import { wrapPromise } from "@/utils/promise";
 
 export type LoadResponse = {
-  user: UserDto | null;
+  user: UserDetailsDto | null;
   permissions: Permission[];
 };
 
 type AuthStoreState = {
   isFirstLoaded: boolean;
-  user: UserDto | null;
+  user: UserDetailsDto | null;
   permissions: Permission[];
   login: (credentials: LoginRequest) => Promise<void>;
   logout: () => Promise<void>;
@@ -90,7 +90,7 @@ export const useAuthStore = create<AuthStoreState>()(
   }))
 );
 
-const USER: UserDto = {
+const USER: UserDetailsDto = {
   id: "1",
   fullName: "Nguyễn Việt Hùng",
   userName: "hungnv@wbcvn.vn",
@@ -101,5 +101,5 @@ const USER: UserDto = {
   userPosition: UserPosition.Developer,
   userStatus: UserStatus.Active,
   remainingLeaveMinutes: 480,
-  workSchedule: WorkScheduleDtoFromJSON({}),
+  workSchedule: WorkScheduleDetailsDtoFromJSON({}),
 };

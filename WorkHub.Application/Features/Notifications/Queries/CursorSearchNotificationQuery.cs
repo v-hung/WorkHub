@@ -11,12 +11,12 @@ using WorkHub.Domain.Entities.Misc;
 
 namespace WorkHub.Application.Features.Notifications.Queries
 {
-	public class CursorSearchNotificationQuery : IRequest<CursorPaginated<NotificationDto>>
+	public class CursorSearchNotificationQuery : IRequest<CursorPaginated<NotificationDetailsDto>>
 	{
 		public required CursorPagedRequest Request { get; set; }
 	}
 
-	public class CursorSearchNotificationQueryHandler : IRequestHandler<CursorSearchNotificationQuery, CursorPaginated<NotificationDto>>
+	public class CursorSearchNotificationQueryHandler : IRequestHandler<CursorSearchNotificationQuery, CursorPaginated<NotificationDetailsDto>>
 	{
 		private readonly IRepository<Notification, int> _repository;
 
@@ -28,14 +28,14 @@ namespace WorkHub.Application.Features.Notifications.Queries
 			_currentUserService = currentUserService;
 		}
 
-		public async Task<CursorPaginated<NotificationDto>> Handle(CursorSearchNotificationQuery query, CancellationToken cancellationToken)
+		public async Task<CursorPaginated<NotificationDetailsDto>> Handle(CursorSearchNotificationQuery query, CancellationToken cancellationToken)
 		{
 			if (_currentUserService.UserId == null)
 			{
 				throw new BusinessException(HttpStatusCode.BadRequest, "User not found");
 			}
 
-			return await _repository.CursorSearchAsync<NotificationDto>(query.Request, v => Guid.Parse(_currentUserService.UserId) == v.UserId);
+			return await _repository.CursorSearchAsync<NotificationDetailsDto>(query.Request, v => Guid.Parse(_currentUserService.UserId) == v.UserId);
 		}
 	}
 }

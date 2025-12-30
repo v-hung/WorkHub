@@ -1,13 +1,13 @@
 import { format } from "@/utils/date.utils";
 import {
-  RequestCombinedMinimalDto,
+  RequestCombinedReferenceDto,
   RequestStatus,
   RequestType,
 } from "@/generate-api";
 import { Badge, TableProps, Tag } from "antd";
 import { PresetStatusColorType } from "antd/es/_util/colors";
 
-export const requestTimesheetColumns: TableProps<RequestCombinedMinimalDto>["columns"] =
+export const requestTimesheetColumns: TableProps<RequestCombinedReferenceDto>["columns"] =
   [
     {
       title: "Date",

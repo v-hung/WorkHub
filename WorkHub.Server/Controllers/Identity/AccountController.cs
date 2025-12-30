@@ -18,20 +18,20 @@ public class AccountController : BaseApiController<AccountController>
 	}
 
 	[HttpPost("login")]
-	[ProducesResponseType<LoginResponse<UserDto>>(StatusCodes.Status200OK)]
+	[ProducesResponseType<LoginResponse<UserDetailsDto>>(StatusCodes.Status200OK)]
 	public async Task<IActionResult> Login([FromBody] LoginRequest input)
 	{
-		var user = await _identityService.LoginAsync<UserDto>(input);
+		var user = await _identityService.LoginAsync<UserDetailsDto>(input);
 
 		return Ok(user);
 	}
 
 	[HttpGet("current-user")]
 	[Authorize]
-	[ProducesResponseType<UserDto>(StatusCodes.Status200OK)]
+	[ProducesResponseType<UserDetailsDto>(StatusCodes.Status200OK)]
 	public async Task<IActionResult> GetCurrentUser()
 	{
-		var user = await _identityService.GetCurrentUserAsync<UserDto>(User);
+		var user = await _identityService.GetCurrentUserAsync<UserDetailsDto>(User);
 
 		return Ok(user);
 	}

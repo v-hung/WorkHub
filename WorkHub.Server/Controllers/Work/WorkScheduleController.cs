@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Work
 	{
 		[HttpGet]
 		[Authorize(Policy = Permissions.WorkSchedules.View)]
-		public async Task<ActionResult<List<WorkScheduleDto>>> GetAll([FromQuery] List<int> ids)
+		public async Task<ActionResult<List<WorkScheduleDetailsDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var data = await _mediator.Send(new GetAllWorkScheduleQuery { Ids = ids });
 
@@ -23,7 +23,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPost("search")]
 		[Authorize(Policy = Permissions.WorkSchedules.View)]
-		public async Task<ActionResult<Paginated<WorkScheduleDto>>> Search(PagedRequest request)
+		public async Task<ActionResult<Paginated<WorkScheduleDetailsDto>>> Search(PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchWorkScheduleQuery { Request = request });
 
@@ -32,7 +32,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpGet("{id}")]
 		[Authorize(Policy = Permissions.WorkSchedules.View)]
-		public async Task<ActionResult<WorkScheduleDto>> GetById(int id)
+		public async Task<ActionResult<WorkScheduleDetailsDto>> GetById(int id)
 		{
 			var data = await _mediator.Send(new GetWorkScheduleByIdQuery(id));
 
@@ -41,7 +41,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPost]
 		[Authorize(Policy = Permissions.WorkSchedules.Create)]
-		public async Task<ActionResult<WorkScheduleDto>> Create(CreateWorkScheduleCommand request)
+		public async Task<ActionResult<WorkScheduleDetailsDto>> Create(CreateWorkScheduleCommand request)
 		{
 			var data = await _mediator.Send(request);
 
@@ -50,7 +50,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPut("{id}")]
 		[Authorize(Policy = Permissions.WorkSchedules.Edit)]
-		public async Task<ActionResult<WorkScheduleDto>> Update(int id, CreateWorkScheduleCommand request)
+		public async Task<ActionResult<WorkScheduleDetailsDto>> Update(int id, CreateWorkScheduleCommand request)
 		{
 			var data = await _mediator.Send(new UpdateWorkScheduleCommand { Id = id, Request = request });
 

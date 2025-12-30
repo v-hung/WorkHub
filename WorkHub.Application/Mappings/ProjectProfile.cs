@@ -9,8 +9,8 @@ namespace WorkHub.Application.Mappings
 	{
 		public ProjectProfile()
 		{
-			CreateMap<Project, ProjectMinimalDto>().ReverseMap();
-			CreateMap<Project, ProjectDto>().ReverseMap();
+			CreateMap<Project, ProjectReferenceDto>().ReverseMap();
+			CreateMap<Project, ProjectDetailsDto>().ReverseMap();
 			CreateMap<CreateProjectCommand, Project>().ReverseMap();
 		}
 	}

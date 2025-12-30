@@ -7,7 +7,7 @@ import UserFormCreate, {
 import { useRef, useState } from "react";
 import { wrapPromise } from "@/utils/promise";
 import { userApi } from "@/services/apiClient";
-import { Permission, UserFullDto } from "@/generate-api";
+import { Permission, UserFormDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -36,7 +36,7 @@ export const loader = wrapProtectedLoader(
 );
 
 export function Component() {
-  const data = useLoaderData() as UserFullDto;
+  const data = useLoaderData() as UserFormDto;
 
   const [loading, setLoading] = useState(false);
   const formRef = useRef<UserFormCreateRefState | null>(null);

@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { WorkScheduleDtoPaginated, PagedRequest } from "@/generate-api";
+import { WorkScheduleDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 import { workScheduleApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useRef, useState } from "react";
@@ -12,7 +12,7 @@ export const useWorkSchedules = () => {
   // =============
 
   const [workSchedulePaginated, setWorkSchedulePaginated] =
-    useState<WorkScheduleDtoPaginated>({
+    useState<WorkScheduleDetailsDtoPaginated>({
       data: [],
       currentPage: 1,
       pageSize: 25,

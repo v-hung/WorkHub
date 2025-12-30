@@ -33,7 +33,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 
 			var timesheet = await _deps.TimesheetRepository.GetTimesheetByDate(_deps.CurrentUserService.UserId!, request.Date);
 
-			timesheet ??= await _deps.TimesheetRepository.CreateTimesheetAsync<TimesheetDto>(new Timesheet { Date = request.Date, UserId = Guid.Parse(_deps.CurrentUserService.UserId!) });
+			timesheet ??= await _deps.TimesheetRepository.CreateTimesheetAsync(new Timesheet { Date = request.Date, UserId = Guid.Parse(_deps.CurrentUserService.UserId!) });
 
 			TimesheetAdjustmentRequest timesheetRequest = _deps.Mapper.Map<TimesheetAdjustmentRequest>(request);
 

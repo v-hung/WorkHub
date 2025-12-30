@@ -56,7 +56,7 @@ public class User : IdentityUser<Guid>, IAuditEntity<Guid>
 
 	public WorkSchedule? WorkSchedule { get; set; }
 
-	public UserDetail? UserDetail { get; set; }
+	public UserProfile? UserProfile { get; set; }
 
 	public IList<Timesheet> Timesheets { get; set; } = [];
 

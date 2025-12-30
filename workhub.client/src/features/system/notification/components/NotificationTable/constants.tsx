@@ -1,8 +1,8 @@
 import { TableProps } from "antd";
-import { NotificationDto } from "@/generate-api";
+import { NotificationDetailsDto } from "@/generate-api";
 import { format } from "@/utils/date.utils";
 
-export const notificationTableColumns: TableProps<NotificationDto>["columns"] =
+export const notificationTableColumns: TableProps<NotificationDetailsDto>["columns"] =
   [
     { title: "title", dataIndex: "title", key: "title", width: "20%" },
     { title: "Message", dataIndex: "message", key: "description" },

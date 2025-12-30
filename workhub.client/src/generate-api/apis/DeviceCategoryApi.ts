@@ -16,8 +16,8 @@
 import * as runtime from '../runtime';
 import type {
   CreateDeviceCategoryCommand,
-  DeviceCategoryDto,
-  DeviceCategoryDtoPaginated,
+  DeviceCategoryDetailsDto,
+  DeviceCategoryDetailsDtoPaginated,
   ErrorResponse,
   ErrorValidateResponse,
   PagedRequest,
@@ -25,10 +25,10 @@ import type {
 import {
     CreateDeviceCategoryCommandFromJSON,
     CreateDeviceCategoryCommandToJSON,
-    DeviceCategoryDtoFromJSON,
-    DeviceCategoryDtoToJSON,
-    DeviceCategoryDtoPaginatedFromJSON,
-    DeviceCategoryDtoPaginatedToJSON,
+    DeviceCategoryDetailsDtoFromJSON,
+    DeviceCategoryDetailsDtoToJSON,
+    DeviceCategoryDetailsDtoPaginatedFromJSON,
+    DeviceCategoryDetailsDtoPaginatedToJSON,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
@@ -69,7 +69,7 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
 
     /**
      */
-    async deviceCategoryCreateRaw(requestParameters: DeviceCategoryCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDto>> {
+    async deviceCategoryCreateRaw(requestParameters: DeviceCategoryCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -88,12 +88,12 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
             body: CreateDeviceCategoryCommandToJSON(requestParameters['createDeviceCategoryCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceCategoryCreate(requestParameters: DeviceCategoryCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDto> {
+    async deviceCategoryCreate(requestParameters: DeviceCategoryCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDetailsDto> {
         const response = await this.deviceCategoryCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -134,7 +134,7 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
 
     /**
      */
-    async deviceCategoryGetAllRaw(requestParameters: DeviceCategoryGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DeviceCategoryDto>>> {
+    async deviceCategoryGetAllRaw(requestParameters: DeviceCategoryGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<DeviceCategoryDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -154,19 +154,19 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(DeviceCategoryDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(DeviceCategoryDetailsDtoFromJSON));
     }
 
     /**
      */
-    async deviceCategoryGetAll(requestParameters: DeviceCategoryGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<DeviceCategoryDto>> {
+    async deviceCategoryGetAll(requestParameters: DeviceCategoryGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<DeviceCategoryDetailsDto>> {
         const response = await this.deviceCategoryGetAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deviceCategoryGetByIdRaw(requestParameters: DeviceCategoryGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDto>> {
+    async deviceCategoryGetByIdRaw(requestParameters: DeviceCategoryGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -189,19 +189,19 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceCategoryGetById(requestParameters: DeviceCategoryGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDto> {
+    async deviceCategoryGetById(requestParameters: DeviceCategoryGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDetailsDto> {
         const response = await this.deviceCategoryGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deviceCategorySearchRaw(requestParameters: DeviceCategorySearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDtoPaginated>> {
+    async deviceCategorySearchRaw(requestParameters: DeviceCategorySearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -220,19 +220,19 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
             body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceCategorySearch(requestParameters: DeviceCategorySearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDtoPaginated> {
+    async deviceCategorySearch(requestParameters: DeviceCategorySearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDetailsDtoPaginated> {
         const response = await this.deviceCategorySearchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deviceCategoryUpdateRaw(requestParameters: DeviceCategoryUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDto>> {
+    async deviceCategoryUpdateRaw(requestParameters: DeviceCategoryUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DeviceCategoryDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -258,12 +258,12 @@ export class DeviceCategoryApi extends runtime.BaseAPI {
             body: CreateDeviceCategoryCommandToJSON(requestParameters['createDeviceCategoryCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DeviceCategoryDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async deviceCategoryUpdate(requestParameters: DeviceCategoryUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDto> {
+    async deviceCategoryUpdate(requestParameters: DeviceCategoryUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeviceCategoryDetailsDto> {
         const response = await this.deviceCategoryUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

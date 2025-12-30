@@ -1,9 +1,9 @@
 import UserCard from "@/features/organization/user/components/UserCard/UserCard";
-import { RequestCombinedDto } from "@/generate-api";
+import { RequestCombinedDetailsDto } from "@/generate-api";
 import type { FC, HTMLAttributes } from "react";
 
 type State = HTMLAttributes<HTMLDivElement> & {
-  data: RequestCombinedDto;
+  data: RequestCombinedDetailsDto;
 };
 
 const TimesheetAdjustmentRequestPanel: FC<State> = (props) => {

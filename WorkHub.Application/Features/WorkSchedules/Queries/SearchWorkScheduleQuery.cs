@@ -7,12 +7,12 @@ using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Features.WorkSchedules.Queries
 {
-	public class SearchWorkScheduleQuery : IRequest<Paginated<WorkScheduleDto>>
+	public class SearchWorkScheduleQuery : IRequest<Paginated<WorkScheduleDetailsDto>>
 	{
 		public required PagedRequest Request { get; set; }
 	}
 
-	public class SearchWorkScheduleQueryHandler : IRequestHandler<SearchWorkScheduleQuery, Paginated<WorkScheduleDto>>
+	public class SearchWorkScheduleQueryHandler : IRequestHandler<SearchWorkScheduleQuery, Paginated<WorkScheduleDetailsDto>>
 	{
 		private readonly IRepository<WorkSchedule, int> _repositoryService;
 
@@ -21,9 +21,9 @@ namespace WorkHub.Application.Features.WorkSchedules.Queries
 			_repositoryService = repositoryService;
 		}
 
-		public async Task<Paginated<WorkScheduleDto>> Handle(SearchWorkScheduleQuery query, CancellationToken cancellationToken)
+		public async Task<Paginated<WorkScheduleDetailsDto>> Handle(SearchWorkScheduleQuery query, CancellationToken cancellationToken)
 		{
-			return await _repositoryService.SearchAsync<WorkScheduleDto, int>(query.Request);
+			return await _repositoryService.SearchAsync<WorkScheduleDetailsDto, int>(query.Request);
 		}
 	}
 }

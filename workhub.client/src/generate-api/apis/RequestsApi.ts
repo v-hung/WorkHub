@@ -19,7 +19,7 @@ import type {
   CreateTimesheetAdjustmentRequestDto,
   ErrorResponse,
   ErrorValidateResponse,
-  RequestCombinedDto,
+  RequestCombinedDetailsDto,
 } from '../models/index';
 import {
     CreateLeaveRequestDtoFromJSON,
@@ -30,8 +30,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    RequestCombinedDtoFromJSON,
-    RequestCombinedDtoToJSON,
+    RequestCombinedDetailsDtoFromJSON,
+    RequestCombinedDetailsDtoToJSON,
 } from '../models/index';
 
 export interface GeneralRequestGetByIdRequest {
@@ -77,7 +77,7 @@ export class RequestsApi extends runtime.BaseAPI {
 
     /**
      */
-    async generalRequestGetByIdRaw(requestParameters: GeneralRequestGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async generalRequestGetByIdRaw(requestParameters: GeneralRequestGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -100,19 +100,19 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async generalRequestGetById(requestParameters: GeneralRequestGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async generalRequestGetById(requestParameters: GeneralRequestGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.generalRequestGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async leaveRequestApprovalRequestRaw(requestParameters: LeaveRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async leaveRequestApprovalRequestRaw(requestParameters: LeaveRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -135,19 +135,19 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async leaveRequestApprovalRequest(requestParameters: LeaveRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async leaveRequestApprovalRequest(requestParameters: LeaveRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.leaveRequestApprovalRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async leaveRequestCancelRequestRaw(requestParameters: LeaveRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async leaveRequestCancelRequestRaw(requestParameters: LeaveRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -170,19 +170,19 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async leaveRequestCancelRequest(requestParameters: LeaveRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async leaveRequestCancelRequest(requestParameters: LeaveRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.leaveRequestCancelRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async leaveRequestCreateRequestRaw(requestParameters: LeaveRequestCreateRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async leaveRequestCreateRequestRaw(requestParameters: LeaveRequestCreateRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -201,19 +201,19 @@ export class RequestsApi extends runtime.BaseAPI {
             body: CreateLeaveRequestDtoToJSON(requestParameters['createLeaveRequestDto']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async leaveRequestCreateRequest(requestParameters: LeaveRequestCreateRequestRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async leaveRequestCreateRequest(requestParameters: LeaveRequestCreateRequestRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.leaveRequestCreateRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async leaveRequestRejectRequestRaw(requestParameters: LeaveRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async leaveRequestRejectRequestRaw(requestParameters: LeaveRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -236,19 +236,19 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async leaveRequestRejectRequest(requestParameters: LeaveRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async leaveRequestRejectRequest(requestParameters: LeaveRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.leaveRequestRejectRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetAdjustmentRequestApprovalRequestRaw(requestParameters: TimesheetAdjustmentRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async timesheetAdjustmentRequestApprovalRequestRaw(requestParameters: TimesheetAdjustmentRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -271,19 +271,19 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetAdjustmentRequestApprovalRequest(requestParameters: TimesheetAdjustmentRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async timesheetAdjustmentRequestApprovalRequest(requestParameters: TimesheetAdjustmentRequestApprovalRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.timesheetAdjustmentRequestApprovalRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetAdjustmentRequestCancelRequestRaw(requestParameters: TimesheetAdjustmentRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async timesheetAdjustmentRequestCancelRequestRaw(requestParameters: TimesheetAdjustmentRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -306,19 +306,19 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetAdjustmentRequestCancelRequest(requestParameters: TimesheetAdjustmentRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async timesheetAdjustmentRequestCancelRequest(requestParameters: TimesheetAdjustmentRequestCancelRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.timesheetAdjustmentRequestCancelRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetAdjustmentRequestCreateRequestRaw(requestParameters: TimesheetAdjustmentRequestCreateRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async timesheetAdjustmentRequestCreateRequestRaw(requestParameters: TimesheetAdjustmentRequestCreateRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -337,19 +337,19 @@ export class RequestsApi extends runtime.BaseAPI {
             body: CreateTimesheetAdjustmentRequestDtoToJSON(requestParameters['createTimesheetAdjustmentRequestDto']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetAdjustmentRequestCreateRequest(requestParameters: TimesheetAdjustmentRequestCreateRequestRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async timesheetAdjustmentRequestCreateRequest(requestParameters: TimesheetAdjustmentRequestCreateRequestRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.timesheetAdjustmentRequestCreateRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async timesheetAdjustmentRequestRejectRequestRaw(requestParameters: TimesheetAdjustmentRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDto>> {
+    async timesheetAdjustmentRequestRejectRequestRaw(requestParameters: TimesheetAdjustmentRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RequestCombinedDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -372,12 +372,12 @@ export class RequestsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => RequestCombinedDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async timesheetAdjustmentRequestRejectRequest(requestParameters: TimesheetAdjustmentRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDto> {
+    async timesheetAdjustmentRequestRejectRequest(requestParameters: TimesheetAdjustmentRequestRejectRequestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RequestCombinedDetailsDto> {
         const response = await this.timesheetAdjustmentRequestRejectRequestRaw(requestParameters, initOverrides);
         return await response.value();
     }

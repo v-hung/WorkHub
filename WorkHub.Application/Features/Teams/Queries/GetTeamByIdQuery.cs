@@ -5,7 +5,7 @@ using WorkHub.Domain.Entities.Organization;
 
 namespace WorkHub.Application.Features.Teams.Queries
 {
-	public class GetTeamByIdQuery : IRequest<TeamFullDto>
+	public class GetTeamByIdQuery : IRequest<TeamFormDto>
 	{
 		public int Id;
 
@@ -15,7 +15,7 @@ namespace WorkHub.Application.Features.Teams.Queries
 		}
 	}
 
-	public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamFullDto>
+	public class GetTeamByIdQueryHandler : IRequestHandler<GetTeamByIdQuery, TeamFormDto>
 	{
 		private readonly IRepository<Team, int> _repository;
 
@@ -24,9 +24,9 @@ namespace WorkHub.Application.Features.Teams.Queries
 			_repository = repository;
 		}
 
-		public async Task<TeamFullDto> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
+		public async Task<TeamFormDto> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.GetByIdAsync<TeamFullDto, int>(query.Id);
+			return await _repository.GetByIdAsync<TeamFormDto, int>(query.Id);
 		}
 	}
 }

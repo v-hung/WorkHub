@@ -8,7 +8,6 @@ using Microsoft.Extensions.Localization;
 using WorkHub.Application.Exceptions;
 using WorkHub.Application.Features.Requests.DTOs;
 using WorkHub.Application.Interfaces.Messaging;
-using WorkHub.Application.Interfaces.Repositories;
 using WorkHub.Application.Interfaces.Services;
 using WorkHub.Application.Interfaces.SignalR;
 using WorkHub.Application.Models.SignalR.Notification;
@@ -17,6 +16,7 @@ using WorkHub.Application.Utils;
 using WorkHub.Domain.Entities.Misc;
 using WorkHub.Domain.Entities.Requests;
 using WorkHub.Domain.Enums;
+using WorkHub.Domain.Repositories;
 using WorkHub.Infrastructure.Data;
 using WorkHub.Infrastructure.Models.Templates.Email;
 
@@ -67,7 +67,7 @@ namespace WorkHub.Infrastructure.Services.Requests
 			{
 				u.Id,
 				u.Email,
-				LanguageCode = u.UserDetail != null ? u.UserDetail.Nationality : Nationality.vi_VN
+				LanguageCode = u.UserProfile != null ? u.UserProfile.Nationality : Nationality.vi_VN
 			}
 			).FirstOrDefaultAsync(u => u.Id == request.ApproverId)
 				?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["Approver not found."]);

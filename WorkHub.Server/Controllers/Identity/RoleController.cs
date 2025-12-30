@@ -21,64 +21,64 @@ namespace WorkHub.Server.Controllers.Time
 
 		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet]
-		public async Task<ActionResult<List<RoleDto>>> GetAll([FromQuery] List<Guid>? ids = null)
+		public async Task<ActionResult<List<RoleDetailsDto>>> GetAll([FromQuery] List<Guid>? ids = null)
 		{
 			ids ??= [];
-			var data = await _roleService.GetAllAsync<RoleDto>(u => ids.Contains(u.Id));
+			var data = await _roleService.GetAllAsync<RoleDetailsDto>(u => ids.Contains(u.Id));
 
 			return Ok(data);
 		}
 
 		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("all-by-names")]
-		public async Task<ActionResult<List<RoleDto>>> GetAllByNames([FromQuery] List<string>? names = null)
+		public async Task<ActionResult<List<RoleDetailsDto>>> GetAllByNames([FromQuery] List<string>? names = null)
 		{
 			names ??= [];
-			var data = await _roleService.GetAllAsync<RoleDto>(u => u.Name != null && names.Contains(u.Name));
+			var data = await _roleService.GetAllAsync<RoleDetailsDto>(u => u.Name != null && names.Contains(u.Name));
 
 			return Ok(data);
 		}
 
 		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpPost("search")]
-		public async Task<ActionResult<Paginated<RoleDto>>> Search(PagedRequest request)
+		public async Task<ActionResult<Paginated<RoleDetailsDto>>> Search(PagedRequest request)
 		{
-			var data = await _roleService.SearchAsync<RoleDto>(request);
+			var data = await _roleService.SearchAsync<RoleDetailsDto>(request);
 			return Ok(data);
 		}
 
 		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("id/{id}")]
-		public async Task<ActionResult<RoleFullDto>> GetById(Guid id)
+		public async Task<ActionResult<RoleFormDto>> GetById(Guid id)
 		{
-			var data = await _roleService.GetAsync<RoleFullDto, Guid>(id);
+			var data = await _roleService.GetAsync<RoleFormDto, Guid>(id);
 
 			return Ok(data);
 		}
 
 		[Authorize(Policy = Permissions.Roles.View)]
 		[HttpGet("name/{name}")]
-		public async Task<ActionResult<RoleDto>> GetByName(string name)
+		public async Task<ActionResult<RoleDetailsDto>> GetByName(string name)
 		{
-			var data = await _roleService.GetAsync<RoleDto>(v => v.Name == name);
+			var data = await _roleService.GetAsync<RoleDetailsDto>(v => v.Name == name);
 
 			return Ok(data);
 		}
 
 		[Authorize(Policy = Permissions.Roles.Create)]
 		[HttpPost]
-		public async Task<ActionResult<RoleDto>> Create(RoleCreateUpdateRequest request)
+		public async Task<ActionResult<RoleDetailsDto>> Create(RoleCreateUpdateRequest request)
 		{
-			var data = await _roleService.CreateAsync<RoleDto>(request);
+			var data = await _roleService.CreateAsync<RoleDetailsDto>(request);
 
 			return Ok(data);
 		}
 
 		[Authorize(Policy = Permissions.Roles.Edit)]
 		[HttpPut("{id}")]
-		public async Task<ActionResult<RoleDto>> Update(Guid id, RoleCreateUpdateRequest request)
+		public async Task<ActionResult<RoleDetailsDto>> Update(Guid id, RoleCreateUpdateRequest request)
 		{
-			var data = await _roleService.UpdateAsync<RoleDto>(id, request);
+			var data = await _roleService.UpdateAsync<RoleDetailsDto>(id, request);
 
 			return Ok(data);
 		}

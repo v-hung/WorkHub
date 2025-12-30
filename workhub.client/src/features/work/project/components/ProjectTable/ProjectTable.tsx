@@ -5,7 +5,7 @@ import { projectTableColumns } from "./constants";
 import { useProjectsContext } from "../../contexts/ProjectContext";
 import { TablePaginationConfig } from "antd";
 import { FilterValue, SorterResult } from "antd/es/table/interface";
-import { ProjectDto } from "@/generate-api";
+import { ProjectDetailsDto } from "@/generate-api";
 import { getPaginationConfig, handleTableChange } from "@/utils/table.utils";
 
 const ProjectTable = () => {
@@ -19,7 +19,9 @@ const ProjectTable = () => {
     async (
       pagination: TablePaginationConfig,
       filters: Record<string, FilterValue | null>,
-      sorter: SorterResult<ProjectDto> | SorterResult<ProjectDto>[]
+      sorter:
+        | SorterResult<ProjectDetailsDto>
+        | SorterResult<ProjectDetailsDto>[]
     ) => {
       const { current, pageSize, orderBy, conditions } = handleTableChange(
         pagination,

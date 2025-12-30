@@ -414,7 +414,7 @@ namespace WorkHub.Infrastructure.Migrations
                     b.ToTable("asp_net_users", (string)null);
                 });
 
-            modelBuilder.Entity("WorkHub.Domain.Entities.Identity.UserDetail", b =>
+            modelBuilder.Entity("WorkHub.Domain.Entities.Identity.UserProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -450,7 +450,7 @@ namespace WorkHub.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("user_details");
+                    b.ToTable("user_profiles");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Misc.Notification", b =>
@@ -924,11 +924,11 @@ namespace WorkHub.Infrastructure.Migrations
                     b.Navigation("WorkSchedule");
                 });
 
-            modelBuilder.Entity("WorkHub.Domain.Entities.Identity.UserDetail", b =>
+            modelBuilder.Entity("WorkHub.Domain.Entities.Identity.UserProfile", b =>
                 {
                     b.HasOne("WorkHub.Domain.Entities.Identity.User", "User")
-                        .WithOne("UserDetail")
-                        .HasForeignKey("WorkHub.Domain.Entities.Identity.UserDetail", "UserId");
+                        .WithOne("UserProfile")
+                        .HasForeignKey("WorkHub.Domain.Entities.Identity.UserProfile", "UserId");
 
                     b.Navigation("User");
                 });
@@ -1022,7 +1022,7 @@ namespace WorkHub.Infrastructure.Migrations
 
                     b.Navigation("Timesheets");
 
-                    b.Navigation("UserDetail");
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("WorkHub.Domain.Entities.Organization.Team", b =>

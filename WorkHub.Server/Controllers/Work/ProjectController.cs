@@ -14,7 +14,7 @@ namespace WorkHub.Server.Controllers.Work
 	{
 		[HttpGet]
 		[Authorize(Policy = Permissions.Projects.View)]
-		public async Task<ActionResult<List<ProjectDto>>> GetAll([FromQuery] List<int> ids)
+		public async Task<ActionResult<List<ProjectDetailsDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var data = await _mediator.Send(new GetAllProjectQuery { Ids = ids });
 
@@ -23,7 +23,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPost("search")]
 		[Authorize(Policy = Permissions.Projects.View)]
-		public async Task<ActionResult<Paginated<ProjectDto>>> Search(PagedRequest request)
+		public async Task<ActionResult<Paginated<ProjectDetailsDto>>> Search(PagedRequest request)
 		{
 			var data = await _mediator.Send(new SearchProjectQuery { Request = request });
 
@@ -32,7 +32,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpGet("{id}")]
 		[Authorize(Policy = Permissions.Projects.View)]
-		public async Task<ActionResult<ProjectDto>> GetById(int id)
+		public async Task<ActionResult<ProjectDetailsDto>> GetById(int id)
 		{
 			var data = await _mediator.Send(new GetProjectByIdQuery(id));
 
@@ -41,7 +41,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPost]
 		[Authorize(Policy = Permissions.Projects.Create)]
-		public async Task<ActionResult<ProjectDto>> Create(CreateProjectCommand request)
+		public async Task<ActionResult<ProjectDetailsDto>> Create(CreateProjectCommand request)
 		{
 			var data = await _mediator.Send(request);
 
@@ -50,7 +50,7 @@ namespace WorkHub.Server.Controllers.Work
 
 		[HttpPut("{id}")]
 		[Authorize(Policy = Permissions.Projects.Edit)]
-		public async Task<ActionResult<ProjectDto>> Update(int id, CreateProjectCommand request)
+		public async Task<ActionResult<ProjectDetailsDto>> Update(int id, CreateProjectCommand request)
 		{
 			var data = await _mediator.Send(new UpdateProjectCommand { Id = id, Request = request });
 

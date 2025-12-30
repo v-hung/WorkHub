@@ -5,12 +5,12 @@ using WorkHub.Application.Interfaces.Services;
 
 namespace WorkHub.Application.Features.Requests.Commands
 {
-	public class CancelRequestCommand : IRequest<RequestCombinedDto>
+	public class CancelRequestCommand : IRequest<RequestCombinedDetailsDto>
 	{
 		public required int Id { get; set; }
 	}
 
-	public class CancelRequestCommandHandler : IRequestHandler<CancelRequestCommand, RequestCombinedDto>
+	public class CancelRequestCommandHandler : IRequestHandler<CancelRequestCommand, RequestCombinedDetailsDto>
 	{
 		private readonly IRequestService<CreateRequestDto> _requestService;
 
@@ -19,10 +19,10 @@ namespace WorkHub.Application.Features.Requests.Commands
 			_requestService = requestService;
 		}
 
-		public async Task<RequestCombinedDto> Handle(CancelRequestCommand command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDetailsDto> Handle(CancelRequestCommand command, CancellationToken cancellationToken)
 		{
 
-			return await _requestService.CancelRequestAsync<RequestCombinedDto>(command.Id);
+			return await _requestService.CancelRequestAsync<RequestCombinedDetailsDto>(command.Id);
 		}
 	}
 }

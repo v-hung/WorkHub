@@ -7,10 +7,10 @@ import {
 } from "react";
 import { useDevices } from "../hooks/useDevices";
 import { useDeviceAction } from "../hooks/useDeviceAction";
-import { DeviceDtoPaginated, PagedRequest } from "@/generate-api";
+import { DeviceDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 
 type DevicesContextType = {
-  devicePaginated: DeviceDtoPaginated;
+  devicePaginated: DeviceDetailsDtoPaginated;
   updateRequest: (updater?: SetStateAction<PagedRequest>) => void;
   loading: boolean;
   deleteRecord: (id: number) => Promise<void>;

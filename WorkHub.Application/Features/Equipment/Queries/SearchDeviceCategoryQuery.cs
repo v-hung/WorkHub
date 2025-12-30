@@ -7,12 +7,12 @@ using WorkHub.Domain.Entities.Equipment;
 
 namespace WorkHub.Application.Features.Equipment.Queries
 {
-	public class SearchDeviceCategoryQuery : IRequest<Paginated<DeviceCategoryDto>>
+	public class SearchDeviceCategoryQuery : IRequest<Paginated<DeviceCategoryDetailsDto>>
 	{
 		public required PagedRequest Request { get; set; }
 	}
 
-	public class SearchDeviceCategoryQueryHandler : IRequestHandler<SearchDeviceCategoryQuery, Paginated<DeviceCategoryDto>>
+	public class SearchDeviceCategoryQueryHandler : IRequestHandler<SearchDeviceCategoryQuery, Paginated<DeviceCategoryDetailsDto>>
 	{
 		private readonly IRepository<DeviceCategory, int> _repository;
 
@@ -21,9 +21,9 @@ namespace WorkHub.Application.Features.Equipment.Queries
 			_repository = repository;
 		}
 
-		public async Task<Paginated<DeviceCategoryDto>> Handle(SearchDeviceCategoryQuery query, CancellationToken cancellationToken)
+		public async Task<Paginated<DeviceCategoryDetailsDto>> Handle(SearchDeviceCategoryQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<DeviceCategoryDto, int>(query.Request);
+			return await _repository.SearchAsync<DeviceCategoryDetailsDto, int>(query.Request);
 		}
 	}
 }

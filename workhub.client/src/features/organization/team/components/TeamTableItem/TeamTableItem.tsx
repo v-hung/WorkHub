@@ -1,10 +1,10 @@
-import { TeamMinimalDto } from "@/generate-api";
+import { TeamReferenceDto } from "@/generate-api";
 import { getUniqueColor } from "@/utils/color.utils";
 import { Tag } from "antd";
 import type { FC } from "react";
 
 type State = {
-  team?: TeamMinimalDto | null;
+  team?: TeamReferenceDto | null;
 };
 
 const TeamTableItem: FC<State> = ({ team }) => {

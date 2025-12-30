@@ -6,12 +6,12 @@ using WorkHub.Application.Interfaces.Services;
 
 namespace WorkHub.Application.Features.Requests.Commands
 {
-	public class CreateTimesheetAdjustmentRequestCommand : IRequest<RequestCombinedDto>
+	public class CreateTimesheetAdjustmentRequestCommand : IRequest<RequestCombinedDetailsDto>
 	{
 		public required CreateTimesheetAdjustmentRequestDto Request { get; set; }
 	}
 
-	public class CreateTimesheetAdjustmentRequestCommandHandler : IRequestHandler<CreateTimesheetAdjustmentRequestCommand, RequestCombinedDto>
+	public class CreateTimesheetAdjustmentRequestCommandHandler : IRequestHandler<CreateTimesheetAdjustmentRequestCommand, RequestCombinedDetailsDto>
 	{
 		private readonly IRequestService<CreateTimesheetAdjustmentRequestDto> _requestService;
 		private readonly IRequestValidator<CreateTimesheetAdjustmentRequestDto> _validator;
@@ -22,13 +22,13 @@ namespace WorkHub.Application.Features.Requests.Commands
 			_validator = validator;
 		}
 
-		public async Task<RequestCombinedDto> Handle(CreateTimesheetAdjustmentRequestCommand command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDetailsDto> Handle(CreateTimesheetAdjustmentRequestCommand command, CancellationToken cancellationToken)
 		{
 			var request = command.Request;
 
 			_validator.Validate(request);
 
-			var data = await _requestService.CreateRequestAsync<RequestCombinedDto>(request);
+			var data = await _requestService.CreateRequestAsync<RequestCombinedDetailsDto>(request);
 
 			return data;
 		}

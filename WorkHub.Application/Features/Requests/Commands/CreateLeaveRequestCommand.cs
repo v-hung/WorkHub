@@ -6,12 +6,12 @@ using WorkHub.Application.Interfaces.Services;
 
 namespace WorkHub.Application.Features.Requests.Commands
 {
-	public class CreateLeaveRequestCommand : IRequest<RequestCombinedDto>
+	public class CreateLeaveRequestCommand : IRequest<RequestCombinedDetailsDto>
 	{
 		public required CreateLeaveRequestDto Request { get; set; }
 	}
 
-	public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, RequestCombinedDto>
+	public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveRequestCommand, RequestCombinedDetailsDto>
 	{
 		private readonly IRequestService<CreateLeaveRequestDto> _requestService;
 		private readonly IRequestValidator<CreateLeaveRequestDto> _validator;
@@ -22,13 +22,13 @@ namespace WorkHub.Application.Features.Requests.Commands
 			_validator = validator;
 		}
 
-		public async Task<RequestCombinedDto> Handle(CreateLeaveRequestCommand command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDetailsDto> Handle(CreateLeaveRequestCommand command, CancellationToken cancellationToken)
 		{
 			var request = command.Request;
 
 			_validator.Validate(request);
 
-			var data = await _requestService.CreateRequestAsync<RequestCombinedDto>(request);
+			var data = await _requestService.CreateRequestAsync<RequestCombinedDetailsDto>(request);
 
 			return data;
 		}

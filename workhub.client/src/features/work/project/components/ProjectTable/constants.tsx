@@ -2,14 +2,14 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useProjectsContext } from "../../contexts/ProjectContext";
-import { Permission, ProjectDto } from "@/generate-api";
+import { Permission, ProjectDetailsDto } from "@/generate-api";
 import { format } from "@/utils/date.utils";
 import { differenceInDays } from "date-fns";
 import { hasPermission } from "@/utils/hasPermission";
 import UserTableItem from "@/features/organization/user/components/UserTableItem/UserTableItem";
 import TeamTableItem from "@/features/organization/team/components/TeamTableItem/TeamTableItem";
 
-export const projectTableColumns: TableProps<ProjectDto>["columns"] = [
+export const projectTableColumns: TableProps<ProjectDetailsDto>["columns"] = [
   { title: "Name", dataIndex: "name", key: "name" },
   {
     title: "Description",

@@ -7,12 +7,12 @@ using WorkHub.Application.Responses.Work;
 
 namespace WorkHub.Application.Features.Timesheets.Commands
 {
-	public class CheckOutCommand : IRequest<TimesheetResponse<TimesheetDto>>
+	public class CheckOutCommand : IRequest<TimesheetResponse<TimesheetDetailsDto>>
 	{
 
 	}
 
-	public class CheckOutCommandHandler : IRequestHandler<CheckOutCommand, TimesheetResponse<TimesheetDto>>
+	public class CheckOutCommandHandler : IRequestHandler<CheckOutCommand, TimesheetResponse<TimesheetDetailsDto>>
 	{
 		private readonly ITimesheetService _timesheetService;
 		private readonly ICurrentUserService _currentUserService;
@@ -23,7 +23,7 @@ namespace WorkHub.Application.Features.Timesheets.Commands
 			_currentUserService = currentUserService;
 		}
 
-		public async Task<TimesheetResponse<TimesheetDto>> Handle(CheckOutCommand command, CancellationToken cancellationToken)
+		public async Task<TimesheetResponse<TimesheetDetailsDto>> Handle(CheckOutCommand command, CancellationToken cancellationToken)
 		{
 			if (_currentUserService.UserId == null)
 			{
@@ -32,7 +32,7 @@ namespace WorkHub.Application.Features.Timesheets.Commands
 
 			var timesheet = await _timesheetService.PerformCheckOut(_currentUserService.UserId);
 
-			return new TimesheetResponse<TimesheetDto>
+			return new TimesheetResponse<TimesheetDetailsDto>
 			{
 				Timesheet = timesheet
 			};

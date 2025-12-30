@@ -1,13 +1,13 @@
 import { getNotification } from "@/contexts/feedback/FeedbackProvider";
 import { getMessageError } from "@/utils/error.utils";
-import { TimesheetDto } from "@/generate-api";
+import { TimesheetDetailsDto } from "@/generate-api";
 import { timesheetApi } from "@/services/apiClient";
 import { getMonth, getYear, isSameMonth } from "date-fns";
 import { SetStateAction, useCallback, useState } from "react";
 
 export const useCurrentTimesheets = () => {
   const [loading, setLoading] = useState(false);
-  const [timesheets, setTimesheets] = useState<TimesheetDto[]>([]);
+  const [timesheets, setTimesheets] = useState<TimesheetDetailsDto[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const isCurrentMonth = isSameMonth(selectedDate, new Date());

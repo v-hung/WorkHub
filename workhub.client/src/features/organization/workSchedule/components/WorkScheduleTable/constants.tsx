@@ -2,10 +2,10 @@ import ButtonLink from "@/ui/elements/ButtonLink";
 import { Button, Popconfirm, Space, TableProps } from "antd";
 import { FC } from "react";
 import { useWorkSchedulesContext } from "../../contexts/WorkScheduleContext";
-import { Permission, WorkScheduleDto } from "@/generate-api";
+import { Permission, WorkScheduleDetailsDto } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 
-export const workScheduleTableColumns: TableProps<WorkScheduleDto>["columns"] =
+export const workScheduleTableColumns: TableProps<WorkScheduleDetailsDto>["columns"] =
   [
     { title: "Title", dataIndex: "title", key: "title" },
     {

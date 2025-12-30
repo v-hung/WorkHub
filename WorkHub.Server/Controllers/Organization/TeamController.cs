@@ -15,7 +15,7 @@ namespace WorkHub.Server.Controllers.Organization
 
 		[Authorize(Policy = Permissions.Teams.View)]
 		[HttpGet]
-		public async Task<ActionResult<List<TeamDto>>> GetAll([FromQuery] List<int> ids)
+		public async Task<ActionResult<List<TeamDetailsDto>>> GetAll([FromQuery] List<int> ids)
 		{
 			var teams = await _mediator.Send(new GetAllTeamQuery { Ids = ids });
 
@@ -24,7 +24,7 @@ namespace WorkHub.Server.Controllers.Organization
 
 		[Authorize(Policy = Permissions.Teams.View)]
 		[HttpPost("search")]
-		public async Task<ActionResult<Paginated<TeamDto>>> Search(PagedRequest request)
+		public async Task<ActionResult<Paginated<TeamDetailsDto>>> Search(PagedRequest request)
 		{
 			var teams = await _mediator.Send(new SearchTeamQuery { Request = request });
 
@@ -33,7 +33,7 @@ namespace WorkHub.Server.Controllers.Organization
 
 		[Authorize(Policy = Permissions.Teams.View)]
 		[HttpGet("{id}")]
-		public async Task<ActionResult<TeamFullDto>> GetById(int id)
+		public async Task<ActionResult<TeamFormDto>> GetById(int id)
 		{
 			var team = await _mediator.Send(new GetTeamByIdQuery(id));
 
@@ -42,7 +42,7 @@ namespace WorkHub.Server.Controllers.Organization
 
 		[Authorize(Policy = Permissions.Teams.Create)]
 		[HttpPost]
-		public async Task<ActionResult<TeamDto>> Create(CreateTeamCommand request)
+		public async Task<ActionResult<TeamDetailsDto>> Create(CreateTeamCommand request)
 		{
 			var team = await _mediator.Send(request);
 
@@ -51,7 +51,7 @@ namespace WorkHub.Server.Controllers.Organization
 
 		[Authorize(Policy = Permissions.Teams.Edit)]
 		[HttpPut("{id}")]
-		public async Task<ActionResult<TeamDto>> Update(int id, CreateTeamCommand request)
+		public async Task<ActionResult<TeamDetailsDto>> Update(int id, CreateTeamCommand request)
 		{
 			var team = await _mediator.Send(new UpdateTeamCommand { Id = id, Request = request });
 

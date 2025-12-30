@@ -18,7 +18,7 @@ import type {
   CursorPagedRequest,
   ErrorResponse,
   ErrorValidateResponse,
-  NotificationDtoCursorPaginated,
+  NotificationDetailsDtoCursorPaginated,
   SendTestNotificationCommand,
 } from '../models/index';
 import {
@@ -28,8 +28,8 @@ import {
     ErrorResponseToJSON,
     ErrorValidateResponseFromJSON,
     ErrorValidateResponseToJSON,
-    NotificationDtoCursorPaginatedFromJSON,
-    NotificationDtoCursorPaginatedToJSON,
+    NotificationDetailsDtoCursorPaginatedFromJSON,
+    NotificationDetailsDtoCursorPaginatedToJSON,
     SendTestNotificationCommandFromJSON,
     SendTestNotificationCommandToJSON,
 } from '../models/index';
@@ -81,7 +81,7 @@ export class NotificationApi extends runtime.BaseAPI {
 
     /**
      */
-    async notificationSearchRaw(requestParameters: NotificationSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationDtoCursorPaginated>> {
+    async notificationSearchRaw(requestParameters: NotificationSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NotificationDetailsDtoCursorPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -100,12 +100,12 @@ export class NotificationApi extends runtime.BaseAPI {
             body: CursorPagedRequestToJSON(requestParameters['cursorPagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => NotificationDtoCursorPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => NotificationDetailsDtoCursorPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async notificationSearch(requestParameters: NotificationSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NotificationDtoCursorPaginated> {
+    async notificationSearch(requestParameters: NotificationSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NotificationDetailsDtoCursorPaginated> {
         const response = await this.notificationSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }

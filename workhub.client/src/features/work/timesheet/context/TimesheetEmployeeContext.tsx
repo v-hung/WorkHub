@@ -8,7 +8,7 @@ import {
 import {
   BioStarSyncHistoricalEventsResponse,
   GetHistoricalEventsRequest,
-  TimesheetFullDtoPaginated,
+  TimesheetDetailsDtoPaginated,
 } from "@/generate-api";
 import {
   GetMonthlyTimesheetRequest,
@@ -22,7 +22,7 @@ type TimesheetEmployeeContextType = {
     cb?: (data: BioStarSyncHistoricalEventsResponse) => void
   ) => Promise<void>;
   request: GetMonthlyTimesheetRequest;
-  timesheetPaginated: TimesheetFullDtoPaginated | undefined;
+  timesheetPaginated: TimesheetDetailsDtoPaginated | undefined;
   updateRequest: (updater?: SetStateAction<GetMonthlyTimesheetRequest>) => void;
   isCurrentMonth: boolean;
 };

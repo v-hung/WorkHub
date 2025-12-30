@@ -1,5 +1,5 @@
 import { getMessageError } from "@/utils/error.utils";
-import { TeamDtoPaginated, PagedRequest } from "@/generate-api";
+import { TeamDetailsDtoPaginated, PagedRequest } from "@/generate-api";
 import { teamApi } from "@/services/apiClient";
 import { App } from "antd";
 import { SetStateAction, useCallback, useRef, useState } from "react";
@@ -11,7 +11,7 @@ export const useTeams = () => {
   // GET LIST team
   // =============
 
-  const [teamPaginated, setTeamPaginated] = useState<TeamDtoPaginated>({
+  const [teamPaginated, setTeamPaginated] = useState<TeamDetailsDtoPaginated>({
     data: [],
     currentPage: 1,
     pageSize: 25,

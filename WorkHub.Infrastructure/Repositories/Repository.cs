@@ -176,70 +176,27 @@ namespace WorkHub.Infrastructure.Repositories
 				.FirstOrDefaultAsync(p => p.Id.Equals(id)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
 		}
 
-		public async Task<D> CreateAsync<D>(object request, List<Func<T, Task>>? updateRelations = null) where D : class
+		public async Task<T> CreateAsync(object request)
 		{
 			T entity = Activator.CreateInstance<T>() ?? throw new BusinessException(HttpStatusCode.BadRequest, $"Cannot create an instance of {typeof(T).Name}");
 
 			_mapper.Map(request, entity);
 
-			if (updateRelations != null)
-			{
-				foreach (var updateRelation in updateRelations)
-				{
-					await updateRelation(entity);
-				}
-			}
-
 			await _context.Set<T>().AddAsync(entity);
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<D>(entity);
+			return entity;
 		}
 
-		public async Task<D> UpdateAsync<D, DId>(TId id, object request, List<Func<T, Task>>? updateRelations = null) where D : class, IEntity<DId>
+		public async Task<T> UpdateAsync(TId id, object request)
 		{
 			T entity = await _context.Set<T>().FindAsync(id) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
 
 			_mapper.Map(request, entity);
 
-			if (updateRelations != null)
-			{
-				foreach (var updateRelation in updateRelations)
-				{
-					await updateRelation(entity);
-				}
-			}
-
 			await _context.SaveChangesAsync();
 
-			return _mapper.Map<D>(entity);
-		}
-
-		public async Task UpdateRelatedEntitiesAsync<D, DId>(
-		T entity,
-		Expression<Func<T, ICollection<D>>> navigationProperty,
-		IList<DId>? relatedEntityIds,
-		TId? id) where D : class, IEntity<DId>
-		{
-			if (relatedEntityIds != null && relatedEntityIds.Any())
-			{
-				var collection = navigationProperty.Compile()(entity);
-
-				if (id != null && !id.Equals(default(TId)))
-				{
-					await _context.Entry(entity).Collection(GetPropertyName(navigationProperty)).LoadAsync();
-					collection.Clear();
-				}
-
-				List<D> relatedEntities = await _context.Set<D>()
-						.Where(v => relatedEntityIds.Contains(v.Id))
-						.ToListAsync();
-
-				foreach (var relatedEntity in relatedEntities)
-				{
-					collection.Add(relatedEntity);
-				}
-			}
+			return entity;
 		}
 
 		public async Task DeleteAsync(TId id)
@@ -251,14 +208,34 @@ namespace WorkHub.Infrastructure.Repositories
 			await _context.SaveChangesAsync();
 		}
 
-		private string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)
+		public async Task<TResult> AddAsync<TResult>(TResult entity) where TResult : class
 		{
-			if (propertyLambda.Body is MemberExpression memberExpression)
-			{
-				return memberExpression.Member.Name;
-			}
-
-			throw new ArgumentException("The expression does not point to a member attribute.", nameof(propertyLambda));
+			await _context.Set<TResult>().AddAsync(entity);
+			return entity;
 		}
+
+		public async Task<TResult> GetEntityByIdAsync<TResult, TResultId>(TResultId id, bool asNoTracking = false) where TResult : class, IEntity<TResultId>
+		{
+			var query = asNoTracking
+				? _context.Set<TResult>().AsNoTracking()
+				: _context.Set<TResult>();
+
+			return await query.FirstOrDefaultAsync(p => p.Id!.Equals(id)) ?? throw new BusinessException(HttpStatusCode.NotFound, _localizer["EntityNotFound", typeof(T).Name]);
+		}
+
+		public async Task<List<TResult>> GetEntityByIdsAsync<TResult, TResultId>(List<TResultId> ids, bool asNoTracking = false) where TResult : class, IEntity<TResultId>
+		{
+			var query = asNoTracking
+				? _context.Set<TResult>().AsNoTracking()
+				: _context.Set<TResult>();
+			return await query.Where(e => ids.Contains(e.Id)).ToListAsync();
+		}
+
+		public Task LoadCollectionAsync<TResult, TResultTProperty>(TResult entity, Expression<Func<TResult, IEnumerable<TResultTProperty>>> navigationProperty) where TResultTProperty : class where TResult : class
+		{
+			return _context.Entry(entity).Collection(navigationProperty).LoadAsync();
+		}
+
+
 	}
 }

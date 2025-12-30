@@ -12,7 +12,7 @@ namespace WorkHub.Server.Controllers.Requests
 	{
 		[HttpGet("{id}")]
 		[Authorize]
-		public async Task<ActionResult<RequestCombinedDto>> GetById(int id)
+		public async Task<ActionResult<RequestCombinedDetailsDto>> GetById(int id)
 		{
 			var result = await _mediator.Send(new GetRequestByIdQuery { Id = id });
 

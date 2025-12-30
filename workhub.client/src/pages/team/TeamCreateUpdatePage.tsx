@@ -7,7 +7,7 @@ import TeamFormCreate, {
 } from "@/features/organization/team/components/TeamFormCreate/TeamFormCreate";
 import { teamApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { Permission, TeamFullDto } from "@/generate-api";
+import { Permission, TeamFormDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -36,7 +36,7 @@ export const loader = wrapProtectedLoader(
 );
 
 export function Component() {
-  const data = useLoaderData() as TeamFullDto;
+  const data = useLoaderData() as TeamFormDto;
 
   const [loading, setLoading] = useState(false);
   const formRef = useRef<TeamFormCreateRefState | null>(null);

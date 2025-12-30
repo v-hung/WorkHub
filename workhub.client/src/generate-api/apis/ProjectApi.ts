@@ -19,8 +19,8 @@ import type {
   ErrorResponse,
   ErrorValidateResponse,
   PagedRequest,
-  ProjectDto,
-  ProjectDtoPaginated,
+  ProjectDetailsDto,
+  ProjectDetailsDtoPaginated,
 } from '../models/index';
 import {
     CreateProjectCommandFromJSON,
@@ -31,10 +31,10 @@ import {
     ErrorValidateResponseToJSON,
     PagedRequestFromJSON,
     PagedRequestToJSON,
-    ProjectDtoFromJSON,
-    ProjectDtoToJSON,
-    ProjectDtoPaginatedFromJSON,
-    ProjectDtoPaginatedToJSON,
+    ProjectDetailsDtoFromJSON,
+    ProjectDetailsDtoToJSON,
+    ProjectDetailsDtoPaginatedFromJSON,
+    ProjectDetailsDtoPaginatedToJSON,
 } from '../models/index';
 
 export interface ProjectCreateRequest {
@@ -69,7 +69,7 @@ export class ProjectApi extends runtime.BaseAPI {
 
     /**
      */
-    async projectCreateRaw(requestParameters: ProjectCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDto>> {
+    async projectCreateRaw(requestParameters: ProjectCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDetailsDto>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -88,12 +88,12 @@ export class ProjectApi extends runtime.BaseAPI {
             body: CreateProjectCommandToJSON(requestParameters['createProjectCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async projectCreate(requestParameters: ProjectCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDto> {
+    async projectCreate(requestParameters: ProjectCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDetailsDto> {
         const response = await this.projectCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -134,7 +134,7 @@ export class ProjectApi extends runtime.BaseAPI {
 
     /**
      */
-    async projectGetAllRaw(requestParameters: ProjectGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectDto>>> {
+    async projectGetAllRaw(requestParameters: ProjectGetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProjectDetailsDto>>> {
         const queryParameters: any = {};
 
         if (requestParameters['ids'] != null) {
@@ -154,19 +154,19 @@ export class ProjectApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProjectDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProjectDetailsDtoFromJSON));
     }
 
     /**
      */
-    async projectGetAll(requestParameters: ProjectGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProjectDto>> {
+    async projectGetAll(requestParameters: ProjectGetAllRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProjectDetailsDto>> {
         const response = await this.projectGetAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async projectGetByIdRaw(requestParameters: ProjectGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDto>> {
+    async projectGetByIdRaw(requestParameters: ProjectGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -189,19 +189,19 @@ export class ProjectApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async projectGetById(requestParameters: ProjectGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDto> {
+    async projectGetById(requestParameters: ProjectGetByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDetailsDto> {
         const response = await this.projectGetByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async projectSearchRaw(requestParameters: ProjectSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDtoPaginated>> {
+    async projectSearchRaw(requestParameters: ProjectSearchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDetailsDtoPaginated>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -220,19 +220,19 @@ export class ProjectApi extends runtime.BaseAPI {
             body: PagedRequestToJSON(requestParameters['pagedRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDtoPaginatedFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDetailsDtoPaginatedFromJSON(jsonValue));
     }
 
     /**
      */
-    async projectSearch(requestParameters: ProjectSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDtoPaginated> {
+    async projectSearch(requestParameters: ProjectSearchRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDetailsDtoPaginated> {
         const response = await this.projectSearchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async projectUpdateRaw(requestParameters: ProjectUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDto>> {
+    async projectUpdateRaw(requestParameters: ProjectUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProjectDetailsDto>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -258,12 +258,12 @@ export class ProjectApi extends runtime.BaseAPI {
             body: CreateProjectCommandToJSON(requestParameters['createProjectCommand']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProjectDetailsDtoFromJSON(jsonValue));
     }
 
     /**
      */
-    async projectUpdate(requestParameters: ProjectUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDto> {
+    async projectUpdate(requestParameters: ProjectUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectDetailsDto> {
         const response = await this.projectUpdateRaw(requestParameters, initOverrides);
         return await response.value();
     }

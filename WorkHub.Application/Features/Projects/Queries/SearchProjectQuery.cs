@@ -7,12 +7,12 @@ using WorkHub.Domain.Entities.Work;
 
 namespace WorkHub.Application.Features.Projects.Queries
 {
-	public class SearchProjectQuery : IRequest<Paginated<ProjectDto>>
+	public class SearchProjectQuery : IRequest<Paginated<ProjectDetailsDto>>
 	{
 		public required PagedRequest Request { get; set; }
 	}
 
-	public class SearchProjectQueryHandler : IRequestHandler<SearchProjectQuery, Paginated<ProjectDto>>
+	public class SearchProjectQueryHandler : IRequestHandler<SearchProjectQuery, Paginated<ProjectDetailsDto>>
 	{
 		private readonly IRepository<Project, int> _repository;
 
@@ -21,9 +21,9 @@ namespace WorkHub.Application.Features.Projects.Queries
 			_repository = repository;
 		}
 
-		public async Task<Paginated<ProjectDto>> Handle(SearchProjectQuery query, CancellationToken cancellationToken)
+		public async Task<Paginated<ProjectDetailsDto>> Handle(SearchProjectQuery query, CancellationToken cancellationToken)
 		{
-			return await _repository.SearchAsync<ProjectDto, int>(query.Request);
+			return await _repository.SearchAsync<ProjectDetailsDto, int>(query.Request);
 		}
 	}
 }

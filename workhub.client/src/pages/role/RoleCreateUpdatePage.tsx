@@ -7,7 +7,7 @@ import RoleFormCreate, {
 } from "@/features/organization/role/components/RoleFormCreate/RoleFormCreate";
 import { roleApi } from "@/services/apiClient";
 import { wrapPromise } from "@/utils/promise";
-import { Permission, RoleDto } from "@/generate-api";
+import { Permission, RoleDetailsDto } from "@/generate-api";
 import DefaultPage from "@/layouts/default/components/DefaultPage/DefaultPage";
 import DefaultHeader from "@/layouts/default/components/DefaultHeader/DefaultHeader";
 import DefaultBreadcrumb from "@/layouts/default/components/DefaultBreadcrumb/DefaultBreadcrumb";
@@ -36,7 +36,7 @@ export const loader = wrapProtectedLoader(
 );
 
 export function Component() {
-  const data = useLoaderData() as RoleDto;
+  const data = useLoaderData() as RoleDetailsDto;
 
   const [loading, setLoading] = useState(false);
   const formRef = useRef<RoleFormCreateRefState | null>(null);

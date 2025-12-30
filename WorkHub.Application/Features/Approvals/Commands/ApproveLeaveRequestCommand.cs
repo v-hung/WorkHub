@@ -5,12 +5,12 @@ using WorkHub.Domain.Entities.Requests;
 
 namespace WorkHub.Application.Features.Approvals.Commands
 {
-	public class ApproveLeaveRequestCommand : IRequest<RequestCombinedDto>
+	public class ApproveLeaveRequestCommand : IRequest<RequestCombinedDetailsDto>
 	{
 		public required int RequestId { get; set; }
 	}
 
-	public class ApproveLeaveRequestCommandHandler : IRequestHandler<ApproveLeaveRequestCommand, RequestCombinedDto>
+	public class ApproveLeaveRequestCommandHandler : IRequestHandler<ApproveLeaveRequestCommand, RequestCombinedDetailsDto>
 	{
 		private readonly IRequestApprovalService<LeaveRequest> _approvalRequestService;
 
@@ -19,9 +19,9 @@ namespace WorkHub.Application.Features.Approvals.Commands
 			_approvalRequestService = approvalService;
 		}
 
-		public async Task<RequestCombinedDto> Handle(ApproveLeaveRequestCommand command, CancellationToken cancellationToken)
+		public async Task<RequestCombinedDetailsDto> Handle(ApproveLeaveRequestCommand command, CancellationToken cancellationToken)
 		{
-			return await _approvalRequestService.ApproveRequestAsync<RequestCombinedDto>(command.RequestId);
+			return await _approvalRequestService.ApproveRequestAsync<RequestCombinedDetailsDto>(command.RequestId);
 		}
 	}
 }

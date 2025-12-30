@@ -124,7 +124,7 @@ static class ServiceCollectionExtensions
 
 	public static void AddApplicationServices(this IServiceCollection services)
 	{
-		services.AddAutoMapper(Assembly.GetExecutingAssembly());
+		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 		services.AddHttpClient("IgnoreSsl")
 			.ConfigurePrimaryHttpMessageHandler(() =>

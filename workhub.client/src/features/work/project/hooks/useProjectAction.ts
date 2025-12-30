@@ -3,7 +3,7 @@ import { getMessageError } from "@/utils/error.utils";
 import {
   CreateProjectCommand,
   CreateProjectCommandFromJSON,
-  ProjectDto,
+  ProjectDetailsDto,
 } from "@/generate-api";
 import { projectApi } from "@/services/apiClient";
 import { useState } from "react";
@@ -18,7 +18,9 @@ export const useProjectAction = () => {
   // Default data
   // =============
 
-  const formDefault = (data?: ProjectDto): CreateProjectCommandCustomType => {
+  const formDefault = (
+    data?: ProjectDetailsDto
+  ): CreateProjectCommandCustomType => {
     if (!data) {
       const form = CreateProjectCommandFromJSON({});
       return {

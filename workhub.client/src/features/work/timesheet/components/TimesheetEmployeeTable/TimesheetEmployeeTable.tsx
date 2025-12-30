@@ -34,7 +34,7 @@ const TimesheetEmployeeTable: FC<State> = () => {
         dateString: format(v.date, "dd/MM/yyyy"),
         startTime: v.startTime ? format(v.startTime) : undefined,
         endTime: v.endTime ? format(v.endTime) : undefined,
-        workMinutes: v.workMinutes,
+        workedMinutes: v.workedMinutes,
         requests: v.requests,
       })),
     [timesheetPaginated]
