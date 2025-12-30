@@ -7,10 +7,12 @@ namespace WorkHub.Application.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-	public static void AddApplicationLayer(this IServiceCollection services)
+	public static void AddApplicationServices(this IServiceCollection services)
 	{
-		services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+		var assembly = typeof(ServiceCollectionExtensions).Assembly;
+
+		services.AddAutoMapper(assembly);
+		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
 
 		AddValidators(services);
 	}

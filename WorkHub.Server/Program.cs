@@ -19,9 +19,9 @@ builder.Services.AddSwaggerDocumentation();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddIdentityConfiguration();
 builder.Services.AddConfigs(builder.Configuration);
+builder.Services.AddWebServices();
 builder.Services.AddApplicationServices();
-builder.Services.AddApplicationLayer();
-builder.Services.AddInfrastructureLayer();
+builder.Services.AddInfrastructureServices();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();

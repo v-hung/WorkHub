@@ -16,11 +16,8 @@ namespace WorkHub.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-	public static void AddInfrastructureLayer(this IServiceCollection services)
+	public static void AddInfrastructureServices(this IServiceCollection services)
 	{
-		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		// services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
-
 		services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 		services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		services.AddScoped<ITimesheetRepository, TimesheetRepository>();

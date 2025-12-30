@@ -122,10 +122,8 @@ static class ServiceCollectionExtensions
 		});
 	}
 
-	public static void AddApplicationServices(this IServiceCollection services)
+	public static void AddWebServices(this IServiceCollection services)
 	{
-		// services.AddAutoMapper(Assembly.GetExecutingAssembly());
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 		services.AddHttpClient("IgnoreSsl")
 			.ConfigurePrimaryHttpMessageHandler(() =>
 				new HttpClientHandler
@@ -154,7 +152,7 @@ static class ServiceCollectionExtensions
 		services.AddSignalR(options =>
 		{
 			options.EnableDetailedErrors = true;
-			options.MaximumReceiveMessageSize = 102400000; // 100MB
+			options.MaximumReceiveMessageSize = 1 * 1024 * 1024; // 1MB
 		});
 
 		services.AddLocalization(options => options.ResourcesPath = "Resources");
