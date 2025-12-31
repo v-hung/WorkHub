@@ -18,6 +18,26 @@ const router = createBrowserRouter(
               lazy: () => import("./pages/home/HomePage"),
             },
             {
+              path: "/dashboard",
+              lazy: () => import("./pages/dashboard/DashboardPage"),
+            },
+            {
+              path: "/analytics",
+              lazy: () => import("./pages/analytics/AnalyticsPage"),
+            },
+            {
+              path: "/messages",
+              lazy: () => import("./pages/messages/MessagesPage"),
+            },
+            {
+              path: "/calendar",
+              lazy: () => import("./pages/calendar/CalendarPage"),
+            },
+            {
+              path: "/meeting",
+              lazy: () => import("./pages/meeting/MeetingPage"),
+            },
+            {
               path: "/notifications",
               lazy: () => import("./pages/notification/NotificationPage"),
             },

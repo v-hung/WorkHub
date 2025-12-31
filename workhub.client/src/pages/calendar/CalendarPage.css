@@ -1,0 +1,169 @@
+/* CalendarPage.css */
+.calendar-container {
+  height: calc(100vh - 200px);
+}
+
+.custom-calendar .ant-picker-calendar-date-content {
+  height: auto;
+  overflow: hidden;
+}
+
+.calendar-date-cell {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.calendar-date-cell .event-item {
+  margin: 1px 0;
+  padding: 1px 4px;
+  border-radius: 2px;
+  color: white;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendar-date-cell .more-events {
+  color: #999;
+  font-size: 10px;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.events-sidebar {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.event-card {
+  margin-bottom: 8px;
+}
+
+.event-card .ant-card-body {
+  padding: 12px;
+}
+
+.event-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-time,
+.event-location,
+.event-attendees {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.event-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.event-location-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-description {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.upcoming-events .ant-list-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.upcoming-events .ant-list-item:last-child {
+  border-bottom: none;
+}
+
+.upcoming-event-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.upcoming-event-indicator {
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.upcoming-event-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.upcoming-event-title {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upcoming-event-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.create-event-form .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.create-event-form .ant-picker {
+  width: 100%;
+}
+
+.meeting-type-selector .ant-radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.priority-selector .ant-radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.calendar-filters .ant-select {
+  min-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    height: auto;
+  }
+
+  .calendar-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .calendar-filters .ant-select {
+    width: 100%;
+  }
+}
