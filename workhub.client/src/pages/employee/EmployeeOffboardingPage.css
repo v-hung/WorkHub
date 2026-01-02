@@ -1,0 +1,222 @@
+/* EmployeeOffboardingPage.css */
+
+.offboarding-container {
+  padding: 24px 0;
+}
+
+.offboarding-overview {
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.offboarding-overview h3 {
+  color: white !important;
+  text-align: center;
+  margin-bottom: 24px !important;
+}
+
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.offboarding-process {
+  margin-bottom: 24px;
+}
+
+.offboarding-process h4 {
+  margin-bottom: 24px !important;
+  text-align: center;
+}
+
+.offboarding-process .ant-steps {
+  padding: 24px;
+}
+
+.current-offboardings {
+  margin-bottom: 24px;
+}
+
+.current-offboardings h4 {
+  margin-bottom: 16px !important;
+}
+
+.employee-item-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.employee-item-desc {
+  margin-top: 8px;
+}
+
+.employee-item-desc > div {
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.employee-item-desc .ant-progress {
+  margin-top: 8px;
+}
+
+.offboarding-checklist {
+  margin-bottom: 24px;
+}
+
+.offboarding-checklist h4 {
+  margin-bottom: 16px !important;
+}
+
+.checklist-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #fff2f0;
+  border-radius: 6px;
+  border: 1px solid #ffccc7;
+  transition: all 0.2s ease;
+}
+
+.checklist-item:hover {
+  background: #ffebe9;
+  border-color: #ff7875;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff4d4f;
+}
+
+.checklist-item label {
+  flex: 1;
+  margin: 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.initiate-offboarding {
+  margin-bottom: 24px;
+}
+
+.initiate-offboarding h4 {
+  margin-bottom: 24px !important;
+}
+
+.initiate-offboarding .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.offboarding-timeline {
+  margin-bottom: 24px;
+}
+
+.offboarding-timeline h4 {
+  margin-bottom: 24px !important;
+}
+
+.offboarding-timeline .ant-timeline {
+  padding: 24px;
+}
+
+.timeline-content strong {
+  display: block;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.timeline-content p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .offboarding-container {
+    padding: 16px 0;
+  }
+
+  .overview-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .stat-box {
+    padding: 16px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .offboarding-process .ant-steps {
+    padding: 16px;
+  }
+
+  .checklist-items {
+    grid-template-columns: 1fr;
+  }
+
+  .offboarding-timeline .ant-timeline {
+    padding: 16px;
+  }
+
+  .initiate-offboarding .ant-form-item {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .overview-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-item-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .checklist-item {
+    padding: 10px;
+  }
+
+  .checklist-item label {
+    font-size: 13px;
+  }
+}

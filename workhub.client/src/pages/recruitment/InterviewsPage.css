@@ -1,0 +1,226 @@
+/* InterviewsPage.css */
+
+.interviews-container {
+  padding: 24px 0;
+}
+
+.stats-row {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card .ant-statistic-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.upcoming-interviews {
+  margin-bottom: 24px;
+}
+
+.upcoming-interviews h4 {
+  margin-bottom: 20px !important;
+}
+
+.interview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.candidate-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.interview-details {
+  margin-top: 12px;
+}
+
+.interview-position {
+  font-size: 16px;
+  color: #059669;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.interview-schedule {
+  margin-bottom: 8px;
+}
+
+.interview-schedule span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.interview-meta {
+  margin-top: 8px;
+}
+
+.interview-meta span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.interview-timeline {
+  margin-bottom: 24px;
+}
+
+.interview-timeline h4 {
+  margin-bottom: 24px !important;
+}
+
+.interview-timeline .ant-timeline {
+  padding: 24px;
+}
+
+.timeline-content strong {
+  display: block;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.timeline-content p {
+  margin: 4px 0 8px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.interview-calendar {
+  margin-bottom: 24px;
+}
+
+.interview-calendar h4 {
+  margin-bottom: 20px !important;
+}
+
+.calendar-preview {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  background: #1890ff;
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #f0f0f0;
+}
+
+.calendar-day {
+  background: white;
+  min-height: 80px;
+  padding: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.calendar-day.has-interview {
+  background: #e6f7ff;
+}
+
+.day-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.interview-indicator {
+  width: 6px;
+  height: 6px;
+  background: #1890ff;
+  border-radius: 50%;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .interviews-container {
+    padding: 16px 0;
+  }
+
+  .stats-row {
+    margin-bottom: 16px;
+  }
+
+  .interview-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .interview-schedule {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .interview-schedule span {
+    font-size: 13px;
+  }
+
+  .interview-meta span {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .interview-timeline .ant-timeline {
+    padding: 16px;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 12px;
+  }
+
+  .calendar-day {
+    min-height: 60px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 576px) {
+  .candidate-name {
+    font-size: 16px;
+  }
+
+  .interview-position {
+    font-size: 14px;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .day-number {
+    font-size: 12px;
+  }
+}

@@ -129,7 +129,16 @@
 		"permission": "Phân quyền",
 		"members": "Thành viên",
 		"system": "Hệ thống",
-		"user": "Người dùng"
+		"user": "Người dùng",
+		"user_management": "Quản lý người dùng",
+		"user_profiles": "Hồ sơ người dùng",
+		"user_preferences": "Tùy chọn người dùng",
+		"system_configuration": "Cấu hình hệ thống",
+		"communication_tools": "Công cụ liên lạc",
+		"bulk_notifications": "Thông báo hàng loạt",
+		"message_templates": "Mẫu tin nhắn",
+		"support_help": "Hỗ trợ & Trợ giúp",
+		"documentation": "Tài liệu"
 	},
 	"locale": {
 		"vi-VN": "Tiếng việt",

@@ -81,6 +81,38 @@ const router = createBrowserRouter(
               ],
             },
             {
+              path: "/employee-profiles",
+              lazy: () => import("./pages/employee/EmployeeProfilesPage"),
+            },
+            {
+              path: "/organizational-chart",
+              lazy: () => import("./pages/employee/OrganizationalChartPage"),
+            },
+            {
+              path: "/employee-onboarding",
+              lazy: () => import("./pages/employee/EmployeeOnboardingPage"),
+            },
+            {
+              path: "/employee-offboarding",
+              lazy: () => import("./pages/employee/EmployeeOffboardingPage"),
+            },
+            {
+              path: "/job-postings",
+              lazy: () => import("./pages/recruitment/JobPostingsPage"),
+            },
+            {
+              path: "/candidates",
+              lazy: () => import("./pages/recruitment/CandidatesPage"),
+            },
+            {
+              path: "/interviews",
+              lazy: () => import("./pages/recruitment/InterviewsPage"),
+            },
+            {
+              path: "/offers",
+              lazy: () => import("./pages/recruitment/OffersPage"),
+            },
+            {
               path: "/roles",
               children: [
                 {
@@ -166,6 +198,54 @@ const router = createBrowserRouter(
                   lazy: () => import("./pages/device/DeviceCreateUpdatePage"),
                 },
               ],
+            },
+            {
+              path: "/salary-structure",
+              lazy: () => import("./pages/payroll/SalaryStructurePage"),
+            },
+            {
+              path: "/payroll-processing",
+              lazy: () => import("./pages/payroll/PayrollProcessingPage"),
+            },
+            {
+              path: "/benefits",
+              lazy: () => import("./pages/payroll/BenefitsPage"),
+            },
+            {
+              path: "/taxes",
+              lazy: () => import("./pages/payroll/TaxesPage"),
+            },
+            {
+              path: "/performance-reviews",
+              lazy: () => import("./pages/performance/PerformanceReviewsPage"),
+            },
+            {
+              path: "/goals",
+              lazy: () => import("./pages/performance/GoalsPage"),
+            },
+            {
+              path: "/feedback",
+              lazy: () => import("./pages/performance/FeedbackPage"),
+            },
+            {
+              path: "/training",
+              lazy: () => import("./pages/performance/TrainingPage"),
+            },
+            {
+              path: "/work-schedules",
+              lazy: () => import("./pages/attendance/WorkSchedulesPage"),
+            },
+            {
+              path: "/time-tracking",
+              lazy: () => import("./pages/attendance/TimeTrackingPage"),
+            },
+            {
+              path: "/leave-management",
+              lazy: () => import("./pages/attendance/LeaveManagementPage"),
+            },
+            {
+              path: "/overtime",
+              lazy: () => import("./pages/attendance/OvertimePage"),
             },
             {
               path: "/device-categories",

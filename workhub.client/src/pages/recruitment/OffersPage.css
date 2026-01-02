@@ -1,0 +1,139 @@
+/* OffersPage.css */
+
+.offers-container {
+  padding: 24px 0;
+}
+
+.stats-row {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card .ant-statistic-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.offers-list {
+  margin-bottom: 24px;
+}
+
+.offers-list h4 {
+  margin-bottom: 20px !important;
+}
+
+.offer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.candidate-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.offer-details {
+  margin-top: 12px;
+}
+
+.offer-position {
+  font-size: 16px;
+  color: #059669;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.offer-salary {
+  margin-bottom: 8px;
+}
+
+.offer-timeline {
+  margin-bottom: 12px;
+}
+
+.offer-timeline span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.offer-benefits {
+  margin-bottom: 8px;
+}
+
+.offer-benefits .ant-tag {
+  margin-bottom: 4px;
+  background: #e6f7ff;
+  color: #1890ff;
+  border: 1px solid #91d5ff;
+}
+
+.offer-manager {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* Modal Styles */
+.ant-modal-body .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.ant-modal-body .ant-picker {
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .offers-container {
+    padding: 16px 0;
+  }
+
+  .stats-row {
+    margin-bottom: 16px;
+  }
+
+  .offer-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .offer-timeline {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .offer-timeline span {
+    display: block;
+    font-size: 13px;
+  }
+
+  .offer-benefits .ant-tag {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .candidate-name {
+    font-size: 16px;
+  }
+
+  .offer-position {
+    font-size: 14px;
+  }
+
+  .offer-salary strong {
+    font-size: 14px;
+  }
+}

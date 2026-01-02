@@ -1,0 +1,159 @@
+/* TaxesPage.css */
+
+.taxes-container {
+  padding: 24px 0;
+}
+
+.stats-row {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card .ant-statistic-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.stat-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  opacity: 0.6;
+}
+
+.tax-rules-table {
+  margin-bottom: 24px;
+}
+
+.tax-rules-table h4,
+.tax-calculations-table h4 {
+  margin-bottom: 20px !important;
+}
+
+.tax-calculations-table {
+  margin-top: 24px;
+}
+
+/* Tax Details Modal */
+.tax-details {
+  padding: 16px 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row .label {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.detail-row .value {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.detail-row.total {
+  border-top: 2px solid #1890ff;
+  margin-top: 8px;
+  padding-top: 12px;
+}
+
+.detail-row.total .value {
+  color: #1890ff;
+  font-size: 16px;
+}
+
+.detail-row.net {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.detail-row.net .value {
+  color: #52c41a;
+  font-size: 16px;
+}
+
+/* Table styling */
+.ant-table-tbody > tr:hover > td {
+  background: #f5f5f5;
+}
+
+/* Modal Styles */
+.ant-modal-body .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.ant-modal-body .ant-input-number {
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .taxes-container {
+    padding: 16px 0;
+  }
+
+  .stats-row {
+    margin-bottom: 16px;
+  }
+
+  .tax-rules-table,
+  .tax-calculations-table {
+    margin-bottom: 16px;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .stat-icon {
+    font-size: 20px;
+    top: 12px;
+    right: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .ant-table-tbody > tr > td {
+    padding: 8px;
+  }
+
+  .ant-table-thead > tr > th {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .detail-row .value {
+    font-size: 14px;
+  }
+
+  .detail-row.total .value,
+  .detail-row.net .value {
+    font-size: 15px;
+  }
+}

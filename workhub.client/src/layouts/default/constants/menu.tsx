@@ -81,74 +81,87 @@ export const getMenuItems = (
       label: t("menus.hr_management"),
       children: [
         {
-          key: "/employees",
-          label: t("menus.employee_management"),
-          children: [
-            {
-              key: "/users",
-              label: t("menus.user_list"),
-              permission: Permission.PermissionsUsersView,
-            },
-            { key: "/employee-profiles", label: t("menus.employee_profiles") },
-            { key: "/organizational-chart", label: t("menus.org_chart") },
-            { key: "/employee-onboarding", label: t("menus.onboarding") },
-            { key: "/employee-offboarding", label: t("menus.offboarding") },
-          ],
+          key: "/users",
+          label: t("menus.user_list"),
+          permission: Permission.PermissionsUsersView,
         },
         {
-          key: "/recruitment",
-          label: t("menus.recruitment"),
-          children: [
-            { key: "/job-postings", label: t("menus.job_postings") },
-            { key: "/candidates", label: t("menus.candidates") },
-            { key: "/interviews", label: t("menus.interviews") },
-            { key: "/offers", label: t("menus.offers") },
-          ],
+          key: "/employee-profiles",
+          label: t("menus.employee_profiles"),
         },
         {
-          key: "/payroll",
-          label: t("menus.payroll"),
-          children: [
-            { key: "/salary-structure", label: t("menus.salary_structure") },
-            {
-              key: "/payroll-processing",
-              label: t("menus.payroll_processing"),
-            },
-            { key: "/benefits", label: t("menus.benefits") },
-            { key: "/taxes", label: t("menus.taxes") },
-          ],
+          key: "/organizational-chart",
+          label: t("menus.org_chart"),
         },
         {
-          key: "/performance",
-          label: t("menus.performance"),
-          children: [
-            {
-              key: "/performance-reviews",
-              label: t("menus.performance_reviews"),
-            },
-            { key: "/goals", label: t("menus.goals_objectives") },
-            { key: "/feedback", label: t("menus.feedback") },
-            { key: "/training", label: t("menus.training_development") },
-          ],
+          key: "/job-postings",
+          label: t("menus.job_postings"),
         },
         {
-          key: "/attendance",
-          label: t("menus.attendance"),
-          children: [
-            {
-              key: "/work-schedules",
-              label: t("menus.work_schedules"),
-              permission: Permission.PermissionsWorkSchedulesView,
-            },
-            { key: "/time-tracking", label: t("menus.time_tracking") },
-            { key: "/leave-management", label: t("menus.leave_management") },
-            { key: "/overtime", label: t("menus.overtime") },
-          ],
+          key: "/candidates",
+          label: t("menus.candidates"),
+        },
+        {
+          key: "/interviews",
+          label: t("menus.interviews"),
+        },
+        {
+          key: "/offers",
+          label: t("menus.offers"),
+        },
+        {
+          key: "/salary-structure",
+          label: t("menus.salary_structure"),
+        },
+        {
+          key: "/payroll-processing",
+          label: t("menus.payroll_processing"),
+        },
+        {
+          key: "/benefits",
+          label: t("menus.benefits"),
+        },
+        {
+          key: "/taxes",
+          label: t("menus.taxes"),
+        },
+        {
+          key: "/performance-reviews",
+          label: t("menus.performance_reviews"),
+        },
+        {
+          key: "/goals",
+          label: t("menus.goals_objectives"),
+        },
+        {
+          key: "/feedback",
+          label: t("menus.feedback"),
+        },
+        {
+          key: "/training",
+          label: t("menus.training_development"),
+        },
+        {
+          key: "/work-schedules",
+          label: t("menus.work_schedules"),
+          permission: Permission.PermissionsWorkSchedulesView,
+        },
+        {
+          key: "/time-tracking",
+          label: t("menus.time_tracking"),
+        },
+        {
+          key: "/leave-management",
+          label: t("menus.leave_management"),
+        },
+        {
+          key: "/overtime",
+          label: t("menus.overtime"),
         },
       ],
     },
 
-    // PROJECT MANAGEMENT (JIRA-LIKE)
+    // PROJECT MANAGEMENT
     {
       type: "group",
       label: t("menus.project_management"),
@@ -255,6 +268,30 @@ export const getMenuItems = (
         {
           key: "/time-tracking-reports",
           label: t("menus.time_tracking_reports"),
+        },
+      ],
+    },
+    {
+      key: "/teams",
+      icon: <IIonPeopleOutline />,
+      label: t("menus.team_manager"),
+      permission: Permission.PermissionsTeamsView,
+      children: [
+        {
+          key: "/team-list",
+          label: t("menus.team_list"),
+        },
+        {
+          key: "/team-structure",
+          label: t("menus.team_structure"),
+        },
+        {
+          key: "/team-performance",
+          label: t("menus.team_performance"),
+        },
+        {
+          key: "/team-collaboration",
+          label: t("menus.team_collaboration"),
         },
       ],
     },
@@ -379,28 +416,6 @@ export const getMenuItems = (
       key: "/finance",
       icon: <IIonCashOutline />,
       label: t("menus.finance_management"),
-      children: [
-        {
-          key: "/budgeting",
-          label: t("menus.budgeting"),
-        },
-        {
-          key: "/expense-management",
-          label: t("menus.expense_management"),
-        },
-        {
-          key: "/invoice-management",
-          label: t("menus.invoice_management"),
-        },
-        {
-          key: "/financial-reports",
-          label: t("menus.financial_reports"),
-        },
-        {
-          key: "/cost-center",
-          label: t("menus.cost_center"),
-        },
-      ],
     },
 
     // INVENTORY & PROCUREMENT
@@ -412,182 +427,92 @@ export const getMenuItems = (
       key: "/inventory",
       icon: <IIonStorefrontOutline />,
       label: t("menus.inventory_management"),
-      children: [
-        {
-          key: "/inventory-items",
-          label: t("menus.inventory_items"),
-        },
-        {
-          key: "/stock-levels",
-          label: t("menus.stock_levels"),
-        },
-        {
-          key: "/inventory-transfers",
-          label: t("menus.inventory_transfers"),
-        },
-        {
-          key: "/inventory-reports",
-          label: t("menus.inventory_reports"),
-        },
-      ],
-    },
-    {
-      key: "/procurement",
-      icon: <IIonBagHandleOutline />,
-      label: t("menus.procurement"),
-      children: [
-        {
-          key: "/purchase-requests",
-          label: t("menus.purchase_requests"),
-        },
-        {
-          key: "/purchase-orders",
-          label: t("menus.purchase_orders"),
-        },
-        {
-          key: "/vendor-management",
-          label: t("menus.vendor_management"),
-        },
-        {
-          key: "/contract-management",
-          label: t("menus.contract_management"),
-        },
-      ],
     },
 
-    // TEAM MANAGEMENT
-    {
-      type: "group",
-      label: t("menus.team_management"),
-    },
-    {
-      key: "/teams",
-      icon: <IIonPeopleOutline />,
-      label: t("menus.team_manager"),
-      permission: Permission.PermissionsTeamsView,
-      children: [
-        {
-          key: "/team-list",
-          label: t("menus.team_list"),
-        },
-        {
-          key: "/team-structure",
-          label: t("menus.team_structure"),
-        },
-        {
-          key: "/team-performance",
-          label: t("menus.team_performance"),
-        },
-        {
-          key: "/team-collaboration",
-          label: t("menus.team_collaboration"),
-        },
-      ],
-    },
-
-    // REPORTS & ANALYTICS
-    {
-      type: "group",
-      label: t("menus.reports_analytics"),
-    },
-    {
-      key: "/report",
-      icon: <IIonPieChartOutline />,
-      label: t("menus.report"),
-      permission: Permission.PermissionsSystemReport,
-      children: [
-        {
-          key: "/hr-reports",
-          label: t("menus.hr_reports"),
-        },
-        {
-          key: "/project-reports",
-          label: t("menus.project_reports"),
-        },
-        {
-          key: "/financial-reports",
-          label: t("menus.financial_reports"),
-        },
-        {
-          key: "/operational-reports",
-          label: t("menus.operational_reports"),
-        },
-        {
-          key: "/custom-reports",
-          label: t("menus.custom_reports"),
-        },
-        {
-          key: "/dashboard-reports",
-          label: t("menus.dashboard_reports"),
-        },
-      ],
-    },
-
-    // SYSTEM ADMINISTRATION
+    // SETTINGS & SYSTEM ADMINISTRATION
     {
       type: "group",
       label: t("menus.system"),
     },
     {
-      key: "/employee",
+      key: "/user-management",
       icon: <IIonPersonOutline />,
-      label: t("menus.employee"),
+      label: t("menus.user_management"),
+      permission: Permission.PermissionsUsersView,
       children: [
-        {
-          key: "/users",
-          label: t("menus.user"),
-          permission: Permission.PermissionsUsersView,
-        },
         {
           key: "/roles",
           label: t("menus.permission"),
           permission: Permission.PermissionsRolesView,
         },
         {
-          key: "/work-times",
-          label: t("menus.work-time"),
-          permission: Permission.PermissionsWorkSchedulesView,
+          key: "/user-profiles",
+          label: t("menus.user_profiles"),
+        },
+        {
+          key: "/user-preferences",
+          label: t("menus.user_preferences"),
         },
       ],
     },
     {
-      key: "/system-settings",
+      key: "/system-configuration",
       icon: <IIonSettingsOutline />,
-      label: t("menus.system_settings"),
+      label: t("menus.system_configuration"),
       children: [
         {
-          key: "/company-settings",
-          label: t("menus.company_settings"),
+          key: "/work-times",
+          label: t("menus.work-time"),
+          permission: Permission.PermissionsWorkSchedulesView,
         },
         {
-          key: "/workflow-settings",
-          label: t("menus.workflow_settings"),
+          key: "/system-settings",
+          label: t("menus.system_settings"),
         },
         {
           key: "/integration-settings",
           label: t("menus.integration_settings"),
         },
+      ],
+    },
+    {
+      key: "/communication-tools",
+      icon: <IIonChatbubbleEllipsesOutline />,
+      label: t("menus.communication_tools"),
+      children: [
         {
-          key: "/security-settings",
-          label: t("menus.security_settings"),
+          key: "/send-mail",
+          label: t("menus.send-mail"),
+          permission: Permission.PermissionsSystemSendEmail,
+        },
+        {
+          key: "/bulk-notifications",
+          label: t("menus.bulk_notifications"),
+        },
+        {
+          key: "/message-templates",
+          label: t("menus.message_templates"),
         },
       ],
     },
     {
-      key: "/send-mail",
-      icon: <IIonSendOutline />,
-      label: t("menus.send-mail"),
-      permission: Permission.PermissionsSystemSendEmail,
-    },
-    {
-      key: "/help",
+      key: "/support-help",
       icon: <IIonHelp />,
-      label: t("menus.help"),
-    },
-    {
-      key: "/support",
-      icon: <IIonHeadsetOutline />,
-      label: t("menus.support"),
+      label: t("menus.support_help"),
+      children: [
+        {
+          key: "/help",
+          label: t("menus.help"),
+        },
+        {
+          key: "/support",
+          label: t("menus.support"),
+        },
+        {
+          key: "/documentation",
+          label: t("menus.documentation"),
+        },
+      ],
     },
   ];
 };

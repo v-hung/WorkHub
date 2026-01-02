@@ -9,6 +9,7 @@ import DefaultContent from "@/layouts/default/components/DefaultContent/DefaultC
 import { Permission } from "@/generate-api";
 import { hasPermission } from "@/utils/hasPermission";
 import UserSyncDataButton from "@/features/organization/user/components/UserSyncDataButton/UserSyncDataButton";
+import "./UserPage.css";
 
 export const loader = wrapProtectedLoader(
   undefined,
@@ -30,7 +31,7 @@ export function Component() {
             type="primary"
             onClick={() => navigate("/users/create")}
             icon={<IIonPersonAddOutline width={16} height={16} />}
-            style={{ marginLeft: 8 }}
+            className="add-user-button"
           >
             Add user
           </Button>

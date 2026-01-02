@@ -130,7 +130,16 @@
 		"work-time": "Work Time",
 		"permission": "Permission",
 		"members": "Members",
-		"system": "System"
+		"system": "System",
+		"user_management": "User Management",
+		"user_profiles": "User Profiles",
+		"user_preferences": "User Preferences",
+		"system_configuration": "System Configuration",
+		"communication_tools": "Communication Tools",
+		"bulk_notifications": "Bulk Notifications",
+		"message_templates": "Message Templates",
+		"support_help": "Support & Help",
+		"documentation": "Documentation"
 	},
 	"locale": {
 		"vi-VN": "Vietnamese",

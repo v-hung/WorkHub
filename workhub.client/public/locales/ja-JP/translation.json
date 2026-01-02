@@ -129,8 +129,16 @@
 		"employee": "従業員",
 		"work-time": "勤務時間",
 		"permission": "許可",
-		"members": "メンバー",
-		"system": "システム"
+		"system": "システム",
+		"user_management": "ユーザー管理",
+		"user_profiles": "ユーザープロフィール",
+		"user_preferences": "ユーザー設定",
+		"system_configuration": "システム構成",
+		"communication_tools": "コミュニケーションツール",
+		"bulk_notifications": "一括通知",
+		"message_templates": "メッセージテンプレート",
+		"support_help": "サポート・ヘルプ",
+		"documentation": "ドキュメント"
 	},
 	"locale": {
 		"vi-VN": "ベトナム語",

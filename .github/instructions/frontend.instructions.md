@@ -1,5 +1,5 @@
 ---
-applyTo: "workhub.client/**/*"
+applyTo: "workhub.client/**/*.ts,workhub.client/**/*.tsx"
 ---
 
 # Frontend Development Instructions for WorkHub
